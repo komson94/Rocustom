@@ -1,0 +1,23 @@
+izlude,179,209,4	script	ป้ายประกาศ#1	837,{
+
+mes "[.....]";
+        mes "  ";
+	mes "เข้าวาปไปเมืองหลวงได้เลยจ้าาา";
+	close;
+OnInit:
+waitingroom "เข้าวาปไปเมืองหลวง",0;
+}
+
+izlude,181,209,0	warp	Main	1,1,louyang,217,102
+
+izlude,124,149,4	script	ป้ายประกาศ#1	837,{
+
+mes "[.....]";
+        mes "  ";
+	mes "เข้าวาปไปเมืองหลวงได้เลยจ้าาา";
+	close;
+OnInit:
+waitingroom "เข้าวาปไปเมืองหลวง",0;
+}
+
+izlude,124,147,0	warp	Main	1,1,louyang,217,102

@@ -1,0 +1,147 @@
+//===== rAthena Script =======================================
+//= Healer
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+
+-	script	Linker	-1,{	
+
+//= Script
+//============================================================
+	mes .NPC$;
+	cutin "soul_van01",2;
+	mes "ข้าสามารถบัฟ Soul Linker ให้เจ้าได้";
+	mes "โดยข้าจะคิดค่าบริการ ^FF0000"+.Price+"^000000 zeny.";
+	mes "-----------------------------------";
+	mes "-^4682B4 ผู้เล่นทั่วไป^000000 ระยะเวลาที่ได้ ^006400"+.ntime+"^000000 นาที";
+	mes "-^008aff VIP^000000 ระยะเวลาที่ได้ ^006400"+.viptime+"^000000 นาที";
+	mes "-----------------------------------";
+	mes "เจ้าสนใจไหมล่ะ?";
+	next;
+	switch(select("^006400•^000000 สนใจ", "^FF0000•^000000 ไม่ต้องการ")) {
+	case 1:
+		mes .NPC$;
+		mes "เจ้าจำเป็นจะต้องอยู่ในระดับ class 2-1 | class 2-2 | High Class";
+		mes "Third Class | Soul Linker | Star Gladiator | Super Novice";
+		mes "^FF0000หากไม่ใช่ ข้าจะไม่สามารถบัฟอะไรให้เจ้าได้.";
+		mes "^000000";
+		mes "เจ้าต้องการจะดำเนินการต่อหรือไม่?";		
+		next;
+		switch(select("^006400•^000000 ดำเนินการต่อ", "^FF0000•^000000 ไม่ ข้าเปลี่ยนใจแล้ว")) {
+		case 1:
+			cutin "soul_van04",2;	
+			progressbar "FFFFFF",.cast;
+			specialeffect2 441;
+			switch ( basejob ) {
+			case Job_Alchemist:	set .@spirit, 445; break;
+			case Job_Monk:	 set .@spirit, 447; break;
+			case Job_Star_Gladiator:  set .@spirit, 448; break;
+			case Job_Sage:	 set .@spirit, 449; break;
+			case Job_Crusader:	set .@spirit, 450; break;
+			case Job_SuperNovice:   set .@spirit, 451; break;
+			case Job_Knight:	set .@spirit, 452; break;
+			case Job_Wizard:	set .@spirit, 453; break;
+  			case Job_Priest:	set .@spirit, 454; break;
+  			case Job_Bard: case Job_Dancer: set .@spirit, 455; break;
+  			case Job_Rogue:	 set .@spirit, 456; break;
+  			case Job_Assassin:	set .@spirit, 457; break;
+  			case Job_Blacksmith:   set .@spirit, 458; break;
+  			case Job_Hunter:	set .@spirit, 460; break;
+  			case Job_Soul_Linker:   set .@spirit, 461; break;
+  			default:
+				mes .NPC$;
+				cutin "soul_van03",2;
+				mes "ข้าเสียใจด้วย เจ้าไม่ตรงตามเงื่อนไข";
+				close2;
+				cutin "soul_van03",255;
+				end;
+			}
+			if ( .@spirit ) {
+				if (vip_status(1)) {
+					Zeny -= .Price;
+					sc_start4 sc_spirit, .viptime*60*1000, 5, .@spirit,0,0;
+					skilleffect .@spirit, 5;
+					specialeffect2 72;
+					mes .NPC$;
+					cutin "soul_van03",2;
+					mes "-----------------------------------";
+					mes "-^008aff VIP^000000 ระยะเวลาที่ได้ ^006400"+.viptime+"^000000 นาที";
+					mes "-----------------------------------";
+					mes "ขอบคุณที่ใช้บริการ.";
+					close2;
+					cutin "soul_van03",255;
+					end;
+				}
+				if (getgmlevel() == 99) {
+				//	set Zeny,Zeny - .Price;	//Free For GM
+					sc_start4 sc_spirit, .gmtime*60*1000, 5, .@spirit,0,0;
+					skilleffect .@spirit, 5;
+					specialeffect2 72;
+					mes .NPC$;
+					cutin "soul_van03",2;
+					mes "-----------------------------------";
+					mes "-^8A2BE2 GM^000000 ระยะเวลาที่ได้ ^006400"+.gmtime+"^000000 นาที";
+					mes "-----------------------------------";
+					mes "ขอบคุณที่ใช้บริการ.";
+					close2;
+					cutin "soul_van03",255;
+					end;
+				}
+				Zeny -= .Price;
+				sc_start4 sc_spirit, .ntime*60*1000, 5, .@spirit,0,0;
+				skilleffect .@spirit, 5;
+				specialeffect2 72;
+				mes .NPC$;
+				cutin "soul_van03",2;
+				mes "-----------------------------------";
+				mes "-^4682B4 ผู้เล่นทั่วไป^000000 ระยะเวลาที่ได้ ^006400"+.ntime+"^000000 นาที";
+				mes "-----------------------------------";
+				mes "ขอบคุณที่ใช้บริการ.";
+				close2;
+				cutin "soul_van03",255;
+				end;
+			}
+			close2;
+			cutin "soul_van03",255;
+			end;
+			
+		case 2:
+			mes .NPC$;
+			cutin "soul_van02",2;
+			mes "ช่างน่าเสียได้...";
+			mes "ไว้พบกันใหม่...ก็แล้วกัน.";
+			close2;
+			cutin "soul_van02",255;
+			end;
+		}
+		
+	case 2:
+		mes .NPC$;
+		cutin "soul_van02",2;
+		mes "ช่างน่าเสียได้...";
+		mes "ไว้พบกันใหม่...ก็แล้วกัน.";
+		close2;
+		cutin "soul_van02",255;
+		end;
+	}
+	close2;
+	cutin "soul_van03",255;
+	end;
+	
+OnInit:
+	.NPC$ = "[^0000FF Soul Reaper ^000000]";	//NPC Name :: ชื่อ NPC
+	.ntime = 5;	// เวลาบัฟ (นาที) :: สำหรับผู้เล่นทั่วไป
+	.viptime = 15;	// เวลาบัฟ (นาที) :: สำหรับผู้เล่น VIP
+	.gmtime = 60;	// เวลาบัฟ (นาที) :: สำหรับ GM
+	.cast = 2;		// ระยะเวลาร่าย (วินาที) :: ดีเลย์การรับบัฟ
+	.Price = 5000;	// ราคา
+	end;
+}
+
+//= Duplicate :: ตำแหน่ง NPC
+//============================================================
+firstcity,255,270,5	duplicate(Linker)	Soul Reaper	4_M_SOULREAPER

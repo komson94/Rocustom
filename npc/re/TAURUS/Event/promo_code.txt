@@ -1,0 +1,334 @@
+//===== rAthena Script ======================================= 
+//= Item Code
+//===== By: ================================================== 
+//= Mr.TAURUS
+//===== Current Version: 1.4 =================================
+//= ปรับปรุง SQL Tables ใหม่.
+//= ปรับให้เพิ่มรางวัลไอเทมได้ สูงสุด 5 รายการ.
+//= โค้ดใช้งานได้ 1 ครั้ง ต่อ 1 โค้ด โค้ดจะถูกลบอัตโนมัติ.
+//= ลบโหมดการใช้งาน Item Code ออก.
+//= ลบประวัติ Item Code ออก.
+//= เปลี่ยนการรับไอเทมเข้าตัวเป็น ส่งไปที่ RodEx แทน.
+//= เพิ่มเมนูสำหรับกำหนดไอเทม หรือ เงิน zeny.
+//===== Compatible With: =====================================
+//= rAthena Project
+//============================================================
+
+firstcity,197,280,3	script	Item Code Officer	4_F_PREMI,{
+	//-------------------------------------
+	.GMmenu = (getgmlevel() >= .GMlvl);
+	.charid = getcharid(0);
+	.sender$ = "Item Code Officer";
+	.title$ = "รางวัลจากการใช้งานไอทมโค้ด";
+	.body$ = "นี่คือของรางวัลของคุณค่ะ.";
+	//-------------------------------------
+	cutin "prm_1",2;
+	mes .NPCname$;
+	mes "สวัสดี ^0000FF"+ strcharinfo(0) +"^000000.";
+	mes "ยินดีต้อนรับสู่บริการ Item Code.";
+	mes "มีอะไรใช้ช่วยไหม?";
+	next;
+	switch(Select(
+		""+.sb$+" ใช้ Item Code",
+		(.GMmenu) ? ""+.sb$+" สร้าง Item Code [^FF0000GM^000000]" : "",
+		(.GMmenu) ? ""+.sb$+" ลบ Item Code [^FF0000GM^000000]" : "",
+		""+.sb$+" ไม่มีอะไร"
+	)){
+		case 1:
+			mes .NPCname$;
+			mes "กรุณาใส่ Item Code:";
+			input @my_code$;
+			next;
+			query_sql "SELECT `code`,`zeny`,`item1`,`amount1`,`item2`,`amount2`,`item3`,`amount3`,`item4`,`amount4`,`item5`,`amount5` FROM `coupons`", .@load_code$,.@load_zeny,.@load_item1,.@load_amount1,.@load_item2,.@load_amount2,.@load_item3,.@load_amount3,.@load_item4,.@load_amount4,.@load_item5,.@load_amount5;
+			for (set @i, 0; @i < getarraysize(.@load_code$); set @i, @i+1)
+			{
+				if (@my_code$ == .@load_code$[@i]) {
+					cutin "prm_3",2;
+					mes .NPCname$;
+					mes "ทำการส่งของรางวัลไปยัง RodEx";
+					mes "เรียบร้อยแล้วค่ะ.";
+					setarray .mailitem[0],.@load_item1,.@load_item2,.@load_item3,.@load_item4,.@load_item5;
+					setarray .mailamount[0],.@load_amount1,.@load_amount2,.@load_amount3,.@load_amount4,.@load_amount5;
+					if (.mailitem[0]) {	
+						mail .charid,.sender$,.title$,.body$,.@load_zeny,.mailitem,.mailamount;
+					}
+					else {
+						mail .charid,.sender$,.title$,.body$,.@load_zeny;
+					}
+					query_sql "INSERT INTO `coupons_log` (`account_id`,`code`,`zeny`,`item1`,`amount1`,`item2`,`amount2`,`item3`,`amount3`,`item4`,`amount4`,`item5`,`amount5`,`date`) VALUES ('"+getcharid(3)+"','"+@my_code$+"','"+.@load_zeny[@i]+"','"+.@load_item1[@i]+"','"+.@load_amount1[@i]+"','"+.@load_item2[@i]+"','"+.@load_amount2[@i]+"','"+.@load_item3[@i]+"','"+.@load_amount3[@i]+"','"+.@load_item4[@i]+"','"+.@load_amount4[@i]+"','"+.@load_item5[@i]+"','"+.@load_amount5[@i]+"', '"+gettime(5)+"/"+gettime(6)+"/"+gettime(7)+" - "+gettime(3)+":"+gettime(2)+"')";
+					query_sql "DELETE FROM `coupons` WHERE `code`='"+@my_code$+"'";
+					close2;
+					cutin "",255;
+					end;
+				}
+			}
+			cutin "prm_4",2;
+			mes .NPCname$;
+			mes "ขอโทษค่ะ";
+			mes "นี่ไม่ใช้ Item Code ที่ถูกต้อง.";
+			close2;
+			cutin "",255;
+			end;
+			
+		case 2:
+			@set_zeny = 0;
+			@set_item1 = 0;
+			@set_item2 = 0;
+			@set_item3 = 0;
+			@set_item4 = 0;
+			@set_item5 = 0;
+			@set_amount1 = 0;
+			@set_amount2 = 0;
+			@set_amount3 = 0;
+			@set_amount4 = 0;
+			@set_amount5 = 0;
+			cutin "prm_2",2;
+			mes .NPCname$;
+			mes "กรุณากำหนดค่าต่างๆของ Item Code ด้วยค่ะ.";
+			next;
+			while (true) {
+				next;
+				cutin "prm_2",2;
+				.finnish = (@set_zeny > 0) || (@set_item1 > 0 && @set_amount1 > 0);
+				.setitem2 = (@set_item1 > 0 && @set_amount1 > 0);
+				.setitem3 = (@set_item2 > 0 && @set_amount2 > 0);
+				.setitem4 = (@set_item3 > 0 && @set_amount3 > 0);
+				.setitem5 = (@set_item4 > 0 && @set_amount4 > 0);
+				mes .NPCname$;
+				mes "สิ่งที่ได้รับจาก Item Code:";
+				if (@set_zeny > 0) { mes "[^009900 " + callfunc("F_InsertComma",@set_zeny) + " ^000000] z."; }
+				if (@set_item1 > 0 && @set_amount1 > 0) { mes "[^0000FF "+getitemname(@set_item1)+" ^000000] จำนวน [^009900 "+callfunc("F_InsertComma",@set_amount1)+" ^000000] ea."; }
+				if (@set_item2 > 0 && @set_amount2 > 0) { mes "[^0000FF "+getitemname(@set_item2)+" ^000000] จำนวน [^009900 "+callfunc("F_InsertComma",@set_amount2)+" ^000000] ea."; }
+				if (@set_item3 > 0 && @set_amount3 > 0) { mes "[^0000FF "+getitemname(@set_item3)+" ^000000] จำนวน [^009900 "+callfunc("F_InsertComma",@set_amount3)+" ^000000] ea."; }
+				if (@set_item4 > 0 && @set_amount4 > 0) { mes "[^0000FF "+getitemname(@set_item4)+" ^000000] จำนวน [^009900 "+callfunc("F_InsertComma",@set_amount4)+" ^000000] ea."; }
+				if (@set_item5 > 0 && @set_amount5 > 0) { mes "[^0000FF "+getitemname(@set_item5)+" ^000000] จำนวน [^009900 "+callfunc("F_InsertComma",@set_amount5)+" ^000000] ea."; }
+				switch(select(
+					""+.sb$+" ยกเลิก",
+					""+.sb$+" กำหนด zeny [^009900"+@set_zeny+"^000000]",
+					""+.sb$+" กำหนด Items1 [^0000FF"+@set_item1+"^000000]|[^009900"+@set_amount1+"^000000]",
+					(.setitem2) ? ""+.sb$+" กำหนด Items2 [^0000FF"+@set_item2+"^000000]|[^009900"+@set_amount2+"^000000]" : "",
+					(.setitem3) ? ""+.sb$+" กำหนด Items3 [^0000FF"+@set_item3+"^000000]|[^009900"+@set_amount3+"^000000]" : "",
+					(.setitem4) ? ""+.sb$+" กำหนด Items4 [^0000FF"+@set_item4+"^000000]|[^009900"+@set_amount4+"^000000]" : "",
+					(.setitem5) ? ""+.sb$+" กำหนด Items5 [^0000FF"+@set_item5+"^000000]|[^009900"+@set_amount5+"^000000]" : "",
+					(.finnish) ? ""+.sb$+" สร้าง Item Code" : ""
+					)) 
+				{
+					case 1:
+						close2;
+						cutin "",255;
+						end;
+					case 2:
+						next;
+						mes .NPCname$;
+						mes "กรุณาใส่จำนวน Zeny:";
+						input @set_zeny;
+						break;
+					case 3:
+						next;
+						mes .NPCname$;
+						mes "กรุณาใส่ Item ID:";
+						input @set_item1;
+						next;
+						if (@set_item1 == 0) {
+							mes .NPCname$;
+							cutin "prm_4",2;
+							mes "ขอโทษค่ะ";
+							mes "กรุณาใส่ตัวเลขอื่นนอกจาก 0 ด้วยค่ะ.";
+							break;
+						}
+						mes .NPCname$;
+						mes "กรุณาใส่ จำนวน Item:";
+						input @set_amount1;
+						next;
+						if(@set_amount1 == 0 || @set_amount1 >= 30000) {
+							mes .NPCname$;
+							cutin "prm_4",2;
+							mes "ขอโทษค่ะ";
+							mes "กรุณาใส่ตัวเลขอื่นนอกจาก";
+							mes "0 และไม่เกิน 30000 ด้วยค่ะ.";
+							break;
+						}
+						break;
+					case 4:
+						next;
+						mes .NPCname$;
+						mes "กรุณาใส่ Item ID:";
+						input @set_item2;
+						next;
+						if (@set_item2 == 0) {
+							mes .NPCname$;
+							cutin "prm_4",2;
+							mes "ขอโทษค่ะ";
+							mes "กรุณาใส่ตัวเลขอื่นนอกจาก 0 ด้วยค่ะ.";
+							break;
+						}
+						mes .NPCname$;
+						mes "กรุณาใส่ จำนวน Item:";
+						input @set_amount2;
+						next;
+						if(@set_amount2 == 0 || @set_amount2 >= 30000) {
+							mes .NPCname$;
+							cutin "prm_4",2;
+							mes "ขอโทษค่ะ";
+							mes "กรุณาใส่ตัวเลขอื่นนอกจาก";
+							mes "0 และไม่เกิน 30000 ด้วยค่ะ.";
+							break;
+						}
+						break;
+					case 5:
+						next;
+						mes .NPCname$;
+						mes "กรุณาใส่ Item ID:";
+						input @set_item3;
+						next;
+						if (@set_item3 == 0) {
+							mes .NPCname$;
+							cutin "prm_4",2;
+							mes "ขอโทษค่ะ";
+							mes "กรุณาใส่ตัวเลขอื่นนอกจาก 0 ด้วยค่ะ.";
+							break;
+						}
+						mes .NPCname$;
+						mes "กรุณาใส่ จำนวน Item:";
+						input @set_amount3;
+						next;
+						if(@set_amount3 == 0 || @set_amount3 >= 30000) {
+							mes .NPCname$;
+							cutin "prm_4",2;
+							mes "ขอโทษค่ะ";
+							mes "กรุณาใส่ตัวเลขอื่นนอกจาก";
+							mes "0 และไม่เกิน 30000 ด้วยค่ะ.";
+							break;
+						}
+						break;
+					case 6:
+						next;
+						mes .NPCname$;
+						mes "กรุณาใส่ Item ID:";
+						input @set_item4;
+						next;
+						if (@set_item4 == 0) {
+							mes .NPCname$;
+							cutin "prm_4",2;
+							mes "ขอโทษค่ะ";
+							mes "กรุณาใส่ตัวเลขอื่นนอกจาก 0 ด้วยค่ะ.";
+							break;
+						}
+						mes .NPCname$;
+						mes "กรุณาใส่ จำนวน Item:";
+						input @set_amount4;
+						next;
+						if(@set_amount4 == 0 || @set_amount4 >= 30000) {
+							mes .NPCname$;
+							cutin "prm_4",2;
+							mes "ขอโทษค่ะ";
+							mes "กรุณาใส่ตัวเลขอื่นนอกจาก";
+							mes "0 และไม่เกิน 30000 ด้วยค่ะ.";
+							break;
+						}
+						break;
+					case 7:
+						next;
+						mes .NPCname$;
+						mes "กรุณาใส่ Item ID:";
+						input @set_item5;
+						next;
+						if (@set_item5 == 0) {
+							mes .NPCname$;
+							cutin "prm_4",2;
+							mes "ขอโทษค่ะ";
+							mes "กรุณาใส่ตัวเลขอื่นนอกจาก 0 ด้วยค่ะ.";
+							break;
+						}
+						mes .NPCname$;
+						mes "กรุณาใส่ จำนวน Item:";
+						input @set_amount5;
+						next;
+						if(@set_amount5 == 0 || @set_amount5 >= 30000) {
+							mes .NPCname$;
+							cutin "prm_4",2;
+							mes "ขอโทษค่ะ";
+							mes "กรุณาใส่ตัวเลขอื่นนอกจาก";
+							mes "0 และไม่เกิน 30000 ด้วยค่ะ.";
+							break;
+						}
+						break;
+					case 8:
+						next;
+						for(set @i, 0; @i < .Code_Length; set @i, @i+1)
+						{
+							set @random_char, rand(0,(getarraysize(.coupon_code$)-1));
+							set @new_coupon$, @new_coupon$ + .coupon_code$[@random_char];
+						}
+							if(.Code_Type == 1) { set @new_coupon$, md5(@new_coupon$); }
+							cutin "prm_3",2;
+							mes .NPCname$;
+							mes "สร้าง Item Code เรียบร้อยแล้วค่ะ.";
+							query_sql "INSERT INTO `coupons` (`code`,`zeny`,`item1`,`amount1`,`item2`,`amount2`,`item3`,`amount3`,`item4`,`amount4`,`item5`,`amount5`) VALUES ('"+@new_coupon$+"',"+@set_zeny+","+@set_item1+","+@set_amount1+","+@set_item2+","+@set_amount2+","+@set_item3+","+@set_amount3+","+@set_item4+","+@set_amount4+","+@set_item5+","+@set_amount5+")";
+							set @new_coupon$, "";
+							close2;
+							cutin "",255;
+							end;	
+				}
+			}
+			close2;
+			cutin "",255;
+			end;
+			
+		case 3:
+			cutin "prm_2",2;
+			mes .NPCname$;
+			mes "กรุณาใส่ Item Code ที่ท่านต้องการจะลบ:";
+			input @my_code$;
+			next;
+			query_sql "SELECT `code`,`zeny`,`item1`,`amount1`,`item2`,`amount2`,`item3`,`amount3`,`item4`,`amount4`,`item5`,`amount5` FROM `coupons`", .@load_code$,.@load_zeny,.@load_item1,.@load_amount1,.@load_item2,.@load_amount2,.@load_item3,.@load_amount3,.@load_item4,.@load_amount4,.@load_item5,.@load_amount5;
+			for (set @i, 0; @i < getarraysize(.@load_code$); set @i, @i+1)
+			{
+				if (@my_code$ == .@load_code$[@i])
+				{
+					query_sql "DELETE FROM `coupons` WHERE `code`='"+@my_code$+"'";
+					cutin "prm_3",2;
+					mes .NPCname$;
+					mes "ทำการลบ Item Code ดังกล่าวเรียบร้อยแล้วค่ะ.";
+					close2;
+					cutin "",255;
+					end;
+				}
+			}
+			cutin "prm_4",2;
+			mes .NPCname$;
+			mes "ขอโทษค่ะ";
+			mes "นี่ไม่ใช้ Item Code ที่ถูกต้อง.";
+			close2;
+			cutin "",255;
+			end;
+				
+		case 4:
+			cutin "prm_3",2;
+			mes .NPCname$;
+			mes "โชคดีนะ.";
+			close2;
+			cutin "",255;
+			end;
+	}
+	cutin "",255;
+	end;
+
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	//waitingroom "ใช้ไอเทมโค้ด",0;
+	// ตั้งค่าประเภทโค้ด. (0 = ปกติ | 1 = MD5-Hash)
+	.Code_Type = 0;
+	// ตั้งค่าความยาวของโค้ด x ตัวอักษร.
+	.Code_Length = 10;
+	// ตั้งค่า เลเวลขั้นต่ำของ GM เพื่อเพิ่มโค้ดใหม่.
+	.GMlvl = 99;
+	setarray .coupon_code$[0],"a","b","c","d","e","f","g","h","i","j","k","l",
+							  "m","n","o","p","q","r","s","t","u","v","w","x",
+							  "y","z","0","1","2","3","4","5","6","7","8","9";					  
+	// Create SQL Table.
+	query_sql "CREATE TABLE IF NOT EXISTS `coupons` (`code` TINYTEXT NOT NULL, `zeny` INT NOT NULL, `item1` INT NOT NULL, `amount1` INT NOT NULL,  `item2` INT NOT NULL, `amount2` INT NOT NULL,  `item3` INT NOT NULL, `amount3` INT NOT NULL,  `item4` INT NOT NULL, `amount4` INT NOT NULL,  `item5` INT NOT NULL, `amount5` INT NOT NULL, INDEX `code` (`code`(32)) ) ENGINE=MyISAM";
+	query_sql "CREATE TABLE IF NOT EXISTS `coupons_log` (`account_id` INT NOT NULL, `code` TINYTEXT NOT NULL, `zeny` INT NOT NULL, `item1` INT NOT NULL, `amount1` INT NOT NULL, `item2` INT NOT NULL, `amount2` INT NOT NULL, `item3` INT NOT NULL, `amount3` INT NOT NULL, `item4` INT NOT NULL, `amount4` INT NOT NULL, `item5` INT NOT NULL, `amount5` INT NOT NULL, `date` TINYTEXT NOT NULL, INDEX `code` (`code`(32)) ) ENGINE=MyISAM";
+	end;
+}

@@ -1,0 +1,26 @@
+-	exbartershop	#exchange_boss	-1
+
+louyang,229,102,4	script	exchange_boss#With out equipment	554,{
+	callshop "#exchange_boss",1;
+	end;
+
+OnInit:
+	waitingroom "exchange_boss",0;
+	npcshopadditem "#exchange_boss",41002,-1,1000,2234,1,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#exchange_boss",41002,-1,1000,2235,1,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#exchange_boss",41002,-1,1000,5002,1,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#exchange_boss",41002,-1,1000,5081,1,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#exchange_boss",41002,-1,1000,2256,1,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#exchange_boss",41002,-1,1000,5007,1,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#exchange_boss",41002,-1,1000,2258,1,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#exchange_boss",41002,-1,1000,5019,1,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#exchange_boss",41002,-1,1000,2254,1,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#exchange_boss",41002,-1,1000,2268,1,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#exchange_boss",41002,-1,1000,2249,1,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#exchange_boss",41002,-1,1000,2274,1,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#exchange_boss",41002,-1,1000,2246,1,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#exchange_boss",41002,-1,1000,5053,1,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	
+	
+	end;
+}

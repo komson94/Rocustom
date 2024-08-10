@@ -1,0 +1,754 @@
+//===== rAthena Script =======================================
+//= Warps
+//============================================================
+//haunt_e,151,200,0	warp	haunt01	1,1,haunt_h,22,158
+haunt_h,19,155,0	warp	haunt02	1,1,haunt_e,151,194
+haunt_h,172,82,0	warp	haunt03	1,1,haunt_h,191,105
+haunt_h,186,105,0	warp	haunt04	1,1,haunt_h,169,82
+1@haunt,172,82,0	warp	haunt05	1,1,1@haunt,191,105
+1@haunt,186,105,0	warp	haunt06	1,1,1@haunt,169,82
+
+//= Mapflags
+//============================================================
+haunt_e	mapflag	town
+haunt_e	mapflag	nopenalty
+haunt_e	mapflag	noicewall
+haunt_e	mapflag	nobranch
+
+haunt_h	mapflag	nomemo
+haunt_h	mapflag	nosave	SavePoint
+1@haunt	mapflag	nomemo
+1@haunt	mapflag	nosave	SavePoint
+
+-	script	h_darkness	-1,{
+OnInit:
+	setmapflag "1@haunt", MF_FOG;
+	end;
+}
+
+//= Monster
+//============================================================
+haunt_h,0,0	monster	Ghost Book	30043,10,5000
+haunt_h,0,0	monster	Dancer Isabelle	30025,10,5000
+haunt_h,0,0	monster	Dancer Michel	30026,10,5000
+haunt_h,0,0	monster	Madame Chiffon	30064,10,5000
+
+1@haunt,0,0	monster	Ghost Book	30043,5,5000
+1@haunt,0,0	monster	Dancer Isabelle	30025,5,5000
+1@haunt,0,0	monster	Dancer Michel	30026,5,5000
+1@haunt,0,0	monster	Madame Chiffon	30064,5,5000
+1@haunt,0,0	monster	Crow	30022,5,5000
+1@haunt,0,0	monster	Soul Taker	30118,5,5000
+1@haunt,0,0	monster	Tritch	30134,5,5000
+1@haunt,0,0	monster	Dark Hollow	30027,5,5000
+//1@haunt,0,0	boss_monster	Beast Vincento	30145,1,7200000,600000,1
+
+//= NPC
+//============================================================
+haunt_e,151,182,5	script	Kafra Employee::kaf_haunt	791,{
+	callfunc "F_Kafra",1,2,1,150,0;
+	savepoint "haunt_e",151,158,1,1;
+	callfunc "F_KafEnd",1,1,"ที่ Haunted Mansion Garden";
+}
+
+haunt_e,164,201,5	script	หุ่นทดลอง#1	30026,{
+
+OnEmot:
+	emotion ET_GO;
+	end;
+}
+
+haunt_e,165,202,5	script	หุ่นทดลอง#2	30025,{
+
+OnEmot:
+	emotion ET_GO;
+	end;
+}
+
+haunt_e,175,192,3	script	ทหารยาม#he_1	4_M_KY_SOLD,{}
+haunt_e,131,192,5	script	ทหารยาม#he_2	4_M_KY_SOLD,{}
+
+
+
+haunt_e,121,189,5	script	Reidin Kurs#he	4_M_REIDIN_KURS,{
+	disable_items;
+	if (isbegin_quest(100000) == 0) && (BaseLevel >= 200) {
+		mes .NPCname$;
+		mes "ข้าได้ยินมาว่ามีนักผจญภัยจำนวนมาก";
+		mes "ที่มาสำรวจ ณ คฤหาสน์หลังนี้แล้ว";
+		mes "ได้หายตัวไปอย่างลึกลับ.";
+		next;
+		mes .NPCname$;
+		mes "โดยที่ไม่มีใครรู้ว่าเกิดอะไรขึ้น";
+		mes "ภายในคฤหาสน์หลังนี้";
+		mes "และก็ไม่รู้แน่ชัดว่านักผจญภัยพวกนั้น";
+		mes "จะเป็นอย่างไรบ้าง.";
+		next;
+		mes .NPCname$;
+		mes "ซึ่งข้าเองก็ได้ส่งคนของข้า";
+		mes "มาเพื่อตรวจสอบที่คฤหาสน์หลังนี้ด้วย";
+		mes "ถึงสองครั้ง แต่ก็คว้าน้ำเหลว";
+		next;
+		mes .NPCname$;
+		mes "ทีมแรกที่ถูกส่งไปนั้น";
+		mes "ไม่ได้กลับมาอีกเลย";
+		mes "ส่วนทีมที่สองนั้น ไม่สามารถเข้าไปข้างในได้";
+		mes "เนื่องจากประตูมันถูกล็อคเอาไว้อย่างแน่นหนา";
+		mes "และก็ไม่มีทางอื่นที่สามารถเข้าไปได้.";
+		next;
+		mes .NPCname$;
+		mes "ข้าจึงต้องมาตรวจสอบที่นี่ด้วยตัวเอง";
+		mes "แต่ตัวข้าเองก็ยังต้องพึ่งพานักผจญภัย";
+		mes "ที่มีความสามารถมากพอที่จะเข้าไปยัง";
+		mes "ภายในคฤหาสน์หลังนี้ได้อยู่.";
+		next;
+		mes .NPCname$;
+		mes "เจ้าเองก็เป็นนักผจญภัยไม่ใช่รึ !!";
+		mes "เจ้าก็ดูจะแข็งแกร่งพอที่จะช่วยข้าได้นะ";
+		mes "เจ้าจะช่วยรับคำขอของข้าได้หรือไม่?";
+		mes "แน่นอนว่า ข้ามีรางวัลตอบแทนให้เจ้าด้วย.";
+		next;
+		switch( select( 
+			"ข้าไม่ว่างหลอก",
+			"ข้าจะช่วยเอง" ))
+		{
+			case 1:
+				mes .NPCname$;
+				mes "ถ้าเจ้าไม่ว่างก็ไม่เป็นไร";
+				mes "ดูเหมือนข้าจะต้องมองหา";
+				mes "คนที่จะช่วยข้าต่อไปสินะ.";
+				emotion ET_OHNO;
+				close;
+				
+			case 2:
+				mes .NPCname$;
+				mes "โอ้ เยี่ยมเลย";
+				mes "ถ้าเจ้าจะช่วยข้าล่ะก็";
+				mes "แน่นอนว่าถ้าเสร็จเรื่องนี้แล้ว";
+				mes "ข้าจะตอบแทนเจ้าแน่.";
+				next;
+				mes .NPCname$;
+				mes "เจ้าช่วยหาทางเข้าไปภายในคฤหาสน์หลังนี้";
+				mes "แล้วช่วยตรวจสอบเกี่ยวกับมันที";
+				mes "ว่ามีอะไรเกิดขึ้นภายในนั้น.";
+				next;
+				mes .NPCname$;
+				mes "อ่อ แล้วก็อย่าลืม";
+				mes "ข้าอยากให้เจ้าหาคนที่หายไปด้วย";
+				mes "หากว่าพวกเข้านั้นยังมีชีวิตอยู่";
+				mes "ขอให้เจ้าโชคดี.";
+				setquest 100000;
+				close;
+		}
+	}
+	if (isbegin_quest(100000) == 1) && (BaseLevel >= 200) {
+		mes .NPCname$;
+		mes "เจ้ายังหาทางเข้าไปข้างในไม่ได้อีกหรอ";
+		mes "ยังไงก็ระวังตัวเอาไว้ด้วยล่ะ";
+		mes "ข้าจะรอรายงานจากเจ้าอยู่ตรงนี้.";
+		close;
+	}
+	mes .NPCname$;
+	mes "ข้ามาที่นี่เพื่อตรวจสอบหลายๆอย่าง";
+	mes "เกี่ยวกับคฤหาสน์หลังนี้.";
+	close;
+
+OnInit:
+	.NPCname$ = "[^0000FF Reidin Kurs ^000000]";
+	questinfo QTYPE_QUEST, QMARK_NONE, "isbegin_quest(100000) == 0 && BaseLevel >= 200";
+	end;
+}
+
+haunt_e,183,195,3	script	ต้นไม้#he	HIDDEN_NPC,{
+	disable_items;
+	if (isbegin_quest(100000) == 1) && (isbegin_quest(100001) == 0) && (countitem(.OldKeyPart) == 0) {
+		mes "ตรวจพบรูขนาดเล็ก !!";
+		next;
+		switch( select( "ตรวจสอบมัน" ))
+		{
+			case 1:
+				setquest 100001;
+				mes "พบ ^0000FF"+getitemname(.OldKeyPart)+"^000000 จำนวน ^0000FF"+(.OldKeyAmount)+"^000000 ชิ้น !!";
+				specialeffect 18;
+				getitem .OldKeyPart,.OldKeyAmount;
+				close;
+		}
+	}
+	if (isbegin_quest(100001) == 1) || (isbegin_quest(100001) == 2) {
+		mes "ตรวจพบรูขนาดเล็ก !!";
+		next;
+		switch( select( "ตรวจสอบมัน" ))
+		{
+			case 1:;
+				mes "^FF0000ไม่พบอะไร !!^000000";
+				close;
+		}
+	}
+	end;
+	
+OnInit:
+	.OldKeyPart = 10000001;
+	.OldKeyAmount = 1;
+	questinfo QTYPE_QUEST, QMARK_NONE, "isbegin_quest(100000) == 1 && isbegin_quest(100001) == 0";
+	end;
+}
+
+haunt_e,151,202,0	script	Haunted Mansion Door	HIDDEN_NPC,{
+	disable_items;
+	mes "^FF0000ประตูถูกล็อคไว้อยู่^000000";
+	if (isbegin_quest(100000) == 1) && (isbegin_quest(100001) == 1) && (countitem(.OldKeyPart) == .OldKeyAmount) {
+		next;
+		switch( select( "ใช้ ^0000FF"+getitemname(.OldKeyPart)+"^000000 เพื่อเปิดประตู" ))
+		{
+			case 1:		
+				completequest 100001;
+				mes "ใช้ ^3355FF"+getitemname(.OldKeyPart)+"^000000";
+				mes "ทำการไขประตูที่ถูกล็อคไว้ !!";
+				specialeffect EF_WINDHIT;
+				next;
+				mes "^FF0000กุญแจเสียหาย !!^000000";
+				mes "^FF0000ไม่สามารถเปิดประตูได้ !!^000000";
+				delitem .OldKeyPart,.OldKeyAmount;
+				setquest 100002;
+				end;
+		}
+	}
+	else if (isbegin_quest(100000) == 1) && (isbegin_quest(100002) == 2) && (countitem(.KeyPart) == .KeyAmount) {
+		next;
+		switch( select( "ใช้ ^0000FF"+getitemname(.KeyPart)+"^000000 เพื่อเปิดประตู" ))
+		{
+			case 1:
+				mes "ใช้ ^3355FF"+getitemname(.KeyPart)+"^000000";
+				mes "ทำการไขประตูที่ถูกล็อคไว้ !!";
+				specialeffect EF_WINDHIT;
+				next;
+				mes "^3355FFประตูได้ถูกเปิดออกแล้ว !!^000000";
+				delitem .KeyPart,.KeyAmount;
+				close2;
+				warp "haunt_h",22,158;
+				end;
+		}
+	}
+	else if (countitem(.KeyPart) >= .KeyAmount) {
+		next;
+		switch( select( "ใช้ ^0000FF"+getitemname(.KeyPart)+"^000000 เพื่อเปิดประตู" ))
+		{
+			case 1:
+				mes "ใช้ ^3355FF"+getitemname(.KeyPart)+"^000000";
+				mes "ทำการไขประตูที่ถูกล็อคไว้ !!";
+				specialeffect EF_WINDHIT;
+				next;
+				mes "^3355FFประตูได้ถูกเปิดออกแล้ว !!^000000";
+				specialeffect EF_BOWLINGBASH;
+				donpcevent "HauntedMansionWarp::OnWarp";
+				delitem .KeyPart,.KeyAmount;
+				end;
+		}
+	}
+	end;
+	
+OnInit:
+	.OldKeyPart = 10000001;
+	.OldKeyAmount = 1;
+	.KeyPart = 10000002;
+	.KeyAmount = 1;
+	questinfo QTYPE_QUEST, QMARK_NONE, "isbegin_quest(100000) == 1 && isbegin_quest(100001) == 1 && countitem(10000001) == 1";
+	questinfo QTYPE_QUEST, QMARK_NONE, "isbegin_quest(100000) == 1 && isbegin_quest(100002) == 2 && countitem(10000002) == 1";
+	questinfo QTYPE_QUEST2, QMARK_NONE, "countitem(10000002) >= 1";
+	end;
+}
+
+haunt_e,168,203,4	script	ชายแก่ปริศนา#he_1	4_M_OLDSCHOLAR,{
+	disable_items;
+	if (isbegin_quest(100000) == 1) && (isbegin_quest(100002) == 1) && (BaseLevel >= 200) {
+		mes .NPCname$;
+		mes "เฮ้ !! พวกเจ้าเป็นใครกัน";
+		mes "แล้วมาที่นี่ทำไม?";
+		next;
+		switch( select( "ข้าแค่มาเดินเล่นเท่านั้น","ข้าพบกุญแจเก่าๆอยู่ที่ต้นไม้นั่น" ))
+		{
+			case 1:
+				mes .NPCname$;
+				mes "นี่เจ้าคิดจะเข้ามาเดินเล่นในที่ของคนอื่นเนี่ยนะ";
+				mes "เจ้ามันช่างโง่เขลายิ่งนัก.";
+				next;
+				mes .NPCname$;
+				mes "ไปซะ !!";
+				mes "ที่นี่ไม่ใช่ที่ให้เจ้ามาเดินเล่น.";
+				close2;
+				donpcevent "หุ่นทดลอง#1::OnEmot";
+				donpcevent "หุ่นทดลอง#2::OnEmot";
+				sleep2 500;
+				specialeffect2 EF_WINDHIT;
+				heal -99999999,0;
+				end;
+				
+			case 2:
+				mes .NPCname$;
+				mes "เจ้าบอกว่าเจอกุญแจเก่าๆอยู่ที่ต้นไม้งั้นรึ";
+				mes "แล้วไหนล่ะกุญแจที่เจ้าว่า.";
+				next;
+				switch( select( "ข้าทำมันพังไปแล้ว" ))
+				{
+					case 1:
+						mes .NPCname$;
+						mes "งั้นรึ กลายเป็นแค่เศษเหล็กไปแล้วสินะ";
+						mes "กุญแจนั่น เป็นกุญแจสำหรับไขเข้าสู่คฤหาสน์หลังนี้";
+						mes "แต่ดูแล้วมันคงจะเก่าเกินไป";
+						mes "และน่าจะเป็นเพียงกุญแจสำรองสำหรับสาวใช้เท่านั้น.";
+						next;
+						mes .NPCname$;
+						mes "จริงสิ ข้าลืมแนะนำตัวไปเลย";
+						mes "ข้าชื่อ ^0000FFCristian^000000";
+						mes "ข้าเป็นหัวหน้าพ่อบ้านของคฤหาสน์หลังนี้.";
+						next;
+						mes .NPCname$;
+						mes "แล้วเจ้ามาที่นี่ทำไม?";
+						next;
+						switch( select( "ข้ามาตามหาคนที่หายไป" ))
+						{
+							case 1:
+								mes .NPCname$;
+								mes "อ่อ อย่างนี้เองสินะ";
+								mes "แต่ข้าคงบอกอะไรกับเจ้ามากไม่ได้";
+								mes "เพราะมันคือคำสั่งของนายท่าน.";
+								next;
+								mes .NPCname$;
+								mes "หากเจ้าต้องการที่จะเข้าไปข้างในคฤหาสน์";
+								mes "เจ้าคงต้องหาทางเองแล้วล่ะ";
+								mes "ข้าคงช่วยอะไรเจ้าไม่ได้.";
+								completequest 100002;
+								setquest 100003;
+								close;
+						}
+				}
+				end;
+		}
+	}
+	if (isbegin_quest(100002) == 2) {
+		mes .NPCnameT$;
+		mes "หน้าที่ของข้าคือดูแลไม่ให้ใคร";
+		mes "เข้าก่อความวุ่นวายแก่คฤหาสน์หลังนี้";
+		mes "และคอยดูแลคนงานชองที่นี่.";
+		close;
+	}
+	.NPCname$ = "[^0000FF ชายแก่ปริศนา ^000000]";
+	mes "เจ้าคนน่าสงสัย ออกไปซะ !!";
+	close2;
+	donpcevent "หุ่นทดลอง#1::OnEmot";
+	donpcevent "หุ่นทดลอง#2::OnEmot";
+	sleep2 500;
+	specialeffect2 EF_WINDHIT;
+	heal -99999999,0;
+	end;
+
+OnInit:
+	.NPCname$ = "[^0000FF ชายแก่ปริศนา ^000000]";
+	.NPCnameT$ = "[^0000FF Cristian ^000000]";
+	questinfo QTYPE_QUEST, QMARK_NONE, "isbegin_quest(100000) == 1 && isbegin_quest(100002) == 1 && BaseLevel >= 200";
+	end;
+}
+
+haunt_e,170,201,3	script	สาวใช้#he01	4_ALICE,{
+	disable_items;
+	if (isbegin_quest(100001) == 2) && (isbegin_quest(100002) == 2) && (isbegin_quest(100003) == 1) {
+		mes .NPCname$;
+		mes "สวัสดี เจ้าเป็นนักผจญภัยหรอ?";
+		mes "ข้าไม่เคยเห็นเจ้ามาก่อนเลย";
+		mes "เจ้าเพิ่งเคยมาที่นี่สินะ.";
+		next;
+		mes .NPCname$;
+		mes "ข้าเห็นนักผจญมากมาย";
+		mes "ต่างก็พากันมาที่นี่";
+		mes "ข้าเองก็ไม่เข้าใจว่าทำไมพวกนั้น";
+		mes "ถึงอยากจะมาที่นี่กันนักนะ.";
+		next;
+		switch( select( "ลือกันว่าที่นี่คือคฤหาสน์ผีสิง" ))
+		{
+			case 1:
+				mes .NPCname$;
+				mes "เจ้าคิดเช่นนั้นหรอ?";
+				mes "หลังจากที่เจ้าได้พูดคุยกับ";
+				mes "หัวหน้าพ่อบ้านไปแล้วน่ะ.";
+				next;
+				mes .NPCname$;
+				mes "ถ้าให้ข้าเดาล่ะก็";
+				mes "คงเป็นงานอดิเรกของน่ายท่าน";
+				mes "ซะมากกว่าที่ทำให้คนภายนอกต่างหวาดกลัว.";
+				next;
+				mes .NPCname$;
+				mes "ข้าไม่รู้หลอกว่าคนภายนอกจะคิดอย่างไร";
+				mes "แต่นายท่านเป็นคนที่ดูลึกลับมาก";
+				mes "แต่กลับกัน นายท่านเองก็ใจดีกับทุกคน";
+				mes "ในคฤหาสน์หลังนี้ เช่นกัน.";
+				next;
+				mes .NPCname$;
+				mes "อุ๊ป... !!";
+				mes "นี่ข้า เผลอพูดอะไรออกไปกันเนี่ย.";
+				next;
+				mes .NPCname$;
+				mes "ตอนนี้ข้ากำลังปวดหัวที่กุญแจของข้าหายไปอยู่นะ";
+				mes "ข้าจะทำยังไงดีเนี่ย";
+				emotion ET_CRY;
+				next;
+				mes .NPCname$;
+				mes "นั่น....นั่นมัน....!!";
+				mes "กุญแจของข้า...";
+				mes "ทำไมมันถึงพังแบบนี้กันล่ะ";
+				emotion ET_HUK;
+				next;
+				mes .NPCname$;
+				mes "แล้วทำไมถึงไปอยู่กับเจ้าได้?";
+				mes "ข้าจำได้ว่าทำมันหายไป";
+				mes "ไม่คิดเลยว่าจะอยู่กับเจ้า";
+				mes "นี่เจ้า ขโมยไปงั้นหรอ?";
+				emotion ET_STARE;
+				next;
+				switch( select( "ใช่ ข้าขโมยมันไปเอง","ข้าพบมันที่ต้นไม้นั่น" ))
+				{
+					case 1:
+						mes .NPCname$;
+						mes "หืม...เป็นเจ้าเองสินะ";
+						mes "ที่ขโมยกุญแจของข้าไป";
+						mes "ทำให้ข้าต้องโดนหัวหน้าพ่อบ้านดุ.";
+						next;
+						mes .NPCname$;
+						mes "ถ้าเป็นอย่างนั้น";
+						mes "เจ้าก็อย่าอยู่เลย";
+						mes "ตายซะเถอะ !!";
+						close2;
+						donpcevent "หุ่นทดลอง#1::OnEmot";
+						donpcevent "หุ่นทดลอง#2::OnEmot";
+						sleep2 500;
+						specialeffect2 EF_WINDHIT;
+						heal -99999999,0;
+						end;
+						
+					case 2:
+						mes .NPCname$;
+						mes "เอ๊ะ...ทำไมถึงไปอยู่ที่นั่นได้ล่ะ";
+						mes "แถมยังพังไปแล้วซะด้วยสิ";
+						mes "แล้วข้าจะเข้าออกคฤหาสน์นี้ยังไงกัน.";
+						next;
+						mes .NPCname$;
+						mes "จริงสิ...นี่ข้าลืมไปได้ยังไง";
+						mes "ยังมีท่านช่างฝีมืออยู่นี่นา.";
+						next;
+						mes .NPCname$;
+						mes "ถ้างั้น.....";
+						mes "ข้าขอให้เจ้าช่วยไปหาท่านช่างฝีมือ";
+						mes "และทำกุญแจดอกใหม่มาให้ข้าที";
+						next;
+						mes .NPCname$;
+						mes "แน่นอนว่าข้าจะให้สำรองอีกอัน";
+						mes "กับเจ้าด้วย แบบนี้ดีเลยจริงไหม?";
+						mes "เจ้าจะสามารถเข้าไปถายใน";
+						mes "คฤหาสน์หลังนี้ได้เลยนะ.";
+						next;
+						mes .NPCname$;
+						mes "เอาล่ะ ช่วยข้าหน่อยล่ะกันนะ.";
+						completequest 100003;
+						setquest 100004;
+						close;	
+				}	
+		}
+	}
+	if (isbegin_quest(100004) == 1) && (countitem(.QKeyPart) == .QKeyAmount) {
+		mes .NPCname$;
+		mes "เจ้ากลับมาแล้ว !!";
+		mes "ข้ารอเจ้ามาสักพักแล้ว";
+		mes "ไหนๆ ข้าขอดูกุญแจดอกใหม่ของข้าหน่อยสิ.";
+		next;
+		mes .NPCname$;
+		mes "โอ้....ว้าว!";
+		mes "มันสวยมาก...";
+		mes "มันวาววับอะไรแบบนี้";
+		mes "ข้าล่ะ ชอบมันมากจริงๆ.";
+		emotion ET_CHUP;
+		next;
+		delitem .QKeyPart,.QKeyAmount;
+		mes .NPCname$;
+		mes "เอาล่ะ ขอบใจเจ้ามากนะ";
+		mes "ที่ช่วยทำตามคำขอของข้าน่ะ";
+		mes "เอานี่ รางวัลตอบแทนของเจ้า.";
+		next;
+		mes .NPCname$;
+		mes "โชคดีนะ.";
+		getexp 500000,500000;
+		getitem .KeyPart,.KeyAmount;
+		completequest 100004;
+		close;
+	}
+	end;
+
+OnInit:
+	.QKeyPart = 10000003;
+	.QKeyAmount = 2;
+	.KeyPart = 10000002;
+	.KeyAmount = 1;
+	.NPCname$ = "[^0000FF สาวใช้ ^000000]";
+	questinfo QTYPE_QUEST, QMARK_NONE, "isbegin_quest(100001) == 2 && isbegin_quest(100002) == 2 && isbegin_quest(100003) == 1 && BaseLevel >= 200";
+	questinfo QTYPE_QUEST2, QMARK_NONE, "isbegin_quest(100004) == 1 && countitem(10000003) == 2";
+	end;
+}
+
+haunt_e,183,207,4	script	ช่างฝีมือลึกลับ#he01	4_M_OILMAN,{
+	disable_items;
+	if (isbegin_quest(100004) == 1) && (isbegin_quest(100005) == 0) {
+		mes .NPCname$;
+		mes "โอ้...!";
+		mes "ข้าไม่เคยเห็นหน้าเจ้ามาก่อนเลย";
+		mes "นักผจญภัย?";
+		next;
+		mes .NPCname$;
+		mes "เอาล่ะเจ้ามาหาข้าทำไมกัน?";
+		next;
+		switch( select( "เปล่า ไม่มีอะไร","ข้าต้องการทำกุญแจ" ))
+		{
+			case 1:
+				mes .NPCname$;
+				mes "ถ้าไม่มีอะไรก็ไปไกลๆข้าซะ!";
+				mes "เสียเวลาจริงๆ.";
+				close;
+				
+			case 2:
+				mes .NPCname$;
+				mes "โอ้...!";
+				mes "เจ้าอยากทำกุญแจงั้นรึ?";
+				mes "ได้สิ แต่เจ้าต้องหาวัตถุดิบมาให้ข้าก่อน.";
+				next;
+				mes .NPCname$;
+				mes "เอาล่ะ ข้าจะบอกเกี่ยวกับ";
+				mes "วัตถุดิบต่างๆให้กับเจ้า";
+				mes "เมื่อเจ้าหามาได้ครบเมื่อไร";
+				mes "ค่อยกลับมาหาข้าละกัน.";
+				setquest 100005;
+				close;
+		}
+	}
+	if (isbegin_quest(100005) == 1) {
+		if (countitem(.ITEMReq01) >= .ITEMAmount01) && (countitem(.ITEMReq02) >= .ITEMAmount02) && (countitem(.ITEMReq03) >= .ITEMAmount03) && (countitem(.ITEMReq04) >= .ITEMAmount04) {
+			mes .NPCname$;
+			mes "โอ้...!";
+			mes "เยี่ยมเลย";
+			mes "เจ้าหามาได้ครบแล้ว";
+			next;
+			mes .NPCname$;
+			mes "เอาล่ะ";
+			mes "ข้าจะเริ่มทำกุญแจแล้ว";
+			next;
+			delitem .ITEMReq01,.ITEMAmount01;
+			delitem .ITEMReq02,.ITEMAmount02;
+			delitem .ITEMReq03,.ITEMAmount03;
+			delitem .ITEMReq04,.ITEMAmount04;
+			mes .NPCname$;
+			mes "...";
+			specialeffect 12;
+			next;
+			mes .NPCname$;
+			mes "...";
+			mes ".....";
+			specialeffect 101;
+			next;
+			mes .NPCname$;
+			mes "...";
+			mes ".....";
+			mes "........";
+			specialeffect 91;
+			next;
+			mes .NPCname$;
+			mes "เรียบร้อย !!";
+			mes "นี่คือกุญแจของเจ้า";
+			mes "รับไปสิ";
+			specialeffect 18;
+			getitem .QKeyPart,.QKeyAmount;
+			completequest 100005;
+			close;
+		}
+		mes .NPCname$;
+		mes "ถ้าเจ้ายังหาวัตถุดิบมาได้ไม่ครบ";
+		mes "ข้าก็ไม่สามารถทำกุญแจให้กับเจ้าได้.";
+		close;
+	}
+	if (isbegin_quest(100006) == 1) {
+		if (countitem(.ITEMReq01) >= .ITEMAmount01) && (countitem(.ITEMReq02) >= .ITEMAmount02) && (countitem(.ITEMReq03) >= .ITEMAmount03) && (countitem(.ITEMReq04) >= .ITEMAmount04) {
+			mes .NPCname$;
+			mes "โอ้...!";
+			mes "เยี่ยมเลย";
+			mes "เจ้าหามาได้ครบแล้ว";
+			next;
+			mes .NPCname$;
+			mes "เอาล่ะ";
+			mes "ข้าจะเริ่มทำกุญแจแล้ว";
+			next;
+			delitem .ITEMReq01,.ITEMAmount01;
+			delitem .ITEMReq02,.ITEMAmount02;
+			delitem .ITEMReq03,.ITEMAmount03;
+			delitem .ITEMReq04,.ITEMAmount04;
+			mes .NPCname$;
+			mes "...";
+			specialeffect 12;
+			next;
+			mes .NPCname$;
+			mes "...";
+			mes ".....";
+			specialeffect 101;
+			next;
+			mes .NPCname$;
+			mes "...";
+			mes ".....";
+			mes "........";
+			specialeffect 91;
+			next;
+			mes .NPCname$;
+			mes "เรียบร้อย !!";
+			mes "นี่คือกุญแจของเจ้า";
+			mes "รับไปสิ";
+			specialeffect 18;
+			getitem .KeyPart,.KeyAmount;
+			completequest 100006;
+			close;
+		}
+		mes .NPCname$;
+		mes "ถ้าเจ้ายังหาวัตถุดิบมาได้ไม่ครบ";
+		mes "ข้าก็ไม่สามารถทำกุญแจให้กับเจ้าได้.";
+		close;
+	}
+	if (isbegin_quest(100005) == 2) {
+		mes .NPCname$;
+		mes "โอ้...เจอกันอีกแล้วนะ";
+		mes "เจ้ามาหาข้าทำไมกัน?";
+		next;
+		switch( select( "ทำกุญแจ [^FF0000เควส^000000] ","ใช้งานร้านค้า" ))
+		{
+			case 1:
+				erasequest 100006;
+				mes .NPCname$;
+				mes "โอ้...!";
+				mes "เจ้าอยากทำกุญแจงั้นรึ?";
+				mes "ได้สิ แต่เจ้าต้องหาวัตถุดิบมาให้ข้าก่อน.";
+				next;
+				mes .NPCname$;
+				mes "เอาล่ะ ข้าจะบอกเกี่ยวกับ";
+				mes "วัตถุดิบต่างๆให้กับเจ้า";
+				mes "เมื่อเจ้าหามาได้ครบเมื่อไร";
+				mes "ค่อยกลับมาหาข้าละกัน.";
+				setquest 100006;
+				close;
+				
+			case 2:
+				close2;
+				callshop "hauntS_SHOP";
+				end;
+		}
+	}
+	end;
+
+OnInit:
+	.ITEMReq01 = 999;
+	.ITEMAmount01 = 50;
+	.ITEMReq02 = 998;
+	.ITEMAmount02 = 100;
+	.ITEMReq03 = 726;
+	.ITEMAmount03 = 2;
+	.ITEMReq04 = 938;
+	.ITEMAmount04 = 100;
+	.KeyPart = 10000002;
+	.KeyAmount = 1;
+	.QKeyPart = 10000003;
+	.QKeyAmount = 2;
+	.NPCname$ = "[^0000FF ช่างฝีมือลึกลับ ^000000]";
+	questinfo QTYPE_QUEST, QMARK_NONE, "isbegin_quest(100005) == 0 && isbegin_quest(100003) == 2 && isbegin_quest(100004) == 1 && BaseLevel >= 200";
+	questinfo QTYPE_QUEST2, QMARK_NONE, "isbegin_quest(100005) == 1 && countitem(999) >= 50 && countitem(998) >= 100 && countitem(726) >= 2 && countitem(938) >= 100";
+	end;
+}
+-	cashshop	hauntS_SHOP	-1,10000002:50
+
+haunt_e,180,209,4	script	ช่างตีเหล็ก#he01	4_M_DWARF,{
+}
+
+haunt_e,182,209,4	script	#he011	4_STEELBOX,{}
+haunt_e,178,207,4	script	#he012	4_BONFIRE,{}
+
+
+haunt_e,151,200,1	script	HauntedMansionWarp	WARPNPC,2,2,{
+
+OnInit:
+	disablenpc "HauntedMansionWarp";
+	end;
+
+OnTouch_:
+	warp "haunt_h",22,158;
+	end;
+
+OnWarp:
+	initnpctimer;
+	enablenpc "HauntedMansionWarp";
+	disablenpc "Haunted Mansion Door";
+	mapannounce "haunt_e", "ระบบ: ทางเข้าสู่ คฤหาสน์ผีสิง ได้ถูกเปิดออกแล้ว และจะเปิดอยู่เป็นเวลา 1 นาที !!",bc_map,"0xFFCE00";
+	end;
+	
+OnTimer50000:
+	mapannounce "haunt_e", "ระบบ: ทางเข้าสู่ คฤหาสน์ผีสิง จะถูกปิดลงในอีก 10 วินาที !!",bc_map,"0xFFCE00";
+	end;
+	
+OnTimer51000:
+	mapannounce "haunt_e", "ระบบ: ทางเข้าสู่ คฤหาสน์ผีสิง จะถูกปิดลงในอีก 9 วินาที !!",bc_map,"0xFFCE00";
+	end;
+
+OnTimer52000:
+	mapannounce "haunt_e", "ระบบ: ทางเข้าสู่ คฤหาสน์ผีสิง จะถูกปิดลงในอีก 8 วินาที !!",bc_map,"0xFFCE00";
+	end;	
+
+OnTimer53000:
+	mapannounce "haunt_e", "ระบบ: ทางเข้าสู่ คฤหาสน์ผีสิง จะถูกปิดลงในอีก 7 วินาที !!",bc_map,"0xFFCE00";
+	end;
+	
+OnTimer54000:
+	mapannounce "haunt_e", "ระบบ: ทางเข้าสู่ คฤหาสน์ผีสิง จะถูกปิดลงในอีก 6 วินาที !!",bc_map,"0xFFCE00";
+	end;
+	
+OnTimer55000:
+	mapannounce "haunt_e", "ระบบ: ทางเข้าสู่ คฤหาสน์ผีสิง จะถูกปิดลงในอีก 5 วินาที !!",bc_map,"0xFFCE00";
+	end;
+	
+OnTimer56000:
+	mapannounce "haunt_e", "ระบบ: ทางเข้าสู่ คฤหาสน์ผีสิง จะถูกปิดลงในอีก 4 วินาที !!",bc_map,"0xFFCE00";
+	end;
+	
+OnTimer57000:
+	mapannounce "haunt_e", "ระบบ: ทางเข้าสู่ คฤหาสน์ผีสิง จะถูกปิดลงในอีก 3 วินาที !!",bc_map,"0xFFCE00";
+	end;
+	
+OnTimer58000:
+	mapannounce "haunt_e", "ระบบ: ทางเข้าสู่ คฤหาสน์ผีสิง จะถูกปิดลงในอีก 2 วินาที !!",bc_map,"0xFFCE00";
+	end;
+	
+OnTimer59000:
+	mapannounce "haunt_e", "ระบบ: ทางเข้าสู่ คฤหาสน์ผีสิง จะถูกปิดลงในอีก 1 วินาที !!",bc_map,"0xFFCE00";
+	end;
+
+OnTimer60000:
+	stopnpctimer;
+	disablenpc "HauntedMansionWarp";
+	enablenpc "Haunted Mansion Door";
+	mapannounce "haunt_e", "ระบบ: ทางเข้าสู่ คฤหาสน์ผีสิง ได้ถูกปิดลงแล้ว !!",bc_map,"0xFFCE00";
+	end;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+haunt_h,144,32,5	script	Test#hh_1	4_LGTSCIENCE,{}
+haunt_h,147,31,4	script	Test#hh_2	4_M_HUGRANFA,{}

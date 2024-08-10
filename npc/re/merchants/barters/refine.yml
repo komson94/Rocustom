@@ -1,0 +1,4860 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Barter Database
+###########################################################################
+#
+# Barter Settings
+#
+###########################################################################
+#  - Name               NPC name.
+#    Map                Map name. (Default: not on a map)
+#    X                  Map x coordinate. (Default: 0)
+#    Y                  Map y coordinate. (Default: 0)
+#    Direction          Direction the NPC is looking. (Default: North)
+#    Sprite             Sprite name of the NPC. (Default: FakeNpc)
+#    Items:             List of sold items.
+#      - Index          Index of the item inside the shop. (0-...)
+#                       Maximum index depends on client.
+#        Item           Aegis name of the item.
+#        Stock          Amount of item in stock. 0 means unlimited. (Default: 0)
+#        Zeny           Cost of them item in Zeny. (Default: 0)
+#        RequiredItems: List of required items (Optional)
+#          - Index      Index of the required item. (0-4)
+#            Item       Aegis name of required item.
+#            Amount     Amount of required item. (Default: 1)
+#            Refine     Refine level of required item. (Default: 0)
+###########################################################################
+
+Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+  - Name: barter_refine_1
+    Items:
+      - Index: 0
+        Item: Oridecon
+        RequiredItems:
+          - Index: 0
+            Item: Oridecon_Stone
+            Amount: 5
+      - Index: 1
+        Item: Elunium
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 5
+      - Index: 2
+        Item: Bradium
+        Zeny: 50000
+        RequiredItems:
+          - Index: 0
+            Item: Oridecon
+            Amount: 3
+      - Index: 3
+        Item: Carnium
+        Zeny: 50000
+        RequiredItems:
+          - Index: 0
+            Item: Elunium
+            Amount: 3
+      - Index: 4
+        Item: Carnium
+        Zeny: 50000
+        RequiredItems:
+          - Index: 0
+            Item: Purified_Bradium
+      - Index: 5
+        Item: Strength1
+        RequiredItems:
+          - Index: 0
+            Item: Dragon_Scale
+            Amount: 349
+          - Index: 1
+            Item: Elunium_Stone
+            Amount: 496
+          - Index: 2
+            Item: Red_Herb
+            Amount: 825
+          - Index: 3
+            Item: Hot_Hair
+            Amount: 627
+          - Index: 4
+            Item: Elunium_Stone
+            Amount: 146
+  - Name: barter_refine_2
+    Items:
+      - Index: 0
+        Item: Ethernium
+        Zeny: 10000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+          - Index: 1
+            Item: Elunium
+      - Index: 1
+        Item: Etherdeocon
+        Zeny: 10000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+          - Index: 1
+            Item: Oridecon
+      - Index: 2
+        Item: Etel_Bradium
+        Zeny: 50000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 3
+          - Index: 1
+            Item: Bradium
+      - Index: 3
+        Item: Etel_Carnium
+        Zeny: 50000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 3
+          - Index: 1
+            Item: Carnium
+      - Index: 4
+        Item: Enriched_Ethernium
+        Zeny: 20000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 2
+          - Index: 1
+            Item: Enriched_Elunium
+      - Index: 5
+        Item: Enriched_Etherdeocon
+        Zeny: 20000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 2
+          - Index: 1
+            Item: Enriched_Oridecon
+      - Index: 6
+        Item: HD_Ethernium
+        Zeny: 50000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 3
+          - Index: 1
+            Item: HD_Elunium
+      - Index: 7
+        Item: HD_Etherdeocon
+        Zeny: 50000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 3
+          - Index: 1
+            Item: HD_Oridecon
+      - Index: 8
+        Item: HD_Ethernium
+        Zeny: 50000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 3
+          - Index: 1
+            Item: LI_HD_Elunium
+      - Index: 9
+        Item: HD_Etherdeocon
+        Zeny: 50000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 3
+          - Index: 1
+            Item: LI_HD_Oridecon
+      - Index: 10
+        Item: HD_Etel_Bradium
+        Zeny: 50000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 3
+          - Index: 1
+            Item: HD_Bradium
+      - Index: 11
+        Item: HD_Etel_Carnium
+        Zeny: 50000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 3
+          - Index: 1
+            Item: HD_Carnium
+      - Index: 12
+        Item: HD_Etel_Bradium
+        Zeny: 50000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 3
+          - Index: 1
+            Item: LI_HD_Bradium
+      - Index: 13
+        Item: HD_Etel_Carnium
+        Zeny: 50000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 3
+          - Index: 1
+            Item: LI_HD_Carnium
+  - Name: barter_refine_3
+    Items:
+      - Index: 0
+        Item: Shadowdecon
+        RequiredItems:
+          - Index: 0
+            Item: Shadowdecon_Ore
+            Amount: 20
+      - Index: 1
+        Item: Zelunium
+        RequiredItems:
+          - Index: 0
+            Item: Zelunium_Ore
+            Amount: 20
+  - Name: quest_shop_item
+    Items:
+      - Index: 0
+        Item: Strength1
+        Zeny: 3026
+        RequiredItems:
+          - Index: 0
+            Item: White_Herb
+            Amount: 107
+          - Index: 1
+            Item: Sticky_Mucus
+            Amount: 434
+          - Index: 2
+            Item: Zargon
+            Amount: 727
+          - Index: 3
+            Item: Unripe_Apple
+            Amount: 292
+          - Index: 4
+            Item: Burning_Heart
+            Amount: 246
+      - Index: 1
+        Item: Strength2
+        Zeny: 5031
+        RequiredItems:
+          - Index: 0
+            Item: Seed_Of_Yggdrasil
+            Amount: 964
+          - Index: 1
+            Item: Dragon_Scale
+            Amount: 707
+          - Index: 2
+            Item: Dragon_Scale
+            Amount: 779
+          - Index: 3
+            Item: Sticky_Mucus
+            Amount: 210
+          - Index: 4
+            Item: Jejellopy
+            Amount: 624
+      - Index: 2
+        Item: Strength3
+        Zeny: 8863
+        RequiredItems:
+          - Index: 0
+            Item: Acorn
+            Amount: 479
+          - Index: 1
+            Item: Moth_Dust
+            Amount: 883
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 357
+          - Index: 3
+            Item: Red_Herb
+            Amount: 594
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 662
+      - Index: 3
+        Item: Strength4
+        Zeny: 3275
+        RequiredItems:
+          - Index: 0
+            Item: Fish_Tail
+            Amount: 681
+          - Index: 1
+            Item: Zargon
+            Amount: 766
+          - Index: 2
+            Item: Hot_Hair
+            Amount: 921
+          - Index: 3
+            Item: Large_Jellopy
+            Amount: 844
+          - Index: 4
+            Item: Brigan
+            Amount: 565
+      - Index: 4
+        Item: Strength5
+        Zeny: 4792
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 179
+          - Index: 1
+            Item: Seed_Of_Yggdrasil
+            Amount: 966
+          - Index: 2
+            Item: Yoyo_Tail
+            Amount: 715
+          - Index: 3
+            Item: Yoyo_Tail
+            Amount: 161
+          - Index: 4
+            Item: Dragon_Scale
+            Amount: 540
+      - Index: 5
+        Item: Strength6
+        Zeny: 4364
+        RequiredItems:
+          - Index: 0
+            Item: Green_Herb
+            Amount: 375
+          - Index: 1
+            Item: Jejellopy
+            Amount: 434
+          - Index: 2
+            Item: Fish_Tail
+            Amount: 775
+          - Index: 3
+            Item: Garlet
+            Amount: 755
+          - Index: 4
+            Item: Red_Herb
+            Amount: 466
+      - Index: 6
+        Item: Strength7
+        Zeny: 9247
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 620
+          - Index: 1
+            Item: Elunium_Stone
+            Amount: 884
+          - Index: 2
+            Item: Hot_Hair
+            Amount: 116
+          - Index: 3
+            Item: Brigan
+            Amount: 540
+          - Index: 4
+            Item: Fish_Tail
+            Amount: 133
+      - Index: 7
+        Item: Strength8
+        Zeny: 4506
+        RequiredItems:
+          - Index: 0
+            Item: Jejellopy
+            Amount: 477
+          - Index: 1
+            Item: Dragon_Scale
+            Amount: 131
+          - Index: 2
+            Item: Fish_Tail
+            Amount: 205
+          - Index: 3
+            Item: Large_Jellopy
+            Amount: 999
+          - Index: 4
+            Item: Garlet
+            Amount: 418
+      - Index: 8
+        Item: Strength9
+        Zeny: 8325
+        RequiredItems:
+          - Index: 0
+            Item: Burning_Heart
+            Amount: 346
+          - Index: 1
+            Item: Acorn
+            Amount: 778
+          - Index: 2
+            Item: Red_Herb
+            Amount: 501
+          - Index: 3
+            Item: Baphomet_Doll
+            Amount: 916
+          - Index: 4
+            Item: Zargon
+            Amount: 591
+      - Index: 9
+        Item: Strength10
+        Zeny: 5866
+        RequiredItems:
+          - Index: 0
+            Item: White_Herb
+            Amount: 250
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 253
+          - Index: 2
+            Item: Yoyo_Tail
+            Amount: 949
+          - Index: 3
+            Item: Fish_Tail
+            Amount: 328
+          - Index: 4
+            Item: Green_Herb
+            Amount: 544
+      - Index: 10
+        Item: Inteligence1
+        Zeny: 3563
+        RequiredItems:
+          - Index: 0
+            Item: Dragon_Scale
+            Amount: 936
+          - Index: 1
+            Item: Red_Herb
+            Amount: 493
+          - Index: 2
+            Item: Zargon
+            Amount: 791
+          - Index: 3
+            Item: Zargon
+            Amount: 529
+          - Index: 4
+            Item: Dragon_Scale
+            Amount: 867
+      - Index: 11
+        Item: Inteligence2
+        Zeny: 6636
+        RequiredItems:
+          - Index: 0
+            Item: Burning_Heart
+            Amount: 392
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 981
+          - Index: 2
+            Item: Hot_Hair
+            Amount: 864
+          - Index: 3
+            Item: Baphomet_Doll
+            Amount: 502
+          - Index: 4
+            Item: Yoyo_Tail
+            Amount: 164
+      - Index: 12
+        Item: Inteligence3
+        Zeny: 1716
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 232
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 868
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 862
+          - Index: 3
+            Item: Large_Jellopy
+            Amount: 620
+          - Index: 4
+            Item: Acorn
+            Amount: 719
+      - Index: 13
+        Item: Inteligence4
+        Zeny: 6460
+        RequiredItems:
+          - Index: 0
+            Item: Zargon
+            Amount: 104
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 299
+          - Index: 2
+            Item: Yoyo_Tail
+            Amount: 448
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 167
+          - Index: 4
+            Item: Brigan
+            Amount: 675
+      - Index: 14
+        Item: Inteligence5
+        Zeny: 8312
+        RequiredItems:
+          - Index: 0
+            Item: Acorn
+            Amount: 279
+          - Index: 1
+            Item: White_Herb
+            Amount: 226
+          - Index: 2
+            Item: Acorn
+            Amount: 842
+          - Index: 3
+            Item: Yoyo_Tail
+            Amount: 366
+          - Index: 4
+            Item: White_Herb
+            Amount: 294
+      - Index: 15
+        Item: Inteligence6
+        Zeny: 5918
+        RequiredItems:
+          - Index: 0
+            Item: Burning_Heart
+            Amount: 823
+          - Index: 1
+            Item: Elunium_Stone
+            Amount: 831
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 227
+          - Index: 3
+            Item: Moth_Dust
+            Amount: 182
+          - Index: 4
+            Item: Burning_Heart
+            Amount: 483
+      - Index: 16
+        Item: Inteligence7
+        Zeny: 5729
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 130
+          - Index: 1
+            Item: Moth_Dust
+            Amount: 281
+          - Index: 2
+            Item: Yoyo_Tail
+            Amount: 714
+          - Index: 3
+            Item: Baphomet_Doll
+            Amount: 585
+          - Index: 4
+            Item: Hot_Hair
+            Amount: 539
+      - Index: 17
+        Item: Inteligence8
+        Zeny: 3919
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 225
+          - Index: 1
+            Item: Elunium_Stone
+            Amount: 815
+          - Index: 2
+            Item: Brigan
+            Amount: 378
+          - Index: 3
+            Item: Large_Jellopy
+            Amount: 277
+          - Index: 4
+            Item: Burning_Heart
+            Amount: 477
+      - Index: 18
+        Item: Inteligence9
+        Zeny: 6945
+        RequiredItems:
+          - Index: 0
+            Item: Fish_Tail
+            Amount: 792
+          - Index: 1
+            Item: Jejellopy
+            Amount: 730
+          - Index: 2
+            Item: Yoyo_Tail
+            Amount: 972
+          - Index: 3
+            Item: Burning_Heart
+            Amount: 712
+          - Index: 4
+            Item: Dragon_Scale
+            Amount: 129
+      - Index: 19
+        Item: Inteligence10
+        Zeny: 6824
+        RequiredItems:
+          - Index: 0
+            Item: Red_Herb
+            Amount: 449
+          - Index: 1
+            Item: Red_Herb
+            Amount: 918
+          - Index: 2
+            Item: Moth_Dust
+            Amount: 148
+          - Index: 3
+            Item: Green_Herb
+            Amount: 527
+          - Index: 4
+            Item: Moth_Dust
+            Amount: 367
+      - Index: 20
+        Item: Dexterity1
+        Zeny: 6014
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 562
+          - Index: 1
+            Item: Burning_Heart
+            Amount: 637
+          - Index: 2
+            Item: Unripe_Apple
+            Amount: 928
+          - Index: 3
+            Item: Red_Herb
+            Amount: 559
+          - Index: 4
+            Item: White_Herb
+            Amount: 305
+      - Index: 21
+        Item: Dexterity2
+        Zeny: 5845
+        RequiredItems:
+          - Index: 0
+            Item: Large_Jellopy
+            Amount: 1000
+          - Index: 1
+            Item: Large_Jellopy
+            Amount: 209
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 646
+          - Index: 3
+            Item: Red_Herb
+            Amount: 425
+          - Index: 4
+            Item: Sticky_Mucus
+            Amount: 111
+      - Index: 22
+        Item: Dexterity3
+        Zeny: 7095
+        RequiredItems:
+          - Index: 0
+            Item: Red_Herb
+            Amount: 376
+          - Index: 1
+            Item: Acorn
+            Amount: 824
+          - Index: 2
+            Item: Zargon
+            Amount: 798
+          - Index: 3
+            Item: Burning_Heart
+            Amount: 518
+          - Index: 4
+            Item: Red_Herb
+            Amount: 793
+      - Index: 23
+        Item: Dexterity4
+        Zeny: 7121
+        RequiredItems:
+          - Index: 0
+            Item: Zargon
+            Amount: 789
+          - Index: 1
+            Item: Garlet
+            Amount: 914
+          - Index: 2
+            Item: Moth_Dust
+            Amount: 752
+          - Index: 3
+            Item: Moth_Dust
+            Amount: 193
+          - Index: 4
+            Item: Brigan
+            Amount: 312
+      - Index: 24
+        Item: Dexterity5
+        Zeny: 4001
+        RequiredItems:
+          - Index: 0
+            Item: Dragon_Scale
+            Amount: 648
+          - Index: 1
+            Item: Elunium_Stone
+            Amount: 149
+          - Index: 2
+            Item: Sticky_Mucus
+            Amount: 751
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 472
+          - Index: 4
+            Item: Garlet
+            Amount: 136
+      - Index: 25
+        Item: Dexterity6
+        Zeny: 1498
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 157
+          - Index: 1
+            Item: Fish_Tail
+            Amount: 370
+          - Index: 2
+            Item: Sticky_Mucus
+            Amount: 842
+          - Index: 3
+            Item: Unripe_Apple
+            Amount: 330
+          - Index: 4
+            Item: Acorn
+            Amount: 809
+      - Index: 26
+        Item: Dexterity7
+        Zeny: 5687
+        RequiredItems:
+          - Index: 0
+            Item: Burning_Heart
+            Amount: 346
+          - Index: 1
+            Item: Zargon
+            Amount: 515
+          - Index: 2
+            Item: Zargon
+            Amount: 692
+          - Index: 3
+            Item: Garlet
+            Amount: 525
+          - Index: 4
+            Item: Elunium_Stone
+            Amount: 638
+      - Index: 27
+        Item: Dexterity8
+        Zeny: 9589
+        RequiredItems:
+          - Index: 0
+            Item: Burning_Heart
+            Amount: 958
+          - Index: 1
+            Item: Green_Herb
+            Amount: 709
+          - Index: 2
+            Item: Dragon_Scale
+            Amount: 981
+          - Index: 3
+            Item: Yoyo_Tail
+            Amount: 450
+          - Index: 4
+            Item: Jejellopy
+            Amount: 719
+      - Index: 28
+        Item: Dexterity9
+        Zeny: 2068
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 117
+          - Index: 1
+            Item: Red_Herb
+            Amount: 149
+          - Index: 2
+            Item: Burning_Heart
+            Amount: 630
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 527
+          - Index: 4
+            Item: Large_Jellopy
+            Amount: 708
+      - Index: 29
+        Item: Dexterity10
+        Zeny: 3764
+        RequiredItems:
+          - Index: 0
+            Item: Zargon
+            Amount: 330
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 794
+          - Index: 2
+            Item: Unripe_Apple
+            Amount: 505
+          - Index: 3
+            Item: Brigan
+            Amount: 781
+          - Index: 4
+            Item: Elunium_Stone
+            Amount: 940
+      - Index: 30
+        Item: Agility1
+        Zeny: 2210
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 561
+          - Index: 1
+            Item: Fish_Tail
+            Amount: 917
+          - Index: 2
+            Item: Jejellopy
+            Amount: 274
+          - Index: 3
+            Item: Dragon_Scale
+            Amount: 224
+          - Index: 4
+            Item: Garlet
+            Amount: 183
+      - Index: 31
+        Item: Agility2
+        Zeny: 3820
+        RequiredItems:
+          - Index: 0
+            Item: Seed_Of_Yggdrasil
+            Amount: 826
+          - Index: 1
+            Item: Dragon_Scale
+            Amount: 613
+          - Index: 2
+            Item: Red_Herb
+            Amount: 754
+          - Index: 3
+            Item: Garlet
+            Amount: 713
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 714
+      - Index: 32
+        Item: Agility3
+        Zeny: 9339
+        RequiredItems:
+          - Index: 0
+            Item: Burning_Heart
+            Amount: 956
+          - Index: 1
+            Item: Moth_Dust
+            Amount: 312
+          - Index: 2
+            Item: Hot_Hair
+            Amount: 108
+          - Index: 3
+            Item: Zargon
+            Amount: 192
+          - Index: 4
+            Item: Garlet
+            Amount: 674
+      - Index: 33
+        Item: Agility4
+        Zeny: 3220
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 821
+          - Index: 1
+            Item: Seed_Of_Yggdrasil
+            Amount: 968
+          - Index: 2
+            Item: White_Herb
+            Amount: 678
+          - Index: 3
+            Item: Elunium_Stone
+            Amount: 547
+          - Index: 4
+            Item: Hot_Hair
+            Amount: 886
+      - Index: 34
+        Item: Agility5
+        Zeny: 6739
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 315
+          - Index: 1
+            Item: Seed_Of_Yggdrasil
+            Amount: 398
+          - Index: 2
+            Item: Jejellopy
+            Amount: 103
+          - Index: 3
+            Item: Acorn
+            Amount: 253
+          - Index: 4
+            Item: Jejellopy
+            Amount: 722
+      - Index: 35
+        Item: Agility6
+        Zeny: 3946
+        RequiredItems:
+          - Index: 0
+            Item: Dragon_Scale
+            Amount: 329
+          - Index: 1
+            Item: Green_Herb
+            Amount: 297
+          - Index: 2
+            Item: Large_Jellopy
+            Amount: 343
+          - Index: 3
+            Item: Garlet
+            Amount: 997
+          - Index: 4
+            Item: Green_Herb
+            Amount: 549
+      - Index: 36
+        Item: Agility7
+        Zeny: 7429
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 926
+          - Index: 1
+            Item: Large_Jellopy
+            Amount: 617
+          - Index: 2
+            Item: Hot_Hair
+            Amount: 967
+          - Index: 3
+            Item: White_Herb
+            Amount: 244
+          - Index: 4
+            Item: Garlet
+            Amount: 291
+      - Index: 37
+        Item: Agility8
+        Zeny: 4923
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 550
+          - Index: 1
+            Item: White_Herb
+            Amount: 332
+          - Index: 2
+            Item: Acorn
+            Amount: 885
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 751
+          - Index: 4
+            Item: Garlet
+            Amount: 757
+      - Index: 38
+        Item: Agility9
+        Zeny: 4287
+        RequiredItems:
+          - Index: 0
+            Item: Red_Herb
+            Amount: 284
+          - Index: 1
+            Item: Elunium_Stone
+            Amount: 250
+          - Index: 2
+            Item: Garlet
+            Amount: 840
+          - Index: 3
+            Item: Sticky_Mucus
+            Amount: 534
+          - Index: 4
+            Item: Yoyo_Tail
+            Amount: 419
+      - Index: 39
+        Item: Agility10
+        Zeny: 4890
+        RequiredItems:
+          - Index: 0
+            Item: Seed_Of_Yggdrasil
+            Amount: 783
+          - Index: 1
+            Item: Jejellopy
+            Amount: 975
+          - Index: 2
+            Item: Green_Herb
+            Amount: 795
+          - Index: 3
+            Item: Jejellopy
+            Amount: 763
+          - Index: 4
+            Item: Hot_Hair
+            Amount: 366
+      - Index: 40
+        Item: Vitality1
+        Zeny: 5140
+        RequiredItems:
+          - Index: 0
+            Item: White_Herb
+            Amount: 951
+          - Index: 1
+            Item: White_Herb
+            Amount: 662
+          - Index: 2
+            Item: Large_Jellopy
+            Amount: 880
+          - Index: 3
+            Item: Garlet
+            Amount: 806
+          - Index: 4
+            Item: Acorn
+            Amount: 269
+      - Index: 41
+        Item: Vitality2
+        Zeny: 8594
+        RequiredItems:
+          - Index: 0
+            Item: Jejellopy
+            Amount: 403
+          - Index: 1
+            Item: Brigan
+            Amount: 304
+          - Index: 2
+            Item: Zargon
+            Amount: 468
+          - Index: 3
+            Item: Garlet
+            Amount: 748
+          - Index: 4
+            Item: Dragon_Scale
+            Amount: 513
+      - Index: 42
+        Item: Vitality3
+        Zeny: 2707
+        RequiredItems:
+          - Index: 0
+            Item: Hot_Hair
+            Amount: 187
+          - Index: 1
+            Item: Moth_Dust
+            Amount: 994
+          - Index: 2
+            Item: Moth_Dust
+            Amount: 662
+          - Index: 3
+            Item: Moth_Dust
+            Amount: 992
+          - Index: 4
+            Item: Fish_Tail
+            Amount: 755
+      - Index: 43
+        Item: Vitality4
+        Zeny: 1942
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 860
+          - Index: 1
+            Item: Acorn
+            Amount: 841
+          - Index: 2
+            Item: Garlet
+            Amount: 355
+          - Index: 3
+            Item: Moth_Dust
+            Amount: 959
+          - Index: 4
+            Item: Brigan
+            Amount: 153
+      - Index: 44
+        Item: Vitality5
+        Zeny: 9997
+        RequiredItems:
+          - Index: 0
+            Item: White_Herb
+            Amount: 262
+          - Index: 1
+            Item: Zargon
+            Amount: 740
+          - Index: 2
+            Item: Moth_Dust
+            Amount: 433
+          - Index: 3
+            Item: Large_Jellopy
+            Amount: 495
+          - Index: 4
+            Item: Hot_Hair
+            Amount: 302
+      - Index: 45
+        Item: Vitality6
+        Zeny: 8249
+        RequiredItems:
+          - Index: 0
+            Item: Seed_Of_Yggdrasil
+            Amount: 376
+          - Index: 1
+            Item: Elunium_Stone
+            Amount: 231
+          - Index: 2
+            Item: Green_Herb
+            Amount: 149
+          - Index: 3
+            Item: Fish_Tail
+            Amount: 471
+          - Index: 4
+            Item: Large_Jellopy
+            Amount: 481
+      - Index: 46
+        Item: Vitality7
+        Zeny: 4194
+        RequiredItems:
+          - Index: 0
+            Item: Fish_Tail
+            Amount: 800
+          - Index: 1
+            Item: Dragon_Scale
+            Amount: 524
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 859
+          - Index: 3
+            Item: Jejellopy
+            Amount: 976
+          - Index: 4
+            Item: Seed_Of_Yggdrasil
+            Amount: 490
+      - Index: 47
+        Item: Vitality8
+        Zeny: 7685
+        RequiredItems:
+          - Index: 0
+            Item: Garlet
+            Amount: 539
+          - Index: 1
+            Item: Sticky_Mucus
+            Amount: 107
+          - Index: 2
+            Item: Unripe_Apple
+            Amount: 979
+          - Index: 3
+            Item: Yoyo_Tail
+            Amount: 334
+          - Index: 4
+            Item: Acorn
+            Amount: 351
+      - Index: 48
+        Item: Vitality9
+        Zeny: 5189
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 291
+          - Index: 1
+            Item: Brigan
+            Amount: 801
+          - Index: 2
+            Item: Green_Herb
+            Amount: 529
+          - Index: 3
+            Item: Dragon_Scale
+            Amount: 488
+          - Index: 4
+            Item: Baphomet_Doll
+            Amount: 488
+      - Index: 49
+        Item: Vitality10
+        Zeny: 1310
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 569
+          - Index: 1
+            Item: Hot_Hair
+            Amount: 266
+          - Index: 2
+            Item: Baphomet_Doll
+            Amount: 503
+          - Index: 3
+            Item: Large_Jellopy
+            Amount: 689
+          - Index: 4
+            Item: Garlet
+            Amount: 322
+      - Index: 50
+        Item: Luck1
+        Zeny: 5831
+        RequiredItems:
+          - Index: 0
+            Item: Burning_Heart
+            Amount: 174
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 839
+          - Index: 2
+            Item: Large_Jellopy
+            Amount: 286
+          - Index: 3
+            Item: Jejellopy
+            Amount: 623
+          - Index: 4
+            Item: Burning_Heart
+            Amount: 569
+      - Index: 51
+        Item: Luck2
+        Zeny: 1789
+        RequiredItems:
+          - Index: 0
+            Item: Large_Jellopy
+            Amount: 863
+          - Index: 1
+            Item: Elunium_Stone
+            Amount: 734
+          - Index: 2
+            Item: Red_Herb
+            Amount: 214
+          - Index: 3
+            Item: Sticky_Mucus
+            Amount: 179
+          - Index: 4
+            Item: Hot_Hair
+            Amount: 341
+      - Index: 52
+        Item: Luck3
+        Zeny: 3253
+        RequiredItems:
+          - Index: 0
+            Item: Jejellopy
+            Amount: 605
+          - Index: 1
+            Item: Green_Herb
+            Amount: 515
+          - Index: 2
+            Item: Hot_Hair
+            Amount: 575
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 800
+          - Index: 4
+            Item: Brigan
+            Amount: 262
+      - Index: 53
+        Item: Luck4
+        Zeny: 9030
+        RequiredItems:
+          - Index: 0
+            Item: Seed_Of_Yggdrasil
+            Amount: 874
+          - Index: 1
+            Item: Dragon_Scale
+            Amount: 330
+          - Index: 2
+            Item: Burning_Heart
+            Amount: 464
+          - Index: 3
+            Item: White_Herb
+            Amount: 592
+          - Index: 4
+            Item: Elunium_Stone
+            Amount: 266
+      - Index: 54
+        Item: Luck5
+        Zeny: 6622
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 838
+          - Index: 1
+            Item: Green_Herb
+            Amount: 801
+          - Index: 2
+            Item: Jejellopy
+            Amount: 186
+          - Index: 3
+            Item: Elunium_Stone
+            Amount: 376
+          - Index: 4
+            Item: Elunium_Stone
+            Amount: 841
+      - Index: 55
+        Item: Luck6
+        Zeny: 4312
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 487
+          - Index: 1
+            Item: Unripe_Apple
+            Amount: 272
+          - Index: 2
+            Item: Baphomet_Doll
+            Amount: 180
+          - Index: 3
+            Item: Yoyo_Tail
+            Amount: 614
+          - Index: 4
+            Item: Hot_Hair
+            Amount: 853
+      - Index: 56
+        Item: Luck7
+        Zeny: 4279
+        RequiredItems:
+          - Index: 0
+            Item: Hot_Hair
+            Amount: 964
+          - Index: 1
+            Item: Acorn
+            Amount: 400
+          - Index: 2
+            Item: Green_Herb
+            Amount: 881
+          - Index: 3
+            Item: Brigan
+            Amount: 614
+          - Index: 4
+            Item: Jejellopy
+            Amount: 328
+      - Index: 57
+        Item: Luck8
+        Zeny: 7872
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 308
+          - Index: 1
+            Item: Green_Herb
+            Amount: 923
+          - Index: 2
+            Item: Large_Jellopy
+            Amount: 250
+          - Index: 3
+            Item: Burning_Heart
+            Amount: 594
+          - Index: 4
+            Item: Brigan
+            Amount: 261
+      - Index: 58
+        Item: Luck9
+        Zeny: 9641
+        RequiredItems:
+          - Index: 0
+            Item: Hot_Hair
+            Amount: 911
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 860
+          - Index: 2
+            Item: Elunium_Stone
+            Amount: 226
+          - Index: 3
+            Item: Green_Herb
+            Amount: 531
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 457
+      - Index: 59
+        Item: Luck10
+        Zeny: 1651
+        RequiredItems:
+          - Index: 0
+            Item: Hot_Hair
+            Amount: 880
+          - Index: 1
+            Item: Yoyo_Tail
+            Amount: 202
+          - Index: 2
+            Item: Yoyo_Tail
+            Amount: 558
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 827
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 274
+      - Index: 60
+        Item: Matk1
+        Zeny: 7473
+        RequiredItems:
+          - Index: 0
+            Item: Red_Herb
+            Amount: 497
+          - Index: 1
+            Item: Dragon_Scale
+            Amount: 566
+          - Index: 2
+            Item: Elunium_Stone
+            Amount: 203
+          - Index: 3
+            Item: Unripe_Apple
+            Amount: 887
+          - Index: 4
+            Item: Elunium_Stone
+            Amount: 341
+      - Index: 61
+        Item: Matk2
+        Zeny: 5247
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 941
+          - Index: 1
+            Item: Burning_Heart
+            Amount: 695
+          - Index: 2
+            Item: Yoyo_Tail
+            Amount: 826
+          - Index: 3
+            Item: Elunium_Stone
+            Amount: 869
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 644
+      - Index: 62
+        Item: Evasion6
+        Zeny: 3165
+        RequiredItems:
+          - Index: 0
+            Item: Large_Jellopy
+            Amount: 212
+          - Index: 1
+            Item: Yoyo_Tail
+            Amount: 739
+          - Index: 2
+            Item: Dragon_Scale
+            Amount: 219
+          - Index: 3
+            Item: Brigan
+            Amount: 113
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 690
+      - Index: 63
+        Item: Evasion12
+        Zeny: 9097
+        RequiredItems:
+          - Index: 0
+            Item: Fish_Tail
+            Amount: 187
+          - Index: 1
+            Item: Burning_Heart
+            Amount: 526
+          - Index: 2
+            Item: Red_Herb
+            Amount: 511
+          - Index: 3
+            Item: Hot_Hair
+            Amount: 432
+          - Index: 4
+            Item: White_Herb
+            Amount: 403
+      - Index: 64
+        Item: Critical5
+        Zeny: 6995
+        RequiredItems:
+          - Index: 0
+            Item: Zargon
+            Amount: 121
+          - Index: 1
+            Item: Burning_Heart
+            Amount: 386
+          - Index: 2
+            Item: Zargon
+            Amount: 436
+          - Index: 3
+            Item: Jejellopy
+            Amount: 702
+          - Index: 4
+            Item: Burning_Heart
+            Amount: 988
+      - Index: 65
+        Item: Critical7
+        Zeny: 3003
+        RequiredItems:
+          - Index: 0
+            Item: Acorn
+            Amount: 420
+          - Index: 1
+            Item: Moth_Dust
+            Amount: 354
+          - Index: 2
+            Item: Moth_Dust
+            Amount: 420
+          - Index: 3
+            Item: Jejellopy
+            Amount: 972
+          - Index: 4
+            Item: Large_Jellopy
+            Amount: 857
+      - Index: 66
+        Item: Atk2
+        Zeny: 5423
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 623
+          - Index: 1
+            Item: Zargon
+            Amount: 226
+          - Index: 2
+            Item: Red_Herb
+            Amount: 209
+          - Index: 3
+            Item: Moth_Dust
+            Amount: 171
+          - Index: 4
+            Item: Baphomet_Doll
+            Amount: 207
+      - Index: 67
+        Item: Atk3
+        Zeny: 4941
+        RequiredItems:
+          - Index: 0
+            Item: Red_Herb
+            Amount: 169
+          - Index: 1
+            Item: Green_Herb
+            Amount: 225
+          - Index: 2
+            Item: Moth_Dust
+            Amount: 447
+          - Index: 3
+            Item: Green_Herb
+            Amount: 910
+          - Index: 4
+            Item: Fish_Tail
+            Amount: 459
+      - Index: 68
+        Item: Str1_J
+        Zeny: 6881
+        RequiredItems:
+          - Index: 0
+            Item: Unripe_Apple
+            Amount: 262
+          - Index: 1
+            Item: Unripe_Apple
+            Amount: 300
+          - Index: 2
+            Item: Large_Jellopy
+            Amount: 189
+          - Index: 3
+            Item: Yoyo_Tail
+            Amount: 559
+          - Index: 4
+            Item: Zargon
+            Amount: 108
+      - Index: 69
+        Item: Str2_J
+        Zeny: 5103
+        RequiredItems:
+          - Index: 0
+            Item: Green_Herb
+            Amount: 920
+          - Index: 1
+            Item: Jejellopy
+            Amount: 402
+          - Index: 2
+            Item: White_Herb
+            Amount: 344
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 502
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 151
+      - Index: 70
+        Item: Str3_J
+        Zeny: 6751
+        RequiredItems:
+          - Index: 0
+            Item: Dragon_Scale
+            Amount: 795
+          - Index: 1
+            Item: Dragon_Scale
+            Amount: 481
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 106
+          - Index: 3
+            Item: Acorn
+            Amount: 481
+          - Index: 4
+            Item: Brigan
+            Amount: 920
+      - Index: 71
+        Item: Int1_J
+        Zeny: 4266
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 995
+          - Index: 1
+            Item: Acorn
+            Amount: 546
+          - Index: 2
+            Item: Burning_Heart
+            Amount: 614
+          - Index: 3
+            Item: Acorn
+            Amount: 371
+          - Index: 4
+            Item: Yoyo_Tail
+            Amount: 429
+      - Index: 72
+        Item: Int2_J
+        Zeny: 6739
+        RequiredItems:
+          - Index: 0
+            Item: Green_Herb
+            Amount: 118
+          - Index: 1
+            Item: Green_Herb
+            Amount: 437
+          - Index: 2
+            Item: Brigan
+            Amount: 373
+          - Index: 3
+            Item: Red_Herb
+            Amount: 758
+          - Index: 4
+            Item: Dragon_Scale
+            Amount: 836
+      - Index: 73
+        Item: Int3_J
+        Zeny: 9006
+        RequiredItems:
+          - Index: 0
+            Item: Seed_Of_Yggdrasil
+            Amount: 215
+          - Index: 1
+            Item: Seed_Of_Yggdrasil
+            Amount: 833
+          - Index: 2
+            Item: Hot_Hair
+            Amount: 273
+          - Index: 3
+            Item: Garlet
+            Amount: 163
+          - Index: 4
+            Item: Large_Jellopy
+            Amount: 385
+      - Index: 74
+        Item: Vit1_J
+        Zeny: 7311
+        RequiredItems:
+          - Index: 0
+            Item: Zargon
+            Amount: 104
+          - Index: 1
+            Item: Green_Herb
+            Amount: 898
+          - Index: 2
+            Item: Unripe_Apple
+            Amount: 723
+          - Index: 3
+            Item: Large_Jellopy
+            Amount: 589
+          - Index: 4
+            Item: Baphomet_Doll
+            Amount: 416
+      - Index: 75
+        Item: Vit2_J
+        Zeny: 4437
+        RequiredItems:
+          - Index: 0
+            Item: Garlet
+            Amount: 506
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 437
+          - Index: 2
+            Item: Burning_Heart
+            Amount: 818
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 437
+          - Index: 4
+            Item: Baphomet_Doll
+            Amount: 238
+      - Index: 76
+        Item: Vit3_J
+        Zeny: 4944
+        RequiredItems:
+          - Index: 0
+            Item: Jejellopy
+            Amount: 946
+          - Index: 1
+            Item: Brigan
+            Amount: 681
+          - Index: 2
+            Item: Hot_Hair
+            Amount: 510
+          - Index: 3
+            Item: Baphomet_Doll
+            Amount: 981
+          - Index: 4
+            Item: Jejellopy
+            Amount: 992
+      - Index: 77
+        Item: Agi1_J
+        Zeny: 2471
+        RequiredItems:
+          - Index: 0
+            Item: Moth_Dust
+            Amount: 676
+          - Index: 1
+            Item: Acorn
+            Amount: 489
+          - Index: 2
+            Item: Large_Jellopy
+            Amount: 125
+          - Index: 3
+            Item: Unripe_Apple
+            Amount: 497
+          - Index: 4
+            Item: Yoyo_Tail
+            Amount: 392
+      - Index: 78
+        Item: Agi2_J
+        Zeny: 8883
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 480
+          - Index: 1
+            Item: Moth_Dust
+            Amount: 744
+          - Index: 2
+            Item: Brigan
+            Amount: 142
+          - Index: 3
+            Item: Dragon_Scale
+            Amount: 805
+          - Index: 4
+            Item: Sticky_Mucus
+            Amount: 689
+      - Index: 79
+        Item: Agi3_J
+        Zeny: 3722
+        RequiredItems:
+          - Index: 0
+            Item: Acorn
+            Amount: 456
+          - Index: 1
+            Item: Red_Herb
+            Amount: 201
+          - Index: 2
+            Item: Baphomet_Doll
+            Amount: 352
+          - Index: 3
+            Item: Garlet
+            Amount: 846
+          - Index: 4
+            Item: Zargon
+            Amount: 883
+      - Index: 80
+        Item: Dex1_J
+        Zeny: 5442
+        RequiredItems:
+          - Index: 0
+            Item: Acorn
+            Amount: 694
+          - Index: 1
+            Item: Burning_Heart
+            Amount: 684
+          - Index: 2
+            Item: Burning_Heart
+            Amount: 907
+          - Index: 3
+            Item: Yoyo_Tail
+            Amount: 281
+          - Index: 4
+            Item: Burning_Heart
+            Amount: 474
+      - Index: 81
+        Item: Dex2_J
+        Zeny: 3368
+        RequiredItems:
+          - Index: 0
+            Item: Moth_Dust
+            Amount: 632
+          - Index: 1
+            Item: Yoyo_Tail
+            Amount: 930
+          - Index: 2
+            Item: Acorn
+            Amount: 458
+          - Index: 3
+            Item: Baphomet_Doll
+            Amount: 328
+          - Index: 4
+            Item: Baphomet_Doll
+            Amount: 632
+      - Index: 82
+        Item: Dex3_J
+        Zeny: 1729
+        RequiredItems:
+          - Index: 0
+            Item: Fish_Tail
+            Amount: 330
+          - Index: 1
+            Item: Unripe_Apple
+            Amount: 784
+          - Index: 2
+            Item: Hot_Hair
+            Amount: 968
+          - Index: 3
+            Item: Baphomet_Doll
+            Amount: 928
+          - Index: 4
+            Item: Acorn
+            Amount: 368
+      - Index: 83
+        Item: Luk1_J
+        Zeny: 1370
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 486
+          - Index: 1
+            Item: Elunium_Stone
+            Amount: 996
+          - Index: 2
+            Item: Fish_Tail
+            Amount: 626
+          - Index: 3
+            Item: Baphomet_Doll
+            Amount: 680
+          - Index: 4
+            Item: Moth_Dust
+            Amount: 109
+      - Index: 84
+        Item: Luk2_J
+        Zeny: 1468
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 842
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 614
+          - Index: 2
+            Item: Unripe_Apple
+            Amount: 216
+          - Index: 3
+            Item: Unripe_Apple
+            Amount: 857
+          - Index: 4
+            Item: Yoyo_Tail
+            Amount: 787
+      - Index: 85
+        Item: Luk3_J
+        Zeny: 8279
+        RequiredItems:
+          - Index: 0
+            Item: Seed_Of_Yggdrasil
+            Amount: 403
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 717
+          - Index: 2
+            Item: Elunium_Stone
+            Amount: 378
+          - Index: 3
+            Item: White_Herb
+            Amount: 610
+          - Index: 4
+            Item: Fish_Tail
+            Amount: 599
+      - Index: 86
+        Item: Mdef2
+        Zeny: 3732
+        RequiredItems:
+          - Index: 0
+            Item: Fish_Tail
+            Amount: 450
+          - Index: 1
+            Item: Green_Herb
+            Amount: 655
+          - Index: 2
+            Item: Moth_Dust
+            Amount: 931
+          - Index: 3
+            Item: Dragon_Scale
+            Amount: 931
+          - Index: 4
+            Item: Garlet
+            Amount: 454
+      - Index: 87
+        Item: Mdef4
+        Zeny: 6123
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 827
+          - Index: 1
+            Item: Fish_Tail
+            Amount: 487
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 732
+          - Index: 3
+            Item: Large_Jellopy
+            Amount: 858
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 136
+      - Index: 88
+        Item: Mdef6
+        Zeny: 1033
+        RequiredItems:
+          - Index: 0
+            Item: Fish_Tail
+            Amount: 360
+          - Index: 1
+            Item: Sticky_Mucus
+            Amount: 455
+          - Index: 2
+            Item: Garlet
+            Amount: 802
+          - Index: 3
+            Item: Elunium_Stone
+            Amount: 945
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 160
+      - Index: 89
+        Item: Mdef8
+        Zeny: 7724
+        RequiredItems:
+          - Index: 0
+            Item: Burning_Heart
+            Amount: 698
+          - Index: 1
+            Item: Burning_Heart
+            Amount: 414
+          - Index: 2
+            Item: Sticky_Mucus
+            Amount: 303
+          - Index: 3
+            Item: Brigan
+            Amount: 829
+          - Index: 4
+            Item: Sticky_Mucus
+            Amount: 659
+      - Index: 90
+        Item: Mdef10
+        Zeny: 3203
+        RequiredItems:
+          - Index: 0
+            Item: Zargon
+            Amount: 787
+          - Index: 1
+            Item: Moth_Dust
+            Amount: 628
+          - Index: 2
+            Item: Sticky_Mucus
+            Amount: 925
+          - Index: 3
+            Item: Elunium_Stone
+            Amount: 223
+          - Index: 4
+            Item: Baphomet_Doll
+            Amount: 773
+      - Index: 91
+        Item: Def3
+        Zeny: 4788
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 736
+          - Index: 1
+            Item: Jejellopy
+            Amount: 861
+          - Index: 2
+            Item: Fish_Tail
+            Amount: 539
+          - Index: 3
+            Item: Green_Herb
+            Amount: 943
+          - Index: 4
+            Item: Sticky_Mucus
+            Amount: 953
+      - Index: 92
+        Item: Def6
+        Zeny: 8602
+        RequiredItems:
+          - Index: 0
+            Item: Unripe_Apple
+            Amount: 221
+          - Index: 1
+            Item: Brigan
+            Amount: 772
+          - Index: 2
+            Item: Jejellopy
+            Amount: 518
+          - Index: 3
+            Item: Dragon_Scale
+            Amount: 762
+          - Index: 4
+            Item: Yoyo_Tail
+            Amount: 549
+      - Index: 93
+        Item: Def9
+        Zeny: 7235
+        RequiredItems:
+          - Index: 0
+            Item: Seed_Of_Yggdrasil
+            Amount: 319
+          - Index: 1
+            Item: White_Herb
+            Amount: 723
+          - Index: 2
+            Item: Fish_Tail
+            Amount: 206
+          - Index: 3
+            Item: Hot_Hair
+            Amount: 844
+          - Index: 4
+            Item: White_Herb
+            Amount: 844
+      - Index: 94
+        Item: Def12
+        Zeny: 6885
+        RequiredItems:
+          - Index: 0
+            Item: Fish_Tail
+            Amount: 231
+          - Index: 1
+            Item: Garlet
+            Amount: 650
+          - Index: 2
+            Item: Baphomet_Doll
+            Amount: 191
+          - Index: 3
+            Item: Hot_Hair
+            Amount: 416
+          - Index: 4
+            Item: Moth_Dust
+            Amount: 246
+      - Index: 95
+        Item: HP100
+        Zeny: 3079
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 879
+          - Index: 1
+            Item: Elunium_Stone
+            Amount: 786
+          - Index: 2
+            Item: Green_Herb
+            Amount: 988
+          - Index: 3
+            Item: Yoyo_Tail
+            Amount: 219
+          - Index: 4
+            Item: Garlet
+            Amount: 859
+      - Index: 96
+        Item: HP200
+        Zeny: 6432
+        RequiredItems:
+          - Index: 0
+            Item: Dragon_Scale
+            Amount: 271
+          - Index: 1
+            Item: Jejellopy
+            Amount: 411
+          - Index: 2
+            Item: Elunium_Stone
+            Amount: 841
+          - Index: 3
+            Item: Unripe_Apple
+            Amount: 176
+          - Index: 4
+            Item: Brigan
+            Amount: 134
+      - Index: 97
+        Item: HP300
+        Zeny: 9900
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 799
+          - Index: 1
+            Item: Elunium_Stone
+            Amount: 111
+          - Index: 2
+            Item: Burning_Heart
+            Amount: 432
+          - Index: 3
+            Item: Burning_Heart
+            Amount: 633
+          - Index: 4
+            Item: Jejellopy
+            Amount: 642
+      - Index: 98
+        Item: HP400
+        Zeny: 3038
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 761
+          - Index: 1
+            Item: Fish_Tail
+            Amount: 573
+          - Index: 2
+            Item: Large_Jellopy
+            Amount: 646
+          - Index: 3
+            Item: Moth_Dust
+            Amount: 930
+          - Index: 4
+            Item: Seed_Of_Yggdrasil
+            Amount: 530
+      - Index: 99
+        Item: HP500
+        Zeny: 5546
+        RequiredItems:
+          - Index: 0
+            Item: Sticky_Mucus
+            Amount: 456
+          - Index: 1
+            Item: Burning_Heart
+            Amount: 337
+          - Index: 2
+            Item: Zargon
+            Amount: 598
+          - Index: 3
+            Item: Moth_Dust
+            Amount: 151
+          - Index: 4
+            Item: Green_Herb
+            Amount: 605
+      - Index: 100
+        Item: SP50
+        Zeny: 9965
+        RequiredItems:
+          - Index: 0
+            Item: Sticky_Mucus
+            Amount: 816
+          - Index: 1
+            Item: Garlet
+            Amount: 229
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 714
+          - Index: 3
+            Item: Jejellopy
+            Amount: 106
+          - Index: 4
+            Item: Baphomet_Doll
+            Amount: 738
+      - Index: 101
+        Item: SP100
+        Zeny: 3276
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 366
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 913
+          - Index: 2
+            Item: Fish_Tail
+            Amount: 277
+          - Index: 3
+            Item: Elunium_Stone
+            Amount: 320
+          - Index: 4
+            Item: Moth_Dust
+            Amount: 161
+      - Index: 102
+        Item: SP150
+        Zeny: 3110
+        RequiredItems:
+          - Index: 0
+            Item: Burning_Heart
+            Amount: 747
+          - Index: 1
+            Item: White_Herb
+            Amount: 789
+          - Index: 2
+            Item: Sticky_Mucus
+            Amount: 806
+          - Index: 3
+            Item: Fish_Tail
+            Amount: 702
+          - Index: 4
+            Item: Yoyo_Tail
+            Amount: 640
+      - Index: 103
+        Item: Highness_Heal_3sec
+        Zeny: 9568
+        RequiredItems:
+          - Index: 0
+            Item: Green_Herb
+            Amount: 757
+          - Index: 1
+            Item: Zargon
+            Amount: 153
+          - Index: 2
+            Item: Red_Herb
+            Amount: 337
+          - Index: 3
+            Item: Green_Herb
+            Amount: 280
+          - Index: 4
+            Item: Fish_Tail
+            Amount: 203
+      - Index: 104
+        Item: Coluceo_Heal30
+        Zeny: 4603
+        RequiredItems:
+          - Index: 0
+            Item: White_Herb
+            Amount: 629
+          - Index: 1
+            Item: Red_Herb
+            Amount: 820
+          - Index: 2
+            Item: Burning_Heart
+            Amount: 359
+          - Index: 3
+            Item: Acorn
+            Amount: 340
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 443
+      - Index: 105
+        Item: Heal_Amount2
+        Zeny: 2203
+        RequiredItems:
+          - Index: 0
+            Item: Moth_Dust
+            Amount: 774
+          - Index: 1
+            Item: Elunium_Stone
+            Amount: 869
+          - Index: 2
+            Item: Green_Herb
+            Amount: 808
+          - Index: 3
+            Item: Acorn
+            Amount: 447
+          - Index: 4
+            Item: Large_Jellopy
+            Amount: 345
+      - Index: 106
+        Item: Matk3
+        Zeny: 4113
+        RequiredItems:
+          - Index: 0
+            Item: Acorn
+            Amount: 560
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 314
+          - Index: 2
+            Item: Green_Herb
+            Amount: 136
+          - Index: 3
+            Item: Baphomet_Doll
+            Amount: 211
+          - Index: 4
+            Item: Jejellopy
+            Amount: 490
+      - Index: 107
+        Item: Atk_Speed1
+        Zeny: 3373
+        RequiredItems:
+          - Index: 0
+            Item: Burning_Heart
+            Amount: 403
+          - Index: 1
+            Item: Sticky_Mucus
+            Amount: 902
+          - Index: 2
+            Item: Yoyo_Tail
+            Amount: 723
+          - Index: 3
+            Item: Zargon
+            Amount: 868
+          - Index: 4
+            Item: Burning_Heart
+            Amount: 307
+      - Index: 108
+        Item: Fighting_Spirit4
+        Zeny: 2141
+        RequiredItems:
+          - Index: 0
+            Item: Large_Jellopy
+            Amount: 614
+          - Index: 1
+            Item: Dragon_Scale
+            Amount: 913
+          - Index: 2
+            Item: White_Herb
+            Amount: 170
+          - Index: 3
+            Item: Zargon
+            Amount: 806
+          - Index: 4
+            Item: Red_Herb
+            Amount: 904
+      - Index: 109
+        Item: Fighting_Spirit3
+        Zeny: 4604
+        RequiredItems:
+          - Index: 0
+            Item: Green_Herb
+            Amount: 824
+          - Index: 1
+            Item: Jejellopy
+            Amount: 718
+          - Index: 2
+            Item: Jejellopy
+            Amount: 653
+          - Index: 3
+            Item: Acorn
+            Amount: 222
+          - Index: 4
+            Item: Elunium_Stone
+            Amount: 743
+      - Index: 110
+        Item: Fighting_Spirit2
+        Zeny: 2899
+        RequiredItems:
+          - Index: 0
+            Item: Red_Herb
+            Amount: 504
+          - Index: 1
+            Item: Dragon_Scale
+            Amount: 997
+          - Index: 2
+            Item: Yoyo_Tail
+            Amount: 439
+          - Index: 3
+            Item: Fish_Tail
+            Amount: 968
+          - Index: 4
+            Item: Moth_Dust
+            Amount: 216
+      - Index: 111
+        Item: Fighting_Spirit1
+        Zeny: 9123
+        RequiredItems:
+          - Index: 0
+            Item: Green_Herb
+            Amount: 770
+          - Index: 1
+            Item: Fish_Tail
+            Amount: 997
+          - Index: 2
+            Item: Fish_Tail
+            Amount: 951
+          - Index: 3
+            Item: White_Herb
+            Amount: 726
+          - Index: 4
+            Item: Green_Herb
+            Amount: 365
+      - Index: 112
+        Item: Spell4
+        Zeny: 1747
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 939
+          - Index: 1
+            Item: Zargon
+            Amount: 376
+          - Index: 2
+            Item: Garlet
+            Amount: 245
+          - Index: 3
+            Item: Garlet
+            Amount: 612
+          - Index: 4
+            Item: Garlet
+            Amount: 485
+      - Index: 113
+        Item: Spell3
+        Zeny: 4349
+        RequiredItems:
+          - Index: 0
+            Item: Garlet
+            Amount: 363
+          - Index: 1
+            Item: Sticky_Mucus
+            Amount: 283
+          - Index: 2
+            Item: Dragon_Scale
+            Amount: 340
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 253
+          - Index: 4
+            Item: Green_Herb
+            Amount: 241
+      - Index: 114
+        Item: Spell2
+        Zeny: 9709
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 872
+          - Index: 1
+            Item: Brigan
+            Amount: 646
+          - Index: 2
+            Item: Fish_Tail
+            Amount: 996
+          - Index: 3
+            Item: Fish_Tail
+            Amount: 154
+          - Index: 4
+            Item: Fish_Tail
+            Amount: 118
+      - Index: 115
+        Item: Spell1
+        Zeny: 6170
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 198
+          - Index: 1
+            Item: Unripe_Apple
+            Amount: 813
+          - Index: 2
+            Item: Baphomet_Doll
+            Amount: 702
+          - Index: 3
+            Item: Hot_Hair
+            Amount: 769
+          - Index: 4
+            Item: Elunium_Stone
+            Amount: 304
+      - Index: 116
+        Item: Sharp3
+        Zeny: 3331
+        RequiredItems:
+          - Index: 0
+            Item: Unripe_Apple
+            Amount: 619
+          - Index: 1
+            Item: Unripe_Apple
+            Amount: 369
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 820
+          - Index: 3
+            Item: Burning_Heart
+            Amount: 831
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 379
+      - Index: 117
+        Item: Sharp2
+        Zeny: 8547
+        RequiredItems:
+          - Index: 0
+            Item: White_Herb
+            Amount: 367
+          - Index: 1
+            Item: Brigan
+            Amount: 905
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 684
+          - Index: 3
+            Item: Yoyo_Tail
+            Amount: 286
+          - Index: 4
+            Item: Green_Herb
+            Amount: 470
+      - Index: 118
+        Item: Sharp1
+        Zeny: 7637
+        RequiredItems:
+          - Index: 0
+            Item: Dragon_Scale
+            Amount: 135
+          - Index: 1
+            Item: Red_Herb
+            Amount: 678
+          - Index: 2
+            Item: Green_Herb
+            Amount: 915
+          - Index: 3
+            Item: Red_Herb
+            Amount: 632
+          - Index: 4
+            Item: Dragon_Scale
+            Amount: 833
+      - Index: 119
+        Item: Atk1
+        Zeny: 2667
+        RequiredItems:
+          - Index: 0
+            Item: Large_Jellopy
+            Amount: 134
+          - Index: 1
+            Item: Garlet
+            Amount: 120
+          - Index: 2
+            Item: Fish_Tail
+            Amount: 998
+          - Index: 3
+            Item: Fish_Tail
+            Amount: 518
+          - Index: 4
+            Item: Acorn
+            Amount: 961
+      - Index: 120
+        Item: Fighting_Spirit5
+        Zeny: 5529
+        RequiredItems:
+          - Index: 0
+            Item: Moth_Dust
+            Amount: 429
+          - Index: 1
+            Item: Red_Herb
+            Amount: 664
+          - Index: 2
+            Item: Red_Herb
+            Amount: 606
+          - Index: 3
+            Item: Fish_Tail
+            Amount: 286
+          - Index: 4
+            Item: Garlet
+            Amount: 345
+      - Index: 121
+        Item: Fighting_Spirit6
+        Zeny: 6803
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 303
+          - Index: 1
+            Item: Jejellopy
+            Amount: 664
+          - Index: 2
+            Item: Dragon_Scale
+            Amount: 802
+          - Index: 3
+            Item: Jejellopy
+            Amount: 697
+          - Index: 4
+            Item: Sticky_Mucus
+            Amount: 751
+      - Index: 122
+        Item: Fighting_Spirit7
+        Zeny: 7203
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 712
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 745
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 450
+          - Index: 3
+            Item: Large_Jellopy
+            Amount: 677
+          - Index: 4
+            Item: White_Herb
+            Amount: 266
+      - Index: 123
+        Item: Fighting_Spirit8
+        Zeny: 3190
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 785
+          - Index: 1
+            Item: Zargon
+            Amount: 760
+          - Index: 2
+            Item: Green_Herb
+            Amount: 425
+          - Index: 3
+            Item: Garlet
+            Amount: 868
+          - Index: 4
+            Item: Green_Herb
+            Amount: 700
+      - Index: 124
+        Item: Fighting_Spirit9
+        Zeny: 2402
+        RequiredItems:
+          - Index: 0
+            Item: Sticky_Mucus
+            Amount: 656
+          - Index: 1
+            Item: Garlet
+            Amount: 937
+          - Index: 2
+            Item: Sticky_Mucus
+            Amount: 467
+          - Index: 3
+            Item: Sticky_Mucus
+            Amount: 588
+          - Index: 4
+            Item: Fish_Tail
+            Amount: 167
+      - Index: 125
+        Item: Fighting_Spirit10
+        Zeny: 6151
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 491
+          - Index: 1
+            Item: Red_Herb
+            Amount: 173
+          - Index: 2
+            Item: White_Herb
+            Amount: 881
+          - Index: 3
+            Item: Green_Herb
+            Amount: 338
+          - Index: 4
+            Item: Burning_Heart
+            Amount: 906
+      - Index: 126
+        Item: Spell5
+        Zeny: 1825
+        RequiredItems:
+          - Index: 0
+            Item: Seed_Of_Yggdrasil
+            Amount: 993
+          - Index: 1
+            Item: Zargon
+            Amount: 756
+          - Index: 2
+            Item: Zargon
+            Amount: 294
+          - Index: 3
+            Item: Zargon
+            Amount: 609
+          - Index: 4
+            Item: Green_Herb
+            Amount: 333
+      - Index: 127
+        Item: Spell6
+        Zeny: 8275
+        RequiredItems:
+          - Index: 0
+            Item: Dragon_Scale
+            Amount: 794
+          - Index: 1
+            Item: Brigan
+            Amount: 954
+          - Index: 2
+            Item: Jejellopy
+            Amount: 441
+          - Index: 3
+            Item: Hot_Hair
+            Amount: 206
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 900
+      - Index: 128
+        Item: Spell7
+        Zeny: 5615
+        RequiredItems:
+          - Index: 0
+            Item: Red_Herb
+            Amount: 173
+          - Index: 1
+            Item: Unripe_Apple
+            Amount: 399
+          - Index: 2
+            Item: Baphomet_Doll
+            Amount: 907
+          - Index: 3
+            Item: Large_Jellopy
+            Amount: 217
+          - Index: 4
+            Item: Elunium_Stone
+            Amount: 317
+      - Index: 129
+        Item: Spell8
+        Zeny: 5434
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 596
+          - Index: 1
+            Item: Burning_Heart
+            Amount: 239
+          - Index: 2
+            Item: Hot_Hair
+            Amount: 816
+          - Index: 3
+            Item: Moth_Dust
+            Amount: 486
+          - Index: 4
+            Item: Yoyo_Tail
+            Amount: 440
+      - Index: 130
+        Item: Spell9
+        Zeny: 9460
+        RequiredItems:
+          - Index: 0
+            Item: Green_Herb
+            Amount: 137
+          - Index: 1
+            Item: Garlet
+            Amount: 124
+          - Index: 2
+            Item: Moth_Dust
+            Amount: 324
+          - Index: 3
+            Item: Sticky_Mucus
+            Amount: 703
+          - Index: 4
+            Item: Garlet
+            Amount: 353
+      - Index: 131
+        Item: Spell10
+        Zeny: 7429
+        RequiredItems:
+          - Index: 0
+            Item: Garlet
+            Amount: 763
+          - Index: 1
+            Item: Hot_Hair
+            Amount: 824
+          - Index: 2
+            Item: Dragon_Scale
+            Amount: 436
+          - Index: 3
+            Item: Baphomet_Doll
+            Amount: 164
+          - Index: 4
+            Item: Yoyo_Tail
+            Amount: 714
+      - Index: 132
+        Item: Atk_Speed2
+        Zeny: 8150
+        RequiredItems:
+          - Index: 0
+            Item: Seed_Of_Yggdrasil
+            Amount: 143
+          - Index: 1
+            Item: Green_Herb
+            Amount: 648
+          - Index: 2
+            Item: Brigan
+            Amount: 889
+          - Index: 3
+            Item: Hot_Hair
+            Amount: 948
+          - Index: 4
+            Item: Brigan
+            Amount: 441
+      - Index: 133
+        Item: Sharp4
+        Zeny: 4883
+        RequiredItems:
+          - Index: 0
+            Item: Moth_Dust
+            Amount: 171
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 743
+          - Index: 2
+            Item: Red_Herb
+            Amount: 642
+          - Index: 3
+            Item: Sticky_Mucus
+            Amount: 530
+          - Index: 4
+            Item: Jejellopy
+            Amount: 952
+      - Index: 134
+        Item: Sharp5
+        Zeny: 2861
+        RequiredItems:
+          - Index: 0
+            Item: Fish_Tail
+            Amount: 613
+          - Index: 1
+            Item: Hot_Hair
+            Amount: 138
+          - Index: 2
+            Item: White_Herb
+            Amount: 435
+          - Index: 3
+            Item: Dragon_Scale
+            Amount: 970
+          - Index: 4
+            Item: Green_Herb
+            Amount: 123
+      - Index: 135
+        Item: Sea_Energy
+        Zeny: 8295
+        RequiredItems:
+          - Index: 0
+            Item: Seed_Of_Yggdrasil
+            Amount: 135
+          - Index: 1
+            Item: Zargon
+            Amount: 279
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 323
+          - Index: 3
+            Item: Elunium_Stone
+            Amount: 113
+          - Index: 4
+            Item: Baphomet_Doll
+            Amount: 506
+      - Index: 136
+        Item: 2011Valentin_Angel
+        Zeny: 4770
+        RequiredItems:
+          - Index: 0
+            Item: Unripe_Apple
+            Amount: 669
+          - Index: 1
+            Item: Brigan
+            Amount: 188
+          - Index: 2
+            Item: Elunium_Stone
+            Amount: 871
+          - Index: 3
+            Item: Garlet
+            Amount: 149
+          - Index: 4
+            Item: Burning_Heart
+            Amount: 549
+      - Index: 137
+        Item: 2011Valentin_Devil
+        Zeny: 9643
+        RequiredItems:
+          - Index: 0
+            Item: Zargon
+            Amount: 151
+          - Index: 1
+            Item: Acorn
+            Amount: 473
+          - Index: 2
+            Item: Hot_Hair
+            Amount: 617
+          - Index: 3
+            Item: Elunium_Stone
+            Amount: 694
+          - Index: 4
+            Item: Dragon_Scale
+            Amount: 129
+      - Index: 138
+        Item: Heal_Amount3
+        Zeny: 3853
+        RequiredItems:
+          - Index: 0
+            Item: Jejellopy
+            Amount: 884
+          - Index: 1
+            Item: Moth_Dust
+            Amount: 144
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 984
+          - Index: 3
+            Item: Hot_Hair
+            Amount: 194
+          - Index: 4
+            Item: Garlet
+            Amount: 349
+      - Index: 139
+        Item: Heal_Amount4
+        Zeny: 9823
+        RequiredItems:
+          - Index: 0
+            Item: Sticky_Mucus
+            Amount: 765
+          - Index: 1
+            Item: White_Herb
+            Amount: 427
+          - Index: 2
+            Item: Jejellopy
+            Amount: 880
+          - Index: 3
+            Item: Yoyo_Tail
+            Amount: 576
+          - Index: 4
+            Item: Burning_Heart
+            Amount: 244
+      - Index: 140
+        Item: Heal_Amount5
+        Zeny: 3509
+        RequiredItems:
+          - Index: 0
+            Item: Zargon
+            Amount: 883
+          - Index: 1
+            Item: Burning_Heart
+            Amount: 285
+          - Index: 2
+            Item: Burning_Heart
+            Amount: 369
+          - Index: 3
+            Item: Elunium_Stone
+            Amount: 275
+          - Index: 4
+            Item: Large_Jellopy
+            Amount: 366
+      - Index: 141
+        Item: S_Str
+        Zeny: 8369
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 545
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 110
+          - Index: 2
+            Item: Hot_Hair
+            Amount: 664
+          - Index: 3
+            Item: Yoyo_Tail
+            Amount: 809
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 482
+      - Index: 142
+        Item: S_Agi
+        Zeny: 1393
+        RequiredItems:
+          - Index: 0
+            Item: White_Herb
+            Amount: 805
+          - Index: 1
+            Item: Burning_Heart
+            Amount: 419
+          - Index: 2
+            Item: Moth_Dust
+            Amount: 368
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 546
+          - Index: 4
+            Item: Fish_Tail
+            Amount: 810
+      - Index: 143
+        Item: S_Vital
+        Zeny: 6286
+        RequiredItems:
+          - Index: 0
+            Item: Green_Herb
+            Amount: 664
+          - Index: 1
+            Item: White_Herb
+            Amount: 557
+          - Index: 2
+            Item: Red_Herb
+            Amount: 458
+          - Index: 3
+            Item: Green_Herb
+            Amount: 905
+          - Index: 4
+            Item: Sticky_Mucus
+            Amount: 327
+      - Index: 144
+        Item: S_Int
+        Zeny: 5031
+        RequiredItems:
+          - Index: 0
+            Item: Seed_Of_Yggdrasil
+            Amount: 756
+          - Index: 1
+            Item: Seed_Of_Yggdrasil
+            Amount: 791
+          - Index: 2
+            Item: Acorn
+            Amount: 591
+          - Index: 3
+            Item: Brigan
+            Amount: 777
+          - Index: 4
+            Item: Garlet
+            Amount: 447
+      - Index: 145
+        Item: S_Dex
+        Zeny: 2139
+        RequiredItems:
+          - Index: 0
+            Item: Hot_Hair
+            Amount: 746
+          - Index: 1
+            Item: Yoyo_Tail
+            Amount: 330
+          - Index: 2
+            Item: Fish_Tail
+            Amount: 720
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 135
+          - Index: 4
+            Item: Large_Jellopy
+            Amount: 833
+      - Index: 146
+        Item: S_Luck
+        Zeny: 1683
+        RequiredItems:
+          - Index: 0
+            Item: Garlet
+            Amount: 686
+          - Index: 1
+            Item: Unripe_Apple
+            Amount: 273
+          - Index: 2
+            Item: Fish_Tail
+            Amount: 909
+          - Index: 3
+            Item: Brigan
+            Amount: 644
+          - Index: 4
+            Item: Hot_Hair
+            Amount: 244
+      - Index: 147
+        Item: Evasion1
+        Zeny: 3328
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 126
+          - Index: 1
+            Item: Yoyo_Tail
+            Amount: 662
+          - Index: 2
+            Item: Hot_Hair
+            Amount: 819
+          - Index: 3
+            Item: Green_Herb
+            Amount: 269
+          - Index: 4
+            Item: Hot_Hair
+            Amount: 884
+      - Index: 148
+        Item: Evasion3
+        Zeny: 4340
+        RequiredItems:
+          - Index: 0
+            Item: Burning_Heart
+            Amount: 899
+          - Index: 1
+            Item: Fish_Tail
+            Amount: 727
+          - Index: 2
+            Item: Sticky_Mucus
+            Amount: 589
+          - Index: 3
+            Item: Large_Jellopy
+            Amount: 371
+          - Index: 4
+            Item: Elunium_Stone
+            Amount: 419
+      - Index: 149
+        Item: MHP1
+        Zeny: 3572
+        RequiredItems:
+          - Index: 0
+            Item: Dragon_Scale
+            Amount: 767
+          - Index: 1
+            Item: Zargon
+            Amount: 402
+          - Index: 2
+            Item: Moth_Dust
+            Amount: 476
+          - Index: 3
+            Item: Baphomet_Doll
+            Amount: 640
+          - Index: 4
+            Item: Garlet
+            Amount: 370
+      - Index: 150
+        Item: MHP2
+        Zeny: 1004
+        RequiredItems:
+          - Index: 0
+            Item: Fish_Tail
+            Amount: 700
+          - Index: 1
+            Item: Dragon_Scale
+            Amount: 449
+          - Index: 2
+            Item: Brigan
+            Amount: 818
+          - Index: 3
+            Item: Large_Jellopy
+            Amount: 535
+          - Index: 4
+            Item: Burning_Heart
+            Amount: 672
+      - Index: 151
+        Item: Fatal1
+        Zeny: 2929
+        RequiredItems:
+          - Index: 0
+            Item: Burning_Heart
+            Amount: 905
+          - Index: 1
+            Item: Red_Herb
+            Amount: 789
+          - Index: 2
+            Item: Sticky_Mucus
+            Amount: 445
+          - Index: 3
+            Item: Zargon
+            Amount: 109
+          - Index: 4
+            Item: Large_Jellopy
+            Amount: 752
+      - Index: 152
+        Item: Fatal2
+        Zeny: 8103
+        RequiredItems:
+          - Index: 0
+            Item: Fish_Tail
+            Amount: 936
+          - Index: 1
+            Item: Sticky_Mucus
+            Amount: 458
+          - Index: 2
+            Item: Zargon
+            Amount: 240
+          - Index: 3
+            Item: Dragon_Scale
+            Amount: 904
+          - Index: 4
+            Item: Jejellopy
+            Amount: 513
+      - Index: 153
+        Item: Fatal3
+        Zeny: 2619
+        RequiredItems:
+          - Index: 0
+            Item: Green_Herb
+            Amount: 157
+          - Index: 1
+            Item: White_Herb
+            Amount: 497
+          - Index: 2
+            Item: Green_Herb
+            Amount: 264
+          - Index: 3
+            Item: Fish_Tail
+            Amount: 967
+          - Index: 4
+            Item: Hot_Hair
+            Amount: 647
+      - Index: 154
+        Item: Fatal4
+        Zeny: 4163
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 214
+          - Index: 1
+            Item: Zargon
+            Amount: 252
+          - Index: 2
+            Item: Unripe_Apple
+            Amount: 829
+          - Index: 3
+            Item: Large_Jellopy
+            Amount: 427
+          - Index: 4
+            Item: Fish_Tail
+            Amount: 339
+      - Index: 155
+        Item: MHP3
+        Zeny: 1322
+        RequiredItems:
+          - Index: 0
+            Item: Seed_Of_Yggdrasil
+            Amount: 217
+          - Index: 1
+            Item: Garlet
+            Amount: 945
+          - Index: 2
+            Item: Moth_Dust
+            Amount: 575
+          - Index: 3
+            Item: Unripe_Apple
+            Amount: 290
+          - Index: 4
+            Item: Hot_Hair
+            Amount: 406
+      - Index: 156
+        Item: MHP4
+        Zeny: 9991
+        RequiredItems:
+          - Index: 0
+            Item: Burning_Heart
+            Amount: 853
+          - Index: 1
+            Item: Garlet
+            Amount: 654
+          - Index: 2
+            Item: White_Herb
+            Amount: 880
+          - Index: 3
+            Item: Hot_Hair
+            Amount: 567
+          - Index: 4
+            Item: Acorn
+            Amount: 515
+      - Index: 157
+        Item: Attack_Delay_1
+        Zeny: 2795
+        RequiredItems:
+          - Index: 0
+            Item: Jejellopy
+            Amount: 964
+          - Index: 1
+            Item: Large_Jellopy
+            Amount: 657
+          - Index: 2
+            Item: Garlet
+            Amount: 136
+          - Index: 3
+            Item: Unripe_Apple
+            Amount: 118
+          - Index: 4
+            Item: White_Herb
+            Amount: 575
+      - Index: 158
+        Item: SP25
+        Zeny: 7710
+        RequiredItems:
+          - Index: 0
+            Item: Zargon
+            Amount: 830
+          - Index: 1
+            Item: Green_Herb
+            Amount: 503
+          - Index: 2
+            Item: Red_Herb
+            Amount: 383
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 889
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 744
+      - Index: 159
+        Item: SP75
+        Zeny: 2845
+        RequiredItems:
+          - Index: 0
+            Item: White_Herb
+            Amount: 729
+          - Index: 1
+            Item: Large_Jellopy
+            Amount: 313
+          - Index: 2
+            Item: Sticky_Mucus
+            Amount: 598
+          - Index: 3
+            Item: Green_Herb
+            Amount: 231
+          - Index: 4
+            Item: Dragon_Scale
+            Amount: 607
+      - Index: 160
+        Item: Attack_Delay_2
+        Zeny: 2660
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 242
+          - Index: 1
+            Item: Moth_Dust
+            Amount: 155
+          - Index: 2
+            Item: White_Herb
+            Amount: 196
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 654
+          - Index: 4
+            Item: Zargon
+            Amount: 162
+      - Index: 161
+        Item: Attack_Delay_3
+        Zeny: 4445
+        RequiredItems:
+          - Index: 0
+            Item: Moth_Dust
+            Amount: 607
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 233
+          - Index: 2
+            Item: Sticky_Mucus
+            Amount: 731
+          - Index: 3
+            Item: Unripe_Apple
+            Amount: 932
+          - Index: 4
+            Item: Baphomet_Doll
+            Amount: 755
+      - Index: 162
+        Item: Bear's_Power
+        Zeny: 5866
+        RequiredItems:
+          - Index: 0
+            Item: Unripe_Apple
+            Amount: 416
+          - Index: 1
+            Item: Yoyo_Tail
+            Amount: 661
+          - Index: 2
+            Item: Burning_Heart
+            Amount: 221
+          - Index: 3
+            Item: Moth_Dust
+            Amount: 104
+          - Index: 4
+            Item: Green_Herb
+            Amount: 355
+      - Index: 163
+        Item: Runaway_Magic
+        Zeny: 3526
+        RequiredItems:
+          - Index: 0
+            Item: Unripe_Apple
+            Amount: 561
+          - Index: 1
+            Item: Green_Herb
+            Amount: 534
+          - Index: 2
+            Item: Elunium_Stone
+            Amount: 808
+          - Index: 3
+            Item: Green_Herb
+            Amount: 185
+          - Index: 4
+            Item: Red_Herb
+            Amount: 473
+      - Index: 164
+        Item: Speed_Of_Light
+        Zeny: 7705
+        RequiredItems:
+          - Index: 0
+            Item: Large_Jellopy
+            Amount: 590
+          - Index: 1
+            Item: Zargon
+            Amount: 904
+          - Index: 2
+            Item: Moth_Dust
+            Amount: 265
+          - Index: 3
+            Item: Burning_Heart
+            Amount: 970
+          - Index: 4
+            Item: Burning_Heart
+            Amount: 949
+      - Index: 165
+        Item: Muscle_Fool
+        Zeny: 3425
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 634
+          - Index: 1
+            Item: Moth_Dust
+            Amount: 702
+          - Index: 2
+            Item: Zargon
+            Amount: 524
+          - Index: 3
+            Item: Unripe_Apple
+            Amount: 385
+          - Index: 4
+            Item: White_Herb
+            Amount: 358
+      - Index: 166
+        Item: Hawkeye
+        Zeny: 4503
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 272
+          - Index: 1
+            Item: Brigan
+            Amount: 220
+          - Index: 2
+            Item: Elunium_Stone
+            Amount: 324
+          - Index: 3
+            Item: Dragon_Scale
+            Amount: 301
+          - Index: 4
+            Item: Jejellopy
+            Amount: 261
+      - Index: 167
+        Item: Lucky_Day
+        Zeny: 3431
+        RequiredItems:
+          - Index: 0
+            Item: Large_Jellopy
+            Amount: 158
+          - Index: 1
+            Item: Seed_Of_Yggdrasil
+            Amount: 976
+          - Index: 2
+            Item: Green_Herb
+            Amount: 642
+          - Index: 3
+            Item: Red_Herb
+            Amount: 719
+          - Index: 4
+            Item: Zargon
+            Amount: 703
+      - Index: 168
+        Item: Attack_Delay_4
+        Zeny: 5583
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 550
+          - Index: 1
+            Item: White_Herb
+            Amount: 379
+          - Index: 2
+            Item: White_Herb
+            Amount: 227
+          - Index: 3
+            Item: Red_Herb
+            Amount: 147
+          - Index: 4
+            Item: Seed_Of_Yggdrasil
+            Amount: 793
+      - Index: 169
+        Item: Atk1p
+        Zeny: 6440
+        RequiredItems:
+          - Index: 0
+            Item: Fish_Tail
+            Amount: 326
+          - Index: 1
+            Item: Yoyo_Tail
+            Amount: 147
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 344
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 158
+          - Index: 4
+            Item: Fish_Tail
+            Amount: 511
+      - Index: 170
+        Item: Matk1p
+        Zeny: 1207
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 599
+          - Index: 1
+            Item: Jejellopy
+            Amount: 249
+          - Index: 2
+            Item: Yoyo_Tail
+            Amount: 211
+          - Index: 3
+            Item: Elunium_Stone
+            Amount: 990
+          - Index: 4
+            Item: Baphomet_Doll
+            Amount: 783
+      - Index: 171
+        Item: HIT1
+        Zeny: 7659
+        RequiredItems:
+          - Index: 0
+            Item: Large_Jellopy
+            Amount: 490
+          - Index: 1
+            Item: Hot_Hair
+            Amount: 564
+          - Index: 2
+            Item: Brigan
+            Amount: 468
+          - Index: 3
+            Item: Red_Herb
+            Amount: 422
+          - Index: 4
+            Item: Acorn
+            Amount: 479
+      - Index: 172
+        Item: Conjure1
+        Zeny: 1109
+        RequiredItems:
+          - Index: 0
+            Item: Large_Jellopy
+            Amount: 832
+          - Index: 1
+            Item: Acorn
+            Amount: 789
+          - Index: 2
+            Item: Acorn
+            Amount: 495
+          - Index: 3
+            Item: Jejellopy
+            Amount: 882
+          - Index: 4
+            Item: Sticky_Mucus
+            Amount: 390
+      - Index: 173
+        Item: Conjure2
+        Zeny: 2263
+        RequiredItems:
+          - Index: 0
+            Item: Large_Jellopy
+            Amount: 879
+          - Index: 1
+            Item: Elunium_Stone
+            Amount: 656
+          - Index: 2
+            Item: Large_Jellopy
+            Amount: 440
+          - Index: 3
+            Item: Yoyo_Tail
+            Amount: 425
+          - Index: 4
+            Item: Moth_Dust
+            Amount: 175
+      - Index: 174
+        Item: Conjure3
+        Zeny: 4868
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 392
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 895
+          - Index: 2
+            Item: Moth_Dust
+            Amount: 363
+          - Index: 3
+            Item: Fish_Tail
+            Amount: 392
+          - Index: 4
+            Item: Large_Jellopy
+            Amount: 246
+      - Index: 175
+        Item: Conjure4
+        Zeny: 3260
+        RequiredItems:
+          - Index: 0
+            Item: Seed_Of_Yggdrasil
+            Amount: 351
+          - Index: 1
+            Item: Large_Jellopy
+            Amount: 161
+          - Index: 2
+            Item: Green_Herb
+            Amount: 312
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 943
+          - Index: 4
+            Item: Dragon_Scale
+            Amount: 472
+      - Index: 176
+        Item: Conjure5
+        Zeny: 6932
+        RequiredItems:
+          - Index: 0
+            Item: Acorn
+            Amount: 824
+          - Index: 1
+            Item: Moth_Dust
+            Amount: 588
+          - Index: 2
+            Item: Acorn
+            Amount: 475
+          - Index: 3
+            Item: Elunium_Stone
+            Amount: 354
+          - Index: 4
+            Item: Large_Jellopy
+            Amount: 463
+      - Index: 177
+        Item: Mdef1
+        Zeny: 2192
+        RequiredItems:
+          - Index: 0
+            Item: Zargon
+            Amount: 115
+          - Index: 1
+            Item: Moth_Dust
+            Amount: 265
+          - Index: 2
+            Item: Dragon_Scale
+            Amount: 859
+          - Index: 3
+            Item: Moth_Dust
+            Amount: 785
+          - Index: 4
+            Item: Acorn
+            Amount: 404
+      - Index: 178
+        Item: Mdef3
+        Zeny: 4598
+        RequiredItems:
+          - Index: 0
+            Item: Green_Herb
+            Amount: 106
+          - Index: 1
+            Item: Burning_Heart
+            Amount: 792
+          - Index: 2
+            Item: Baphomet_Doll
+            Amount: 474
+          - Index: 3
+            Item: Unripe_Apple
+            Amount: 615
+          - Index: 4
+            Item: Burning_Heart
+            Amount: 932
+      - Index: 179
+        Item: Mdef5
+        Zeny: 7085
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 831
+          - Index: 1
+            Item: Acorn
+            Amount: 629
+          - Index: 2
+            Item: Yoyo_Tail
+            Amount: 124
+          - Index: 3
+            Item: Fish_Tail
+            Amount: 446
+          - Index: 4
+            Item: Zargon
+            Amount: 337
+      - Index: 180
+        Item: Def15
+        Zeny: 9870
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 638
+          - Index: 1
+            Item: White_Herb
+            Amount: 384
+          - Index: 2
+            Item: Yoyo_Tail
+            Amount: 924
+          - Index: 3
+            Item: Baphomet_Doll
+            Amount: 884
+          - Index: 4
+            Item: Dragon_Scale
+            Amount: 740
+      - Index: 181
+        Item: Atk4p
+        Zeny: 3310
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 313
+          - Index: 1
+            Item: Dragon_Scale
+            Amount: 901
+          - Index: 2
+            Item: Zargon
+            Amount: 652
+          - Index: 3
+            Item: Zargon
+            Amount: 876
+          - Index: 4
+            Item: Jejellopy
+            Amount: 533
+      - Index: 182
+        Item: Atk5p
+        Zeny: 4170
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 727
+          - Index: 1
+            Item: White_Herb
+            Amount: 322
+          - Index: 2
+            Item: Unripe_Apple
+            Amount: 221
+          - Index: 3
+            Item: Dragon_Scale
+            Amount: 554
+          - Index: 4
+            Item: Fish_Tail
+            Amount: 477
+      - Index: 183
+        Item: Matk2p
+        Zeny: 1482
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 705
+          - Index: 1
+            Item: Garlet
+            Amount: 930
+          - Index: 2
+            Item: Garlet
+            Amount: 848
+          - Index: 3
+            Item: Brigan
+            Amount: 102
+          - Index: 4
+            Item: Jejellopy
+            Amount: 340
+      - Index: 184
+        Item: Matk3p
+        Zeny: 1429
+        RequiredItems:
+          - Index: 0
+            Item: Moth_Dust
+            Amount: 608
+          - Index: 1
+            Item: Garlet
+            Amount: 223
+          - Index: 2
+            Item: Yoyo_Tail
+            Amount: 904
+          - Index: 3
+            Item: Jejellopy
+            Amount: 671
+          - Index: 4
+            Item: Green_Herb
+            Amount: 745
+      - Index: 185
+        Item: Matk4p
+        Zeny: 3122
+        RequiredItems:
+          - Index: 0
+            Item: Fish_Tail
+            Amount: 868
+          - Index: 1
+            Item: Unripe_Apple
+            Amount: 247
+          - Index: 2
+            Item: Acorn
+            Amount: 147
+          - Index: 3
+            Item: Large_Jellopy
+            Amount: 445
+          - Index: 4
+            Item: Red_Herb
+            Amount: 410
+      - Index: 186
+        Item: Matk5p
+        Zeny: 6673
+        RequiredItems:
+          - Index: 0
+            Item: Green_Herb
+            Amount: 769
+          - Index: 1
+            Item: Red_Herb
+            Amount: 712
+          - Index: 2
+            Item: Hot_Hair
+            Amount: 939
+          - Index: 3
+            Item: Dragon_Scale
+            Amount: 313
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 853
+      - Index: 187
+        Item: MHP5
+        Zeny: 9673
+        RequiredItems:
+          - Index: 0
+            Item: Large_Jellopy
+            Amount: 999
+          - Index: 1
+            Item: Unripe_Apple
+            Amount: 324
+          - Index: 2
+            Item: Unripe_Apple
+            Amount: 466
+          - Index: 3
+            Item: Zargon
+            Amount: 931
+          - Index: 4
+            Item: Yoyo_Tail
+            Amount: 276
+      - Index: 188
+        Item: Def18
+        Zeny: 4658
+        RequiredItems:
+          - Index: 0
+            Item: White_Herb
+            Amount: 780
+          - Index: 1
+            Item: Jejellopy
+            Amount: 151
+          - Index: 2
+            Item: Zargon
+            Amount: 870
+          - Index: 3
+            Item: Unripe_Apple
+            Amount: 437
+          - Index: 4
+            Item: Acorn
+            Amount: 221
+      - Index: 189
+        Item: Def21
+        Zeny: 8361
+        RequiredItems:
+          - Index: 0
+            Item: Dragon_Scale
+            Amount: 834
+          - Index: 1
+            Item: Hot_Hair
+            Amount: 868
+          - Index: 2
+            Item: Elunium_Stone
+            Amount: 510
+          - Index: 3
+            Item: Dragon_Scale
+            Amount: 786
+          - Index: 4
+            Item: Hot_Hair
+            Amount: 511
+      - Index: 190
+        Item: Atk6p
+        Zeny: 9358
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 764
+          - Index: 1
+            Item: Garlet
+            Amount: 529
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 483
+          - Index: 3
+            Item: Large_Jellopy
+            Amount: 414
+          - Index: 4
+            Item: Yoyo_Tail
+            Amount: 167
+      - Index: 191
+        Item: Atk7p
+        Zeny: 8965
+        RequiredItems:
+          - Index: 0
+            Item: Sticky_Mucus
+            Amount: 197
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 491
+          - Index: 2
+            Item: Acorn
+            Amount: 991
+          - Index: 3
+            Item: Large_Jellopy
+            Amount: 268
+          - Index: 4
+            Item: Acorn
+            Amount: 392
+      - Index: 192
+        Item: Matk6p
+        Zeny: 9078
+        RequiredItems:
+          - Index: 0
+            Item: Jejellopy
+            Amount: 238
+          - Index: 1
+            Item: Large_Jellopy
+            Amount: 505
+          - Index: 2
+            Item: Red_Herb
+            Amount: 371
+          - Index: 3
+            Item: Brigan
+            Amount: 195
+          - Index: 4
+            Item: Yoyo_Tail
+            Amount: 821
+      - Index: 193
+        Item: Matk7p
+        Zeny: 4066
+        RequiredItems:
+          - Index: 0
+            Item: Burning_Heart
+            Amount: 963
+          - Index: 1
+            Item: Hot_Hair
+            Amount: 116
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 794
+          - Index: 3
+            Item: Elunium_Stone
+            Amount: 778
+          - Index: 4
+            Item: Dragon_Scale
+            Amount: 783
+      - Index: 194
+        Item: Force1
+        Zeny: 9995
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 890
+          - Index: 1
+            Item: Jejellopy
+            Amount: 234
+          - Index: 2
+            Item: Acorn
+            Amount: 780
+          - Index: 3
+            Item: Baphomet_Doll
+            Amount: 257
+          - Index: 4
+            Item: Green_Herb
+            Amount: 382
+      - Index: 195
+        Item: Force2
+        Zeny: 1347
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 144
+          - Index: 1
+            Item: Green_Herb
+            Amount: 120
+          - Index: 2
+            Item: Moth_Dust
+            Amount: 716
+          - Index: 3
+            Item: Yoyo_Tail
+            Amount: 203
+          - Index: 4
+            Item: Red_Herb
+            Amount: 985
+      - Index: 196
+        Item: Force3
+        Zeny: 5417
+        RequiredItems:
+          - Index: 0
+            Item: White_Herb
+            Amount: 950
+          - Index: 1
+            Item: Large_Jellopy
+            Amount: 364
+          - Index: 2
+            Item: Red_Herb
+            Amount: 451
+          - Index: 3
+            Item: Garlet
+            Amount: 250
+          - Index: 4
+            Item: Acorn
+            Amount: 264
+      - Index: 197
+        Item: Intellect1
+        Zeny: 2816
+        RequiredItems:
+          - Index: 0
+            Item: Zargon
+            Amount: 388
+          - Index: 1
+            Item: Moth_Dust
+            Amount: 867
+          - Index: 2
+            Item: Fish_Tail
+            Amount: 415
+          - Index: 3
+            Item: Acorn
+            Amount: 526
+          - Index: 4
+            Item: Yoyo_Tail
+            Amount: 992
+      - Index: 198
+        Item: Intellect2
+        Zeny: 6799
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 194
+          - Index: 1
+            Item: Sticky_Mucus
+            Amount: 116
+          - Index: 2
+            Item: Garlet
+            Amount: 696
+          - Index: 3
+            Item: White_Herb
+            Amount: 369
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 867
+      - Index: 199
+        Item: Intellect3
+        Zeny: 4233
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 302
+          - Index: 1
+            Item: Elunium_Stone
+            Amount: 881
+          - Index: 2
+            Item: Unripe_Apple
+            Amount: 815
+          - Index: 3
+            Item: Moth_Dust
+            Amount: 508
+          - Index: 4
+            Item: Baphomet_Doll
+            Amount: 316
+      - Index: 200
+        Item: Swiftness1
+        Zeny: 5568
+        RequiredItems:
+          - Index: 0
+            Item: Seed_Of_Yggdrasil
+            Amount: 550
+          - Index: 1
+            Item: Dragon_Scale
+            Amount: 105
+          - Index: 2
+            Item: Brigan
+            Amount: 706
+          - Index: 3
+            Item: Garlet
+            Amount: 505
+          - Index: 4
+            Item: Fish_Tail
+            Amount: 625
+      - Index: 201
+        Item: Swiftness2
+        Zeny: 2991
+        RequiredItems:
+          - Index: 0
+            Item: White_Herb
+            Amount: 168
+          - Index: 1
+            Item: Moth_Dust
+            Amount: 559
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 559
+          - Index: 3
+            Item: Green_Herb
+            Amount: 426
+          - Index: 4
+            Item: Garlet
+            Amount: 135
+      - Index: 202
+        Item: Swiftness3
+        Zeny: 2090
+        RequiredItems:
+          - Index: 0
+            Item: Red_Herb
+            Amount: 509
+          - Index: 1
+            Item: Acorn
+            Amount: 751
+          - Index: 2
+            Item: Yoyo_Tail
+            Amount: 437
+          - Index: 3
+            Item: Garlet
+            Amount: 819
+          - Index: 4
+            Item: Red_Herb
+            Amount: 573
+      - Index: 203
+        Item: Tough1
+        Zeny: 2709
+        RequiredItems:
+          - Index: 0
+            Item: Red_Herb
+            Amount: 274
+          - Index: 1
+            Item: Jejellopy
+            Amount: 151
+          - Index: 2
+            Item: Green_Herb
+            Amount: 315
+          - Index: 3
+            Item: Yoyo_Tail
+            Amount: 247
+          - Index: 4
+            Item: Yoyo_Tail
+            Amount: 469
+      - Index: 204
+        Item: Tough2
+        Zeny: 2814
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 142
+          - Index: 1
+            Item: Large_Jellopy
+            Amount: 885
+          - Index: 2
+            Item: Large_Jellopy
+            Amount: 730
+          - Index: 3
+            Item: Jejellopy
+            Amount: 968
+          - Index: 4
+            Item: Baphomet_Doll
+            Amount: 497
+      - Index: 205
+        Item: Tough3
+        Zeny: 2962
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 589
+          - Index: 1
+            Item: Garlet
+            Amount: 214
+          - Index: 2
+            Item: Sticky_Mucus
+            Amount: 422
+          - Index: 3
+            Item: Acorn
+            Amount: 970
+          - Index: 4
+            Item: Burning_Heart
+            Amount: 547
+      - Index: 206
+        Item: Artful1
+        Zeny: 1610
+        RequiredItems:
+          - Index: 0
+            Item: Burning_Heart
+            Amount: 150
+          - Index: 1
+            Item: Garlet
+            Amount: 305
+          - Index: 2
+            Item: Acorn
+            Amount: 805
+          - Index: 3
+            Item: Moth_Dust
+            Amount: 141
+          - Index: 4
+            Item: Brigan
+            Amount: 505
+      - Index: 207
+        Item: Artful2
+        Zeny: 2857
+        RequiredItems:
+          - Index: 0
+            Item: Dragon_Scale
+            Amount: 455
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 187
+          - Index: 2
+            Item: Moth_Dust
+            Amount: 245
+          - Index: 3
+            Item: Elunium_Stone
+            Amount: 847
+          - Index: 4
+            Item: Dragon_Scale
+            Amount: 752
+      - Index: 208
+        Item: Artful3
+        Zeny: 5220
+        RequiredItems:
+          - Index: 0
+            Item: Sticky_Mucus
+            Amount: 526
+          - Index: 1
+            Item: Fish_Tail
+            Amount: 502
+          - Index: 2
+            Item: Brigan
+            Amount: 733
+          - Index: 3
+            Item: Baphomet_Doll
+            Amount: 685
+          - Index: 4
+            Item: Seed_Of_Yggdrasil
+            Amount: 226
+      - Index: 209
+        Item: Fortune1
+        Zeny: 8001
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 938
+          - Index: 1
+            Item: Hot_Hair
+            Amount: 506
+          - Index: 2
+            Item: Green_Herb
+            Amount: 522
+          - Index: 3
+            Item: Unripe_Apple
+            Amount: 571
+          - Index: 4
+            Item: Hot_Hair
+            Amount: 106
+      - Index: 210
+        Item: Fortune2
+        Zeny: 1254
+        RequiredItems:
+          - Index: 0
+            Item: Sticky_Mucus
+            Amount: 886
+          - Index: 1
+            Item: Burning_Heart
+            Amount: 869
+          - Index: 2
+            Item: Fish_Tail
+            Amount: 937
+          - Index: 3
+            Item: Unripe_Apple
+            Amount: 919
+          - Index: 4
+            Item: Seed_Of_Yggdrasil
+            Amount: 141
+      - Index: 211
+        Item: Fortune3
+        Zeny: 4772
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 792
+          - Index: 1
+            Item: Unripe_Apple
+            Amount: 806
+          - Index: 2
+            Item: Green_Herb
+            Amount: 262
+          - Index: 3
+            Item: Brigan
+            Amount: 874
+          - Index: 4
+            Item: Yoyo_Tail
+            Amount: 195
+      - Index: 212
+        Item: Critical1
+        Zeny: 7388
+        RequiredItems:
+          - Index: 0
+            Item: Jejellopy
+            Amount: 244
+          - Index: 1
+            Item: Dragon_Scale
+            Amount: 422
+          - Index: 2
+            Item: Red_Herb
+            Amount: 240
+          - Index: 3
+            Item: Zargon
+            Amount: 290
+          - Index: 4
+            Item: Yoyo_Tail
+            Amount: 316
+      - Index: 213
+        Item: HP50
+        Zeny: 9948
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 971
+          - Index: 1
+            Item: Fish_Tail
+            Amount: 823
+          - Index: 2
+            Item: Jejellopy
+            Amount: 538
+          - Index: 3
+            Item: Sticky_Mucus
+            Amount: 782
+          - Index: 4
+            Item: Green_Herb
+            Amount: 858
+      - Index: 214
+        Item: SP10
+        Zeny: 2779
+        RequiredItems:
+          - Index: 0
+            Item: Hot_Hair
+            Amount: 486
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 484
+          - Index: 2
+            Item: Hot_Hair
+            Amount: 757
+          - Index: 3
+            Item: Unripe_Apple
+            Amount: 564
+          - Index: 4
+            Item: Red_Herb
+            Amount: 784
+      - Index: 215
+        Item: MSP1
+        Zeny: 3566
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 869
+          - Index: 1
+            Item: Brigan
+            Amount: 332
+          - Index: 2
+            Item: Zargon
+            Amount: 757
+          - Index: 3
+            Item: Red_Herb
+            Amount: 145
+          - Index: 4
+            Item: Baphomet_Doll
+            Amount: 223
+      - Index: 216
+        Item: HEAL2
+        Zeny: 6789
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 489
+          - Index: 1
+            Item: Large_Jellopy
+            Amount: 572
+          - Index: 2
+            Item: Zargon
+            Amount: 227
+          - Index: 3
+            Item: Acorn
+            Amount: 946
+          - Index: 4
+            Item: Green_Herb
+            Amount: 106
+      - Index: 217
+        Item: HEALHP1
+        Zeny: 1126
+        RequiredItems:
+          - Index: 0
+            Item: Acorn
+            Amount: 683
+          - Index: 1
+            Item: Zargon
+            Amount: 830
+          - Index: 2
+            Item: White_Herb
+            Amount: 497
+          - Index: 3
+            Item: Dragon_Scale
+            Amount: 420
+          - Index: 4
+            Item: Red_Herb
+            Amount: 614
+      - Index: 218
+        Item: HEALSP1
+        Zeny: 2781
+        RequiredItems:
+          - Index: 0
+            Item: Fish_Tail
+            Amount: 919
+          - Index: 1
+            Item: Jejellopy
+            Amount: 988
+          - Index: 2
+            Item: Red_Herb
+            Amount: 316
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 769
+          - Index: 4
+            Item: Jejellopy
+            Amount: 222
+      - Index: 219
+        Item: Tolerance_Not1
+        Zeny: 9892
+        RequiredItems:
+          - Index: 0
+            Item: Red_Herb
+            Amount: 275
+          - Index: 1
+            Item: Moth_Dust
+            Amount: 341
+          - Index: 2
+            Item: Brigan
+            Amount: 387
+          - Index: 3
+            Item: Fish_Tail
+            Amount: 853
+          - Index: 4
+            Item: Red_Herb
+            Amount: 899
+      - Index: 220
+        Item: Tolerance_Not2
+        Zeny: 5678
+        RequiredItems:
+          - Index: 0
+            Item: Unripe_Apple
+            Amount: 231
+          - Index: 1
+            Item: Acorn
+            Amount: 887
+          - Index: 2
+            Item: Large_Jellopy
+            Amount: 711
+          - Index: 3
+            Item: Sticky_Mucus
+            Amount: 844
+          - Index: 4
+            Item: Dragon_Scale
+            Amount: 240
+      - Index: 221
+        Item: Tolerance_Not3
+        Zeny: 7447
+        RequiredItems:
+          - Index: 0
+            Item: Garlet
+            Amount: 848
+          - Index: 1
+            Item: Brigan
+            Amount: 943
+          - Index: 2
+            Item: White_Herb
+            Amount: 324
+          - Index: 3
+            Item: Sticky_Mucus
+            Amount: 922
+          - Index: 4
+            Item: Seed_Of_Yggdrasil
+            Amount: 633
+      - Index: 222
+        Item: ATK_BIG1
+        Zeny: 7449
+        RequiredItems:
+          - Index: 0
+            Item: Acorn
+            Amount: 616
+          - Index: 1
+            Item: Sticky_Mucus
+            Amount: 585
+          - Index: 2
+            Item: Dragon_Scale
+            Amount: 132
+          - Index: 3
+            Item: Baphomet_Doll
+            Amount: 213
+          - Index: 4
+            Item: Baphomet_Doll
+            Amount: 286
+      - Index: 223
+        Item: ATK_MEDIUM1
+        Zeny: 8032
+        RequiredItems:
+          - Index: 0
+            Item: Burning_Heart
+            Amount: 657
+          - Index: 1
+            Item: Acorn
+            Amount: 754
+          - Index: 2
+            Item: Zargon
+            Amount: 856
+          - Index: 3
+            Item: Garlet
+            Amount: 766
+          - Index: 4
+            Item: White_Herb
+            Amount: 190
+      - Index: 224
+        Item: ATK_SMALL1
+        Zeny: 9674
+        RequiredItems:
+          - Index: 0
+            Item: Unripe_Apple
+            Amount: 495
+          - Index: 1
+            Item: Burning_Heart
+            Amount: 555
+          - Index: 2
+            Item: Burning_Heart
+            Amount: 694
+          - Index: 3
+            Item: Burning_Heart
+            Amount: 986
+          - Index: 4
+            Item: Seed_Of_Yggdrasil
+            Amount: 605
+      - Index: 225
+        Item: Critical2
+        Zeny: 6625
+        RequiredItems:
+          - Index: 0
+            Item: White_Herb
+            Amount: 997
+          - Index: 1
+            Item: Garlet
+            Amount: 997
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 793
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 967
+          - Index: 4
+            Item: Red_Herb
+            Amount: 933
+      - Index: 226
+        Item: Critical3
+        Zeny: 8036
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 174
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 970
+          - Index: 2
+            Item: Garlet
+            Amount: 491
+          - Index: 3
+            Item: Acorn
+            Amount: 320
+          - Index: 4
+            Item: Garlet
+            Amount: 843
+      - Index: 227
+        Item: Critical4
+        Zeny: 2286
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 208
+          - Index: 1
+            Item: Jejellopy
+            Amount: 817
+          - Index: 2
+            Item: Fish_Tail
+            Amount: 406
+          - Index: 3
+            Item: Dragon_Scale
+            Amount: 930
+          - Index: 4
+            Item: White_Herb
+            Amount: 786
+      - Index: 228
+        Item: Dodge1
+        Zeny: 4712
+        RequiredItems:
+          - Index: 0
+            Item: Jejellopy
+            Amount: 527
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 606
+          - Index: 2
+            Item: Fish_Tail
+            Amount: 1000
+          - Index: 3
+            Item: Dragon_Scale
+            Amount: 625
+          - Index: 4
+            Item: Large_Jellopy
+            Amount: 774
+      - Index: 229
+        Item: Dodge2
+        Zeny: 1580
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 503
+          - Index: 1
+            Item: Fish_Tail
+            Amount: 501
+          - Index: 2
+            Item: Burning_Heart
+            Amount: 408
+          - Index: 3
+            Item: Garlet
+            Amount: 178
+          - Index: 4
+            Item: Brigan
+            Amount: 372
+      - Index: 230
+        Item: Dodge3
+        Zeny: 5292
+        RequiredItems:
+          - Index: 0
+            Item: Fish_Tail
+            Amount: 183
+          - Index: 1
+            Item: Brigan
+            Amount: 616
+          - Index: 2
+            Item: Baphomet_Doll
+            Amount: 773
+          - Index: 3
+            Item: Brigan
+            Amount: 243
+          - Index: 4
+            Item: Brigan
+            Amount: 196
+      - Index: 231
+        Item: Thrift1
+        Zeny: 3288
+        RequiredItems:
+          - Index: 0
+            Item: Large_Jellopy
+            Amount: 327
+          - Index: 1
+            Item: Green_Herb
+            Amount: 847
+          - Index: 2
+            Item: Elunium_Stone
+            Amount: 753
+          - Index: 3
+            Item: Fish_Tail
+            Amount: 129
+          - Index: 4
+            Item: Elunium_Stone
+            Amount: 603
+      - Index: 232
+        Item: Thrift2
+        Zeny: 2013
+        RequiredItems:
+          - Index: 0
+            Item: Green_Herb
+            Amount: 469
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 773
+          - Index: 2
+            Item: Acorn
+            Amount: 901
+          - Index: 3
+            Item: Brigan
+            Amount: 420
+          - Index: 4
+            Item: Elunium_Stone
+            Amount: 770
+      - Index: 233
+        Item: Thrift3
+        Zeny: 8575
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 167
+          - Index: 1
+            Item: Brigan
+            Amount: 735
+          - Index: 2
+            Item: Brigan
+            Amount: 506
+          - Index: 3
+            Item: Seed_Of_Yggdrasil
+            Amount: 720
+          - Index: 4
+            Item: Acorn
+            Amount: 257
+      - Index: 234
+        Item: Skill_Delay1
+        Zeny: 1286
+        RequiredItems:
+          - Index: 0
+            Item: Brigan
+            Amount: 344
+          - Index: 1
+            Item: Green_Herb
+            Amount: 967
+          - Index: 2
+            Item: Burning_Heart
+            Amount: 790
+          - Index: 3
+            Item: Hot_Hair
+            Amount: 867
+          - Index: 4
+            Item: Green_Herb
+            Amount: 731
+      - Index: 235
+        Item: Skill_Delay2
+        Zeny: 9362
+        RequiredItems:
+          - Index: 0
+            Item: Baphomet_Doll
+            Amount: 862
+          - Index: 1
+            Item: Seed_Of_Yggdrasil
+            Amount: 572
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 924
+          - Index: 3
+            Item: Sticky_Mucus
+            Amount: 179
+          - Index: 4
+            Item: Acorn
+            Amount: 681
+      - Index: 236
+        Item: Skill_Delay3
+        Zeny: 2466
+        RequiredItems:
+          - Index: 0
+            Item: White_Herb
+            Amount: 668
+          - Index: 1
+            Item: Yoyo_Tail
+            Amount: 855
+          - Index: 2
+            Item: Unripe_Apple
+            Amount: 915
+          - Index: 3
+            Item: Yoyo_Tail
+            Amount: 172
+          - Index: 4
+            Item: Jejellopy
+            Amount: 268
+      - Index: 237
+        Item: Neev_STR_1
+        Zeny: 9610
+        RequiredItems:
+          - Index: 0
+            Item: Acorn
+            Amount: 292
+          - Index: 1
+            Item: Baphomet_Doll
+            Amount: 434
+          - Index: 2
+            Item: Garlet
+            Amount: 803
+          - Index: 3
+            Item: Hot_Hair
+            Amount: 860
+          - Index: 4
+            Item: Jejellopy
+            Amount: 612
+      - Index: 238
+        Item: Neev_STR_2
+        Zeny: 9458
+        RequiredItems:
+          - Index: 0
+            Item: White_Herb
+            Amount: 390
+          - Index: 1
+            Item: Hot_Hair
+            Amount: 528
+          - Index: 2
+            Item: Hot_Hair
+            Amount: 742
+          - Index: 3
+            Item: Red_Herb
+            Amount: 444
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 115
+      - Index: 239
+        Item: Neev_STR_3
+        Zeny: 2870
+        RequiredItems:
+          - Index: 0
+            Item: Garlet
+            Amount: 182
+          - Index: 1
+            Item: Moth_Dust
+            Amount: 182
+          - Index: 2
+            Item: Zargon
+            Amount: 979
+          - Index: 3
+            Item: White_Herb
+            Amount: 246
+          - Index: 4
+            Item: White_Herb
+            Amount: 160
+      - Index: 240
+        Item: Neev_AGI_1
+        Zeny: 2647
+        RequiredItems:
+          - Index: 0
+            Item: Moth_Dust
+            Amount: 241
+          - Index: 1
+            Item: Large_Jellopy
+            Amount: 315
+          - Index: 2
+            Item: Elunium_Stone
+            Amount: 873
+          - Index: 3
+            Item: Baphomet_Doll
+            Amount: 104
+          - Index: 4
+            Item: Moth_Dust
+            Amount: 997
+      - Index: 241
+        Item: Neev_AGI_2
+        Zeny: 4186
+        RequiredItems:
+          - Index: 0
+            Item: White_Herb
+            Amount: 632
+          - Index: 1
+            Item: Red_Herb
+            Amount: 548
+          - Index: 2
+            Item: Large_Jellopy
+            Amount: 145
+          - Index: 3
+            Item: Baphomet_Doll
+            Amount: 776
+          - Index: 4
+            Item: Acorn
+            Amount: 770
+      - Index: 242
+        Item: Neev_AGI_3
+        Zeny: 3904
+        RequiredItems:
+          - Index: 0
+            Item: Sticky_Mucus
+            Amount: 432
+          - Index: 1
+            Item: Acorn
+            Amount: 298
+          - Index: 2
+            Item: Burning_Heart
+            Amount: 165
+          - Index: 3
+            Item: Garlet
+            Amount: 491
+          - Index: 4
+            Item: Sticky_Mucus
+            Amount: 539
+

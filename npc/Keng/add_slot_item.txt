@@ -1,0 +1,141 @@
+morocc,47,34,3	script	Add Slot Option	10060,{
+	disable_items;
+	getinventorylist;
+	.@npc_name$ = "Random Option";
+	.@cash_price = 50;
+	.@donate_item = 1300051;
+	
+	mes "["+ .@npc_name$ +"]";
+	mes "เลือกอุปกรณ์ ที่ต้องการใส่การ์ดได้เลย";
+	mes "^FF0000การ์ดที่อยู่ในไอเทมจะถูกทำลาย^000000";
+	mes "ค่าบริการ: " + .@cash_price + "X จำนวนการ์ด  ที่มีในไอเทม Cash";
+	mes "ต้อง ใช้ ^FFFFFF<ITEM>^4D4DFF[ GACHAPON ]^000000<INFO>"+.@donate_item+"</INFO></ITEM>^000000. 1 ea";
+	
+	setarray .@indices[1], EQI_ACC_L,EQI_ACC_R,EQI_SHOES,EQI_GARMENT,EQI_HEAD_LOW,EQI_HEAD_MID,EQI_HEAD_TOP,EQI_ARMOR,EQI_HAND_L,EQI_HAND_R,EQI_COSTUME_HEAD_TOP,EQI_COSTUME_HEAD_MID,EQI_COSTUME_HEAD_LOW,EQI_COSTUME_GARMENT,EQI_SHADOW_ARMOR,EQI_SHADOW_WEAPON,EQI_SHADOW_SHIELD,EQI_SHADOW_SHOES,EQI_SHADOW_ACC_R,EQI_SHADOW_ACC_L;
+	for(.@i = 1; .@i<getarraysize(.@indices); ++.@i) {
+		if(getequipisequiped(.@indices[.@i])) {
+			.@menu$ = .@menu$ + F_getpositionname(.@indices[.@i]) + "-[" + getequipname(.@indices[.@i]) + "]";
+			.@equipped = 1;
+			
+		}
+		.@menu$ = .@menu$ + ":";
+	}
+	
+	if (.@equipped == 0) {
+		mes "["+ .@npc_name$ +"]";
+		mes "ต้องสวมใส่อุปกรณ์ด้วยนะ ห่วย #1";
+		close;
+	}
+	next;
+
+	.@part = .@indices[select(.@menu$)];
+	.@refine = getequiprefinerycnt(.@part);
+	.@equip_id = getequipid(.@part);
+	
+//find card in inventory
+.@c = 1;
+	for ( .@i = 0; .@i < @inventorylist_count; ++.@i ) {
+		if ( getiteminfo( @inventorylist_id[.@i], 2 ) == IT_CARD ) {
+			.@name$ = getitemname( @inventorylist_id[.@i] );	
+				.@menu_card$ = .@menu_card$ + ":["+@inventorylist_id[.@i]+"]"+.@name$;
+				.@cardid[.@c] = @inventorylist_id[.@i];
+				++.@c;		
+		}
+	}
+	
+	if(countitem(.@donate_item) < 1){
+		mes "คุณไม่มีไอเทม";
+		mes getitemname(.@donate_item);
+		mes "ต้อง ใช้ ^FFFFFF<ITEM>^4D4DFF[ GACHAPON ]^000000<INFO>"+.@donate_item+"</INFO></ITEM>^000000. 1 ea";
+		close;
+	}
+	
+	
+	
+	if(getarraysize(.@cardid) < 1){
+		mes "คุณไม่มีการ์ด";
+		close;
+	}
+
+	mes "โปรดเลือกการ์ดที่ต้องการใส่กับไอเทมชิ้นนี้ ";
+
+		next;
+	.@select_card = select(.@menu_card$);
+	--.@select_card;
+	
+	.@count = 1;
+	for(.@i = 0; .@i<=3; ++.@i) {
+		setarray .@card[.@i], getequipcardid(.@part,.@i);
+		if(.@card[.@i] != 0){
+		 ++.@count;
+		}
+	}
+	set .@cardcount,getequipcardcnt(.@part);
+	.@cash_price = .@cash_price * .@count;
+	
+	if(#CASHPOINTS < .@cash_price){
+		mes "คุณมี  Cash Point ไม่เพียงพอ";
+		close;
+	}
+	
+	
+	
+	mes "คุณเลือก";
+	mes	"^FF1000"+getitemname(.@cardid[.@select_card])+"^FF0000 [ "+.@cardid[.@select_card]+" ]^000000";
+	mes "ค่าบริการ คือ ^FF0000"+ .@cash_price+ "Cash Point"; 
+	mes "ช่องที่ 1[ "+.@card[0]+" ] ";
+	mes "ช่องที่ 2[ "+.@card[1]+" ] ";
+	mes "ช่องที่ 3[ "+.@card[2]+" ] ";
+	mes "ช่องที่ 4[ "+.@card[3]+" ] ";
+	
+	switch(select("ช่องที่ 1:ช่องที่ 2:ช่องที่ 3:ช่องที่ 4"))
+	{
+				case 1:
+						.@card[0]= .@cardid[.@select_card];	
+						delequip .@part;
+						delitem .@card[0],1;
+						delitem .@donate_item,1;						
+						specialeffect 509;
+						callfunc("IsCashEnough",.@cash_price,"",1);
+						getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+						close;						
+				case 2:
+						.@card[1]= .@cardid[.@select_card];	
+						delequip .@part;
+						delitem .@card[1],1;
+						delitem .@donate_item,1;						
+						specialeffect 509;
+						callfunc("IsCashEnough",.@cash_price,"",1);
+						getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+						close;
+				case 3:	
+						.@card[2]= .@cardid[.@select_card];	
+						delequip .@part;	
+						delitem .@card[2],1;
+						delitem .@donate_item,1;						
+						specialeffect 509;
+						callfunc("IsCashEnough",.@cash_price,"",1);
+						getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+						close;
+				case 4:
+						.@card[3]= .@cardid[.@select_card];
+						delequip .@part;
+						delitem .@card[3],1;
+						delitem .@donate_item,1;						
+						specialeffect 509;
+						callfunc("IsCashEnough",.@cash_price,"",1);
+						getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+						close;
+	}
+	
+		
+						
+
+	
+
+	close;
+	
+OnInit:
+	waitingroom "--> เหน็บการ์ด  <--",0;
+	end;
+}

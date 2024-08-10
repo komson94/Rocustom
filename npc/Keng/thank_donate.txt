@@ -1,0 +1,33 @@
+-	script	Thank	 -1,{
+
+OnInit:
+
+
+	while (1)
+	{
+		query_sql "SELECT DISTINCT user_id FROM `payment` WHERE `status` = '02'",.user_id;
+		sleep 500;
+		if (getarraysize(.user_id) > 0) {
+		
+				for (set .i,0; .i < getarraysize(.user_id); set .i,.i+1) {
+				
+			
+				if(attachrid(.user_id[.i]) == 1)
+				{
+				
+					
+						//dispbottom "ขอขอบคุณท่าน "+strcharinfo(0)+" ที่ได้สนับสนุนเซิฟเล็กๆแห่งนี้";
+						announce "ขอขอบคุณท่าน "+strcharinfo(0)+" ที่ได้บริจาคสนับสนุนเซิฟเล็กๆแห่งนี้",bc_green|bc_All;
+						
+						detachrid;
+					sleep 150000;
+						//deletearray .user_id[.i],getarraysize(.user_id);
+				}
+				
+			}
+		}
+	sleep 5000;
+	}
+	end;
+
+}

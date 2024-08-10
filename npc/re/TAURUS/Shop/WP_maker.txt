@@ -1,0 +1,88 @@
+//===== rAthena Script =======================================
+//= Weapon Maker Shop
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: =====================================
+//= 1.0 Add Shop NPC with Barter Shop Src.
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+// Dummy Shop
+-	exbartershop	Barter_WP_S1_Maker	-1
+-	exbartershop	Barter_WP_S2_Maker	-1
+-	exbartershop	Barter_WP_S3_Maker	-1
+
+fct_in01,269,94,5	script	Weapon Maker#WP_S1	4_M_03,{
+	disable_items;
+	callshop "Barter_WP_S1_Maker",1;
+	end;
+	
+OnInit:
+	//npcshopadditem "<Shop Name>",<Item>,<Quantity>,<Zeny Cost>,<Cost Item 1>,<Cost Amount 1>,<Cost Refine 1>,........<Cost Item 5>,<Cost Amount 5>,<Cost Refine 5>;
+	npcshopadditem "Barter_WP_S1_Maker",1527,-1,0,999,50,0,714,1,0,969,1,0,7291,30,0,0,0,0;	//Quadrille
+	npcshopadditem "Barter_WP_S1_Maker",1141,-1,0,999,50,0,714,1,0,969,1,0,7295,30,0,0,0,0;	//Immaterial Sword
+	npcshopadditem "Barter_WP_S1_Maker",1526,-1,0,999,50,0,714,1,0,969,1,0,7294,30,0,0,0,0;	//Slash
+	
+	npcshopadditem "Barter_WP_S1_Maker",1224,-1,0,999,50,0,714,1,0,969,1,0,7297,30,0,0,0,0;	//Swordbreaker
+	npcshopadditem "Barter_WP_S1_Maker",1225,-1,0,999,50,0,714,1,0,969,1,0,7292,30,0,0,0,0;	//Mailbreaker
+	npcshopadditem "Barter_WP_S1_Maker",1367,-1,0,999,50,0,714,1,0,969,1,0,7296,30,0,0,0,0;	//Slaughter
+	
+	npcshopadditem "Barter_WP_S1_Maker",1139,-1,0,999,50,0,714,1,0,969,1,0,7289,30,0,0,0,0;	//Tirfing
+	npcshopadditem "Barter_WP_S1_Maker",1134,-1,0,999,50,0,714,1,0,969,1,0,7290,30,0,0,0,0;	//Caesar's Sword
+	npcshopadditem "Barter_WP_S1_Maker",1365,-1,0,999,50,0,714,1,0,969,1,0,7293,30,0,0,0,0;	//Sabbath
+	end;
+}
+
+fct_in01,272,94,5	script	Weapon Maker#WP_S2	4_M_02,{
+	disable_items;
+	callshop "Barter_WP_S2_Maker",1;
+	end;
+	
+OnInit:
+	//npcshopadditem "<Shop Name>",<Item>,<Quantity>,<Zeny Cost>,<Cost Item 1>,<Cost Amount 1>,<Cost Refine 1>,........<Cost Item 5>,<Cost Amount 5>,<Cost Refine 5>;
+	npcshopadditem "Barter_WP_S2_Maker",1132,-1,0,969,1,0,1005,2,0,989,1,0,7293,30,0,0,0,0;	//Edge
+	npcshopadditem "Barter_WP_S2_Maker",1137,-1,0,969,1,0,1005,2,0,989,1,0,7293,30,0,0,0,0;	//Excalibur
+	npcshopadditem "Barter_WP_S2_Maker",1166,-1,0,969,1,0,1005,2,0,989,1,0,7295,30,0,0,0,0;	//Dragon Slayer
+	npcshopadditem "Barter_WP_S2_Maker",1167,-1,0,969,1,0,1005,2,0,989,1,0,7295,30,0,0,0,0;	//Schweizersabel
+	
+	npcshopadditem "Barter_WP_S2_Maker",1364,-1,0,969,1,0,1005,2,0,989,1,0,7291,30,0,0,0,0;	//Great Axe
+	npcshopadditem "Barter_WP_S2_Maker",1369,-1,0,969,1,0,1005,2,0,989,1,0,7291,30,0,0,0,0;	//Guillotine
+	npcshopadditem "Barter_WP_S2_Maker",1470,-1,0,969,1,0,1005,2,0,989,1,0,7290,30,0,0,0,0;	//Brionac
+	npcshopadditem "Barter_WP_S2_Maker",1469,-1,0,969,1,0,1005,2,0,989,1,0,7290,30,0,0,0,0;	//Longinus's Spear
+	
+	npcshopadditem "Barter_WP_S2_Maker",1814,-1,0,969,1,0,1005,2,0,989,1,0,7292,30,0,0,0,0;	//Berserk
+	npcshopadditem "Barter_WP_S2_Maker",1720,-1,0,969,1,0,1005,2,0,989,1,0,7292,30,0,0,0,0;	//Rudra Bow
+	npcshopadditem "Barter_WP_S2_Maker",1415,-1,0,969,1,0,1005,2,0,989,1,0,7297,30,0,0,0,0;	//Brocca
+	npcshopadditem "Barter_WP_S2_Maker",1416,-1,0,969,1,0,1005,2,0,989,1,0,7297,30,0,0,0,0;	//Tjungkuletti
+	
+	npcshopadditem "Barter_WP_S2_Maker",1140,-1,0,969,1,0,1005,2,0,989,1,0,7294,30,0,0,0,0;	//Byeollungum
+	npcshopadditem "Barter_WP_S2_Maker",1228,-1,0,969,1,0,1005,2,0,989,1,0,7294,30,0,0,0,0;	//Combat Knife
+	npcshopadditem "Barter_WP_S2_Maker",1233,-1,0,969,1,0,1005,2,0,989,1,0,7296,30,0,0,0,0;	//Exorciser
+	npcshopadditem "Barter_WP_S2_Maker",1528,-1,0,969,1,0,1005,2,0,989,1,0,7296,30,0,0,0,0;	//Grand Cross
+	end;
+}
+
+fct_in01,275,94,5	script	Weapon Maker#WP_S3	1_M_SMITH,{
+	disable_items;
+	callshop "Barter_WP_S3_Maker",1;
+	end;
+	
+OnInit:
+	//npcshopadditem "<Shop Name>",<Item>,<Quantity>,<Zeny Cost>,<Cost Item 1>,<Cost Amount 1>,<Cost Refine 1>,........<Cost Item 5>,<Cost Amount 5>,<Cost Refine 5>;
+	npcshopadditem "Barter_WP_S3_Maker",1549,-1,0,1415,1,0,999,200,0,7325,30,0,0,0,0,0,0,0;			//Pile Bunker
+	npcshopadditem "Barter_WP_S3_Maker",1144,-1,0,950,300,0,961,10,0,964,10,0,1023,10,0,0,0,0;	//Sashimi Knife
+	npcshopadditem "Barter_WP_S3_Maker",1163,-1,10000,999,1,0,0,0,0,0,0,0,0,0,0,0,0,0;				//Claymore
+	npcshopadditem "Barter_WP_S3_Maker",13006,-1,20000,1036,40,0,7123,30,0,984,5,0,0,0,0,0,0,0;		//Khukri
+	npcshopadditem "Barter_WP_S3_Maker",13007,-1,20000,7022,1,0,999,30,0,0,0,0,0,0,0,0,0,0;			//Jitte
+	npcshopadditem "Barter_WP_S3_Maker",13011,-1,20000,7099,5,0,999,25,0,0,0,0,0,0,0,0,0,0;			//Asura
+	npcshopadditem "Barter_WP_S3_Maker",13012,-1,20000,720,10,0,999,30,0,0,0,0,0,0,0,0,0,0;			//Murasame
+	npcshopadditem "Barter_WP_S3_Maker",13014,-1,20000,12001,10,0,932,500,0,722,5,0,0,0,0,0,0,0;	//Hakujin
+	npcshopadditem "Barter_WP_S3_Maker",13300,-1,20000,999,50,0,7115,20,0,984,5,0,0,0,0,0,0,0;		//Huuma Wing Shuriken
+	npcshopadditem "Barter_WP_S3_Maker",13301,-1,20000,999,30,0,7301,100,0,984,2,0,0,0,0,0,0,0;		//Huuma Giant Wheel Shuriken
+	npcshopadditem "Barter_WP_S3_Maker",13302,-1,20000,13301,1,0,733,20,0,984,3,0,0,0,0,0,0,0;		//Huuma Giant Wheel Shuriken
+	npcshopadditem "Barter_WP_S3_Maker",13303,-1,20000,999,50,0,7098,100,0,7097,100,0,7521,50,0,0,0,0;	//Huuma Blaze Shuriken
+	npcshopadditem "Barter_WP_S3_Maker",2118,-1,10000,2117,1,0,2102,1,0,0,0,0,0,0,0,0,0,0;			//Arm Guard
+	npcshopadditem "Barter_WP_S3_Maker",2119,-1,20000,2117,1,0,2107,1,0,0,0,0,0,0,0,0,0,0;			//Advanced Arm Guard
+	npcshopadditem "Barter_WP_S3_Maker",2120,-1,20000,2119,1,0,2104,1,0,0,0,0,0,0,0,0,0,0;			//Advanced Arm Guard
+	end;
+}

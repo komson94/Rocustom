@@ -1,0 +1,65 @@
+//===== rAthena Script =======================================
+//= Shop
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+// Dummy Shop
+-	exbartershop	FSRod_Crafting	-1
+-	bartershop	Fishing_Point_Coin	-1
+-	shop	Fisher_Shop	-1,no,910265:-1,910266:-1,910267:-1,910268:-1,910068:10000,910069:10000,910070:10000,910064:150000,910065:150000,910066:150000,910067:150000
+//============================================================
+moonhaven,147,211,5	script	พ่อค้า#mhaven	4_M_HUMERCHANT,{
+	disable_items;
+	mes .NPCname$;
+	mes "ยินดีต้อนรับ";
+	mes "เจ้าอยากจะซื้ออะไรล่ะ?";
+	callshop "Fisher_Shop",1;
+	end;
+	
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";	// ชื่อ NPC
+	waitingroom " ร้านค้า",0;
+	end;
+}
+//============================================================
+moonhaven,145,208,5	script	ช่างทำเบ็ดตกปลา#mhaven	4_M_DWARF,{
+	disable_items;
+	callshop "FSRod_Crafting",1;
+	end;
+
+OnInit:
+	waitingroom " ช่างทำเบ็ดตกปลา",0;
+	//npcshopadditem "<Shop Name>",<Item>,<Quantity>,<Zeny Cost>,<Cost Item 1>,<Cost Amount 1>,<Cost Refine 1>,........<Cost Item 5>,<Cost Amount 5>,<Cost Refine 5>;
+	npcshopadditem "FSRod_Crafting",910061,-1,10000,910068,1,0,1019,20,0,1067,20,0,938,30,0,0,0,0;		//Fishing Rod Lv.1
+	npcshopadditem "FSRod_Crafting",910062,-1,10000,910069,1,0,1019,30,0,7197,20,0,7150,30,0,0,0,0;		//Fishing Rod Lv.2
+	npcshopadditem "FSRod_Crafting",910063,-1,10000,910070,1,0,1002,50,0,7197,20,0,7095,20,0,0,0,0;		//Fishing Rod Lv.3
+	end;
+}
+
+moonhaven,161,206,3	script	Fishing Point Shop#mhaven	4_F_SITDOWN,{
+	disable_items;
+	mes .NPCname$;
+	mes "ยินดีต้อนรับ";
+	mes "ท่านสามารถนำ ^FF0000"+getitemname(.ReqItemID)+"^000000";
+	mes "มาแลกเป็นไอเท็มต่างๆได้.";
+	callshop "Fishing_Point_Coin",1;
+	end;
+	
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	waitingroom "ร้านค้า Fishing Point",0;
+	.ReqItemID = 910060;
+	//npcshopadditem "<Shop Name>",<Item>,<Cost Item>,<Cost Amount>,<Quantity>;
+	npcshopadditem "Fishing_Point_Coin",910064,910060,5,-1;
+	npcshopadditem "Fishing_Point_Coin",910065,910060,5,-1;
+	npcshopadditem "Fishing_Point_Coin",910066,910060,5,-1;
+	npcshopadditem "Fishing_Point_Coin",910067,910060,5,-1;
+	npcshopadditem "Fishing_Point_Coin",910061,910060,10,-1;
+	npcshopadditem "Fishing_Point_Coin",910062,910060,15,-1;
+	npcshopadditem "Fishing_Point_Coin",910063,910060,30,-1;
+	end;
+}

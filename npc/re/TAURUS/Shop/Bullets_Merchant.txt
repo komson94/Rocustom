@@ -1,0 +1,145 @@
+//===== rAthena Script =======================================
+//= New Bullet Dealer
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+// Dummy Shop
+//------------------------------------------------------------
+// ตามแบบกำหนดเอง.
+-	shop	Bullets_Shop	-1,1750:-1,1751:-1,1752:-1,1753:-1,1754:-1,1755:-1,1756:-1,1757:-1,1758:-1,1759:-1,1760:-1,1761:-1,1762:-1,1763:-1,1764:-1,1765:-1,1766:-1,1767:-1,1768:-1,1769:-1,1770:-1,1772:-1,1773:-1,1774:-1,1775:-1,1776:-1
+// ตามแบบ official.
+-	shop	Official_Bullets_Shop	-1,1750:-1,1770:-1,1751:-1,1752:-1,1754:-1,1755:-1,1756:-1,1757:-1,1767:-1,1762:-1,1065:-1,7940:-1
+//------------------------------------------------------------
+// ตามแบบกำหนดเอง.
+-	bartershop	BulletCase_Shop	-1
+fct_in01,1,1,1	script	#Barter_BulletCase_Shop	-1,{
+	OnInit:
+		npcshopadditem "BulletCase_Shop",12004,1750,500,-1;//Arrow_Container
+		npcshopadditem "BulletCase_Shop",12005,1770,500,-1;//Iron_Arrow_Container
+		npcshopadditem "BulletCase_Shop",12006,1753,500,-1;//Steel_Arrow_Container
+		npcshopadditem "BulletCase_Shop",12007,1753,500,-1;//Ori_Arrow_Container
+		npcshopadditem "BulletCase_Shop",12008,1752,500,-1;//Fire_Arrow_Container
+		npcshopadditem "BulletCase_Shop",12009,1751,500,-1;//Silver_Arrow_Container
+		npcshopadditem "BulletCase_Shop",12010,1755,500,-1;//Wind_Arrow_Container
+		npcshopadditem "BulletCase_Shop",12011,1756,500,-1;//Stone_Arrow_Container
+		npcshopadditem "BulletCase_Shop",12012,1754,500,-1;//Crystal_Arrow_Container
+		npcshopadditem "BulletCase_Shop",12013,1767,500,-1;//Shadow_Arrow_Container
+		npcshopadditem "BulletCase_Shop",12014,1757,500,-1;//Imma_Arrow_Container
+		npcshopadditem "BulletCase_Shop",12015,1762,500,-1;//Rusty_Arrow_Container
+		npcshopadditem "BulletCase_Shop",12183,1772,500,-1;//Holy_Arrow_Quiver		
+		npcshopadditem "BulletCase_Shop",12575,1773,500,-1;//Arrow_Of_Elf_Cntr
+		npcshopadditem "BulletCase_Shop",12576,1774,500,-1;//Hunting_Arrow_Cntr
+		npcshopadditem "BulletCase_Shop",100174,1763,500,-1;//Poison_Arrow_Container
+		npcshopadditem "BulletCase_Shop",12677,1775,500,-1;//Siege_Arrow_Quiver_S
+		npcshopadditem "BulletCase_Shop",12678,1776,500,-1;//Siege_Arrow_Quiver_A
+		npcshopadditem "BulletCase_Shop",23061,1764,500,-1;//Incisive_Arrow_Cntr
+		npcshopadditem "BulletCase_Shop",910137,1758,500,-1;//Stun_Arrow_Quiver
+		npcshopadditem "BulletCase_Shop",910138,1760,500,-1;//Flash_Arrow_Quiver
+		npcshopadditem "BulletCase_Shop",910139,1761,500,-1;//Cursed Arrow Quiver
+		npcshopadditem "BulletCase_Shop",910140,1768,500,-1;//Sleep Arrow Quiver
+		npcshopadditem "BulletCase_Shop",910141,1769,500,-1;//Silence Arrow Quiver
+		npcshopadditem "BulletCase_Shop",910142,1766,500,-1;//Arrow of Counter Evil Quiver
+		npcshopadditem "BulletCase_Shop",23711,1065,500,-1;//Booby_Trap_Box
+		npcshopadditem "BulletCase_Shop",12341,7940,500,-1;//Special_Alloy_Trap_Box
+		end;
+}
+//------------------------------------------------------------
+// ตามแบบ official.
+-	bartershop	Official_BulletCase_Shop	-1
+fct_in01,1,1,1	script	#Official_BulletCase_Shop	-1,{
+	OnInit:
+		npcshopadditem "Official_BulletCase_Shop",12004,1750,500,-1;//Arrow_Container
+		npcshopadditem "Official_BulletCase_Shop",12005,1770,500,-1;//Iron_Arrow_Container
+		npcshopadditem "Official_BulletCase_Shop",12009,1751,500,-1;//Silver_Arrow_Container
+		npcshopadditem "Official_BulletCase_Shop",12008,1752,500,-1;//Fire_Arrow_Container
+		npcshopadditem "Official_BulletCase_Shop",12012,1754,500,-1;//Crystal_Arrow_Container
+		npcshopadditem "Official_BulletCase_Shop",12010,1755,500,-1;//Wind_Arrow_Container
+		npcshopadditem "Official_BulletCase_Shop",12011,1756,500,-1;//Stone_Arrow_Container
+		npcshopadditem "Official_BulletCase_Shop",12014,1757,500,-1;//Imma_Arrow_Container
+		npcshopadditem "Official_BulletCase_Shop",12013,1767,500,-1;//Shadow_Arrow_Container
+		npcshopadditem "Official_BulletCase_Shop",12015,1762,500,-1;//Rusty_Arrow_Container		
+		npcshopadditem "Official_BulletCase_Shop",12575,1773,500,-1;//Arrow_Of_Elf_Cntr
+		npcshopadditem "Official_BulletCase_Shop",12576,1774,500,-1;//Hunting_Arrow_Cntr
+		npcshopadditem "Official_BulletCase_Shop",100174,1763,500,-1;//Poison_Arrow_Container
+		npcshopadditem "Official_BulletCase_Shop",12678,1776,500,-1;//Siege_Arrow_Quiver_A
+		npcshopadditem "Official_BulletCase_Shop",12677,1775,500,-1;//Siege_Arrow_Quiver_S
+		npcshopadditem "Official_BulletCase_Shop",23711,1065,500,-1;//Booby_Trap_Box
+		npcshopadditem "Official_BulletCase_Shop",12341,7940,500,-1;//Special_Alloy_Trap_Box
+		end;
+}
+//------------------------------------------------------------
+-	script	New_Bullets_Dealer	-1,{
+	disable_items;
+	mes .NPCname$;
+	mes "สวัสดี ต้องการอะไรไหม?";
+	next;
+	switch(select(
+		""+.sb$+" ซื้อกระสุน",
+		""+.sb$+" แลกเปลี่ยนกระบอกลกระสุน",
+		""+.sb$+" ขายสัมภาระ",
+		""+.sb$+" ยกเลิก"
+	)) {
+		case 1:
+			mes .NPCname$;
+			mes "จะเตรียมกระสุนให้";
+			close2;
+			if (.type_shop) { callshop "Official_Bullets_Shop",1; }
+			else { callshop "Bullets_Shop",1; }
+			end;
+		case 2:
+			mes .NPCname$;
+			mes "จะเตรียม Bullet Case ให้";
+			close2;
+			if (.type_shop) { callshop "Official_BulletCase_Shop",1; }
+			else { callshop "BulletCase_Shop",1; }		
+			end;
+		case 3:
+			close2;
+			if (.type_shop) { callshop "Official_Bullets_Shop",2; }
+			else { callshop "Bullets_Shop",2; }
+			end;
+		case 4:
+			mes .NPCname$;
+			mes "แล้วพบกันใหม่";
+			close;
+	}
+	end;
+	
+OnInit:
+	.NPCname$ = "[^0000FF Bullet Dealer ^000000]";
+	.sb$ = "~";
+	.type_shop = 0;	 //ประภทสินค้าในร้าน (0: ตามแบบกำหนดเอง / 1: ตามแบบ official)
+	end;
+}
+
+//------------------------------------------------------------
+// ตำแหน่ง NPC.
+//------------------------------------------------------------
+// custom map.
+askald,98,155,4	duplicate(New_Bullets_Dealer)	Bullet Dealer#fsc	4_F_GUNSLINGER
+// official map.
+prt_in,162,137,4	duplicate(New_Bullets_Dealer)	Bullet Dealer#prt	4_F_GUNSLINGER
+morocc_in,128,68,4	duplicate(New_Bullets_Dealer)	Bullet Dealer#moc	4_F_GUNSLINGER
+geffen_in,22,169,4	duplicate(New_Bullets_Dealer)	Bullet Dealer#gef	4_F_GUNSLINGER
+payon_in01,10,132,4	duplicate(New_Bullets_Dealer)	Bullet Dealer#pay	4_F_GUNSLINGER
+alberta_in,177,25,4	duplicate(New_Bullets_Dealer)	Bullet Dealer#alb	4_F_GUNSLINGER
+izlude_in,73,105,3	duplicate(New_Bullets_Dealer)	Bullet Dealer#izd	4_F_GUNSLINGER
+aldeba_in,37,49,3	duplicate(New_Bullets_Dealer)	Bullet Dealer#ald	4_F_GUNSLINGER
+xmas_in,171,93,3	duplicate(New_Bullets_Dealer)	Bullet Dealer#xms	4_F_GUNSLINGER
+cmd_in01,119,173,5	duplicate(New_Bullets_Dealer)	Bullet Dealer#com	4_F_GUNSLINGER
+ama_in01,100,19,3	duplicate(New_Bullets_Dealer)	Bullet Dealer#ama	4_F_GUNSLINGER
+gonryun,175,97,3	duplicate(New_Bullets_Dealer)	Bullet Dealer#gon	4_F_GUNSLINGER
+um_in,156,127,5	duplicate(New_Bullets_Dealer)	Bullet Dealer#umb	4_F_GUNSLINGER
+lou_in02,134,178,3	duplicate(New_Bullets_Dealer)	Bullet Dealer#lou	4_F_GUNSLINGER
+ayo_in01,77,163,4	duplicate(New_Bullets_Dealer)	Bullet Dealer#ayo	4_F_GUNSLINGER
+ein_in01,95,24,7	duplicate(New_Bullets_Dealer)	Bullet Dealer#ein	4_F_GUNSLINGER
+lhz_in02,266,92,5	duplicate(New_Bullets_Dealer)	Bullet Dealer#lhz	4_F_GUNSLINGER
+hu_in01,95,383,5	duplicate(New_Bullets_Dealer)	Bullet Dealer#hug	4_F_GUNSLINGER
+ra_in01,169,365,5	duplicate(New_Bullets_Dealer)	Bullet Dealer#rac	4_F_GUNSLINGER
+ve_in,351,243,5	duplicate(New_Bullets_Dealer)	Bullet Dealer#ves	4_F_GUNSLINGER
+mosk_in,26,174,3	duplicate(New_Bullets_Dealer)	Bullet Dealer#mosk	4_F_GUNSLINGER
+brasilis,252,249,3	duplicate(New_Bullets_Dealer)	Bullet Dealer#bra	4_F_GUNSLINGER
+dewata,223,169,3	duplicate(New_Bullets_Dealer)	Bullet Dealer#dew	4_F_GUNSLINGER
+ma_in01,67,21,5	duplicate(New_Bullets_Dealer)	Bullet Dealer#mal	4_F_GUNSLINGER

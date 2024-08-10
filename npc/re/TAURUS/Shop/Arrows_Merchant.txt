@@ -1,0 +1,146 @@
+//===== rAthena Script =======================================
+//= New Arrow Dealer
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+// Dummy Shop
+//------------------------------------------------------------
+// ตามแบบกำหนดเอง.
+-	shop	Arrows_Shop	-1,1750:-1,1751:-1,1752:-1,1753:-1,1754:-1,1755:-1,1756:-1,1757:-1,1758:-1,1759:-1,1760:-1,1761:-1,1762:-1,1763:-1,1764:-1,1765:-1,1766:-1,1767:-1,1768:-1,1769:-1,1770:-1,1772:-1,1773:-1,1774:-1,1775:-1,1776:-1
+// ตามแบบ official.
+-	shop	Official_Arrows_Shop	-1,1750:-1,1770:-1,1751:-1,1752:-1,1754:-1,1755:-1,1756:-1,1757:-1,1767:-1,1762:-1,1065:-1,7940:-1
+//------------------------------------------------------------
+// ตามแบบกำหนดเอง.
+-	bartershop	Container_Shop	-1
+fct_in01,1,1,1	script	#Barter_Container_Shop	-1,{
+	OnInit:
+		npcshopadditem "Container_Shop",12004,1750,500,-1;//Arrow_Container
+		npcshopadditem "Container_Shop",12005,1770,500,-1;//Iron_Arrow_Container
+		npcshopadditem "Container_Shop",12006,1753,500,-1;//Steel_Arrow_Container
+		npcshopadditem "Container_Shop",12007,1753,500,-1;//Ori_Arrow_Container
+		npcshopadditem "Container_Shop",12008,1752,500,-1;//Fire_Arrow_Container
+		npcshopadditem "Container_Shop",12009,1751,500,-1;//Silver_Arrow_Container
+		npcshopadditem "Container_Shop",12010,1755,500,-1;//Wind_Arrow_Container
+		npcshopadditem "Container_Shop",12011,1756,500,-1;//Stone_Arrow_Container
+		npcshopadditem "Container_Shop",12012,1754,500,-1;//Crystal_Arrow_Container
+		npcshopadditem "Container_Shop",12013,1767,500,-1;//Shadow_Arrow_Container
+		npcshopadditem "Container_Shop",12014,1757,500,-1;//Imma_Arrow_Container
+		npcshopadditem "Container_Shop",12015,1762,500,-1;//Rusty_Arrow_Container
+		npcshopadditem "Container_Shop",12183,1772,500,-1;//Holy_Arrow_Quiver		
+		npcshopadditem "Container_Shop",12575,1773,500,-1;//Arrow_Of_Elf_Cntr
+		npcshopadditem "Container_Shop",12576,1774,500,-1;//Hunting_Arrow_Cntr
+		npcshopadditem "Container_Shop",100174,1763,500,-1;//Poison_Arrow_Container
+		npcshopadditem "Container_Shop",12677,1775,500,-1;//Siege_Arrow_Quiver_S
+		npcshopadditem "Container_Shop",12678,1776,500,-1;//Siege_Arrow_Quiver_A
+		npcshopadditem "Container_Shop",23061,1764,500,-1;//Incisive_Arrow_Cntr
+		npcshopadditem "Container_Shop",910137,1758,500,-1;//Stun_Arrow_Quiver
+		npcshopadditem "Container_Shop",910138,1760,500,-1;//Flash_Arrow_Quiver
+		npcshopadditem "Container_Shop",910139,1761,500,-1;//Cursed Arrow Quiver
+		npcshopadditem "Container_Shop",910140,1768,500,-1;//Sleep Arrow Quiver
+		npcshopadditem "Container_Shop",910141,1769,500,-1;//Silence Arrow Quiver
+		npcshopadditem "Container_Shop",910142,1766,500,-1;//Arrow of Counter Evil Quiver
+		npcshopadditem "Container_Shop",23711,1065,500,-1;//Booby_Trap_Box
+		npcshopadditem "Container_Shop",12341,7940,500,-1;//Special_Alloy_Trap_Box
+		end;
+}
+//------------------------------------------------------------
+// ตามแบบ official.
+-	bartershop	Official_Container_Shop	-1
+fct_in01,1,1,1	script	#Official_Container_Shop	-1,{
+	OnInit:
+		npcshopadditem "Official_Container_Shop",12004,1750,500,-1;//Arrow_Container
+		npcshopadditem "Official_Container_Shop",12005,1770,500,-1;//Iron_Arrow_Container
+		npcshopadditem "Official_Container_Shop",12009,1751,500,-1;//Silver_Arrow_Container
+		npcshopadditem "Official_Container_Shop",12008,1752,500,-1;//Fire_Arrow_Container
+		npcshopadditem "Official_Container_Shop",12012,1754,500,-1;//Crystal_Arrow_Container
+		npcshopadditem "Official_Container_Shop",12010,1755,500,-1;//Wind_Arrow_Container
+		npcshopadditem "Official_Container_Shop",12011,1756,500,-1;//Stone_Arrow_Container
+		npcshopadditem "Official_Container_Shop",12014,1757,500,-1;//Imma_Arrow_Container
+		npcshopadditem "Official_Container_Shop",12013,1767,500,-1;//Shadow_Arrow_Container
+		npcshopadditem "Official_Container_Shop",12015,1762,500,-1;//Rusty_Arrow_Container		
+		npcshopadditem "Official_Container_Shop",12575,1773,500,-1;//Arrow_Of_Elf_Cntr
+		npcshopadditem "Official_Container_Shop",12576,1774,500,-1;//Hunting_Arrow_Cntr
+		npcshopadditem "Official_Container_Shop",100174,1763,500,-1;//Poison_Arrow_Container
+		npcshopadditem "Official_Container_Shop",12678,1776,500,-1;//Siege_Arrow_Quiver_A
+		npcshopadditem "Official_Container_Shop",12677,1775,500,-1;//Siege_Arrow_Quiver_S
+		npcshopadditem "Official_Container_Shop",23711,1065,500,-1;//Booby_Trap_Box
+		npcshopadditem "Official_Container_Shop",12341,7940,500,-1;//Special_Alloy_Trap_Box
+		end;
+}
+//------------------------------------------------------------
+-	script	New_Arrows_Dealer	-1,{
+	disable_items;
+	mes .NPCname$;
+	mes "สวัสดี ต้องการซื้อธนู";
+	mes "หรือแลกเปลี่ยนกระบอกลูกธนูหรือ?";
+	next;
+	switch(select(
+		""+.sb$+" ซื้อลูกธนู",
+		""+.sb$+" แลกเปลี่ยนกระบอกลูกธนู",
+		""+.sb$+" ขายสัมภาระ",
+		""+.sb$+" ยกเลิก"
+	)) {
+		case 1:
+			mes .NPCname$;
+			mes "จะเตรียมลูกธนูให้";
+			close2;
+			if (.type_shop) { callshop "Official_Arrows_Shop",1; }
+			else { callshop "Arrows_Shop",1; }
+			end;
+		case 2:
+			mes .NPCname$;
+			mes "จะเตรียมกระบอกลูกธนูให้";
+			close2;
+			if (.type_shop) { callshop "Official_Container_Shop",1; }
+			else { callshop "Container_Shop",1; }		
+			end;
+		case 3:
+			close2;
+			if (.type_shop) { callshop "Official_Arrows_Shop",2; }
+			else { callshop "Arrows_Shop",2; }
+			end;
+		case 4:
+			mes .NPCname$;
+			mes "แล้วพบกันใหม่";
+			close;
+	}
+	end;
+	
+OnInit:
+	.NPCname$ = "[^0000FF Arrow Dealer ^000000]";
+	.sb$ = "~";
+	.type_shop = 0;	 //ประภทสินค้าในร้าน (0: ตามแบบกำหนดเอง / 1: ตามแบบ official)
+	end;
+}
+
+//------------------------------------------------------------
+// ตำแหน่ง NPC.
+//------------------------------------------------------------
+// custom map.
+askald,101,158,4	duplicate(New_Arrows_Dealer)	Arrow Dealer#fsc	4_M_ARCHER
+// official map.
+prt_in,162,135,4	duplicate(New_Arrows_Dealer)	Arrow Dealer#prt	4_M_ARCHER
+morocc_in,128,66,4	duplicate(New_Arrows_Dealer)	Arrow Dealer#moc	4_M_ARCHER
+geffen_in,22,167,4	duplicate(New_Arrows_Dealer)	Arrow Dealer#gef	4_M_ARCHER
+payon_in01,8,132,4	duplicate(New_Arrows_Dealer)	Arrow Dealer#pay	4_M_ARCHER
+alberta_in,177,23,4	duplicate(New_Arrows_Dealer)	Arrow Dealer#alb	4_M_ARCHER
+izlude_in,73,103,3	duplicate(New_Arrows_Dealer)	Arrow Dealer#izd	4_M_ARCHER
+aldeba_in,37,47,3	duplicate(New_Arrows_Dealer)	Arrow Dealer#ald	4_M_ARCHER
+xmas_in,169,93,3	duplicate(New_Arrows_Dealer)	Arrow Dealer#xms	4_M_ARCHER
+cmd_in01,117,173,5	duplicate(New_Arrows_Dealer)	Arrow Dealer#com	4_M_ARCHER
+ama_in01,100,17,3	duplicate(New_Arrows_Dealer)	Arrow Dealer#ama	4_M_ARCHER
+gonryun,175,95,3	duplicate(New_Arrows_Dealer)	Arrow Dealer#gon	4_M_ARCHER
+um_in,158,127,5	duplicate(New_Arrows_Dealer)	Arrow Dealer#umb	4_M_ARCHER
+lou_in02,134,176,3	duplicate(New_Arrows_Dealer)	Arrow Dealer#lou	4_M_ARCHER
+ayo_in01,77,161,4	duplicate(New_Arrows_Dealer)	Arrow Dealer#ayo	4_M_ARCHER
+ein_in01,95,22,7	duplicate(New_Arrows_Dealer)	Arrow Dealer#ein	4_M_ARCHER
+lhz_in02,268,92,5	duplicate(New_Arrows_Dealer)	Arrow Dealer#lhz	4_M_ARCHER
+hu_in01,99,383,5	duplicate(New_Arrows_Dealer)	Arrow Dealer#hug	4_M_ARCHER
+ra_in01,169,363,5	duplicate(New_Arrows_Dealer)	Arrow Dealer#rac	4_M_ARCHER
+ve_in,349,243,5	duplicate(New_Arrows_Dealer)	Arrow Dealer#ves	4_M_ARCHER
+mosk_in,24,173,3	duplicate(New_Arrows_Dealer)	Arrow Dealer#mosk	4_M_ARCHER
+brasilis,252,247,3	duplicate(New_Arrows_Dealer)	Arrow Dealer#bra	4_M_ARCHER
+dewata,223,167,3	duplicate(New_Arrows_Dealer)	Arrow Dealer#dew	4_M_ARCHER
+ma_in01,69,21,5	duplicate(New_Arrows_Dealer)	Arrow Dealer#mal	4_M_ARCHER

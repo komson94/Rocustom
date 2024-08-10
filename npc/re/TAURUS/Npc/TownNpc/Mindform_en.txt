@@ -1,0 +1,161 @@
+//--------------------- Mindform Shoe Enchant 
+//----------------------- Striker Edition
+//------------------------ Version 1.0
+//------------------------ use prontera token for deEnchant
+
+askald,56,102,5	script	Enchant Mindform#enchant	10272,{
+	disable_items;
+	mes "[Mindform Master]";
+	mes "เจ้าต้องการจะออฟ Mindform หรือไม่?";
+	next;
+	switch (select ("- Close:- Enchant Shoes:- Unenchantment") ) {
+		case 1:
+			end;
+		case 2:
+			.@equip_id = getequipid(EQI_SHOES);
+			switch(.@equip_id) {
+				case 470030:
+				case 470034:
+				case 470058:
+				case 470062:
+				case 470078:
+				case 470080:
+				case 470082:
+				case 470089:
+				case 470097:
+				case 22243:
+					break;	
+				default:
+					mes "Please, wearing Mindform Shoes";
+					close;
+			}
+			mes "Okay";
+			next;
+			setarray .@card[0], getequipcardid(EQI_SHOES,0), getequipcardid(EQI_SHOES,1), getequipcardid(EQI_SHOES,2), getequipcardid(EQI_SHOES,3);
+			.@refine = getequiprefinerycnt(EQI_SHOES);
+			if (.@card[2] > 0) {
+				mes "These boots have already passed the enchanting limit. We can't enchant them any more.";
+				end;
+			}
+			if (.@card[3] == 0) {
+				if (zeny <= 2000000) {
+					mes "Need 2m zeny";
+					end;
+				}
+				mes "Procress";
+				setarray .@enchant[0],
+					4700,	// Strength1
+					4701,	// Strength2
+					4702,	// Strength3
+					4703,	// Strength4
+					4704,	// Strength5
+					4710,	// Inteligence1
+					4711,	// Inteligence2
+					4712,	// Inteligence3
+					4713,	// Inteligence4
+					4714,	// Inteligence5
+					4720,	// Dexterity1
+					4721,	// Dexterity2
+					4722,	// Dexterity3
+					4723,	// Dexterity4
+					4724,	// Dexterity5
+					4730,	// Agility1
+					4731,	// Agility2
+					4732,	// Agility3
+					4733,	// Agility4
+					4734,	// Agility5
+					4740,	// Vitality1
+					4741,	// Vitality2
+					4742,	// Vitality3
+					4743,	// Vitality4
+					4744,	// Vitality5
+					4750,	// Luck1
+					4751,	// Luck2
+					4752,	// Luck3
+					4753,	// Luck4
+					4754,	// Luck5
+					4808,	//FS4
+					4820,	//FS5
+					4821,	//FS6
+					4822,	//FS7
+					4832,	//EA1
+					4833,	//EA2
+					4834,	//EA3
+					4835,	//EA4
+					4814,	//SPell2
+					4813,	//SPell3
+					4812,	//SPell4
+					4826,	//SPell5
+					4861,	//Hp1
+					4862,	//HP2
+					4869,	//aspd1
+					4872,	//aspd2
+					4873,	//aspd3
+					4881;	//aspd4
+				.@card[3] = .@enchant[ rand( getarraysize(.@enchant) ) ];
+				zeny -= 2000000;
+				delequip EQI_SHOES;
+				getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+				next;
+				mes "done";
+				end;
+			}
+			else if (.@card[2] == 0 ) {
+				if (zeny <= 2000000) {
+					mes "need 2m zeny";
+					end;
+				}
+				mes "Procress";
+				setarray .@enchant[0],
+					4875,	//bear power
+					4876,	//runaway magic
+					4877,	//speed
+					4878,	//muscle
+					4879,	//hawkeye
+					4880;	//lucky
+				.@card[2] = .@enchant[ rand( getarraysize(.@enchant) ) ];
+				zeny -= 2000000;
+				delequip EQI_SHOES;
+				getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+				next;
+				mes "done";
+				end;
+			}
+			end;
+		case 3:
+			.@equip_id = getequipid(EQI_SHOES);
+			switch(.@equip_id) {
+				case 470030:
+				case 470034:
+				case 470058:
+				case 470062:
+				case 470078:
+				case 470080:
+				case 470082:
+				case 470089:
+				case 470097:
+				case 22243:
+					break;
+				default:
+					mes "Please, wearing Mindform Shoes";
+					close;
+			}
+			.@equip_name$ = getequipname(EQI_SHOES);
+			setarray .@card[0], getequipcardid(EQI_SHOES,0), getequipcardid(EQI_SHOES,1), getequipcardid(EQI_SHOES,2), getequipcardid(EQI_SHOES,3);
+			.@refine = getequiprefinerycnt(EQI_SHOES);
+			if (.@card[2] == 0) {
+				mes "You must enchant it first.";
+				end;
+			}
+			if (#CASHPOINTS <=30 || countitem(6919) < 10 ) {
+				mes "Need 30 Cashpoints And 10 Honor Token";
+				end;
+			}
+			delequip EQI_SHOES;
+			#CASHPOINTS -= 30;
+			delitem 6919,10;
+			getitem2 .@equip_id,1,1,.@refine,0,0,0,0,0;
+			end;
+	}
+	
+}

@@ -1,0 +1,153 @@
+//===== rAthena Script =======================================
+//= Cash Item Exchanger
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+
+fct_in01,26,199,3	script	Cash Item Exchanger	4_F_KAFRA6,{
+	disable_items;
+	cutin "kafra_06",2;
+	mes .NPCname$;
+	mes "สวัสดีค่ะ";
+	mes "ฉันคือพนักงานรับซื้อ Cash Item คืน";
+	mes "โดยราคาที่รับซื้อจะลดลง ^FF000050^000000% ของราคาเต็มที่วางขายอยู่";
+	mes "ท่านสามารถดูรายการที่รับซื้อได้จากแคตตาล็อกค่ะ.";
+	next;
+	switch(select(
+		""+.Symbol$+" ขาย Cash Item คืน",
+		""+.Symbol$+" ขอดูแคตตาล็อก",
+		""+.Symbol$+" ไม่ดีกว่า"
+		)){
+			case 1:
+				mes .NPCname$;
+				mes "กรุณาเลือกไอเทมที่ตรงตามรายการในแคตตาล็อก";
+				mes "ที่ต้องการจะขายคืนค่ะ";
+				mes "^FF0000โปรดระมัดระวังก่อนทำการกดขายด้วยนะคะ^000000";
+				callshop "Cash_Item_Exchange",2;
+				npcshopattach "Cash_Item_Exchange";
+				end;
+				
+			case 2:
+				mes .NPCname$;
+				mes "แคตตาล็อกจะแสดงรายการของ";
+				mes "Cash Item ที่รับซื้อคืน";
+				mes "พร้อมแสดงราคาที่รับซื้อที่ด้านขวา.";
+				callshop "Catalog_Item_Exchange",1;
+				end;
+				
+			case 3:
+				mes .NPCname$;
+				mes "โอกาสหน้าเชิญใหม่ค่ะ.";
+				close2;
+				cutin "",255;
+				end;
+		}
+		cutin "",255;
+		end;
+
+OnBuyItem:
+	setarray .@choice$, "@bought_", "bought", "-1", "@item";	
+OnSellItem:
+	if( !getarraysize(.@choice$) )
+		setarray .@choice$, "@sold_", "ขายแล้ว", "1", "@delitem";
+	.@len = getarraysize(getd(.@choice$+"nameid"));
+	for ( .@i = 0; .@i < .@len; .@i++ ) {
+	
+		if( .@choice$[1] == "ขายแล้ว" ) {
+			if ( countitem(@sold_nameid[.@i]) < @sold_quantity[.@i] || @sold_quantity[.@i] <= 0 ) {
+              	mes .NPCname$;
+				mes "มีบางอย่างผิดพลาด";
+				close2;
+				cutin "",255;
+				end;
+			}
+		} else {
+			if ( @bought_quantity[.@i] <= 0 ) {
+              	mes .NPCname$;
+				mes "มีบางอย่างผิดพลาด";			
+				close2;
+				cutin "",255;
+				end;
+			}
+		}
+		
+		for ( .@a = 0; .@a < .list; .@a = .@a + 2 ) {
+			if( getd(.@choice$+"nameid["+.@i+"]") == .Item_List[.@a] ) {
+				if ( #CASHPOINTS < .Item_List[.@a+1] * @bought_quantity[.@i]
+				&&   .@choice$[1] != "ขายแล้ว" ) {
+                  	mes .NPCname$;
+					mes "คุณมี Cashpoints ไม่เพียงพอ.";			
+					close2;
+					cutin "",255;
+					end;
+				}
+				atcommand .@choice$[3]+" "+.Item_List[.@a]+" "+getd(.@choice$+"quantity["+.@i+"]");
+				.@cashpoints = ( getd(.@choice$+"quantity["+.@i+"]") * .Item_List[.@a+1] ) * atoi(.@choice$[2]);
+				#CASHPOINTS = #CASHPOINTS + .@cashpoints;
+				dispbottom "ไอเทม "+ getitemname(.Item_List[.@a]) +" จำนวน "+ getd(.@choice$+"quantity["+.@i+"]") +" อัน ได้ทำการ "+ .@choice$[1] +" ได้ "+ .@cashpoints +" Cash Point.", 0xff0000;
+			}
+		}
+	}
+	deletearray getd(.@choice$+"quantity");
+	deletearray getd(.@choice$+"nameid");
+	mes .NPCname$;
+	mes "แลกเปลี่ยนเรียบร้อยแล้วค่ะ";
+	mes "----------------------------------";
+	mes "หากแลกเปลี่ยนไอเทมสำเร็จ";
+	mes "จะมีข้อความสีแดงที่กล่องแชทค่ะ";
+	mes "ขอบคุณที่ใช้บริการค่ะ";
+	close2;
+	cutin "",255;
+	end;
+
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.Symbol$ = "~";
+	// Item List
+	setarray .Item_List,	12790, 100, 	//Name Change Coupon
+							12900, 50,		//Battle Manual Box | 10 ea.
+							12902, 50,		//Bubble Gum Box | 10 ea.
+							13710, 50,		//Gym Pass Box
+							12922, 65,		//Token of Siegfried Box
+							13500, 50,		//Life Insurrance Box | 10 ea.
+							13990, 50,		//JOB Battle Manual Box | 10 ea.
+							17270, 50,		//Bar Cookie Of Strength Box
+							17271, 50,		//Bar Cookie Of Vitality Box
+							17272, 50,		//Bar Cookie Of Agility Box
+							17273, 50,		//Bar Cookie Of Intellgence Box
+							17274, 50,		//Bar Cookie Of Dexterity Box
+							17275, 50,		//Bar Cookie Of Luck Box
+							16770, 62,		//Silvervine Box | 10 ea.
+							12920, 45,		//Enriched Elunium Box | 10 ea.
+							12921, 45,		//Enriched Oridecon Box | 10 ea.
+							16394, 62,		//HD Oridecon Box | 10 ea.
+							16396, 62,		//HD Elunium Box | 10 ea.
+							16261, 62,		//HD Carnium Box | 10 ea.
+							16260, 62;		//HD Bradium Box | 10 ea.
+							
+	.list = getarraysize(.Item_List);
+	npcshopdelitem "Cash_Item_Exchange",501;
+	for ( .@a = 0; .@a < .list; .@a = .@a + 2 )
+		npcshopadditem "Cash_Item_Exchange",.Item_List[.@a],.Item_List[.@a+1];
+	
+	setarray .messages$,"รั","บ","ซื้","อ"," ","C","a","s","h"," ","I","t","e","m"," ","คื","น";
+    while( 1 )
+    {
+        set .Display$,"";
+        for( set .i,0; .i < getarraysize( .messages$ ); set .i,.i + 1 )
+        {
+            set .Display$,.Display$ + .messages$[.i];
+            delwaitingroom;
+            waitingroom .Display$,0;
+            sleep 100;
+        }
+    sleep 5000;        // ดีเลย์ก่อนตัวอักษรวิ่งซ้ำ 1000 = 1 วินาที.
+    }	
+	end;
+}
+-	shop	Cash_Item_Exchange	-1,501:-1
+-	pointshop	Catalog_Item_Exchange	-1,#Catalog Item Exchange,12790:100,12900:50,12902:50,13710:50,13500:50,13990:50,17270:50,17271:50,17272:50,17273:50,17274:50,17275:50,16770:62,12920:45,12921:45,16394:62,16396:62,16261:62,16260:62

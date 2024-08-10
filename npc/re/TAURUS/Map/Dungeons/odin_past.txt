@@ -1,0 +1,1389 @@
+//===== rAthena Script =======================================
+//= Odin Past Script
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+
+//==================================================
+// odin_past - Mob Spanw
+//==================================================
+odin_past,0,0	monster	Angelgolt	20604,40,5000
+odin_past,0,0	monster	Angelgolt	20605,60,5000
+odin_past,0,0	monster	Holy Frus	20606,45,5000
+odin_past,0,0	monster	Holy Skogul	20607,45,5000
+odin_past,0,0	monster	Arch Plasma	20608,5,15000
+odin_past,0,0	monster	Spectral Plasma	20609,5,15000
+odin_past,0,0,0,0	boss_monster	Valkyrie Reginleif	20610,1,7200000,600000,1
+odin_past,0,0,0,0	boss_monster	Valkyrie Ingrid	20611,1,7200000,600000,1
+
+
+//==================================================
+// odin_past - Warp
+//==================================================
+odin_past,291,235,0	warp	past-tem03	1,1,odin_tem03,277,240
+odin_tem03,277,236,0	script	odin_past	WARPNPC,2,2,{
+	if (Baselevel < .ReqLevel)    {
+        mes .NPC$;
+        mes "ต้องมี Base Level ^FF0000"+.ReqLevel+"^000000 ขึ้นไป";
+        mes "จึงจะสามารถเข้าไปได้.";
+        close;
+    }
+	warp .mapname$,.x,.y;
+    end;
+OnInit:
+    .ReqLevel = 190;
+    .mapname$ = "odin_past";
+    .x = 291;
+    .y = 230;
+    end;
+}
+
+//==================================================
+// Odin Relic
+//==================================================
+function	script	Odin_itembox	{
+	//Item List.
+	setarray .ITEM_LIST,7511,7063,25767,15397,15398,15399,15400,15401,15402,22209,20947;
+	.@i = .ITEM_LIST[rand(getarraysize(.ITEM_LIST))];
+	if (.@i == 7511 || .@i == 7063) {
+		.@num = rand(10);
+		getitem .@i,.@num;
+	} 
+	else if (.@i == 25767) {
+		getitem .@i,1;
+	} 
+	else {
+		getitem .@i,1;
+		announce "[ระบบ]: ผู้เล่น [ "+strcharinfo(0)+" ] เปิด "+getitemname(23986)+" ได้รับ "+getitemname(.@i)+" !",bc_all,0x00FF00;
+	}
+	end; 
+}
+
+//==================================================
+// Enchantment NPC
+//==================================================
+// official npc position.
+//hu_in01,97,322,5	script	Susan Grey	4_F_HUWOMAN,{
+morocc,153,71,3	script	Susan Grey	448,{
+	disable_items;
+	mes .NPCname$;
+	if ((MaxWeight - Weight) < 1000) {
+		mes "เจ้าแบกของมาหนักเกินไป. ลองลดน้ำหนักลงแล้วมาใหม่.";
+		close;
+	}
+	if (checkweight(501,1) == 0) {
+		mes "เจ้าพกของมามากเกินไป. ลองลดของลงแล้วมาใหม่.";
+		close;
+	}
+	mes "สามารถนำอุปกรณ์จาก Odin Past";
+	mes "มาเสริมออฟได้ที่นี่.";
+	next;
+	switch( select(
+		""+.sb$+" รายละเอียด",
+		""+.sb$+" ออฟ "+getitemname(.ITEM_LIST[1])+"",
+		""+.sb$+" ออฟ "+getitemname(.ITEM_LIST[2])+"",
+		""+.sb$+" ออฟ Soutanes"
+	)) {
+		case 1:
+			switch( select(
+				""+.sb$+" เกี่ยวกับ "+getitemname(.ITEM_LIST[1])+"",
+				""+.sb$+" เกี่ยวกับ "+getitemname(.ITEM_LIST[2])+"",
+				""+.sb$+" เกี่ยวกับ Soutanes"
+			)) {
+				case 1:
+					next;
+					mes .NPCname$;			
+					mes "<ITEM>"+getitemname(.ITEM_LIST[1])+"<INFO>"+.ITEM_LIST[1]+"</INFO></ITEM>";
+					mes "^0000FFออฟแบบธรรมดา^000000:";
+					mes "ใช้ <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM> x "+.EN_Amount[1]+" อัน";
+					mes "และ ^009900"+callfunc("F_InsertComma",.Price)+"^000000 Zeny ในการออฟ.";
+					mes "^0000FFรายการออฟชั่นที่สุ่มได้^000000:";
+					for( .@i = 0; .@i < getarraysize(.NormalEN_OrbID); .@i++ ) {
+						mes "<ITEM>"+getitemname(.NormalEN_OrbID[.@i])+"<INFO>"+.NormalEN_OrbID[.@i]+"</INFO></ITEM>";
+					}
+					next;
+					mes .NPCname$;
+					mes "<ITEM>"+getitemname(.ITEM_LIST[1])+"<INFO>"+.ITEM_LIST[1]+"</INFO></ITEM>";
+					mes "^990099ออฟแบบพิเศษ^000000:";
+					mes "ต้องอัพเกรดไอเทม +^FF0000"+.RefineRate[1]+"^000000 ขึ้นไป";
+					mes "จะสามารถออฟชั่นได้แค่ช่องที่ 2 เท่านั้น";
+					mes "ใช้ <ITEM>"+getitemname(.EN_ITEM[2])+"<INFO>"+.EN_ITEM[2]+"</INFO></ITEM> x "+.EN_Amount[2]+" อัน";
+					mes "และ ^009900"+callfunc("F_InsertComma",.Price)+"^000000 Zeny ในการออฟ.";
+					mes "^0000FFรายการออฟชั่นที่สุ่มได้^000000:";
+					for( .@i = 0; .@i < getarraysize(.SpecialEN_OrbID); .@i++ ) {
+						mes "<ITEM>"+getitemname(.SpecialEN_OrbID[.@i])+"<INFO>"+.SpecialEN_OrbID[.@i]+"</INFO></ITEM>";
+					}
+					close;
+				case 2:
+					next;
+					mes .NPCname$;			
+					mes "<ITEM>"+getitemname(.ITEM_LIST[2])+"<INFO>"+.ITEM_LIST[2]+"</INFO></ITEM>";
+					mes "^0000FFออฟแบบธรรมดา^000000:";
+					mes "ใช้ <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM> x "+.EN_Amount[1]+" อัน";
+					mes "และ ^009900"+callfunc("F_InsertComma",.Price)+"^000000 Zeny ในการออฟ.";
+					mes "^0000FFรายการออฟชั่นที่สุ่มได้^000000:";
+					for( .@i = 0; .@i < getarraysize(.NormalEN_OrbID); .@i++ ) {
+						mes "<ITEM>"+getitemname(.NormalEN_OrbID[.@i])+"<INFO>"+.NormalEN_OrbID[.@i]+"</INFO></ITEM>";
+					}
+					next;
+					mes .NPCname$;
+					mes "<ITEM>"+getitemname(.ITEM_LIST[2])+"<INFO>"+.ITEM_LIST[2]+"</INFO></ITEM>";
+					mes "^990099ออฟแบบพิเศษ^000000:";
+					mes "ต้องอัพเกรดไอเทม +^FF0000"+.RefineRate[1]+"^000000 ขึ้นไป";
+					mes "สามารถออฟชั่นได้แค่ช่องที่ 2 เท่านั้น";
+					mes "ใช้ <ITEM>"+getitemname(.EN_ITEM[2])+"<INFO>"+.EN_ITEM[2]+"</INFO></ITEM> x "+.EN_Amount[2]+" อัน";
+					mes "และ ^009900"+callfunc("F_InsertComma",.Price)+"^000000 Zeny ในการออฟ.";
+					mes "^0000FFรายการออฟชั่นที่สุ่มได้^000000:";
+					for( .@i = 0; .@i < getarraysize(.SpecialEN_OrbID); .@i++ ) {
+						mes "<ITEM>"+getitemname(.SpecialEN_OrbID[.@i])+"<INFO>"+.SpecialEN_OrbID[.@i]+"</INFO></ITEM>";
+					}
+					close;
+				case 3:
+					next;
+					mes .NPCname$;			
+					for( .@i = 0; .@i < getarraysize(.ITEM_LIST2); .@i++ ) {
+						mes "<ITEM>"+getitemname(.ITEM_LIST2[.@i])+"<INFO>"+.ITEM_LIST2[.@i]+"</INFO></ITEM>";
+					}
+					mes "^0000FFออฟแบบธรรมดา^000000:";
+					mes "ใช้ <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM> x "+.EN_Amount[1]+" อัน";
+					mes "และ ^009900"+callfunc("F_InsertComma",.Price)+"^000000 Zeny ในการออฟ.";
+					mes "^0000FFรายการออฟชั่นที่สุ่มได้^000000:";
+					for( .@i = 0; .@i < getarraysize(.NormalEN_OrbID); .@i++ ) {
+						mes "<ITEM>"+getitemname(.NormalEN_OrbID[.@i])+"<INFO>"+.NormalEN_OrbID[.@i]+"</INFO></ITEM>";
+					}
+					next;
+					mes .NPCname$;
+					for( .@i = 0; .@i < getarraysize(.ITEM_LIST2); .@i++ ) {
+						mes "<ITEM>"+getitemname(.ITEM_LIST2[.@i])+"<INFO>"+.ITEM_LIST2[.@i]+"</INFO></ITEM>";
+					}
+					mes "^990099ออฟแบบพิเศษ^000000:";
+					mes "ต้องอัพเกรดไอเทม +^FF0000"+.RefineRate[2]+"^000000 ขึ้นไป";
+					mes "สามารถออฟชั่นได้แค่ช่องที่ 2 เท่านั้น";
+					mes "ใช้ <ITEM>"+getitemname(.EN_ITEM[2])+"<INFO>"+.EN_ITEM[2]+"</INFO></ITEM> x "+.EN_Amount[2]+" อัน";
+					mes "และ ^009900"+callfunc("F_InsertComma",.Price)+"^000000 Zeny ในการออฟ.";
+					mes "^0000FFรายการออฟชั่นที่สุ่มได้^000000:";
+					for( .@i = 0; .@i < getarraysize(.SpecialES_OrbID); .@i++ ) {
+						mes "<ITEM>"+getitemname(.SpecialES_OrbID[.@i])+"<INFO>"+.SpecialES_OrbID[.@i]+"</INFO></ITEM>";
+					}
+					close;
+			}
+		//==========================================================================================
+		case 2:
+			switch( select(
+					""+.sb$+" ออฟแบบธรรมดา",
+					""+.sb$+" ออฟแบบพิเศษ",
+					""+.sb$+" ลบออฟชั่น"
+			)) {
+				case 1:
+					next;
+					if (getequipid(EQI_GARMENT) == .ITEM_LIST[1]) {
+						.@equip_id = getequipid(EQI_GARMENT);	
+						.@refine = getequiprefinerycnt(EQI_GARMENT);	
+						setarray .@card[0], getequipcardid(EQI_GARMENT,0), getequipcardid(EQI_GARMENT,1), getequipcardid(EQI_GARMENT,2), getequipcardid(EQI_GARMENT,3);
+						.@EN_Orb = .NormalEN_OrbID[rand(getarraysize(.NormalEN_OrbID))];	
+						mes .NPCname$;
+						mes "^990099ไอเทม^000000 : <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+						mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM> x "+.EN_Amount[1]+" อัน";
+						mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+						mes "เจ้าพร้อมที่จะออฟแล้วรึยัง ?";
+						next;
+						if (select( ""+.sb$+" ออฟเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+							mes .NPCname$;
+							mes "ขอให้โชคดี.";
+							close;
+						}
+						if (countitem(.EN_ITEM[1]) < .EN_Amount[1]) || (Zeny < .Price) {
+							mes .NPCname$;
+							mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM>";
+							mes "หรือ Zeny ไม่เพียงพอ.";
+							close;
+						}
+						if (getequipcardid(EQI_GARMENT,1) == 0) { .@card1$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_GARMENT,2) == 0) { .@card2$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_GARMENT,3) == 0) { .@card3$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_GARMENT,1) > 0)  { .@card1$ = "^FF0000"+getitemname(getequipcardid(EQI_GARMENT,1))+"^000000"; }
+						if (getequipcardid(EQI_GARMENT,2) > 0)  { .@card2$ = "^FF0000"+getitemname(getequipcardid(EQI_GARMENT,2))+"^000000"; }
+						if (getequipcardid(EQI_GARMENT,3) > 0)  { .@card3$ = "^FF0000"+getitemname(getequipcardid(EQI_GARMENT,3))+"^000000"; }
+						mes .NPCname$;
+						mes "เลือกช่องที่ต้องการออฟชั่น:";
+						next;
+						switch( select(
+							""+.sb$+" ช่องที่ 4 ["+.@card3$+"]",
+							""+.sb$+" ช่องที่ 3 ["+.@card2$+"]",
+							""+.sb$+" ช่องที่ 2 ["+.@card1$+"]"
+						)) {
+							case 1:
+								if (.@card[3] > 0) {
+									mes .NPCname$;
+									mes "^FF0000ช่องนี้มีออฟชั่นอยู่แล้ว.^000000";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_GARMENT, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_GARMENT, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_GARMENT, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[1];
+								Zeny -= .Price;
+								delequip EQI_GARMENT;
+								getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@EN_Orb;
+								mes .NPCname$;
+								mes "^0000CDออฟเรียบร้อย.^000000";
+								close;
+							case 2:
+								if (.@card[2] > 0) {
+									mes .NPCname$;
+									mes "^FF0000ช่องนี้มีออฟชั่นอยู่แล้ว.^000000";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_GARMENT, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_GARMENT, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_GARMENT, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[1];
+								Zeny -= .Price;
+								delequip EQI_GARMENT;
+								getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@EN_Orb,.@card[3];
+								mes .NPCname$;
+								mes "^0000CDออฟเรียบร้อย.^000000";
+								close;
+							case 3:
+								if (.@card[1] > 0) {
+									mes .NPCname$;
+									mes "^FF0000ช่องนี้มีออฟชั่นอยู่แล้ว.^000000";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_GARMENT, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_GARMENT, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_GARMENT, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[1];
+								Zeny -= .Price;
+								delequip EQI_GARMENT;
+								getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@EN_Orb,.@card[2],.@card[3];
+								mes .NPCname$;
+								mes "^0000CDออฟเรียบร้อย.^000000";
+								close;
+						}
+					} else {
+						mes .NPCname$;
+						mes "เจ้าไม่ได้ใส่";
+						mes "<ITEM>"+getitemname(.ITEM_LIST[1])+"<INFO>"+.ITEM_LIST[1]+"</INFO></ITEM>";
+						close;
+					}
+					end;
+					
+				case 2:
+					next;
+					if (getequipid(EQI_GARMENT) == .ITEM_LIST[1]) && (getequiprefinerycnt(EQI_GARMENT) >= .RefineRate[1]) {
+						.@equip_id = getequipid(EQI_GARMENT);
+						.@refine = getequiprefinerycnt(EQI_GARMENT);	
+						setarray .@card[0], getequipcardid(EQI_GARMENT,0), getequipcardid(EQI_GARMENT,1), getequipcardid(EQI_GARMENT,2), getequipcardid(EQI_GARMENT,3);
+						.@EN_Orb = .SpecialES_OrbID[rand(getarraysize(.SpecialES_OrbID))];	
+						if (.@card[1] > 0) {
+							mes .NPCname$;
+							mes "^FF0000ออฟสูงสุดแล้วไม่สามารถออฟได้อีก.^000000";
+							close;
+						}
+						if (.@card[1] == 0) {
+							mes .NPCname$;
+							mes "^990099ไอเทม^000000 : +^FF0000"+.@refine+"^000000 <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+							mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[2])+"<INFO>"+.EN_ITEM[2]+"</INFO></ITEM> x "+.EN_Amount[2]+" อัน";
+							mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+							mes "^FF0000สามารถออฟชั่นได้แค่ช่องที่ 2 เท่านั้น^000000";
+							mes "เจ้าพร้อมที่จะออฟแล้วรึยัง ?";
+							next;
+							if (select( ""+.sb$+" ออฟเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+								mes .NPCname$;
+								mes "ขอให้โชคดี.";
+								close;
+							}
+							if (countitem(.EN_ITEM[2]) < .EN_Amount[2]) || (Zeny < .Price) {
+								mes .NPCname$;
+								mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[2])+"<INFO>"+.EN_ITEM[2]+"</INFO></ITEM>";
+								mes "หรือ Zeny ไม่เพียงพอ.";
+								close;
+							}
+							// anti-hack
+							if (callfunc("F_IsEquipIDHack", EQI_GARMENT, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_GARMENT, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_GARMENT, .@refine)) { close; }	
+							progressbar "000000",1;
+							specialeffect2 EF_REPAIRWEAPON;
+							delitem .EN_ITEM[2],.EN_Amount[2];
+							Zeny -= .Price;
+							delequip EQI_GARMENT;
+							getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@EN_Orb,.@card[2],.@card[3];
+							mes .NPCname$;
+							mes "^0000CDออฟเรียบร้อย.^000000";
+							close;
+						}
+					} else {
+						mes .NPCname$;
+						mes "เจ้าไม่ได้ใส่";
+						mes "+^FF0000"+.RefineRate[1]+"^000000 <ITEM>"+getitemname(.ITEM_LIST[1])+"<INFO>"+.ITEM_LIST[1]+"</INFO></ITEM>";
+						close;
+					}	
+					end;
+					
+				case 3:
+					next;
+					if (getequipid(EQI_GARMENT) == .ITEM_LIST[1]) {
+						.@equip_id = getequipid(EQI_GARMENT);
+						.@refine = getequiprefinerycnt(EQI_GARMENT);	
+						setarray .@card[0], getequipcardid(EQI_GARMENT,0), getequipcardid(EQI_GARMENT,1), getequipcardid(EQI_GARMENT,2), getequipcardid(EQI_GARMENT,3);
+						if (.@card[1] == 0 && .@card[2] == 0 && .@card[3] == 0) {
+							mes .NPCname$;
+							mes "^FF0000ไม่พบออฟชั่นใดๆ.^000000";
+							close;
+						}
+						if (getequipcardid(EQI_GARMENT,1) == 0) { .@card1$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_GARMENT,2) == 0) { .@card2$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_GARMENT,3) == 0) { .@card3$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_GARMENT,1) > 0)  { .@card1$ = "^0000FF"+getitemname(getequipcardid(EQI_GARMENT,1))+"^000000"; }
+						if (getequipcardid(EQI_GARMENT,2) > 0)  { .@card2$ = "^0000FF"+getitemname(getequipcardid(EQI_GARMENT,2))+"^000000"; }
+						if (getequipcardid(EQI_GARMENT,3) > 0)  { .@card3$ = "^0000FF"+getitemname(getequipcardid(EQI_GARMENT,3))+"^000000"; }
+						mes .NPCname$;
+						mes "เลือกช่องที่ต้องการลบออฟชั่น:";
+						next;
+						switch( select(
+							""+.sb$+" ^FF0000ลบทั้งหมด^000000",
+							""+.sb$+" ลบช่องที่ 4 ["+.@card3$+"]",
+							""+.sb$+" ลบช่องที่ 3 ["+.@card2$+"]",
+							""+.sb$+" ลบช่องที่ 2 ["+.@card1$+"]"
+						)) {
+							case 1:
+								mes .NPCname$;
+								mes "^FF0000ลบออฟทั้งหมด^000000:";
+								mes "^990099ไอเทม^000000 : <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+								mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[2])+"<INFO>"+.EN_ITEM[2]+"</INFO></ITEM> x "+.EN_Amount[3]+" อัน";
+								mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+								mes "^990099โอกาสเสียหาย^000000 : ^FF0000"+.FailRate+"^000000% ที่อุปกรณ์จะหายไป";
+								mes "เจ้าพร้อมที่จะลบออฟชั่นแล้วรึยัง ?";
+								next;
+								if (select( ""+.sb$+" ลบเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+									mes .NPCname$;
+									mes "ขอให้โชคดี.";
+									close;
+								}
+								if (countitem(.EN_ITEM[2]) < .EN_Amount[3]) || (Zeny < .Price) {
+									mes .NPCname$;
+									mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[2])+"<INFO>"+.EN_ITEM[2]+"</INFO></ITEM>";
+									mes "หรือ Zeny ไม่เพียงพอ.";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_GARMENT, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_GARMENT, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_GARMENT, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[2],.EN_Amount[3];
+								Zeny -= .Price;
+								delequip EQI_GARMENT;
+								.rate = rand(100);
+								if ( .rate > .FailRate ) {
+									getitem2 .@equip_id,1,1,.@refine,0,.@card[0],0,0,0;
+									mes .NPCname$;
+									mes "^0000CDลบออฟชั่นทั้งหมดเรียบร้อย.^000000";
+									close;
+								} else {
+									sleep 500;
+									specialeffect2 EF_SUI_EXPLOSION;
+									mes .NPCname$;
+									mes "^FF0000ไอเทมเสียหาย^000000";
+									mes "โชคไม่ดีเอาซะเลย.";
+									close;
+								}
+								end;
+							case 2:
+								mes .NPCname$;
+								mes "^990099ลบช่องที่ 4^000000 : ["+.@card3$+"]";
+								mes "^990099ไอเทม^000000 : <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+								mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[4]+"</INFO></ITEM> x "+.EN_Amount[1]+" อัน";
+								mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+								mes "^990099โอกาสเสียหาย^000000 : ^FF0000"+.FailRate+"^000000% ที่อุปกรณ์จะหายไป";
+								mes "เจ้าพร้อมที่จะลบออฟชั่นแล้วรึยัง ?";
+								next;
+								if (select( ""+.sb$+" ลบเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+									mes .NPCname$;
+									mes "ขอให้โชคดี.";
+									close;
+								}
+								if (countitem(.EN_ITEM[1]) < .EN_Amount[4]) || (Zeny < .Price) {
+									mes .NPCname$;
+									mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM>";
+									mes "หรือ Zeny ไม่เพียงพอ.";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_GARMENT, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_GARMENT, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_GARMENT, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[4];
+								Zeny -= .Price;
+								delequip EQI_GARMENT;
+								.rate = rand(100);
+								if ( .rate > .FailRate ) {
+									getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],0;
+									mes .NPCname$;
+									mes "^0000CDลบออฟชั่นทั้งหมดเรียบร้อย.^000000";
+									close;
+								} else {
+									sleep 500;
+									specialeffect2 EF_SUI_EXPLOSION;
+									mes .NPCname$;
+									mes "^FF0000ไอเทมเสียหาย^000000";
+									mes "โชคไม่ดีเอาซะเลย.";
+									close;
+								}
+								end;
+							case 3:
+								mes .NPCname$;
+								mes "^990099ลบช่องที่ 3^000000 : ["+.@card2$+"]";
+								mes "^990099ไอเทม^000000 : <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+								mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[4]+"</INFO></ITEM> x "+.EN_Amount[1]+" อัน";
+								mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+								mes "^990099โอกาสเสียหาย^000000 : ^FF0000"+.FailRate+"^000000% ที่อุปกรณ์จะหายไป";
+								mes "เจ้าพร้อมที่จะลบออฟชั่นแล้วรึยัง ?";
+								next;
+								if (select( ""+.sb$+" ลบเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+									mes .NPCname$;
+									mes "ขอให้โชคดี.";
+									close;
+								}
+								if (countitem(.EN_ITEM[1]) < .EN_Amount[4]) || (Zeny < .Price) {
+									mes .NPCname$;
+									mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM>";
+									mes "หรือ Zeny ไม่เพียงพอ.";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_GARMENT, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_GARMENT, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_GARMENT, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[4];
+								Zeny -= .Price;
+								delequip EQI_GARMENT;
+								.rate = rand(100);
+								if ( .rate > .FailRate ) {
+									getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],0,.@card[3];
+									mes .NPCname$;
+									mes "^0000CDลบออฟชั่นทั้งหมดเรียบร้อย.^000000";
+									close;
+								} else {
+									sleep 500;
+									specialeffect2 EF_SUI_EXPLOSION;
+									mes .NPCname$;
+									mes "^FF0000ไอเทมเสียหาย^000000";
+									mes "โชคไม่ดีเอาซะเลย.";
+									close;
+								}
+								end;
+							case 4:
+								mes .NPCname$;
+								mes "^990099ลบช่องที่ 2^000000 : ["+.@card1$+"]";
+								mes "^990099ไอเทม^000000 : <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+								mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[4]+"</INFO></ITEM> x "+.EN_Amount[1]+" อัน";
+								mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+								mes "^990099โอกาสเสียหาย^000000 : ^FF0000"+.FailRate+"^000000% ที่อุปกรณ์จะหายไป";
+								mes "เจ้าพร้อมที่จะลบออฟชั่นแล้วรึยัง ?";
+								next;
+								if (select( ""+.sb$+" ลบเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+									mes .NPCname$;
+									mes "ขอให้โชคดี.";
+									close;
+								}
+								if (countitem(.EN_ITEM[1]) < .EN_Amount[4]) || (Zeny < .Price) {
+									mes .NPCname$;
+									mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM>";
+									mes "หรือ Zeny ไม่เพียงพอ.";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_GARMENT, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_GARMENT, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_GARMENT, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[4];
+								Zeny -= .Price;
+								delequip EQI_GARMENT;
+								.rate = rand(100);
+								if ( .rate > .FailRate ) {
+									getitem2 .@equip_id,1,1,.@refine,0,.@card[0],0,.@card[2],.@card[3];
+									mes .NPCname$;
+									mes "^0000CDลบออฟชั่นทั้งหมดเรียบร้อย.^000000";
+									close;
+								} else {
+									sleep 500;
+									specialeffect2 EF_SUI_EXPLOSION;
+									mes .NPCname$;
+									mes "^FF0000ไอเทมเสียหาย^000000";
+									mes "โชคไม่ดีเอาซะเลย.";
+									close;
+								}
+								end;
+						}
+					} else {
+						mes .NPCname$;
+						mes "เจ้าไม่ได้ใส่";
+						mes "<ITEM>"+getitemname(.ITEM_LIST[1])+"<INFO>"+.ITEM_LIST[1]+"</INFO></ITEM>";
+						close;
+					}
+			}
+		//==========================================================================================
+		case 3:
+			switch( select(
+					""+.sb$+" ออฟแบบธรรมดา",
+					""+.sb$+" ออฟแบบพิเศษ",
+					""+.sb$+" ลบออฟชั่น"
+			)) {
+				case 1:
+					next;
+					if (getequipid(EQI_SHOES) == .ITEM_LIST[2]) {
+						.@equip_id = getequipid(EQI_SHOES);	
+						.@refine = getequiprefinerycnt(EQI_SHOES);	
+						setarray .@card[0], getequipcardid(EQI_SHOES,0), getequipcardid(EQI_SHOES,1), getequipcardid(EQI_SHOES,2), getequipcardid(EQI_SHOES,3);
+						.@EN_Orb = .NormalEN_OrbID[rand(getarraysize(.NormalEN_OrbID))];	
+						mes .NPCname$;
+						mes "^990099ไอเทม^000000 : <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+						mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM> x "+.EN_Amount[1]+" อัน";
+						mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+						mes "เจ้าพร้อมที่จะออฟแล้วรึยัง ?";
+						next;
+						if (select( ""+.sb$+" ออฟเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+							mes .NPCname$;
+							mes "ขอให้โชคดี.";
+							close;
+						}
+						if (countitem(.EN_ITEM[1]) < .EN_Amount[1]) || (Zeny < .Price) {
+							mes .NPCname$;
+							mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM>";
+							mes "หรือ Zeny ไม่เพียงพอ.";
+							close;
+						}
+						if (getequipcardid(EQI_SHOES,1) == 0) { .@card1$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_SHOES,2) == 0) { .@card2$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_SHOES,3) == 0) { .@card3$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_SHOES,1) > 0)  { .@card1$ = "^FF0000"+getitemname(getequipcardid(EQI_SHOES,1))+"^000000"; }
+						if (getequipcardid(EQI_SHOES,2) > 0)  { .@card2$ = "^FF0000"+getitemname(getequipcardid(EQI_SHOES,2))+"^000000"; }
+						if (getequipcardid(EQI_SHOES,3) > 0)  { .@card3$ = "^FF0000"+getitemname(getequipcardid(EQI_SHOES,3))+"^000000"; }
+						mes .NPCname$;
+						mes "เลือกช่องที่ต้องการออฟชั่น:";
+						next;
+						switch( select(
+							""+.sb$+" ช่องที่ 4 ["+.@card3$+"]",
+							""+.sb$+" ช่องที่ 3 ["+.@card2$+"]",
+							""+.sb$+" ช่องที่ 2 ["+.@card1$+"]"
+						)) {
+							case 1:
+								if (.@card[3] > 0) {
+									mes .NPCname$;
+									mes "^FF0000ช่องนี้มีออฟชั่นอยู่แล้ว.^000000";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_SHOES, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_SHOES, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_SHOES, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[1];
+								Zeny -= .Price;
+								delequip EQI_SHOES;
+								getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@EN_Orb;
+								mes .NPCname$;
+								mes "^0000CDออฟเรียบร้อย.^000000";
+								close;
+							case 2:
+								if (.@card[2] > 0) {
+									mes .NPCname$;
+									mes "^FF0000ช่องนี้มีออฟชั่นอยู่แล้ว.^000000";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_SHOES, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_SHOES, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_SHOES, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[1];
+								Zeny -= .Price;
+								delequip EQI_SHOES;
+								getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@EN_Orb,.@card[3];
+								mes .NPCname$;
+								mes "^0000CDออฟเรียบร้อย.^000000";
+								close;
+							case 3:
+								if (.@card[1] > 0) {
+									mes .NPCname$;
+									mes "^FF0000ช่องนี้มีออฟชั่นอยู่แล้ว.^000000";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_SHOES, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_SHOES, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_SHOES, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[1];
+								Zeny -= .Price;
+								delequip EQI_SHOES;
+								getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@EN_Orb,.@card[2],.@card[3];
+								mes .NPCname$;
+								mes "^0000CDออฟเรียบร้อย.^000000";
+								close;
+						}
+					} else {
+						mes .NPCname$;
+						mes "เจ้าไม่ได้ใส่";
+						mes "<ITEM>"+getitemname(.ITEM_LIST[2])+"<INFO>"+.ITEM_LIST[2]+"</INFO></ITEM>";
+						close;
+					}
+					end;
+					
+				case 2:
+					next;
+					if (getequipid(EQI_SHOES) == .ITEM_LIST[2]) && (getequiprefinerycnt(EQI_SHOES) >= .RefineRate[1]) {
+						.@equip_id = getequipid(EQI_SHOES);
+						.@refine = getequiprefinerycnt(EQI_SHOES);	
+						setarray .@card[0], getequipcardid(EQI_SHOES,0), getequipcardid(EQI_SHOES,1), getequipcardid(EQI_SHOES,2), getequipcardid(EQI_SHOES,3);
+						.@EN_Orb = .SpecialES_OrbID[rand(getarraysize(.SpecialES_OrbID))];	
+						if (.@card[1] > 0) {
+							mes .NPCname$;
+							mes "^FF0000ออฟสูงสุดแล้วไม่สามารถออฟได้อีก.^000000";
+							close;
+						}
+						if (.@card[1] == 0) {
+							mes .NPCname$;
+							mes "^990099ไอเทม^000000 : +^FF0000"+.@refine+"^000000 <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+							mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[2])+"<INFO>"+.EN_ITEM[2]+"</INFO></ITEM> x "+.EN_Amount[2]+" อัน";
+							mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+							mes "^FF0000สามารถออฟชั่นได้แค่ช่องที่ 2 เท่านั้น^000000";
+							mes "เจ้าพร้อมที่จะออฟแล้วรึยัง ?";
+							next;
+							if (select( ""+.sb$+" ออฟเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+								mes .NPCname$;
+								mes "ขอให้โชคดี.";
+								close;
+							}
+							if (countitem(.EN_ITEM[2]) < .EN_Amount[2]) || (Zeny < .Price) {
+								mes .NPCname$;
+								mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[2])+"<INFO>"+.EN_ITEM[2]+"</INFO></ITEM>";
+								mes "หรือ Zeny ไม่เพียงพอ.";
+								close;
+							}
+							// anti-hack
+							if (callfunc("F_IsEquipIDHack", EQI_SHOES, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_SHOES, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_SHOES, .@refine)) { close; }	
+							progressbar "000000",1;
+							specialeffect2 EF_REPAIRWEAPON;
+							delitem .EN_ITEM[2],.EN_Amount[2];
+							Zeny -= .Price;
+							delequip EQI_SHOES;
+							getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@EN_Orb,.@card[2],.@card[3];
+							mes .NPCname$;
+							mes "^0000CDออฟเรียบร้อย.^000000";
+							close;
+						}
+					} else {
+						mes .NPCname$;
+						mes "เจ้าไม่ได้ใส่";
+						mes "+^FF0000"+.RefineRate[1]+"^000000 <ITEM>"+getitemname(.ITEM_LIST[2])+"<INFO>"+.ITEM_LIST[2]+"</INFO></ITEM>";
+						close;
+					}	
+					end;
+					
+				case 3:
+					next;
+					if (getequipid(EQI_SHOES) == .ITEM_LIST[2]) {
+						.@equip_id = getequipid(EQI_SHOES);
+						.@refine = getequiprefinerycnt(EQI_SHOES);	
+						setarray .@card[0], getequipcardid(EQI_SHOES,0), getequipcardid(EQI_SHOES,1), getequipcardid(EQI_SHOES,2), getequipcardid(EQI_SHOES,3);
+						if (.@card[1] == 0 && .@card[2] == 0 && .@card[3] == 0) {
+							mes .NPCname$;
+							mes "^FF0000ไม่พบออฟชั่นใดๆ.^000000";
+							close;
+						}
+						if (getequipcardid(EQI_SHOES,1) == 0) { .@card1$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_SHOES,2) == 0) { .@card2$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_SHOES,3) == 0) { .@card3$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_SHOES,1) > 0)  { .@card1$ = "^0000FF"+getitemname(getequipcardid(EQI_SHOES,1))+"^000000"; }
+						if (getequipcardid(EQI_SHOES,2) > 0)  { .@card2$ = "^0000FF"+getitemname(getequipcardid(EQI_SHOES,2))+"^000000"; }
+						if (getequipcardid(EQI_SHOES,3) > 0)  { .@card3$ = "^0000FF"+getitemname(getequipcardid(EQI_SHOES,3))+"^000000"; }
+						mes .NPCname$;
+						mes "เลือกช่องที่ต้องการลบออฟชั่น:";
+						next;
+						switch( select(
+							""+.sb$+" ^FF0000ลบทั้งหมด^000000",
+							""+.sb$+" ลบช่องที่ 4 ["+.@card3$+"]",
+							""+.sb$+" ลบช่องที่ 3 ["+.@card2$+"]",
+							""+.sb$+" ลบช่องที่ 2 ["+.@card1$+"]"
+						)) {
+							case 1:
+								mes .NPCname$;
+								mes "^FF0000ลบออฟทั้งหมด^000000:";
+								mes "^990099ไอเทม^000000 : <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+								mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[2])+"<INFO>"+.EN_ITEM[2]+"</INFO></ITEM> x "+.EN_Amount[3]+" อัน";
+								mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+								mes "^990099โอกาสเสียหาย^000000 : ^FF0000"+.FailRate+"^000000% ที่อุปกรณ์จะหายไป";
+								mes "เจ้าพร้อมที่จะลบออฟชั่นแล้วรึยัง ?";
+								next;
+								if (select( ""+.sb$+" ลบเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+									mes .NPCname$;
+									mes "ขอให้โชคดี.";
+									close;
+								}
+								if (countitem(.EN_ITEM[2]) < .EN_Amount[3]) || (Zeny < .Price) {
+									mes .NPCname$;
+									mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[2])+"<INFO>"+.EN_ITEM[2]+"</INFO></ITEM>";
+									mes "หรือ Zeny ไม่เพียงพอ.";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_SHOES, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_SHOES, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_SHOES, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[2],.EN_Amount[3];
+								Zeny -= .Price;
+								delequip EQI_SHOES;
+								.rate = rand(100);
+								if ( .rate > .FailRate ) {
+									getitem2 .@equip_id,1,1,.@refine,0,.@card[0],0,0,0;
+									mes .NPCname$;
+									mes "^0000CDลบออฟชั่นทั้งหมดเรียบร้อย.^000000";
+									close;
+								} else {
+									sleep 500;
+									specialeffect2 EF_SUI_EXPLOSION;
+									mes .NPCname$;
+									mes "^FF0000ไอเทมเสียหาย^000000";
+									mes "โชคไม่ดีเอาซะเลย.";
+									close;
+								}
+								end;
+							case 2:
+								mes .NPCname$;
+								mes "^990099ลบช่องที่ 4^000000 : ["+.@card3$+"]";
+								mes "^990099ไอเทม^000000 : <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+								mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[4]+"</INFO></ITEM> x "+.EN_Amount[1]+" อัน";
+								mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+								mes "^990099โอกาสเสียหาย^000000 : ^FF0000"+.FailRate+"^000000% ที่อุปกรณ์จะหายไป";
+								mes "เจ้าพร้อมที่จะลบออฟชั่นแล้วรึยัง ?";
+								next;
+								if (select( ""+.sb$+" ลบเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+									mes .NPCname$;
+									mes "ขอให้โชคดี.";
+									close;
+								}
+								if (countitem(.EN_ITEM[1]) < .EN_Amount[4]) || (Zeny < .Price) {
+									mes .NPCname$;
+									mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM>";
+									mes "หรือ Zeny ไม่เพียงพอ.";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_SHOES, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_SHOES, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_SHOES, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[4];
+								Zeny -= .Price;
+								delequip EQI_SHOES;
+								.rate = rand(100);
+								if ( .rate > .FailRate ) {
+									getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],0;
+									mes .NPCname$;
+									mes "^0000CDลบออฟชั่นทั้งหมดเรียบร้อย.^000000";
+									close;
+								} else {
+									sleep 500;
+									specialeffect2 EF_SUI_EXPLOSION;
+									mes .NPCname$;
+									mes "^FF0000ไอเทมเสียหาย^000000";
+									mes "โชคไม่ดีเอาซะเลย.";
+									close;
+								}
+								end;
+							case 3:
+								mes .NPCname$;
+								mes "^990099ลบช่องที่ 3^000000 : ["+.@card2$+"]";
+								mes "^990099ไอเทม^000000 : <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+								mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[4]+"</INFO></ITEM> x "+.EN_Amount[1]+" อัน";
+								mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+								mes "^990099โอกาสเสียหาย^000000 : ^FF0000"+.FailRate+"^000000% ที่อุปกรณ์จะหายไป";
+								mes "เจ้าพร้อมที่จะลบออฟชั่นแล้วรึยัง ?";
+								next;
+								if (select( ""+.sb$+" ลบเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+									mes .NPCname$;
+									mes "ขอให้โชคดี.";
+									close;
+								}
+								if (countitem(.EN_ITEM[1]) < .EN_Amount[4]) || (Zeny < .Price) {
+									mes .NPCname$;
+									mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM>";
+									mes "หรือ Zeny ไม่เพียงพอ.";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_SHOES, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_SHOES, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_SHOES, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[4];
+								Zeny -= .Price;
+								delequip EQI_SHOES;
+								.rate = rand(100);
+								if ( .rate > .FailRate ) {
+									getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],0,.@card[3];
+									mes .NPCname$;
+									mes "^0000CDลบออฟชั่นทั้งหมดเรียบร้อย.^000000";
+									close;
+								} else {
+									sleep 500;
+									specialeffect2 EF_SUI_EXPLOSION;
+									mes .NPCname$;
+									mes "^FF0000ไอเทมเสียหาย^000000";
+									mes "โชคไม่ดีเอาซะเลย.";
+									close;
+								}
+								end;
+							case 4:
+								mes .NPCname$;
+								mes "^990099ลบช่องที่ 2^000000 : ["+.@card1$+"]";
+								mes "^990099ไอเทม^000000 : <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+								mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[4]+"</INFO></ITEM> x "+.EN_Amount[1]+" อัน";
+								mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+								mes "^990099โอกาสเสียหาย^000000 : ^FF0000"+.FailRate+"^000000% ที่อุปกรณ์จะหายไป";
+								mes "เจ้าพร้อมที่จะลบออฟชั่นแล้วรึยัง ?";
+								next;
+								if (select( ""+.sb$+" ลบเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+									mes .NPCname$;
+									mes "ขอให้โชคดี.";
+									close;
+								}
+								if (countitem(.EN_ITEM[1]) < .EN_Amount[4]) || (Zeny < .Price) {
+									mes .NPCname$;
+									mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM>";
+									mes "หรือ Zeny ไม่เพียงพอ.";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_SHOES, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_SHOES, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_SHOES, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[4];
+								Zeny -= .Price;
+								delequip EQI_SHOES;
+								.rate = rand(100);
+								if ( .rate > .FailRate ) {
+									getitem2 .@equip_id,1,1,.@refine,0,.@card[0],0,.@card[2],.@card[3];
+									mes .NPCname$;
+									mes "^0000CDลบออฟชั่นทั้งหมดเรียบร้อย.^000000";
+									close;
+								} else {
+									sleep 500;
+									specialeffect2 EF_SUI_EXPLOSION;
+									mes .NPCname$;
+									mes "^FF0000ไอเทมเสียหาย^000000";
+									mes "โชคไม่ดีเอาซะเลย.";
+									close;
+								}
+								end;
+						}
+					} else {
+						mes .NPCname$;
+						mes "เจ้าไม่ได้ใส่";
+						mes "<ITEM>"+getitemname(.ITEM_LIST[2])+"<INFO>"+.ITEM_LIST[2]+"</INFO></ITEM>";
+						close;
+					}
+			}
+		//==========================================================================================
+		case 4:
+			switch( select(
+					""+.sb$+" ออฟแบบธรรมดา",
+					""+.sb$+" ออฟแบบพิเศษ",
+					""+.sb$+" ลบออฟชั่น"
+			)) {
+				case 1:
+					next;
+					if (getequipid(EQI_ARMOR) == .ITEM_LIST2[0] || getequipid(EQI_ARMOR) == .ITEM_LIST2[1] || getequipid(EQI_ARMOR) == .ITEM_LIST2[2] || getequipid(EQI_ARMOR) == .ITEM_LIST2[3] || getequipid(EQI_ARMOR) == .ITEM_LIST2[4] || getequipid(EQI_ARMOR) == .ITEM_LIST2[5]) {
+						.@equip_id = getequipid(EQI_ARMOR);	
+						switch(.@equip_id) {
+							case 15397: // STR Soutane
+							case 15398: // AGI Soutane
+							case 15399: // VIT Soutane
+							case 15400: // DEX Soutane
+							case 15401: // INT Soutane
+							case 15402: // LUK Soutane
+								break;
+						}
+						.@refine = getequiprefinerycnt(EQI_ARMOR);	
+						setarray .@card[0], getequipcardid(EQI_ARMOR,0), getequipcardid(EQI_ARMOR,1), getequipcardid(EQI_ARMOR,2), getequipcardid(EQI_ARMOR,3);
+						.@EN_Orb = .NormalEN_OrbID[rand(getarraysize(.NormalEN_OrbID))];	
+						mes .NPCname$;
+						mes "^990099ไอเทม^000000 : <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+						mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM> x "+.EN_Amount[1]+" อัน";
+						mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+						mes "เจ้าพร้อมที่จะออฟแล้วรึยัง ?";
+						next;
+						if (select( ""+.sb$+" ออฟเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+							mes .NPCname$;
+							mes "ขอให้โชคดี.";
+							close;
+						}
+						if (countitem(.EN_ITEM[1]) < .EN_Amount[1]) || (Zeny < .Price) {
+							mes .NPCname$;
+							mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM>";
+							mes "หรือ Zeny ไม่เพียงพอ.";
+							close;
+						}
+						if (getequipcardid(EQI_ARMOR,1) == 0) { .@card1$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_ARMOR,2) == 0) { .@card2$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_ARMOR,3) == 0) { .@card3$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_ARMOR,1) > 0)  { .@card1$ = "^FF0000"+getitemname(getequipcardid(EQI_ARMOR,1))+"^000000"; }
+						if (getequipcardid(EQI_ARMOR,2) > 0)  { .@card2$ = "^FF0000"+getitemname(getequipcardid(EQI_ARMOR,2))+"^000000"; }
+						if (getequipcardid(EQI_ARMOR,3) > 0)  { .@card3$ = "^FF0000"+getitemname(getequipcardid(EQI_ARMOR,3))+"^000000"; }
+						mes .NPCname$;
+						mes "เลือกช่องที่ต้องการออฟชั่น:";
+						next;
+						switch( select(
+							""+.sb$+" ช่องที่ 4 ["+.@card3$+"]",
+							""+.sb$+" ช่องที่ 3 ["+.@card2$+"]",
+							""+.sb$+" ช่องที่ 2 ["+.@card1$+"]"
+						)) {
+							case 1:
+								if (.@card[3] > 0) {
+									mes .NPCname$;
+									mes "^FF0000ช่องนี้มีออฟชั่นอยู่แล้ว.^000000";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_ARMOR, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_ARMOR, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_ARMOR, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[1];
+								Zeny -= .Price;
+								delequip EQI_ARMOR;
+								getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@EN_Orb;
+								mes .NPCname$;
+								mes "^0000CDออฟเรียบร้อย.^000000";
+								close;
+							case 2:
+								if (.@card[2] > 0) {
+									mes .NPCname$;
+									mes "^FF0000ช่องนี้มีออฟชั่นอยู่แล้ว.^000000";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_ARMOR, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_ARMOR, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_ARMOR, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[1];
+								Zeny -= .Price;
+								delequip EQI_ARMOR;
+								getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@EN_Orb,.@card[3];
+								mes .NPCname$;
+								mes "^0000CDออฟเรียบร้อย.^000000";
+								close;
+							case 3:
+								if (.@card[1] > 0) {
+									mes .NPCname$;
+									mes "^FF0000ช่องนี้มีออฟชั่นอยู่แล้ว.^000000";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_ARMOR, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_ARMOR, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_ARMOR, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[1];
+								Zeny -= .Price;
+								delequip EQI_ARMOR;
+								getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@EN_Orb,.@card[2],.@card[3];
+								mes .NPCname$;
+								mes "^0000CDออฟเรียบร้อย.^000000";
+								close;
+						}
+					} else {
+						mes .NPCname$;
+						mes "เจ้าไม่ได้ใส่";
+						for( .@i = 0; .@i < getarraysize(.ITEM_LIST2); .@i++ ) {
+							mes "+^FF0000"+.RefineRate[2]+"^000000 <ITEM>"+getitemname(.ITEM_LIST2[.@i])+"<INFO>"+.ITEM_LIST2[.@i]+"</INFO></ITEM>";
+						}
+						close;
+					}
+					end;
+					
+				case 2:
+					next;
+					if (getequipid(EQI_ARMOR) == .ITEM_LIST2[0] || getequipid(EQI_ARMOR) == .ITEM_LIST2[1] || getequipid(EQI_ARMOR) == .ITEM_LIST2[2] || getequipid(EQI_ARMOR) == .ITEM_LIST2[3] || getequipid(EQI_ARMOR) == .ITEM_LIST2[4] || getequipid(EQI_ARMOR) == .ITEM_LIST2[5]) && (getequiprefinerycnt(EQI_ARMOR) >= .RefineRate[2]) {
+						.@equip_id = getequipid(EQI_ARMOR);	
+						switch(.@equip_id) {
+							case 15397: // STR Soutane
+							case 15398: // AGI Soutane
+							case 15399: // VIT Soutane
+							case 15400: // DEX Soutane
+							case 15401: // INT Soutane
+							case 15402: // LUK Soutane
+								break;
+						}
+						.@refine = getequiprefinerycnt(EQI_ARMOR);	
+						setarray .@card[0], getequipcardid(EQI_ARMOR,0), getequipcardid(EQI_ARMOR,1), getequipcardid(EQI_ARMOR,2), getequipcardid(EQI_ARMOR,3);
+						.@EN_Orb = .SpecialES_OrbID[rand(getarraysize(.SpecialES_OrbID))];	
+						if (.@card[1] > 0) {
+							mes .NPCname$;
+							mes "^FF0000ออฟสูงสุดแล้วไม่สามารถออฟได้อีก.^000000";
+							close;
+						}
+						if (.@card[1] == 0) {
+							mes .NPCname$;
+							mes "^990099ไอเทม^000000 : +^FF0000"+.@refine+"^000000 <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+							mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[2])+"<INFO>"+.EN_ITEM[2]+"</INFO></ITEM> x "+.EN_Amount[2]+" อัน";
+							mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+							mes "^FF0000สามารถออฟชั่นได้แค่ช่องที่ 2 เท่านั้น^000000";
+							mes "เจ้าพร้อมที่จะออฟแล้วรึยัง ?";
+							next;
+							if (select( ""+.sb$+" ออฟเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+								mes .NPCname$;
+								mes "ขอให้โชคดี.";
+								close;
+							}
+							if (countitem(.EN_ITEM[2]) < .EN_Amount[2]) || (Zeny < .Price) {
+								mes .NPCname$;
+								mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[2])+"<INFO>"+.EN_ITEM[2]+"</INFO></ITEM>";
+								mes "หรือ Zeny ไม่เพียงพอ.";
+								close;
+							}
+							// anti-hack
+							if (callfunc("F_IsEquipIDHack", EQI_ARMOR, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_ARMOR, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_ARMOR, .@refine)) { close; }	
+							progressbar "000000",1;
+							specialeffect2 EF_REPAIRWEAPON;
+							delitem .EN_ITEM[2],.EN_Amount[2];
+							Zeny -= .Price;
+							delequip EQI_ARMOR;
+							getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@EN_Orb,.@card[2],.@card[3];
+							mes .NPCname$;
+							mes "^0000CDออฟเรียบร้อย.^000000";
+							close;
+						}
+					} else {
+						mes .NPCname$;
+						mes "เจ้าไม่ได้ใส่";
+						for( .@i = 0; .@i < getarraysize(.ITEM_LIST2); .@i++ ) {
+							mes "+^FF0000"+.RefineRate[2]+"^000000 <ITEM>"+getitemname(.ITEM_LIST2[.@i])+"<INFO>"+.ITEM_LIST2[.@i]+"</INFO></ITEM>";
+						}
+						close;
+					}	
+					end;
+					
+				case 3:
+					next;
+					if (getequipid(EQI_ARMOR) == .ITEM_LIST2[0] || getequipid(EQI_ARMOR) == .ITEM_LIST2[1] || getequipid(EQI_ARMOR) == .ITEM_LIST2[2] || getequipid(EQI_ARMOR) == .ITEM_LIST2[3] || getequipid(EQI_ARMOR) == .ITEM_LIST2[4] || getequipid(EQI_ARMOR) == .ITEM_LIST2[5]) && (getequiprefinerycnt(EQI_ARMOR) >= .RefineRate[2]) {
+						.@equip_id = getequipid(EQI_ARMOR);	
+						switch(.@equip_id) {
+							case 15397: // STR Soutane
+							case 15398: // AGI Soutane
+							case 15399: // VIT Soutane
+							case 15400: // DEX Soutane
+							case 15401: // INT Soutane
+							case 15402: // LUK Soutane
+								break;
+						}
+						.@refine = getequiprefinerycnt(EQI_ARMOR);	
+						setarray .@card[0], getequipcardid(EQI_ARMOR,0), getequipcardid(EQI_ARMOR,1), getequipcardid(EQI_ARMOR,2), getequipcardid(EQI_ARMOR,3);
+						if (.@card[1] == 0 && .@card[2] == 0 && .@card[3] == 0) {
+							mes .NPCname$;
+							mes "^FF0000ไม่พบออฟชั่นใดๆ.^000000";
+							close;
+						}
+						if (getequipcardid(EQI_ARMOR,1) == 0) { .@card1$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_ARMOR,2) == 0) { .@card2$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_ARMOR,3) == 0) { .@card3$ = "^777777ว่างเปล่า^000000"; }
+						if (getequipcardid(EQI_ARMOR,1) > 0)  { .@card1$ = "^0000FF"+getitemname(getequipcardid(EQI_ARMOR,1))+"^000000"; }
+						if (getequipcardid(EQI_ARMOR,2) > 0)  { .@card2$ = "^0000FF"+getitemname(getequipcardid(EQI_ARMOR,2))+"^000000"; }
+						if (getequipcardid(EQI_ARMOR,3) > 0)  { .@card3$ = "^0000FF"+getitemname(getequipcardid(EQI_ARMOR,3))+"^000000"; }
+						mes .NPCname$;
+						mes "เลือกช่องที่ต้องการลบออฟชั่น:";
+						next;
+						switch( select(
+							""+.sb$+" ^FF0000ลบทั้งหมด^000000",
+							""+.sb$+" ลบช่องที่ 4 ["+.@card3$+"]",
+							""+.sb$+" ลบช่องที่ 3 ["+.@card2$+"]",
+							""+.sb$+" ลบช่องที่ 2 ["+.@card1$+"]"
+						)) {
+							case 1:
+								mes .NPCname$;
+								mes "^FF0000ลบออฟทั้งหมด^000000:";
+								mes "^990099ไอเทม^000000 : <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+								mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[2])+"<INFO>"+.EN_ITEM[2]+"</INFO></ITEM> x "+.EN_Amount[3]+" อัน";
+								mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+								mes "^990099โอกาสเสียหาย^000000 : ^FF0000"+.FailRate+"^000000% ที่อุปกรณ์จะหายไป";
+								mes "เจ้าพร้อมที่จะลบออฟชั่นแล้วรึยัง ?";
+								next;
+								if (select( ""+.sb$+" ลบเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+									mes .NPCname$;
+									mes "ขอให้โชคดี.";
+									close;
+								}
+								if (countitem(.EN_ITEM[2]) < .EN_Amount[3]) || (Zeny < .Price) {
+									mes .NPCname$;
+									mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[2])+"<INFO>"+.EN_ITEM[2]+"</INFO></ITEM>";
+									mes "หรือ Zeny ไม่เพียงพอ.";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_ARMOR, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_ARMOR, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_ARMOR, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[2],.EN_Amount[3];
+								Zeny -= .Price;
+								delequip EQI_ARMOR;
+								.rate = rand(100);
+								if ( .rate > .FailRate ) {
+									getitem2 .@equip_id,1,1,.@refine,0,.@card[0],0,0,0;
+									mes .NPCname$;
+									mes "^0000CDลบออฟชั่นทั้งหมดเรียบร้อย.^000000";
+									close;
+								} else {
+									sleep 500;
+									specialeffect2 EF_SUI_EXPLOSION;
+									mes .NPCname$;
+									mes "^FF0000ไอเทมเสียหาย^000000";
+									mes "โชคไม่ดีเอาซะเลย.";
+									close;
+								}
+								end;
+							case 2:
+								mes .NPCname$;
+								mes "^990099ลบช่องที่ 4^000000 : ["+.@card3$+"]";
+								mes "^990099ไอเทม^000000 : <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+								mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[4]+"</INFO></ITEM> x "+.EN_Amount[1]+" อัน";
+								mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+								mes "^990099โอกาสเสียหาย^000000 : ^FF0000"+.FailRate+"^000000% ที่อุปกรณ์จะหายไป";
+								mes "เจ้าพร้อมที่จะลบออฟชั่นแล้วรึยัง ?";
+								next;
+								if (select( ""+.sb$+" ลบเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+									mes .NPCname$;
+									mes "ขอให้โชคดี.";
+									close;
+								}
+								if (countitem(.EN_ITEM[1]) < .EN_Amount[4]) || (Zeny < .Price) {
+									mes .NPCname$;
+									mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM>";
+									mes "หรือ Zeny ไม่เพียงพอ.";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_ARMOR, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_ARMOR, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_ARMOR, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[4];
+								Zeny -= .Price;
+								delequip EQI_ARMOR;
+								.rate = rand(100);
+								if ( .rate > .FailRate ) {
+									getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],0;
+									mes .NPCname$;
+									mes "^0000CDลบออฟชั่นทั้งหมดเรียบร้อย.^000000";
+									close;
+								} else {
+									sleep 500;
+									specialeffect2 EF_SUI_EXPLOSION;
+									mes .NPCname$;
+									mes "^FF0000ไอเทมเสียหาย^000000";
+									mes "โชคไม่ดีเอาซะเลย.";
+									close;
+								}
+								end;
+							case 3:
+								mes .NPCname$;
+								mes "^990099ลบช่องที่ 3^000000 : ["+.@card2$+"]";
+								mes "^990099ไอเทม^000000 : <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+								mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[4]+"</INFO></ITEM> x "+.EN_Amount[1]+" อัน";
+								mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+								mes "^990099โอกาสเสียหาย^000000 : ^FF0000"+.FailRate+"^000000% ที่อุปกรณ์จะหายไป";
+								mes "เจ้าพร้อมที่จะลบออฟชั่นแล้วรึยัง ?";
+								next;
+								if (select( ""+.sb$+" ลบเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+									mes .NPCname$;
+									mes "ขอให้โชคดี.";
+									close;
+								}
+								if (countitem(.EN_ITEM[1]) < .EN_Amount[4]) || (Zeny < .Price) {
+									mes .NPCname$;
+									mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM>";
+									mes "หรือ Zeny ไม่เพียงพอ.";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_ARMOR, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_ARMOR, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_ARMOR, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[4];
+								Zeny -= .Price;
+								delequip EQI_ARMOR;
+								.rate = rand(100);
+								if ( .rate > .FailRate ) {
+									getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],0,.@card[3];
+									mes .NPCname$;
+									mes "^0000CDลบออฟชั่นทั้งหมดเรียบร้อย.^000000";
+									close;
+								} else {
+									sleep 500;
+									specialeffect2 EF_SUI_EXPLOSION;
+									mes .NPCname$;
+									mes "^FF0000ไอเทมเสียหาย^000000";
+									mes "โชคไม่ดีเอาซะเลย.";
+									close;
+								}
+								end;
+							case 4:
+								mes .NPCname$;
+								mes "^990099ลบช่องที่ 2^000000 : ["+.@card1$+"]";
+								mes "^990099ไอเทม^000000 : <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>";
+								mes "^990099วัตถุดิบที่จำเป็น^000000 : <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[4]+"</INFO></ITEM> x "+.EN_Amount[1]+" อัน";
+								mes "^990099ค่าใช้จ่าย^000000 : ^009900"+callfunc("F_InsertComma",.Price)+"^000000 zeny";
+								mes "^990099โอกาสเสียหาย^000000 : ^FF0000"+.FailRate+"^000000% ที่อุปกรณ์จะหายไป";
+								mes "เจ้าพร้อมที่จะลบออฟชั่นแล้วรึยัง ?";
+								next;
+								if (select( ""+.sb$+" ลบเลย.", ""+.sb$+" ไว้คราวหน้า." ) == 2) {
+									mes .NPCname$;
+									mes "ขอให้โชคดี.";
+									close;
+								}
+								if (countitem(.EN_ITEM[1]) < .EN_Amount[4]) || (Zeny < .Price) {
+									mes .NPCname$;
+									mes "เจ้ามี <ITEM>"+getitemname(.EN_ITEM[1])+"<INFO>"+.EN_ITEM[1]+"</INFO></ITEM>";
+									mes "หรือ Zeny ไม่เพียงพอ.";
+									close;
+								}
+								// anti-hack
+								if (callfunc("F_IsEquipIDHack", EQI_ARMOR, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_ARMOR, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_ARMOR, .@refine)) { close; }	
+								progressbar "000000",1;
+								specialeffect2 EF_REPAIRWEAPON;
+								delitem .EN_ITEM[1],.EN_Amount[4];
+								Zeny -= .Price;
+								delequip EQI_ARMOR;
+								.rate = rand(100);
+								if ( .rate > .FailRate ) {
+									getitem2 .@equip_id,1,1,.@refine,0,.@card[0],0,.@card[2],.@card[3];
+									mes .NPCname$;
+									mes "^0000CDลบออฟชั่นทั้งหมดเรียบร้อย.^000000";
+									close;
+								} else {
+									sleep 500;
+									specialeffect2 EF_SUI_EXPLOSION;
+									mes .NPCname$;
+									mes "^FF0000ไอเทมเสียหาย^000000";
+									mes "โชคไม่ดีเอาซะเลย.";
+									close;
+								}
+								end;
+						}
+					} else {
+						mes .NPCname$;
+						mes "เจ้าไม่ได้ใส่";
+						for( .@i = 0; .@i < getarraysize(.ITEM_LIST2); .@i++ ) {
+							mes "<ITEM>"+getitemname(.ITEM_LIST2[.@i])+"<INFO>"+.ITEM_LIST2[.@i]+"</INFO></ITEM>";
+						}
+						close;
+					}
+			}
+		//==========================================================================================
+	}
+OnInit:
+	waitingroom "Options Odin past",0;
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	//===================================
+	// Fail Rate for reset.
+	//===================================
+	.FailRate = 30;
+	//===================================
+	// Price of fee.
+	//===================================
+	.Price = 500000;
+	//===================================
+	// Refine of Item.
+	//===================================
+	setarray .RefineRate,
+					   0, //null
+					   7, // +7
+					   9; // +9
+	//===================================
+	// Enchants Items List.
+	//===================================
+	setarray .EN_ITEM,
+					0, //null
+				25767, //Angel's Dream
+				 6417; //Silvervine Fruit
+	//===================================
+	// Use Amount of Enchants Items List.
+	//===================================
+	setarray .EN_Amount,
+					  0, //null
+					  5, //Angel's Dream
+					  3, //Silvervine Fruit
+					  5, //Silvervine Fruit for reset all
+					  5; //Angel's Dream for choose reset
+	//===================================
+	// Armor & Manteau.
+	//===================================
+	setarray .ITEM_LIST,
+					  0, //null
+				  20947, //Clergy's Manteau 
+				  22209; //Clergy's Boots
+	//===================================
+	// Accessory List.
+	//===================================
+	setarray .ITEM_LIST2,	
+				   15397,	//Str Soutane
+				   15398,	//Agi Soutane
+				   15399,	//Vit Soutane
+				   15400,	//Dex Soutane
+				   15401,	//Int Soutane
+				   15402;	//Luk Soutane
+	//===================================
+	// Normal Enchant.
+	//===================================
+	setarray .NormalEN_OrbID,
+			  4705,4706,4707, //STR 6~8
+			  4715,4716,4717, //INT 6~8
+			  4725,4726,4727, //Dex 6~8
+			  4735,4736,4737, //AGI 6~8
+			  4745,4746,4747, //VIT 6~8
+			  4755,4756,4757, //LUK 6~8
+				   4794,4902, //DEF 12|18
+				   4786,4787, //MDEF 2|4
+				   4867,4900, //MaxHP 3%|5%
+				   4801,4802, //SP 100|150
+			 4764,4765,29241, //Crit 5|7|10
+				   4762,4763; //Flee 6|10
+	//===================================
+	// Special Enchant (2nd slot only).
+	//===================================	
+	// +7 Clergy's Manteau & Clergy's Boots.
+	setarray .SpecialEN_OrbID,
+					4706,4707, //STR 7~8
+					4716,4717, //INT 7~8
+					4726,4727, //Dex 7~8
+					4736,4737, //AGI 7~8
+					4746,4747, //VIT 7~8
+					4756,4757, //LUK 7~8
+				   4902,29026, //DEF 18|20
+					4788,4789, //MDEF 6|8
+					4867,4900, //MaxHP 3%|5%
+					4801,4802; //SP 100|150
+	// +9 Soutanes.		  
+	setarray .SpecialES_OrbID,
+					4706,4707, //STR 7~8
+					4716,4717, //INT 7~8
+					4726,4727, //Dex 7~8
+					4736,4737, //AGI 7~8
+					4746,4747, //VIT 7~8
+					4756,4757, //LUK 7~8
+						 4903, //DEF 21
+						 4790, //MDEF 10
+						 4900, //MaxHP 5%
+						 4802, //SP 150
+						29241, //Crit 10
+						 4763, //Flee 10
+					4820,4821, //Fighting Spirit 5|6
+					4812,4826, //Spell 4|5
+					4835,4836, //Expert Archer 4|5
+					4843,4844, //Sharp 4|5
+					4873,4881, //DelayAfterAttack 3|4
+		 310076,310077,310078, //Blessing STR|AGI|VIT
+		 310079,310080,310081; //Blessing DEX|INT|LUK
+	//===================================
+	end;
+}

@@ -1,0 +1,68 @@
+//===== rAthena Script =======================================
+//= Bounty Hunter Guild
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+
+// Mapflags
+//============================================================
+bounty_hall	mapflag	town
+bounty_hall	mapflag	nopenalty
+bounty_hall	mapflag	noicewall
+bounty_hall	mapflag	nobranch
+bounty_hall	mapflag	noskill
+bounty_hall	mapflag	noteleport
+
+// Warp
+//============================================================
+firstcity,294,299,0	warp	Go_Bounty_Hall	1,1,bounty_hall,98,32
+bounty_hall,98,28,0	warp	Go_Town	1,1,firstcity,291,297
+
+// NPC
+//============================================================
+bounty_hall,86,108,5	script	Guard#BH_01	4_M_CRU_SOLD,{}
+bounty_hall,86,83,5	script	Guard#BH_02	4_M_CRU_SOLD,{}
+bounty_hall,109,108,4	script	Guard#BH_03	4_M_CRU_SOLD,{}
+bounty_hall,109,83,4	script	Guard#BH_04	4_M_CRU_SOLD,{}
+bounty_hall,78,100,5	script	Guard#BH_05	4_M_CRU_SOLD,{}
+bounty_hall,78,91,5	script	Guard#BH_06	4_M_CRU_SOLD,{}
+bounty_hall,117,100,4	script	Guard#BH_07	4_M_CRU_SOLD,{}
+bounty_hall,117,91,4	script	Guard#BH_08	4_M_CRU_SOLD,{}
+bounty_hall,91,38,5	script	Guard#BH_09	4_M_KY_SOLD,{}
+bounty_hall,104,38,4	script	Guard#BH_10	4_M_KY_SOLD,{}
+
+
+// All Shop
+//============================================================
+// Dummy Shop
+-	shop	BH_Tool_Dealer	-1,611:-1,1750:-1,501:-1,502:-1,503:-1,504:-1,505:-1,506:-1,645:-1,656:-1,657:-1,601:-1,602:-1,1065:-1,610:-1
+
+bounty_hall,105,141,4	script	Bounty Tool Dealer#tool_BH	4_M_PATRICK,{
+	disable_items;
+	mes .NPCname$;
+	mes "ยินดีต้อนรับเหล่านักผจญภัย";
+	mes "มีอันไหนที่เจ้าสนใจบ้างไหม?";
+	callshop "BH_Tool_Dealer",1;
+	end;
+OnInit:
+	.NPCname$ = "[^0000FF Bounty Tool Dealer ^000000]";
+	end;
+}
+
+bounty_hall,102,141,4	script	Kafra Employee::kaf_bh	4_F_KAFRA5,{
+	cutin "kafra_05",2;
+	callfunc "F_KafSet";
+	mes "[Kafra Employee]";
+	mes "ยินดีต้อนรับสู่";
+	mes "Kafra Corporation.";
+	mes "พนักงาน Kafra";
+	mes "พร้อมให้บริการเจ้า.";
+	mes "มีอะไรให้ข้ารับใช้ไหม ?";
+	callfunc "F_Kafra",5,1,1,40,800;
+	savepoint "bounty_hall",98,48,1,1;
+	callfunc "F_KafEnd",0,1,"Bounty Hunter Guild";
+}

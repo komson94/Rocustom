@@ -1,0 +1,84 @@
+//===== rAthena Script =======================================
+//= Bounty Hunter Item Shop
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: ===================================== 
+//= 1.0 Add Shop NPC with Barter Shop Src.
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+// Dummy Barter Shop
+-	bartershop	Barter_BH_IT_SHOP	-1
+
+// Barter Shop
+//============================================================
+byako,181,124,4	script	Event Item Shop	564,{
+	disable_items;
+	mes .NPCname$;
+	mes "ยินดีต้อนรับเหล่านักผจญภัย";
+	mes "หากเจ้ามี <ITEM>"+getitemname(.Req_ItemID)+"<INFO>"+.Req_ItemID+"</INFO></ITEM>";
+	mes "เจ้าสามารถนำมาแลกไอเท็มต่างๆกับข้าได้.";
+	mes "ติดต่อรับรางวัลได้ทางเพจ24ชม";
+	mes "--------------------";
+	mes "เจ้ามีอยู่ทั้งหมด [ ^006600"+callfunc("F_InsertComma",countitem(.Req_ItemID))+" ^000000] อัน.";
+	mes "--------------------";
+	callshop "Barter_BH_IT_SHOP",1;
+	end;
+
+OnInit:
+	waitingroom "Costume Coin",0;
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.Req_ItemID = 130000035;
+	//npcshopadditem "<Shop Name>",<Item>,<Cost Item>,<Cost Amount>,<Quantity>;
+	npcshopadditem "Barter_BH_IT_SHOP",9127,130000035,1,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",9128,130000035,1,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",9129,130000035,1,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",9130,130000035,1,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",9131,130000035,1,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",9132,130000035,1,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",9133,130000035,1,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000005,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000006,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000007,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000008,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000009,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000010,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000011,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000012,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000013,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000014,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000015,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000016,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000017,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000018,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000019,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000020,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000021,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000022,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000023,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000024,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000025,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000026,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000027,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000028,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000029,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000030,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000031,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000032,130000035,3,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",130000033,130000035,3,-1;
+	
+
+	npcshopadditem "Barter_BH_IT_SHOP",19764,130000035,2,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",31728,130000035,2,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",20595,130000035,2,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",31055,130000035,2,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",31818,130000035,2,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",31934,130000035,2,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",31946,130000035,2,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",20224,130000035,2,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",31549,130000035,2,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",31482,130000035,2,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",31406,130000035,2,-1;
+	npcshopadditem "Barter_BH_IT_SHOP",31374,130000035,2,-1;
+	end;
+}

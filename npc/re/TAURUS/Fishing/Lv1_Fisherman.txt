@@ -1,0 +1,324 @@
+//===== rAthena Script =======================================
+//= Lv1 Fisherman
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+moonhaven,232,176,3	script	ชาวประมง Lv.1#Fisherman_Lv1	4_CAT_ADV2,{
+	disable_items;
+	mes .NPCname$;
+	getinventorylist;
+	if (@inventorylist_count >= 91) {
+		mes "โปรดเช็คกระเป๋าของเจ้าก่อน";
+		mes "ต้องมีช่องว่างอย่างน้อย ^FF000010^000000 ช่อง";
+		mes "เจ้าใช้ไป: ^FF0000"+@inventorylist_count+"^000000 | 100 ช่อง";
+		close;
+	}
+	mes "มีอะไรให้ข้าช่วยไหม?";
+	next;
+	switch(select(
+		""+.symbol$+" ตรวจสอบการทำงาน",
+		""+.symbol$+" รับไอเท็ม"
+		)){
+			case 1:
+				if (#Lv1_FishermanLv) {
+					mes .NPCname$;
+					mes "ชาวประมงทำงานไป: " + ($Lv1_FishingCount - #Lv1_FishingCount) + " รอบ";
+					mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv1_FishermanLv;
+					close;
+				}
+				else {
+					mes .NPCname$;
+					mes "เจ้ายังไม่ได้จ้างชาวประมง!";
+					close;
+				}
+			
+			case 2:
+				if (#Lv1_FishermanLv) {
+					mes .NPCname$;
+					mes "ชาวประมงทำงานไป: " + ($Lv1_FishingCount - #Lv1_FishingCount) + " รอบ";
+					mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv1_FishermanLv;
+					
+					if (#Lv1_FishermanLv >= 1) {
+						.@Normal_Rate = .Normal_Rate;
+						.@Medium_Rate = .Medium_Rate;
+						.@High_Rate = .High_Rate;
+						.@Rare_Rate = .Rare_Rate;
+					}
+					if (#Lv1_FishermanLv >= 2) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					if (#Lv1_FishermanLv >= 3) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					if (#Lv1_FishermanLv >= 4) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					if (#Lv1_FishermanLv >= 5) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					if (#Lv1_FishermanLv >= 6) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					if (#Lv1_FishermanLv >= 7) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					if (#Lv1_FishermanLv >= 8) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					if (#Lv1_FishermanLv >= 9) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					if (#Lv1_FishermanLv >= 10) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					if (#Lv1_FishermanLv >= 11) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					if (#Lv1_FishermanLv >= 12) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;	
+					}
+					if (#Lv1_FishermanLv >= 13) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					if (#Lv1_FishermanLv >= 14) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					if (#Lv1_FishermanLv >= 15) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					if (#Lv1_FishermanLv >= 16) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					if (#Lv1_FishermanLv >= 17) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					if (#Lv1_FishermanLv >= 18) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					if (#Lv1_FishermanLv >= 19) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					if (#Lv1_FishermanLv >= 20) {
+						.@Normal_Rate = .Normal_Rate + #Lv1_FishermanLv;
+						.@Medium_Rate = .Medium_Rate + #Lv1_FishermanLv;
+						.@High_Rate = .High_Rate + #Lv1_FishermanLv;
+						.@Rare_Rate = .Rare_Rate + #Lv1_FishermanLv;
+					}
+					
+					.@loopCount = ($Lv1_FishingCount - #Lv1_FishingCount);
+					freeloop(1);
+					while (.@loopCount > 0) {
+						.@loopCount--;
+						
+						if (.@Normal_Rate > 0 && rand(1,100) <= .@Normal_Rate) {
+							.@r = rand(0,18);
+							.Normal_Count[.@r]++;
+						}
+						else if (.@Medium_Rate > 0 && rand(1,100) <= .@Medium_Rate) {
+							.@r = rand(0,18);
+							.Medium_Count[.@r]++;
+						}
+						else if (.@High_Rate > 0 && rand(1,100) <= .@High_Rate) {
+							.@r = rand(0,1);
+							.High_Count[.@r]++;
+						}
+						else if (.@Rare_Rate > 0 && rand(1,100) <= .@Rare_Rate) {
+							.@r = rand(0,1);
+							.Rare_Count[.@r]++;
+						}
+					}
+					freeloop(0);
+					next;
+					mes .NPCname$;
+					mes "สิ่งที่ได้รับจากการตกปลา:";
+					// Get Items
+					//---------------------------------------------------------------------------
+					if (.Normal_Count[0] > 0) { mes "ได้รับ " + .Normal_Count[0] + "x " + getitemname(.nReward[0]) + "."; getitem .nReward[0],.Normal_Count[0]; }
+					if (.Normal_Count[1] > 0) { mes "ได้รับ " + .Normal_Count[1] + "x " + getitemname(.nReward[1]) + "."; getitem .nReward[1],.Normal_Count[1]; }
+					if (.Normal_Count[2] > 0) { mes "ได้รับ " + .Normal_Count[2] + "x " + getitemname(.nReward[2]) + "."; getitem .nReward[2],.Normal_Count[2]; }
+					if (.Normal_Count[3] > 0) { mes "ได้รับ " + .Normal_Count[3] + "x " + getitemname(.nReward[3]) + "."; getitem .nReward[3],.Normal_Count[3]; }
+					if (.Normal_Count[4] > 0) { mes "ได้รับ " + .Normal_Count[4] + "x " + getitemname(.nReward[4]) + "."; getitem .nReward[4],.Normal_Count[4]; }
+					if (.Normal_Count[5] > 0) { mes "ได้รับ " + .Normal_Count[5] + "x " + getitemname(.nReward[5]) + "."; getitem .nReward[5],.Normal_Count[5]; }
+					if (.Normal_Count[6] > 0) { mes "ได้รับ " + .Normal_Count[6] + "x " + getitemname(.nReward[6]) + "."; getitem .nReward[6],.Normal_Count[6]; }
+					if (.Normal_Count[7] > 0) { mes "ได้รับ " + .Normal_Count[7] + "x " + getitemname(.nReward[7]) + "."; getitem .nReward[7],.Normal_Count[7]; }
+					if (.Normal_Count[8] > 0) { mes "ได้รับ " + .Normal_Count[8] + "x " + getitemname(.nReward[8]) + "."; getitem .nReward[8],.Normal_Count[8]; }
+					if (.Normal_Count[9] > 0) { mes "ได้รับ " + .Normal_Count[9] + "x " + getitemname(.nReward[9]) + "."; getitem .nReward[9],.Normal_Count[9]; }
+					if (.Normal_Count[10] > 0) { mes "ได้รับ " + .Normal_Count[10] + "x " + getitemname(.nReward[10]) + "."; getitem .nReward[10],.Normal_Count[10]; }
+					if (.Normal_Count[11] > 0) { mes "ได้รับ " + .Normal_Count[11] + "x " + getitemname(.nReward[11]) + "."; getitem .nReward[11],.Normal_Count[11]; }
+					if (.Normal_Count[12] > 0) { mes "ได้รับ " + .Normal_Count[12] + "x " + getitemname(.nReward[12]) + "."; getitem .nReward[12],.Normal_Count[12]; }
+					if (.Normal_Count[13] > 0) { mes "ได้รับ " + .Normal_Count[13] + "x " + getitemname(.nReward[13]) + "."; getitem .nReward[13],.Normal_Count[13]; }
+					if (.Normal_Count[14] > 0) { mes "ได้รับ " + .Normal_Count[14] + "x " + getitemname(.nReward[14]) + "."; getitem .nReward[14],.Normal_Count[14]; }
+					if (.Normal_Count[15] > 0) { mes "ได้รับ " + .Normal_Count[15] + "x " + getitemname(.nReward[15]) + "."; getitem .nReward[15],.Normal_Count[15]; }
+					if (.Normal_Count[16] > 0) { mes "ได้รับ " + .Normal_Count[16] + "x " + getitemname(.nReward[16]) + "."; getitem .nReward[16],.Normal_Count[16]; }
+					if (.Normal_Count[17] > 0) { mes "ได้รับ " + .Normal_Count[17] + "x " + getitemname(.nReward[17]) + "."; getitem .nReward[17],.Normal_Count[17]; }
+					
+					if (.Medium_Count[0] > 0) { mes "ได้รับ " + .Medium_Count[0] + "x " + getitemname(.mReward[0]) + "."; getitem .mReward[0],.Medium_Count[0]; }
+					if (.Medium_Count[1] > 0) { mes "ได้รับ " + .Medium_Count[1] + "x " + getitemname(.mReward[1]) + "."; getitem .mReward[1],.Medium_Count[1]; }
+					if (.Medium_Count[2] > 0) { mes "ได้รับ " + .Medium_Count[2] + "x " + getitemname(.mReward[2]) + "."; getitem .mReward[2],.Medium_Count[2]; }
+					if (.Medium_Count[3] > 0) { mes "ได้รับ " + .Medium_Count[3] + "x " + getitemname(.mReward[3]) + "."; getitem .mReward[3],.Medium_Count[3]; }
+					if (.Medium_Count[4] > 0) { mes "ได้รับ " + .Medium_Count[4] + "x " + getitemname(.mReward[4]) + "."; getitem .mReward[4],.Medium_Count[4]; }
+					if (.Medium_Count[5] > 0) { mes "ได้รับ " + .Medium_Count[5] + "x " + getitemname(.mReward[5]) + "."; getitem .mReward[5],.Medium_Count[5]; }
+					if (.Medium_Count[6] > 0) { mes "ได้รับ " + .Medium_Count[6] + "x " + getitemname(.mReward[6]) + "."; getitem .mReward[6],.Medium_Count[6]; }
+					if (.Medium_Count[7] > 0) { mes "ได้รับ " + .Medium_Count[7] + "x " + getitemname(.mReward[7]) + "."; getitem .mReward[7],.Medium_Count[7]; }
+					if (.Medium_Count[8] > 0) { mes "ได้รับ " + .Medium_Count[8] + "x " + getitemname(.mReward[8]) + "."; getitem .mReward[8],.Medium_Count[8]; }
+					if (.Medium_Count[9] > 0) { mes "ได้รับ " + .Medium_Count[9] + "x " + getitemname(.mReward[9]) + "."; getitem .mReward[9],.Medium_Count[9]; }
+					if (.Medium_Count[10] > 0) { mes "ได้รับ " + .Medium_Count[10] + "x " + getitemname(.mReward[10]) + "."; getitem .mReward[10],.Medium_Count[10]; }
+					if (.Medium_Count[11] > 0) { mes "ได้รับ " + .Medium_Count[11] + "x " + getitemname(.mReward[11]) + "."; getitem .mReward[11],.Medium_Count[11]; }
+					if (.Medium_Count[12] > 0) { mes "ได้รับ " + .Medium_Count[12] + "x " + getitemname(.mReward[12]) + "."; getitem .mReward[12],.Medium_Count[12]; }
+					if (.Medium_Count[13] > 0) { mes "ได้รับ " + .Medium_Count[13] + "x " + getitemname(.mReward[13]) + "."; getitem .mReward[13],.Medium_Count[13]; }
+					if (.Medium_Count[14] > 0) { mes "ได้รับ " + .Medium_Count[14] + "x " + getitemname(.mReward[14]) + "."; getitem .mReward[14],.Medium_Count[14]; }
+					if (.Medium_Count[15] > 0) { mes "ได้รับ " + .Medium_Count[15] + "x " + getitemname(.mReward[15]) + "."; getitem .mReward[15],.Medium_Count[15]; }
+					if (.Medium_Count[16] > 0) { mes "ได้รับ " + .Medium_Count[16] + "x " + getitemname(.mReward[16]) + "."; getitem .mReward[16],.Medium_Count[16]; }
+					if (.Medium_Count[17] > 0) { mes "ได้รับ " + .Medium_Count[17] + "x " + getitemname(.mReward[17]) + "."; getitem .mReward[17],.Medium_Count[17]; }
+					
+					if (.High_Count[0] > 0) { mes "ได้รับ " + .High_Count[0] + "x " + getitemname(.hReward[0]) + "."; getitem .hReward[0],.High_Count[0]; }
+					if (.High_Count[1] > 0) { mes "ได้รับ " + .High_Count[1] + "x " + getitemname(.hReward[1]) + "."; getitem .hReward[1],.High_Count[1]; }
+					
+					if (.Rare_Count[0] > 0) { mes "ได้รับ " + .Rare_Count[0] + "x " + getitemname(.rReward[0]) + "."; getitem .rReward[0],.Rare_Count[0]; }
+					if (.Rare_Count[1] > 0) { mes "ได้รับ " + .Rare_Count[1] + "x " + getitemname(.rReward[1]) + "."; getitem .rReward[1],.Rare_Count[1]; }
+					#Lv1_FishingCount = $Lv1_FishingCount;
+					close;
+				}
+				else{
+					mes .NPCname$;
+					mes "เจ้ายังไม่ได้จ้างชาวประมง!";
+					close;
+				}
+	}
+	end;
+ 
+OnTimer900000:	// 15 นาที
+	$Lv1_FishingCount++;	
+	specialeffect 36;
+	initnpctimer;
+	end;
+	
+OnGMAding:	
+	specialeffect 36;
+	end;
+	
+OnInit:
+	waitingroom "ชาวประมง Lv.1",0;
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.symbol$ = "~";
+	setarray .Normal_Count, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	setarray .Medium_Count, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	setarray .High_Count,   0,0;
+	setarray .Rare_Count,   0,0;
+	//========================================================
+	//= Reward List.
+	//========================================================
+	setarray .nReward[0],	544,	//Raw Fish
+							579,	//Fresh Fish
+							713,	//Empty Bottle
+							908,	//Spawn
+							918,	//Sticky Webfoot
+							951,	//Fin
+							950,	//Heart of Mermaid
+							960,	//Nipper
+							961,	//Conch
+							962,	//Tentacle
+							963,	//Sharp Scale
+							964,	//Crab Shell
+							965,	//Clam Shell
+							966,	//Clam Flesh
+							1023,	//Fish Tail
+							1051,	//Detonator
+							1053,	//Ancient Tooth
+							7405;	//Crushed Can
+	//----------------------------------------------------------
+	setarray .mReward[0],	910201,	//Shark
+							910204,	//Tuna
+							910207,	//Octopus
+							910210,	//Snapper
+							910213,	//Piranha
+							910216,	//Salmon
+							910219,	//Eel
+							910222,	//Carp
+							910225,	//Squid
+							910228,	//Mackerel
+							910231,	//Crucian Carp
+							910234,	//Blue Whale
+							910237,	//Whale
+							910240,	//Giant Octopus
+							910243,	//Giant Squid
+							910246,	//Sturgeon
+							910249,	//Fresh Shrimp
+							910252;	//King Lobster
+	//----------------------------------------------------------
+	setarray .hReward[0],	720,	//Aquamarine
+							722;	//Pearl
+	//----------------------------------------------------------	
+	setarray .rReward[0],	130000034,	//Old Blue Box
+							909999;	//Old Purple Box						
+	//----------------------------------------------------------	
+	// Rate from Fishing Rod Lv.1
+	.Normal_Rate = 35;
+	.Medium_Rate = 25;
+	.High_Rate = 20;
+	.Rare_Rate = 100;
+	initnpctimer;
+	end;	
+}
+
+moonhaven,192,177,5	duplicate(ชาวประมง Lv.1#Fisherman_Lv1)	ชาวประมง Lv.1#FM2	4_CAT_ADV2
+moonhaven,144,71,5	duplicate(ชาวประมง Lv.1#Fisherman_Lv1)	ชาวประมง Lv.1#FM3	4_CAT_ADV2
+moonhaven,270,143,3	duplicate(ชาวประมง Lv.1#Fisherman_Lv1)	ชาวประมง Lv.1#FM4	4_CAT_ADV2

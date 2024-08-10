@@ -1,0 +1,13 @@
+CREATE TABLE `tharakan_hilo` (
+`char_id`  int(11) UNSIGNED NOT NULL DEFAULT 0 ,
+`name`  varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' ,
+`on`  int(30) NOT NULL ,
+PRIMARY KEY (`char_id`)
+)
+ENGINE=MyISAM
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+CHECKSUM=0
+ROW_FORMAT=DYNAMIC
+DELAY_KEY_WRITE=0
+;
+

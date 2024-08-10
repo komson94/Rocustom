@@ -1,0 +1,40 @@
+//===== rAthena Script =======================================
+//= Day & Night
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+
+-	script	Day_Night_System	-1,{
+	
+	OnInit:
+		.@hr = gettime(DT_HOUR);
+		// à»Ô´ãªé§Ò¹ setbattleflag
+		// true: à»Ô´ | false: »Ô´
+		.mflag = false;
+		// ¨Ó¹Ç¹ÁÍ¹ÊàµÍÃìµÍ¹¡ÅÒ§ÇÑ¹ 06.00 ~ 17.59 ¹.
+		.day_rate = 100;
+		// ¨Ó¹Ç¹ÁÍ¹ÊàµÍÃìµÍ¹¡ÅÒ§¤×¹ 18.00 ~ 05.59 ¹.
+		.night_rate = 200;
+	OnClock0600:
+ 	OnClock1800:
+		.@count = .night_rate / 100;  
+		if (.@hr >= 6 && .@hr < 18) {
+			day;
+			if (.mflag) {
+				announce "[ÃĞºº]: ¢³Ğ¹Õéà¢éÒÊÙéâËÁ´¡ÅÒ§ÇÑ¹ ¨Ó¹Ç¹ÁÍ¹ÊàµÍÃì¨Ğ¡ÅÑº¤×¹à·èÒà´ÔÁ!!",bc_all;
+				setbattleflag "mob_count_rate",.day_rate;
+			}
+		}
+		else {
+			night;
+			if (.mflag) {
+				announce "[ÃĞºº]: ¢³Ğ¹Õéà¢éÒÊÙéâËÁ´¡ÅÒ§¤×¹ ¨Ó¹Ç¹ÁÍ¹ÊàµÍÃì¨Ğà¾ÔèÁ¢Öé¹à»ç¹ "+.@count+" à·èÒ!!",bc_all;
+				setbattleflag "mob_count_rate",.night_rate;
+			}
+		}
+	end;
+}

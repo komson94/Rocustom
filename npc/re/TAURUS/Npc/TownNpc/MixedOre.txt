@@ -1,0 +1,46 @@
+//=============================================================
+// - Edit Version - 1.1
+// - BY exsoulionzzzz
+//=============================================================
+
+-	script	orei::oreio	-1,{
+	setarray .@ori, 984, 756, 5;
+	setarray .@elu, 985, 757, 5;
+	
+	mes "สวัสดีค่ะยินดีให้บริการค่ะ";
+	mes "เราสามารถรวมแร่ให้คุณได้";
+	mes "ต้องการใช้บริการไหมค่ะ";
+	mes "-รวมแร่ "+getitemname(.@ori);
+	mes "ใช้ "+getitemname(.@ori[1])+"  "+.@ori[2]+" ชิ้น";
+	mes "-รวมแร่ "+getitemname(.@elu);
+	mes "ใช้ "+getitemname(.@elu[1])+"  "+.@elu[2]+" ชิ้น";
+	next;
+	menu "รวมแร่ทั้งหมดเดียวนี้", -;
+	set .@amount, countitem(.@ori[1])/ .@ori[2];
+	if ( .@amount ) {
+		delitem .@ori[1], .@amount*.@ori[2];
+		getitem .@ori, .@amount;
+	}
+	set .@amount, countitem(.@elu[1])/ .@elu[2];
+	if ( .@amount ) {
+		delitem .@elu[1], .@amount*.@elu[2];
+		getitem .@elu, .@amount;
+	}
+close;
+OnInit: 
+setarray .messages$,"บ","ริ","ก","า","ร","ร","ว","ม","แ","ร่";
+	while( 1 )
+	{
+		set .Display$,"";
+		for( set .i,0; .i < getarraysize( .messages$ ); set .i,.i + 1 )
+		{
+			set .Display$,.Display$ + .messages$[.i];
+			delwaitingroom;
+			waitingroom .Display$,0;
+			sleep 100;
+		}
+	sleep 1000;
+	}
+	end;
+}
+morocc,137,67,3	duplicate(oreio)	บริการรวมแร่ 	444

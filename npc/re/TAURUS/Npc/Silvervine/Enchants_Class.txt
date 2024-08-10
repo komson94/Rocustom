@@ -1,0 +1,215 @@
+askald,71,110,3	script	Aver De Dosh(Class)#cos_ect	4_WHITETIGER,{
+	disable_items;
+	mes "[Aver De Dosh]";
+	mes "Welcome to Fashion Stone!!";
+	next;
+	mes "[Aver De Dosh]";
+	mes "We take various costume items.";
+	next;
+	mes "[Aver De Dosh]";
+	mes "If you want cool styling for your costume Hat, please come to me 'Aver De Dosh'!";
+	mes "Don't forget to bring ^ff0000your own costume Hat and costume stones^000000~";
+	next;
+	if (select( "Apply ability.", "End Conversation." ) == 2) {
+		mes "[Aver De Dosh]";
+		mes "Please check our other upgrading services~";
+		close;
+	}
+	if (checkweight(1119,3) == 0) {
+		mes "[Aver De Dosh]";
+		mes "Kiaaaaach!!!";
+		mes "I hate bulging bags!";
+		mes "No matter how cool your hat looks, that fat bag of yours is a fashion terror you know!";
+		next;
+		mes "[Aver De Dosh]";
+		mes "It seems you have too many items on you.";
+		mes "Come back after clearing some inventory spaces.";
+		close;
+	}
+	.@eq_top = getequipid(EQI_COSTUME_HEAD_TOP);
+	.@eq_mid = getequipid(EQI_COSTUME_HEAD_MID);
+	.@eq_low = getequipid(EQI_COSTUME_HEAD_LOW);
+
+	if (.@eq_top == -1 && .@eq_mid == -1 && .@eq_low == -1) {
+		mes "[Aver De Dosh]";
+		mes "You must wear item you want to add ability.";
+		mes "Then, I will be able to help you out.";
+		close;
+	}
+	if (.@eq_top > -1) {
+		.@part = EQI_COSTUME_HEAD_TOP;
+		.@equip_id = .@eq_top;
+	}
+	else if (.@eq_mid > -1) {
+		.@part = EQI_COSTUME_HEAD_MID;
+		.@equip_id = .@eq_mid;
+	}
+	else if (.@eq_low > -1) {
+		.@part = EQI_COSTUME_HEAD_LOW;
+		.@equip_id = .@eq_low;
+	}
+
+	.@location = getiteminfo(.@equip_id, 5);
+	.@equip_refine = getequiprefinerycnt(.@part);
+	setarray .@card[0], getequipcardid(.@part, 0), getequipcardid(.@part, 1), getequipcardid(.@part, 2), getequipcardid(.@part, 3);
+
+	mes "[Aver De Dosh]";
+	mes "Wow~ This ^0000FF" + getitemname(.@equip_id) + "^000000!!! looks great on you!!";
+	mes "What kind of stone do you want to use for the upgrade?";
+	next;
+	if (.@part == EQI_COSTUME_HEAD_TOP)
+		.@slot = select( "Upper", "Middle", "Lower", "Cancel" ) - 1;	// the slot enchanted changes according to the location
+	else if (.@part == EQI_COSTUME_HEAD_MID)
+		.@slot = select( "", "Middle", "Lower", "Cancel" ) - 1;
+	else if (.@part == EQI_COSTUME_HEAD_LOW)
+		.@slot = 2;
+
+	switch(.@slot) {
+	case 0:
+		if (!(.@location & 1024)) {
+			mes "[Aver De Dosh]";
+			mes "The costume can't be enhanced at this location.";	// custom
+			close;
+		}
+		setarray .@stone_id[0],
+			25445, 29460,	// Lord_Knight
+			1000297, 310258,	// Lord_Knight_2
+			25710, 29517,	// Paladin
+			1000218, 310187,	// Paladin_2
+			25413, 29428,	// Sniper
+			1000008, 310000,	// Sniper_2
+			25498, 29485,	// Bard_Dance
+			1000305,310266,	// Bard_Dance_2
+			25714, 29521,	// Assassin
+			1000222, 310191,	// Assassin_2
+			25490, 25808,	// Stalker
+			25808, 29621,	// Stalker_2
+			25453, 29468,	// Wizard
+			1000214, 310181,	// Wizard_2
+			25417, 29432,	// Professor
+			25802, 29617,	// Professor_2
+			25494, 29481,	// Whitesmiteh
+			1000012, 310004,	// Whitesmith_2
+			25450, 29464,	// Creator
+			1000301, 310262,	// Creator_2
+			25706, 29513,	// Priest
+			1000016, 310008,	// Priest_2
+			25409, 29423,	// Champion
+			25800, 29613;	// Champion_2
+		break;
+	case 1:
+		if (!(.@location & 2048)) {
+			mes "[Aver De Dosh]";
+			mes "The costume can't be enhanced at this location.";	// custom
+			close;
+		}
+		setarray .@stone_id[0],
+			25446,	29461,	// Lord_Knight
+			1000298, 310259,	// Lord_Knight_2
+			25711,	29518,	// Paladin
+			1000219,	310186,	// Paladin_2
+			25414,	29429,	// Sniper
+			1000009,	310001,	// Sniper_2
+			25499,	29486,	// Bard_Dance
+			1000306,310267,	// Bard_Dance_2
+			25715,	29522,	// Assassin
+			1000223,	310190,	// Assassin_2
+			25491,	25807,	// Stalker
+			25807,	29620,	// Stalker_2
+			25454,	29469,	// Wizard
+			1000215,	310182,	// Wizard_2
+			25418,	29433,	// Professor
+			25803,	29616,	// Professor_2
+			25495,	29482,	// Whitesmiteh
+			1000013,	310005,	// Whitesmith_2
+			25451,	29465,	// Creator
+			1000302, 310263,	// Creator_2
+			25707,	29514,	// Priest
+			1000017,	310009,	// Priest_2
+			25410,	29424,	// Champion
+			25799,	29612;	// Champion_2
+		break;
+	case 2:
+		if (!(.@location & 4096)) {
+			mes "[Aver De Dosh]";
+			mes "The costume can't be enhanced at this location.";	// custom
+			close;
+		}
+		setarray .@stone_id[0],
+			25447, 29462,	// Lord_Knight
+			1000299, 310260,	// Lord_Knight_2
+			25712, 29519,	// Paladin
+			1000220, 310185,	// Paladin_2
+			25415, 29430,	// Sniper
+			1000010, 310002,	// Sniper_2
+			25500, 29487,	// Bard_Dance
+			1000307,310268,	// Bard_Dance_2
+			25716, 29523,	// Assassin
+			1000224, 310189,	// Assassin_2
+			25492, 25806,	// Stalker
+			25806, 29619,	// Stalker_2
+			25455, 29470,	// Wizard
+			1000216, 310183,	// Wizard_2
+			25419, 29434,	// Professor
+			25804, 29615,	// Professor_2
+			25496, 29483,	// Whitesmiteh
+			1000014, 310004,	// Whitesmith_2
+			25452, 29466,	// Creator
+			1000303, 310264,	// Creator_2
+			25708, 29515,	// Priest
+			1000018, 310010,	// Priest_2
+			25411, 29425,	// Champion
+			25798, 29611;	// Champion_2
+		break;
+	default:
+		mes "[Aver De Dosh]";
+		mes "Please check our other upgrading services~";
+		close;
+	}
+	.@size = getarraysize(.@stone_id);
+	for ( .@i = 0; .@i < .@size; .@i += 2 )
+		.@menu$ += sprintf( "%d. %s [%d] left:", (.@i/2)+1, getitemname(.@stone_id[.@i]), countitem(.@stone_id[.@i]) );
+	.@s = (select(.@menu$) - 1) * 2;
+	.@stone = .@stone_id[.@s];
+	.@enchant = .@stone_id[.@s+1];
+
+	if (getequipid(.@part) < 0 || countitem(.@stone) < 1) {
+		mes "[Aver De Dosh]";
+		mes "Hmm? Think you are lack of ingredients.";
+		mes "You must have both costume item and ability stone for this upgrading work.";
+		close;
+	}
+	mes "^FF0000   !!! Caution !!!^000000";
+	mes "^FF0000This upgrade can be failed.^000000";
+	mes "^FF0000If the item already has extra ability,^000000";
+	mes "^FF0000we will reset item's ability.^000000";
+	mes "^FF0000Are you sure about upgrading this item?^000000";
+	next;
+	if (select( "Yes.", "No." ) == 2) {
+		mes "[Aver De Dosh]";
+		mes "Please check our other upgrading services~";
+		close;
+	}
+	delitem .@stone, 1;
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+		close;
+
+	delequip .@part;
+  	if (rand(1,100) < 51) {
+  		mes "[Aver De Dosh]";
+  		mes "Wow... Elegance!!";
+  		mes "This is perfect... Wow!";
+  		.@card[.@slot] = .@enchant;
+  	}
+  	else {
+  		mes "[Aver De Dosh]";
+  		mes "History is known for its failure...";
+  		mes "History of Fashion also is...";
+  		mes "Sorry...to disappoint you..~ LoL.";
+  		.@card[.@slot] = 0;
+  	}
+	getitem2 .@equip_id,1,1,.@equip_refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+	close;
+}

@@ -1,0 +1,33 @@
+//===== rAthena Script =======================================
+//= Bounty Hunter Abyss Corridor Shop
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: ===================================== 
+//= 1.0 Add Shop NPC with Barter Shop Src.
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+// Dummy Barter Shop
+-	exbartershop	Abyss_Corridor_Card_Shop	-1
+
+// Barter Shop
+//============================================================
+bounty_hall,138,128,5	script	Abyss Corridor Shop	10507,{
+	disable_items;
+//	mes .NPCname$;
+//	mes "ยินดีต้อนรับเหล่านักผจญภัย";
+//	mes "หากเจ้ามี <ITEM>"+getitemname(.Req_ItemID)+"<INFO>"+.Req_ItemID+"</INFO></ITEM>";
+//	mes "เจ้าสามารถนำมาแลกไอเท็มต่างๆกับข้าได้.";
+//	mes "--------------------";
+//	mes "เจ้ามีอยู่ทั้งหมด [ ^006600"+callfunc("F_InsertComma",countitem(.Req_ItemID))+" ^000000] อัน.";
+//	mes "--------------------";
+	callshop "Abyss_Corridor_Card_Shop",1;
+	end;
+
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.Req_ItemID = 130000050;
+	//npcshopadditem "<Shop Name>",<Item>,<Quantity>,<Zeny Cost>,<Cost Item 1>,<Cost Amount 1>,<Cost Refine 1>,........<Cost Item 5>,<Cost Amount 5>,<Cost Refine 5>;
+	npcshopadditem "Abyss_Corridor_Card_Shop",130000039,1,0,130000050,1,0,0,0,0,0,0;
+	end;
+}

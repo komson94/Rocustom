@@ -1,0 +1,106 @@
+legend_ro,116,159,5	script	restatus	782,{
+mes "สวัสดีค่ะยินดีต้อนรับ"; 
+mes "สู่บริการ รีเซ็ตสเตตัสและสกิล"; 
+mes "และ ลบสเตตัส";
+mes "คุณต้องการใช้บริการนี้ไหมค่ะ";
+next;
+menu 
+"^FF0000•^000000 ลบสเตตัส",DeleteStats,
+"^FF0000•^000000 ยกเลิก",L7; 
+
+DeleteStats:
+mes "สวัสดีค่ะยินดีต้อนรับ"; 
+mes "เราสามารถลบสเตตัส"; 
+mes "ส่วนเกินให้คุณได้";
+mes "ซึ่งในการลบสเตตัส";
+mes "จะลบออกครั้งและ 50 แต้ม";
+mes "ค่าบริการ ครั้งละ CASH 10 ea.";
+mes "คุณต้องการใช้บริการนี้ไหมค่ะ";
+next;
+menu 
+"^FF0000•^000000 ลบ STR",L1,
+"^FF0000•^000000 ลบ AGI",L2,
+"^FF0000•^000000 ลบ VIT",L3,
+"^FF0000•^000000 ลบ INT",L4,
+"^FF0000•^000000 ลบ DEX",L5,
+"^FF0000•^000000 ลบ LUK",L6,
+"^FF0000•^000000 ยกเลิก",L7; 
+
+L1:
+if (readparam(bStr) < 50) goto Q2;
+if(countitem(910039)<10) goto Q1;
+delitem 910039,10;
+atcommand "@str -50";
+atcommand "@stpoint 2291";
+mes "เราได้ทำการลบสเตตัสให้เรียบร้อยแล้วค่ะ"; 
+mes "ขอบคุณที่ใช้บริการนะค่ะ^_^"; 
+close;
+ 
+L2:
+if (readparam(bAgi) < 50) goto Q2;
+if(countitem(910039)<10) goto Q1;
+delitem 910039,10;
+atcommand "@agi -50";
+atcommand "@stpoint 2291";
+mes "เราได้ทำการลบสเตตัสให้เรียบร้อยแล้วค่ะ"; 
+mes "ขอบคุณที่ใช้บริการนะค่ะ^_^"; 
+close;
+ 
+L3:
+if (readparam(bVit) < 50) goto Q2;
+if(countitem(910039)<10) goto Q1;
+delitem 910039,10;
+atcommand "@vit -50";
+atcommand "@stpoint 2291";
+mes "เราได้ทำการลบสเตตัสให้เรียบร้อยแล้วค่ะ"; 
+mes "ขอบคุณที่ใช้บริการนะค่ะ^_^"; 
+close;
+
+L4:
+if (readparam(bInt) < 50) goto Q2;
+if(countitem(910039)<10) goto Q1;
+delitem 910039,10;
+atcommand "@int -50";
+atcommand "@stpoint 2291";
+mes "เราได้ทำการลบสเตตัสให้เรียบร้อยแล้วค่ะ"; 
+mes "ขอบคุณที่ใช้บริการนะค่ะ^_^"; 
+close;
+
+L5:
+if (readparam(bDex) < 50) goto Q2;
+if(countitem(910039)<10) goto Q1;
+delitem 910039,10;
+atcommand "@dex -50";
+atcommand "@stpoint 2291";
+mes "เราได้ทำการลบสเตตัสให้เรียบร้อยแล้วค่ะ"; 
+mes "ขอบคุณที่ใช้บริการนะค่ะ^_^"; 
+close;
+
+L6:
+if (readparam(bLuk) < 50) goto Q2;
+if(countitem(910039)<10) goto Q1;
+delitem 910039,10;
+atcommand "@luk -50";
+atcommand "@stpoint 2291";
+mes "เราได้ทำการลบสเตตัสให้เรียบร้อยแล้วค่ะ"; 
+mes "ขอบคุณที่ใช้บริการนะค่ะ^_^"; 
+close;
+
+Q1:
+mes "คุณมี TCG CARD";
+mes "ไม่พอที่จะลบสเตตัสได้ค่ะT_T";
+close;
+
+Q2:
+mes "คุณมี ค่าสเตตัสไม่ถึง 50";
+mes "ไม่พอที่จะลบสเตตัสได้ค่ะT_T";
+close;
+
+L7: 
+mes "ยินดีให้บริการค่ะ"; 
+close;
+end;
+OnInit:
+waitingroom	" รีสเตตัส ",0;
+end;
+}

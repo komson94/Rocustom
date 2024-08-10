@@ -1,0 +1,52 @@
+//==============================================
+//==============================================
+//==============================================
+// - Script By : แม่มดน้อย จอมป่วน
+// - Script City : Thailand 
+// - Script Support Server : rAthena & Hercules
+// Contacts
+// Facebook https://www.facebook.com/appleroplus2
+// Gmail appleroplus@gmail.com
+// Skype appleroplus@hotmail.com
+//==============================================
+//==============================================
+//==============================================
+morocc,168,81,3	script	ไปเก็บเวล level	4_aira,{
+
+mes "เราจะพาท่านไปเก็บเวล";
+mes "โปรดเลือกสถานที่ต่างๆที่จะไป";
+next;
+menu 
+"^FF0000•^000000 เก็บเวล 1-70 [ "+getmapusers("orcsdun01")+" ]",zenyy,
+"^FF0000•^000000 เก็บเวล 70-120 [ "+getmapusers("mag_dun02")+" ]",zenyyyy,
+"^FF0000•^000000 เก็บเวล 120-150 [ "+getmapusers("abyss_03")+" ]",zenyyyyy,
+"^FF0000•^000000 เก็บเวล 150-200 [ "+getmapusers("abyss_04")+" ]",zenyyyyyy,
+"^FF0000•^000000 ยกเลิก",cancel;
+
+zenyy:
+warp "orcsdun01",0,0;
+//announce "[ระบบ] ขณะนี้ คุณ [ "+strcharinfo(0)+" ] ได้เข้าสู่  ห้อง เก็บเวล 1 แล้วจ้า ขณะนี้มีผู้เล่นทั้งหมด [ "+getmapusers("orcsdun01")+" ] คน",0,0x66FF00;
+close;
+
+zenyyyy:
+warp "mag_dun02",0,0;
+//announce "[ระบบ] ขณะนี้ คุณ [ "+strcharinfo(0)+" ] ได้เข้าสู่  ห้อง เก็บเวล 2 แล้วจ้า ขณะนี้มีผู้เล่นทั้งหมด [ "+getmapusers("mag_dun02")+" ] คน",0,0x66FF00;
+close;
+
+zenyyyyy:
+warp "abyss_03",0,0;
+//announce "[ระบบ] ขณะนี้ คุณ [ "+strcharinfo(0)+" ] ได้เข้าสู่  ห้อง เก็บเวล 2 แล้วจ้า ขณะนี้มีผู้เล่นทั้งหมด [ "+getmapusers("abyss_03")+" ] คน",0,0x66FF00;
+close;
+
+zenyyyyyy:
+warp "abyss_04",0,0;
+//announce "[ระบบ] ขณะนี้ คุณ [ "+strcharinfo(0)+" ] ได้เข้าสู่  ห้อง เก็บเวล 2 แล้วจ้า ขณะนี้มีผู้เล่นทั้งหมด [ "+getmapusers("abyss_04")+" ] คน",0,0x66FF00;
+close;
+
+cancel:
+close;
+
+OnInit:
+waitingroom "วาปเก็บLevel",0;
+end; 
+}

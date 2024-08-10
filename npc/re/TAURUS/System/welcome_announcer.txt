@@ -1,0 +1,20 @@
+-	script	GMLogin_Announce	-1,{
+
+OnPCLoginEvent:
+	if (getgmlevel() == 99){
+        announce "ประกาศ : [GM] "+strcharinfo(0)+" ได้ออนไลน์แล้ว! สามารถติดต่อหรือแจ้งปัญหาได้แล้วค่ะ.",0;
+		atcommand "@battleignore";
+		atcommand "@speed 0";
+		percentheal 100,100; specialeffect2 EF_HEAL;
+		.gTime = 60;
+		sc_start SC_BLESSING,    .gTime*60*1000,10;		specialeffect2 EF_INCAGILITY;
+		sc_start SC_INCREASEAGI, .gTime*60*1000,10;		specialeffect2 EF_BLESSING;
+		sc_start SC_ANGELUS,     .gTime*60*1000,10;		specialeffect2 EF_ANGELUS;
+		sc_start SC_MAGNIFICAT,  .gTime*60*1000,5;		specialeffect2 EF_MAGNIFICAT;
+		sc_start SC_IMPOSITIO,   .gTime*60*1000,5;		specialeffect2 EF_IMPOSITIO;
+		sc_start SC_GLORIA,      .gTime*60*1000,5;		specialeffect2 EF_GLORIA;
+		sc_start SC_ENDURE,      .gTime*60*1000,10;
+		sc_start SC_EDP,         .gTime*60*1000,5;
+    }
+    end;
+} 

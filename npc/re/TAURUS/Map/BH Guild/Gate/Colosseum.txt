@@ -1,0 +1,886 @@
+//===== rAthena Script =======================================
+//= Colosseum
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Description: =========================================
+//= Custom Instance
+//===== Changelogs: ==========================================
+//= 1.0 เวอร์ชั่นแรก.
+//============================================================
+
+//============================================================
+// mapflag
+//============================================================
+1@colo	mapflag	noteleport
+1@colo	mapflag	monster_noteleport
+1@colo	mapflag	nomemo
+1@colo	mapflag	nopenalty
+1@colo	mapflag	nobranch
+1@colo	mapflag	nosave	SavePoint
+1@colo	mapflag	nochat
+1@colo	mapflag	novending
+
+//============================================================
+//= Create & Enter Instance.
+//============================================================
+bounty_hall,148,128,3	script	Princess Meer	4_JP_AB_NPC_009,{
+	disable_items;
+	if (colosseum_level <= 0) { colosseum_level = 1; }
+	mes .NPCname$;
+	mes "ยินดีต้อนรับเหล่าผู้กล้าทั้งหลาย";
+	mes "พวกท่านสามารถเข้าสู่ ^990099"+.instance_name$+"^000000";
+	mes "เพื่อต่อสู้ฝีมือ หากท่านสามารถผ่านไปยังระดับที่สูงขึ้น";
+	mes "รางวัลที่ท่านจะได้รับก็จะสูงขึ้นด้วยเช่นกัน.";
+	mes "^FF0000โปรดเตรียมตัวให้พร้อมก่อนเข้าสู่ดันเจี้ยน.^000000";
+	next;
+	switch(select(
+		""+.sb$+" เข้าสู่ดันเจี้ยน",
+		""+.sb$+" สร้างดันเจี้ยน"
+	)){
+		case 1:
+			mes .NPCname$;
+			switch(checkquest(.quest_id,PLAYTIME)) {
+				case 0:
+				case 1:
+					mes "คูลดาวน์ของ ^0000FF"+.instance_name$+"^000000 ยังคงเหลืออยู่. เราไม่สามารถเดินทางได้อีกในเวลานี้.";
+					close;
+				case 2:
+					mes "ร่องรอยการเข้าถึงดันเจี้ยน ^0000FF"+.instance_name$+"^000000";
+					mes "ทั้งหมดถูกลบออกแล้ว.";
+					erasequest .quest_id;
+					close;
+			}
+			switch(instance_enter(.instance_name$)) {
+				case IE_OTHER:
+					mes "ข้อผิดพลาดที่ไม่รู้จัก.";
+					close;
+				case IE_NOINSTANCE:
+					mes "ต้องทำการสร้างดันเจี้ยนก่อน.";
+					close;
+				case IE_OK:
+					setquest .quest_id;
+					mapannounce "bounty_hall", strcharinfo(0)+ " กำลังเข้าสู่ "+.instance_name$, bc_map, "0x00ff99", FW_NORMAL, 12;
+					close;
+			}
+		case 2:
+			mes .NPCname$;
+			if (BaseLevel < .req_lvl) {
+				mes "ต้องการเลเวล: ^FF0000"+.req_lvl+"^000000 ขึ้นไป!";
+				close;
+			}
+			if(is_party_leader() == false) {
+				mes "เจ้าไม่ใช่หัวหน้าปาร์ตี้.";
+				close;
+			}
+			switch(checkquest(.quest_id,PLAYTIME)) {
+				case 0:
+				case 1:
+					mes "คูลดาวน์ของ ^0000FF"+.instance_name$+"^000000 ยังคงเหลืออยู่. เราไม่สามารถเดินทางได้อีกในเวลานี้.";
+					close;
+				case 2:
+					mes "ร่องรอยการเข้าถึงดันเจี้ยน ^0000FF"+.instance_name$+"^000000";
+					mes "ทั้งหมดถูกลบออกแล้ว.";
+					erasequest .quest_id;
+					close;
+			}
+			if (instance_create(.instance_name$) < 1) {
+				mes "ปาร์ตี้: " + getpartyname( getcharid(1) ) + "";
+				mes "หัวหน้า: " + getpartyleader( getcharid(1) ) + "";
+				mes "^0000FF"+.instance_name$+"^000000 - ข้อผิดพลาดที่ไม่รู้จัก";
+				close;
+			}
+			mes "สร้างดันเจี้ยนเรียบร้อยแล้ว.";
+			close;
+	}
+OnInit:
+	.NPCname$  = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	.instance_name$ = "Abyss Colosseum";
+	.req_lvl = 150;
+	.quest_id = 1000030;
+	end;
+}
+
+
+//============================================================
+//= Princess Meer
+//============================================================
+1@colo,63,95,3	script	Princess Meer#start	4_JP_AB_NPC_009,{
+	'partyId = getcharid(1);
+	.@colo_lv_1 = (colosseum_level >= 1);
+	.@colo_lv_2 = (colosseum_level >= 2);
+	.@colo_lv_3 = (colosseum_level >= 3);
+	.@colo_lv_4 = (colosseum_level >= 4);
+	.@colo_lv_5 = (colosseum_level >= 5);
+	.@colo_lv_6 = (colosseum_level >= 6);
+	.@colo_lv_7 = (colosseum_level >= 7);
+	.@colo_lv_8 = (colosseum_level >= 8);
+	.@colo_lv_9 = (colosseum_level >= 9);
+	.@colo_lv_10 = (colosseum_level >= 10);
+	if (is_party_leader() == false) { end; }
+	if ('round_num == 0) {
+		mes .NPCname$;
+		mes "ที่นี่คือสนามต่อสู้อันยิ่งใหญ่";
+		mes "เหล่าผู้ปรารถนาชื่อเสียงและเกียรติยศ";
+		mes "ต่างพากันมา ณ ที่แห่งนี้.";
+		next;
+		mes .NPCname$;
+		mes "ไม่ว่าใครที่ก้าวเข้ามา ณ ที่แห่งนี้แล้ว";
+		mes "ยังไงก็ต้องเข้าต่อสู้และเผชิญหน้ากับอันตราย";
+		mes "หากฝ่าฟันไปได้ ก็จะได้รับรางวัลแห่งชัยชนะ.";
+		next;
+		mes .NPCname$;
+		mes "^0000FF"+strcharinfo(0)+"^000000 โปรดเลือกระดับความยาก";
+		mes "ในการต่อสู้ครั้งนี้";
+		mes "ดังนั้นจงเลือกอย่างระมัดระวัง";
+		mes "ดังนั้นจงเลือกอย่างระมัดระวัง แต่แน่นอน";
+		mes "ความยากที่ยากขึ้นให้ผลตอบแทนที่สูงขึ้นเช่นกัน.";
+		switch(select(
+			""+sb$+" ยกเลิก",
+			(.@colo_lv_1) ? ""+.sb$+" ความยากระดับ 1" : "",
+			(.@colo_lv_2) ? ""+.sb$+" ความยากระดับ 2" : "",
+			(.@colo_lv_3) ? ""+.sb$+" ความยากระดับ 3" : "",
+			(.@colo_lv_4) ? ""+.sb$+" ความยากระดับ 4" : "",
+			(.@colo_lv_5) ? ""+.sb$+" ความยากระดับ 5" : "",
+			(.@colo_lv_6) ? ""+.sb$+" ความยากระดับ 6" : "",
+			(.@colo_lv_7) ? ""+.sb$+" ความยากระดับ 7" : "",
+			(.@colo_lv_8) ? ""+.sb$+" ความยากระดับ 8" : "",
+			(.@colo_lv_9) ? ""+.sb$+" ความยากระดับ 9" : "",
+			(.@colo_lv_10) ? ""+.sb$+" ความยากระดับ 10" : ""
+		)) {
+			case 1: close;
+			case 2:
+				set getvariableofnpc(.lvl_up,instance_npcname("#Gioia_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("#Kades_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("Treasure Box#tbcolo")),1;
+				break;
+			case 3:
+				set getvariableofnpc(.lvl_up,instance_npcname("#Gioia_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("#Kades_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("Treasure Box#tbcolo")),1;
+				break;
+			case 4:
+				set getvariableofnpc(.lvl_up,instance_npcname("#Gioia_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("#Kades_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("Treasure Box#tbcolo")),1;
+				break;
+			case 5:
+				set getvariableofnpc(.lvl_up,instance_npcname("#Gioia_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("#Kades_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("Treasure Box#tbcolo")),1;
+				break;
+			case 6:
+				set getvariableofnpc(.lvl_up,instance_npcname("#Gioia_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("#Kades_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("Treasure Box#tbcolo")),1;
+				break;
+			case 7:
+				set getvariableofnpc(.lvl_up,instance_npcname("#Gioia_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("#Kades_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("Treasure Box#tbcolo")),1;
+				break;
+			case 8:
+				set getvariableofnpc(.lvl_up,instance_npcname("#Gioia_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("#Kades_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("Treasure Box#tbcolo")),1;
+				break;
+			case 9:
+				set getvariableofnpc(.lvl_up,instance_npcname("#Gioia_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("#Kades_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("Treasure Box#tbcolo")),1;
+				break;
+			case 10:
+				set getvariableofnpc(.lvl_up,instance_npcname("#Gioia_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("#Kades_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("Treasure Box#tbcolo")),1;
+				break;
+			case 11:
+				set getvariableofnpc(.lvl_up,instance_npcname("#Gioia_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("#Kades_mob")),1;
+				set getvariableofnpc(.lvl_up,instance_npcname("Treasure Box#tbcolo")),1;
+				break;
+		}
+		close2;
+		'round_num += 1;
+		donpcevent instance_npcname("Princess Meer#start")+"::OnEnable";
+		end;
+	}
+	end;
+	
+OnEnable:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : ยินดีต้อนรับเหล่าผู้กล้าทั้งหลายสู่สนามต่อสู้...!!", bc_map,0xFFFF00,FW_NORMAL,18;
+	initnpctimer;
+	end;
+OnTimer1500:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : ขอให้พวกท่านจงเตรียมตัวให้พร้อม.", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer5000:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : ในการต่อสู้ครั้งนี้ ท่านจะต้องเอาชนะคู่ต่อสู้ไปให้ได้.", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer10000:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : หากเอาชนะคู่ต่อสู้ได้แล้ว ท่านจะสามารเลือกที่จะต่อสู้กับคัตรูถัดไป.", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer14000:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : หรือจะเลือกหยุดเพื่อเข้ารับรางวัลและจบการต่อสู้ในครั้งนี้ได้.", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer17000:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : หากท่านไม่สามารถเอาชนะได้ภายในเวลาที่กำหนด จะถือว่าท่านพ่ายแพ้.", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer21000:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : เตรียมตัวให้พร้อม การต่อสู้กำลังจะเริ่มขึ้น...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer25000:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 5...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer26000:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 4...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer27000:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 3...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer28000:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 2...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer29000:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 1...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer30000:
+	stopnpctimer;
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : ศัตรูตัวที่ "+'round_num+" ได้ปรากฏตัวออกมาแล้ว...!!", bc_map,0xFFFF00,FW_NORMAL,18;
+	enablenpc instance_npcname("Gioia#m1");
+	sleep 3000;
+	donpcevent instance_npcname("Gioia#m1") + "::OnStart";
+	disablenpc instance_npcname("Princess Meer#start");
+	end;
+	
+OnInit:
+	.NPCname$  = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	end;
+	
+OnInstanceInit:
+	'mapname$ = instance_mapname("1@colo");
+	'round_num = 0;
+	setarray 'mob_id,
+				   0,	//null
+				3889,	//Gioia
+				3891,	//Kades
+				3893,	//Daehyon
+				3892,	//Pyuriel
+				3700,	//Lost Dragon
+				3732,	//Witch Zilant
+				3733,	//Elder Dragon Zilant
+				3991,	//Old King Groza
+			   20701,	//Princess Meer
+			   20702;	//Halfblood Princess Meer
+	setarray 'thorn,
+			   1958,	//Thorny Skeleton
+			   1959,	//Thorn of Recovery
+			   1960,	//Thorn of Magic
+			   1961;	//Thorn of Purification
+	// Disable NPC.
+	disablenpc instance_npcname("Princess Meer#2");
+	disablenpc instance_npcname("Treasure Box#tbcolo");
+	disablenpc instance_npcname("Gioia#m1");
+	disablenpc instance_npcname("Kades#m2");
+	disablenpc instance_npcname("Daehyon#m3");
+	disablenpc instance_npcname("Pyuriel#m4");
+	disablenpc instance_npcname("Lost Dragon#m5");
+	disablenpc instance_npcname("Witch Zilant#m6");
+	disablenpc instance_npcname("Elder Dragon Zilant#m7");
+	disablenpc instance_npcname("Old King Groza#m8");
+	disablenpc instance_npcname("Princess Meer#m9");
+	disablenpc instance_npcname("Half Blood Princess Meer#m10");
+	end;
+}
+
+
+//============================================================
+//= Monster Spawn 1
+//============================================================
+1@colo,71,75,3	script	Gioia#m1	4_JP_AB_NPC_005,{
+	end;
+OnStart:
+	'npc_gioia$ = instance_npcname("Gioia#m1");
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : ฮ่า ฮ่า ๆๆๆ !!", bc_map,0xFFFF00,FW_NORMAL,18;
+	npctalk ""+strnpcinfo(1)+": ฮ่า ฮ่า ๆๆๆ !!", 'npc_gioia$;
+	initnpctimer;
+	end;
+OnTimer1500:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : วันนี้ข้ามีแขกเข้ามาสินะ...", bc_map,0xFFFF00,FW_NORMAL,18;
+	npctalk ""+strnpcinfo(1)+": วันนี้ข้ามีแขกเข้ามาสินะ....", 'npc_gioia$;
+	end;
+OnTimer5000:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : เจ้าพวกมนุษย์หน้าโง่ !!", bc_map,0xFFFF00,FW_NORMAL,18;
+	npctalk ""+strnpcinfo(1)+": เจ้าพวกมนุษย์หน้าโง่ !!", 'npc_gioia$;
+	end;
+OnTimer10000:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : ไหนๆก็เข้ามากันแล้ว ข้าจะฆ่าทิ้งซะให้หมดเลย !!", bc_map,0xFFFF00,FW_NORMAL,18;
+	npctalk ""+strnpcinfo(1)+": ไหนๆก็เข้ามากันแล้ว ข้าจะฆ่าทิ้งซะให้หมดเลย !!", 'npc_gioia$;
+	sleep 500;
+	donpcevent instance_npcname("#Gioia_mob") + "::OnStart";
+	disablenpc instance_npcname("Gioia#m1");
+	end;
+}
+1@colo,1,1,0	script	#Gioia_mob	HIDDEN_NPC,{
+	end;
+OnStart:
+	'mob_1$ = instance_npcname("#Gioia_mob") + "::OnMobDead";
+	monster 'mapname$,71,75,"--ja--",'mob_id[1],1,'mob_1$;
+		'mob_1 = $@mobid[.@i];
+		'mob1_level = .@level[UMOB_LEVEL];
+		'mob1_maxhp = .@maxhp[UMOB_MAXHP]; 
+		'mob1_atk = .@atkmin[UMOB_ATKMIN];
+		'mob1_atkm = .@atkmax[UMOB_ATKMAX];
+		'mob1_matk = .@matkmin[UMOB_MATKMIN];
+		'mob1_matkm = .@matkmax[UMOB_MATKMAX];
+		getunitdata 'mob_1, .@level;
+		getunitdata 'mob_1, .@atkmin;
+		getunitdata 'mob_1, .@atkmax;
+		getunitdata 'mob_1, .@matkmin;
+		getunitdata 'mob_1, .@matkmax;
+		setunitdata 'mob_1, UMOB_LEVEL,	  180 + .lvl_up;
+		setunitdata 'mob_1, UMOB_MAXHP,	  200000000 + 100000000 * .lvl_up;
+		setunitdata 'mob_1, UMOB_ATKMIN,  'mob1_atk   *.lvl_up;
+		setunitdata 'mob_1, UMOB_ATKMAX,  'mob1_atkm  *.lvl_up;
+		setunitdata 'mob_1, UMOB_MATKMIN, 'mob1_matk  *.lvl_up;
+		setunitdata 'mob_1, UMOB_MATKMAX, 'mob1_matkm *.lvl_up;
+		initnpctimer;
+	end;
+	
+OnTimer30000:
+	.@mob_dead = mobcount('mapname$,'mob_1$);
+	if (.@mob_dead > 0) {
+		.@thorn = 'thorn[rand(getarraysize('thorn))];
+		areamonster 'mapname$,51,81,74,70,"--ja--",.@thorn,1;
+		initnpctimer;
+	}
+	end;
+OnMobDead:
+	.@mob_dead = mobcount('mapname$,'mob_1$);
+	if ( .@mob_dead <= 0 ) {
+		'round_num = 1;
+		killmonster 'mapname$, "All";
+		enablenpc instance_npcname("Princess Meer#2");
+		sleep 1000;
+		donpcevent instance_npcname("Princess Meer#2") + "::OnTalk";
+	}
+	end;
+}
+
+
+//============================================================
+//= Princess Meer 2
+//============================================================
+1@colo,63,95,3	script	Princess Meer#2	4_JP_AB_NPC_009,{
+	if (is_party_leader() == false) { end; }
+	mes .NPCname$;
+	mes "ยอดเยี่ยมมาก ^0000FF"+strcharinfo(0)+"^000000";
+	mes "ในการต่อสู้ครั้งนี้";
+	mes "ท่านสามารถเอาชนะมาได้";
+	mes "ท่านต้องการที่จะต่อสู้ต่อไปหรือไม่?";
+	next;
+	if (select( ""+.sb$+" หยุดแค่นี้", ""+.sb$+" สู้ต่อไป" ) == 1) {
+		mes .NPCname$;
+		mes "ท่านแน่ใจหรือไม่ที่จะหยุดแค่นี้?";
+		next;
+		if (select( ""+.sb$+" แน่ใจ", ""+.sb$+" ข้าเปลี่ยนใจ" ) == 1) {
+			warpparty 'mapname$,186,77,'partyId,'mapname$;
+			end;
+		}
+	}
+	mes .NPCname$;
+	mes "ขอให้ท่านเตรียมตัวให้พร้อมสำหรับการต่อสู้รอบถัดไป";
+	mes "ขอให้ท่านโชคดี.";
+	'round_num += 1;
+	close2;
+	donpcevent instance_npcname("Princess Meer#2") + "::OnStart";
+	end;
+	
+OnTalk:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : ขอแสดงความยินดีด้วยค่ะ ที่ท่านได้ผ่านการต่อสู้รอบที่ "+'round_num+" ได้แล้ว...!!", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+
+OnStart:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : เอาล่ะ ต่อไปจะเป็นการต่อสู้ในรอบที่ "+'round_num+"", bc_map,0xFFFF00,FW_NORMAL,18;
+	initnpctimer;
+	end;	
+OnTimer1500:	
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : โปรดเตรียมตัวให้พร้อมก่อนการต่อสู้ในรอบนี้จะเริ่มขึ้น...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4000:	
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : เตรียมตัวให้พร้อม การต่อสู้กำลังจะเริ่มขึ้น...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4500:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 5...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4600:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 4...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4700:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 3...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4800:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 2...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4900:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 1...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer5000:
+	stopnpctimer;
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : ศัตรูตัวที่ "+'round_num+" ได้ปรากฏตัวออกมาแล้ว...!!", bc_map,0xFFFF00,FW_NORMAL,18;
+	enablenpc instance_npcname("Kades#m2");
+	sleep 3000;
+	donpcevent instance_npcname("Kades#m2") + "::OnStart";
+	disablenpc instance_npcname("Princess Meer#2");
+	end;
+
+OnInit:
+	.NPCname$  = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	end;
+}
+
+
+//============================================================
+//= Monster Spawn 2
+//============================================================
+1@colo,71,75,3	script	Kades#m2	4_JP_AB_NPC_006,{
+	end;
+OnStart:
+	'npc_kades$ = instance_npcname("Kades#m2");
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : ข้าไม่คิดว่าพวกเจ้าจะผ่านเข้ามาได้ !!", bc_map,0xFFFF00,FW_NORMAL,18;
+	npctalk ""+strnpcinfo(1)+": ข้าไม่คิดว่าพวกเจ้าจะผ่านเข้ามาได้ !!", 'npc_kades$;
+	initnpctimer;
+	end;
+OnTimer1500:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : เจ้า Gioia มันช่างอ่อนแอเกินไป...", bc_map,0xFFFF00,FW_NORMAL,18;
+	npctalk ""+strnpcinfo(1)+": เจ้า Gioia มันช่างอ่อนแอเกินไป....", 'npc_kades$;
+	end;
+OnTimer5000:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : ข้าไม่เหมือนกับเจ้านั่นหลอกนะ !!", bc_map,0xFFFF00,FW_NORMAL,18;
+	npctalk ""+strnpcinfo(1)+": ข้าไม่เหมือนกับเจ้านั่นหลอกนะ !!", 'npc_kades$;
+	end;
+OnTimer10000:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : พวกเจ้าจะต้องพ่ายแพ้ให้กับข้า Kades ผู้นี้ !!", bc_map,0xFFFF00,FW_NORMAL,18;
+	npctalk ""+strnpcinfo(1)+": พวกเจ้าจะต้องพ่ายแพ้ให้กับข้า Kades ผู้นี้ !!", 'npc_kades$;
+	sleep 500;
+	donpcevent instance_npcname("#Kades_mob") + "::OnStart";
+	disablenpc instance_npcname("Kades#m2");
+	end;
+}
+1@colo,1,1,0	script	#Kades_mob	HIDDEN_NPC,{
+	end;
+OnStart:
+	'mob_2$ = instance_npcname("#Kades_mob") + "::OnMobDead";
+	monster 'mapname$,71,75,"--ja--",'mob_id[2],1,'mob_2$;
+		'mob_2 = $@mobid[.@i];
+		'mob2_level = .@level[UMOB_LEVEL];
+		'mob2_maxhp = .@maxhp[UMOB_MAXHP]; 
+		'mob2_atk = .@atkmin[UMOB_ATKMIN];
+		'mob2_atkm = .@atkmax[UMOB_ATKMAX];
+		'mob2_matk = .@matkmin[UMOB_MATKMIN];
+		'mob2_matkm = .@matkmax[UMOB_MATKMAX];
+		getunitdata 'mob_2, .@level;
+		getunitdata 'mob_2, .@atkmin;
+		getunitdata 'mob_2, .@atkmax;
+		getunitdata 'mob_2, .@matkmin;
+		getunitdata 'mob_2, .@matkmax;
+		setunitdata 'mob_2, UMOB_LEVEL,	  180 + .lvl_up;
+		setunitdata 'mob_2, UMOB_MAXHP,	   200000000 + 150000000 * .lvl_up;
+		setunitdata 'mob_2, UMOB_ATKMIN,  'mob2_atk   *.lvl_up;
+		setunitdata 'mob_2, UMOB_ATKMAX,  'mob2_atkm  *.lvl_up;
+		setunitdata 'mob_2, UMOB_MATKMIN, 'mob2_matk  *.lvl_up;
+		setunitdata 'mob_2, UMOB_MATKMAX, 'mob2_matkm *.lvl_up;
+		initnpctimer;
+	end;
+	
+OnTimer30000:
+	.@mob_dead = mobcount('mapname$,'mob_2$);
+	if (.@mob_dead > 0) {
+		.@thorn = 'thorn[rand(getarraysize('thorn))];
+		areamonster 'mapname$,51,81,74,70,"--ja--",.@thorn,1;
+		initnpctimer;
+	}
+	end;
+OnMobDead:
+	.@mob_dead = mobcount('mapname$,'mob_2$);
+	if ( .@mob_dead <= 0 ) {
+		'round_num = 1;
+		killmonster 'mapname$, "All";
+		enablenpc instance_npcname("Princess Meer#3");
+		sleep 1000;
+		donpcevent instance_npcname("Princess Meer#3") + "::OnTalk";
+	}
+	end;
+}
+
+
+//============================================================
+//= Princess Meer 3
+//============================================================
+1@colo,63,95,3	script	Princess Meer#3	4_JP_AB_NPC_009,{
+	if (is_party_leader() == false) { end; }
+	mes .NPCname$;
+	mes "ยอดเยี่ยมมาก ^0000FF"+strcharinfo(0)+"^000000";
+	mes "ในการต่อสู้ครั้งนี้";
+	mes "ท่านสามารถเอาชนะมาได้";
+	mes "ท่านต้องการที่จะต่อสู้ต่อไปหรือไม่?";
+	next;
+	if (select( ""+.sb$+" หยุดแค่นี้", ""+.sb$+" สู้ต่อไป" ) == 1) {
+		mes .NPCname$;
+		mes "ท่านแน่ใจหรือไม่ที่จะหยุดแค่นี้?";
+		next;
+		if (select( ""+.sb$+" แน่ใจ", ""+.sb$+" ข้าเปลี่ยนใจ" ) == 1) {
+			warpparty 'mapname$,186,77,'partyId,'mapname$;
+			end;
+		}
+	}
+	mes .NPCname$;
+	mes "ขอให้ท่านเตรียมตัวให้พร้อมสำหรับการต่อสู้รอบถัดไป";
+	mes "ขอให้ท่านโชคดี.";
+	'round_num += 1;
+	close2;
+	donpcevent instance_npcname("Princess Meer#3") + "::OnStart";
+	end;
+	
+OnTalk:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : ขอแสดงความยินดีด้วยค่ะ ที่ท่านได้ผ่านการต่อสู้รอบที่ "+'round_num+" ได้แล้ว...!!", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+
+OnStart:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : เอาล่ะ ต่อไปจะเป็นการต่อสู้ในรอบที่ "+'round_num+"", bc_map,0xFFFF00,FW_NORMAL,18;
+	initnpctimer;
+	end;	
+OnTimer1500:	
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : โปรดเตรียมตัวให้พร้อมก่อนการต่อสู้ในรอบนี้จะเริ่มขึ้น...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4000:	
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : เตรียมตัวให้พร้อม การต่อสู้กำลังจะเริ่มขึ้น...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4500:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 5...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4600:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 4...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4700:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 3...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4800:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 2...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4900:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 1...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer5000:
+	stopnpctimer;
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : ศัตรูตัวที่ "+'round_num+" ได้ปรากฏตัวออกมาแล้ว...!!", bc_map,0xFFFF00,FW_NORMAL,18;
+	enablenpc instance_npcname("Daehyon#m3");
+	sleep 3000;
+	donpcevent instance_npcname("Daehyon#m3") + "::OnStart";
+	disablenpc instance_npcname("Princess Meer#3");
+	end;
+
+OnInit:
+	.NPCname$  = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	end;
+}
+
+//============================================================
+//= Monster Spawn 3
+//============================================================
+1@colo,71,75,3	script	Daehyon#m3	4_JP_AB_NPC_007,{
+	end;
+OnStart:
+	'npc_daehyon$ = instance_npcname("Daehyon#m3");
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : เก่งมากที่ผ่านมาถึงรอบนี้ได้ !!", bc_map,0xFFFF00,FW_NORMAL,18;
+	npctalk ""+strnpcinfo(1)+": เก่งมากที่ผ่านมาถึงรอบนี้ได้ !!", 'npc_daehyon$;
+	initnpctimer;
+	end;
+OnTimer1500:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : ผู้อ่อนแอจะต้องพ่ายแพ้ไป...", bc_map,0xFFFF00,FW_NORMAL,18;
+	npctalk ""+strnpcinfo(1)+": ผู้อ่อนแอจะต้องพ่ายแพ้ไป....", 'npc_daehyon$;
+	end;
+OnTimer5000:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : นักรบย่อมไม่ย่อท้อต่ออันตรายและความยากลำบาก !!", bc_map,0xFFFF00,FW_NORMAL,18;
+	npctalk ""+strnpcinfo(1)+": นักรบย่อมไม่ย่อท้อต่ออันตรายและความยากลำบาก !!", 'npc_daehyon$;
+	end;
+OnTimer10000:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : เข้ามาเลย !!", bc_map,0xFFFF00,FW_NORMAL,18;
+	npctalk ""+strnpcinfo(1)+": เข้ามาเลย !!", 'npc_daehyon$;
+	sleep 500;
+	donpcevent instance_npcname("#Daehyon_mob") + "::OnStart";
+	disablenpc instance_npcname("Daehyon#m3");
+	end;
+}
+1@colo,1,1,0	script	#Daehyon_mob	HIDDEN_NPC,{
+	end;
+OnStart:
+	'mob_3$ = instance_npcname("#Daehyon_mob") + "::OnMobDead";
+	monster 'mapname$,71,75,"--ja--",'mob_id[3],1,'mob_3$;
+		'mob_3 = $@mobid[.@i];
+		'mob3_level = .@level[UMOB_LEVEL];
+		'mob3_maxhp = .@maxhp[UMOB_MAXHP]; 
+		'mob3_atk = .@atkmin[UMOB_ATKMIN];
+		'mob3_atkm = .@atkmax[UMOB_ATKMAX];
+		'mob3_matk = .@matkmin[UMOB_MATKMIN];
+		'mob3_matkm = .@matkmax[UMOB_MATKMAX];
+		getunitdata 'mob_3, .@level;
+		getunitdata 'mob_3, .@atkmin;
+		getunitdata 'mob_3, .@atkmax;
+		getunitdata 'mob_3, .@matkmin;
+		getunitdata 'mob_3, .@matkmax;
+		setunitdata 'mob_3, UMOB_LEVEL,	   180 + .lvl_up;
+		setunitdata 'mob_3, UMOB_MAXHP,	   200000000 + 200000000 * .lvl_up;
+		setunitdata 'mob_3, UMOB_ATKMIN,  'mob3_atk   *.lvl_up;
+		setunitdata 'mob_3, UMOB_ATKMAX,  'mob3_atkm  *.lvl_up;
+		setunitdata 'mob_3, UMOB_MATKMIN, 'mob3_matk  *.lvl_up;
+		setunitdata 'mob_3, UMOB_MATKMAX, 'mob3_matkm *.lvl_up;
+		initnpctimer;
+	end;
+	
+OnTimer30000:
+	.@mob_dead = mobcount('mapname$,'mob_3$);
+	if (.@mob_dead > 0) {
+		.@thorn = 'thorn[rand(getarraysize('thorn))];
+		areamonster 'mapname$,51,81,74,70,"--ja--",.@thorn,1;
+		initnpctimer;
+	}
+	end;
+OnMobDead:
+	.@mob_dead = mobcount('mapname$,'mob_3$);
+	if ( .@mob_dead <= 0 ) {
+		'round_num = 1;
+		killmonster 'mapname$, "All";
+		enablenpc instance_npcname("Princess Meer#4");
+		sleep 1000;
+		donpcevent instance_npcname("Princess Meer#4") + "::OnTalk";
+	}
+	end;
+}
+
+
+//============================================================
+//= Princess Meer 4
+//============================================================
+1@colo,63,95,3	script	Princess Meer#4	4_JP_AB_NPC_009,{
+	if (is_party_leader() == false) { end; }
+	mes .NPCname$;
+	mes "ยอดเยี่ยมมาก ^0000FF"+strcharinfo(0)+"^000000";
+	mes "ในการต่อสู้ครั้งนี้";
+	mes "ท่านสามารถเอาชนะมาได้";
+	mes "ท่านต้องการที่จะต่อสู้ต่อไปหรือไม่?";
+	next;
+	if (select( ""+.sb$+" หยุดแค่นี้", ""+.sb$+" สู้ต่อไป" ) == 1) {
+		mes .NPCname$;
+		mes "ท่านแน่ใจหรือไม่ที่จะหยุดแค่นี้?";
+		next;
+		if (select( ""+.sb$+" แน่ใจ", ""+.sb$+" ข้าเปลี่ยนใจ" ) == 1) {
+			warpparty 'mapname$,186,77,'partyId,'mapname$;
+			end;
+		}
+	}
+	mes .NPCname$;
+	mes "ขอให้ท่านเตรียมตัวให้พร้อมสำหรับการต่อสู้รอบถัดไป";
+	mes "ขอให้ท่านโชคดี.";
+	'round_num += 1;
+	close2;
+	donpcevent instance_npcname("Princess Meer#3") + "::OnStart";
+	end;
+	
+OnTalk:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : ขอแสดงความยินดีด้วยค่ะ ที่ท่านได้ผ่านการต่อสู้รอบที่ "+'round_num+" ได้แล้ว...!!", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+
+OnStart:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : เอาล่ะ ต่อไปจะเป็นการต่อสู้ในรอบที่ "+'round_num+"", bc_map,0xFFFF00,FW_NORMAL,18;
+	initnpctimer;
+	end;	
+OnTimer1500:	
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : โปรดเตรียมตัวให้พร้อมก่อนการต่อสู้ในรอบนี้จะเริ่มขึ้น...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4000:	
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : เตรียมตัวให้พร้อม การต่อสู้กำลังจะเริ่มขึ้น...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4500:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 5...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4600:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 4...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4700:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 3...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4800:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 2...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer4900:
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : การต่อสู้กำลังจะเริ่มขึ้นใน 1...", bc_map,0xFFFF00,FW_NORMAL,18;
+	end;
+OnTimer5000:
+	stopnpctimer;
+	mapannounce 'mapname$, ""+strnpcinfo(1)+" : ศัตรูตัวที่ "+'round_num+" ได้ปรากฏตัวออกมาแล้ว...!!", bc_map,0xFFFF00,FW_NORMAL,18;
+	enablenpc instance_npcname("Daehyon#m3");
+	sleep 3000;
+	donpcevent instance_npcname("Daehyon#m3") + "::OnStart";
+	disablenpc instance_npcname("Princess Meer#3");
+	end;
+
+OnInit:
+	.NPCname$  = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	end;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+1@colo,71,75,3	script	Pyuriel#m4	4_JP_AB_NPC_008,{}
+1@colo,71,75,3	script	Lost Dragon#m5	4_JP_AB_NPC_003,{}
+1@colo,71,75,3	script	Witch Zilant#m6	4_JP_AB_NPC_001,{}
+1@colo,71,75,3	script	Elder Dragon Zilant#m7	4_JP_AB_NPC_002,{}
+1@colo,71,75,3	script	Old King Groza#m8	4_JP_AB_NPC_004,{}
+1@colo,71,75,3	script	Princess Meer#m9	4_JP_AB_NPC_009,{}
+1@colo,71,75,3	script	Half Blood Princess Meer#m10	4_JP_AB_NPC_010,{}
+
+
+//============================================================
+//= Treasure Box.
+//============================================================
+1@colo,186,83,3	script	Treasure Box#tbcolo	4_TREASURE_BOX,{	
+	if (.treasure_box == 1) end;
+	.treasure_box = 1;
+	specialeffect EF_COIN;
+	disablenpc instance_npcname("Treasure Box#tbcolo");
+	if (.lvl_up == 1 ) {
+		makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+		for (.@i = 1; .@i <= 4; .@i++) if(rand(1,5) <= 1) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+		makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+		for (.@i = 1; .@i <= 14; .@i++) if(rand(1,2) <= 1) makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+	}
+	if (.lvl_up == 2 ) {
+		makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+		for (.@i = 1; .@i <= 5; .@i++) if(rand(1,5) <= 1) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+		makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+		for (.@i = 1; .@i <= 19; .@i++) if(rand(1,2) <= 1) makeitem 25876,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+	}
+	if (.lvl_up == 3 ) {
+	for (.@i = 1; .@i <= 2; .@i++) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+	for (.@i = 1; .@i <= 5; .@i++) if(rand(1,5) <= 1) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+	makeitem 25865,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Gemstone
+	for (.@i = 1; .@i <= 2; .@i++) if(rand(1,4) <= 1) makeitem 25865,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Gemstone
+	makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+	for (.@i = 1; .@i <= 24; .@i++) if(rand(1,2) <= 1) makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+	}
+	if (.lvl_up == 4 ) {
+	for (.@i = 1; .@i <= 2; .@i++) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+	for (.@i = 1; .@i <= 6; .@i++) if(rand(1,5) <= 1) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+	makeitem 25865,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Gemstone
+	for (.@i = 1; .@i <= 3; .@i++) if(rand(1,4) <= 1) makeitem 25865,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Gemstone
+	makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+	for (.@i = 1; .@i <= 29; .@i++) if(rand(1,2) <= 1) makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+	}
+	if (.lvl_up == 5 ) {
+	for (.@i = 1; .@i <= 3; .@i++) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+	for (.@i = 1; .@i <= 6; .@i++) if(rand(1,5) <= 1) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+	makeitem 25865,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Gemstone
+	for (.@i = 1; .@i <= 3; .@i++) if(rand(1,4) <= 1) makeitem 25865,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Gemstone
+	makeitem 25866,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Spell
+	for (.@i = 1; .@i <= 3; .@i++) if(rand(1,10) <= 1) makeitem 25866,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Spell
+	for (.@i = 1; .@i <= 2; .@i++) makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+	for (.@i = 1; .@i <= 28; .@i++) if(rand(1,2) <= 1) makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+	}
+	if (.lvl_up == 6 ) {
+		for (.@i = 1; .@i <= 3; .@i++) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+		for (.@i = 1; .@i <= 7; .@i++) if(rand(1,3) <= 1) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+		makeitem 25865,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Gemstone
+		for (.@i = 1; .@i <= 4; .@i++) if(rand(1,6) <= 1) makeitem 25865,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Gemstone
+		for (.@i = 1; .@i <= 3; .@i++) makeitem 25866,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Spell
+		for (.@i = 1; .@i <= 4; .@i++) if(rand(1,4) <= 1) makeitem 25866,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Spell
+		for (.@i = 1; .@i <= 2; .@i++) makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+		for (.@i = 1; .@i <= 28; .@i++) if(rand(1,2) <= 1) makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+	}
+	if (.lvl_up == 7 ) {
+		for (.@i = 1; .@i <= 4; .@i++) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+		for (.@i = 1; .@i <= 6; .@i++) if(rand(1,3) <= 1) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+		for (.@i = 1; .@i <= 2; .@i++) makeitem 25865,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Gemstone
+		for (.@i = 1; .@i <= 3; .@i++) if(rand(1,6) <= 1) makeitem 25865,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Gemstone
+		for (.@i = 1; .@i <= 5; .@i++) makeitem 25866,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Spell
+		for (.@i = 1; .@i <= 6; .@i++) if(rand(1,4) <= 1) makeitem 25866,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Spell
+		for (.@i = 1; .@i <= 3; .@i++) makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+		for (.@i = 1; .@i <= 28; .@i++) if(rand(1,2) <= 1) makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+	}
+	if (.lvl_up == 8 ) {
+		for (.@i = 1; .@i <= 4; .@i++) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+		for (.@i = 1; .@i <= 6; .@i++) if(rand(1,3) <= 1) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+		for (.@i = 1; .@i <= 2; .@i++) makeitem 25865,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Gemstone
+		for (.@i = 1; .@i <= 4; .@i++) if(rand(1,6) <= 1) makeitem 25865,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Gemstone
+		for (.@i = 1; .@i <= 8; .@i++) makeitem 25866,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Spell
+		for (.@i = 1; .@i <= 8; .@i++) if(rand(1,4) <= 1) makeitem 25866,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Spell
+		for (.@i = 1; .@i <= 3; .@i++) makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+		for (.@i = 1; .@i <= 28; .@i++) if(rand(1,2) <= 1) makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+	}
+	if (.lvl_up == 9 ) {
+		for (.@i = 1; .@i <= 5; .@i++) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+		for (.@i = 1; .@i <= 5; .@i++) if(rand(1,3) <= 1) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+		for (.@i = 1; .@i <= 2; .@i++) makeitem 25865,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Gemstone
+		for (.@i = 1; .@i <= 4; .@i++) if(rand(1,6) <= 1) makeitem 25865,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Gemstone
+		for (.@i = 1; .@i <= 11; .@i++) makeitem 25866,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Spell
+		for (.@i = 1; .@i <= 11; .@i++) if(rand(1,4) <= 1) makeitem 25866,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Spell
+		for (.@i = 1; .@i <= 4; .@i++) makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+		for (.@i = 1; .@i <= 28; .@i++) if(rand(1,2) <= 1) makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+	}
+	if (.lvl_up >= 10 ) {
+		for (.@i = 1; .@i <= 5; .@i++) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+		for (.@i = 1; .@i <= 5; .@i++) if(rand(1,3) <= 1) makeitem 25864,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Circle
+		for (.@i = 1; .@i <= 2; .@i++) makeitem 25865,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Gemstone
+		for (.@i = 1; .@i <= 5; .@i++) if(rand(1,6) <= 1) makeitem 25865,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Gemstone
+		for (.@i = 1; .@i <= 14; .@i++) makeitem 25866,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Spell
+		for (.@i = 1; .@i <= 14; .@i++) if(rand(1,4) <= 1) makeitem 25866,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Spell
+		for (.@i = 1; .@i <= 4; .@i++) makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+		for (.@i = 1; .@i <= 28; .@i++) if(rand(1,2) <= 1) makeitem 25867,1, 'mapname$, (186 + rand(-5,5)), (83 + rand(-5,5));	// Fragment
+	}
+	end;
+}
+
+//============================================================
+//= Princess Exit.
+//============================================================
+1@colo,186,95,3	script	Princess Meer#exit	4_JP_AB_NPC_009,{
+	if (is_party_leader() == false) && (.talk == 0) { end; }
+	if (.talk == 0) {
+		mes .NPCname$;
+		mes "ยินดีด้วยท่านผู้กล้า";
+		mes "ท่านได้ผ่านการต่อสู้อันยากลำบากมาได้แล้ว";
+		mes "และนี่ก็คือรางวัลของท่าน.";
+		close2;
+		.talk = 1;
+		enablenpc instance_npcname("Treasure Box#tbcolo");
+		end;
+	} else {
+		mes .NPCname$;
+		mes "ท่านต้องการจะออกจากที่นี่ใช่หรือไม่?";
+		next;
+		if (select( ""+.sb$+" ใช่", ""+.sb$+" ไม่" ) == 2) {
+			close;
+		}
+		warp "bounty_hall",143,122;
+		end;
+	}
+	end;
+	
+OnInit:
+	.NPCname$  = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	end;
+}

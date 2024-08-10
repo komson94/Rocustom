@@ -1,0 +1,42 @@
+
+
+
+function	script	EquipProcess	{
+
+		getinventorylist;
+		for(set @i, 0; @i < @inventorylist_count; set @i, @i + 1) 
+		{
+		
+			if (@inventorylist_id[@i] == 1220006) {
+				 bonus_script "{ bonus bAspd,10; }",30,0,0,SC_INCASPDRATE;
+			}
+			if (@inventorylist_id[@i] == 1220007) {
+				 bonus_script "{ bonus bStr,10; }",30,0,0,SC_INCSTR;
+			}
+			if (@inventorylist_id[@i] == 1220008) {
+				 bonus_script "{ bonus2 bDropAddRace,RC_All,20; }",30,0,0,SC_ITEMSCRIPT;
+			}
+			if (@inventorylist_id[@i] == 1220009) {
+			
+				bonus3 bAutoSpell,"KN_PIERCE",10,1000; 
+			}
+			if (@inventorylist_id[@i] == 1220010) {
+				bonus2 bHpDrainRate,10,15; 
+			}
+			if (@inventorylist_id[@i] == 1220020) {
+				 bonus_script "{ bonus2 bSPDrainRate,10,15; }",30,0,0,SC_ITEMSCRIPT;
+			}
+		
+		}
+		
+
+}
+
+-	script	Equip_get_status	-1,{
+end;
+	
+	OnNPCKillEvent:
+		EquipProcess();
+	end;
+	
+}

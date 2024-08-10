@@ -1,0 +1,108 @@
+morocc,111,89,4	script	สุ่ม Costume #1	57,{
+disable_items;
+mes "[Costume Classic]";
+mes "สวัสดีครับ ยินดีให้บริการครับ";
+mes "เลือกเมนูที่คุณต้องการครับ";
+next;
+menu "• สุ่ม Costume",KC_ST1,"• รายละเอียด",KC_IF1,"• ยกเลิก",KC_ED;
+
+KC_ST1:
+mes "[Costume HiEnd]";
+mes "ต้องการ "+getitemname(29005)+" 1 ea";
+next;
+menu "• สุ่ม Costume",KC_ST11;
+
+
+KC_ST11:
+if(countitem(29005) < 1) { 
+mes "[Costume HiEnd]";
+mes "ต้องการ "+getitemname(29005)+" 1 ea";
+end; 
+}
+
+delitem 29005,1;
+
+specialeffect2 91;
+progressbar "ffff00",1;
+
+setarray .OTH_ITEMLIST[0],39006,39009;
+setarray .COSN_ITEMLIST[0],39007;
+setarray .RARE_ITEMLIST[0],39008;
+setarray .min_amount,1;
+setarray .max_amount,1;
+ set .rand, rand(0,30);
+    switch(.rand){
+        case 10: case 20: case 30:
+            set .Random, rand( getarraysize( .RARE_ITEMLIST ) );
+            getitem .RARE_ITEMLIST[ .Random ], 1;
+            announce "ผู้เล่น ["+strcharinfo(0)+"] สุ่ม Costume ได้รับ Item Rate "+getitemname(.RARE_ITEMLIST[ .Random ])+" ",bc_all,0xFF0000;
+        break;
+       
+       
+        case 5: case 15: case 29:
+            set .Random, rand( getarraysize( .COSN_ITEMLIST ) );
+            getitem .COSN_ITEMLIST[ .Random ], 1;
+            announce "ผู้เล่น ["+strcharinfo(0)+"] สุ่ม Costume ได้รับ Item Costume "+getitemname(.COSN_ITEMLIST[ .Random ])+" ",bc_all,0xFF0000;
+        break;
+       
+        default:
+            set .@amount,rand( .min_amount[.@random],.max_amount[.@random] );
+            set .Random, rand( getarraysize( .OTH_ITEMLIST ) );
+        if ( .OTH_ITEMLIST[ .Random ] == 0 || .OTH_ITEMLIST[ .Random ] == 0 ) {
+            getitem .OTH_ITEMLIST[ .Random ], 1;
+            announce "ผู้เล่น ["+strcharinfo(0)+"] สุ่ม Costume ได้รับ "+getitemname(.OTH_ITEMLIST[ .Random ])+" ",bc_all,0xFF0000;
+			end;
+            } else {
+            getitem .OTH_ITEMLIST[ .Random ], .@amount;
+            //announce "ผู้เล่น ["+strcharinfo(0)+"] เปิด MG Lucky Egg ได้รับ.. "+getitemname(.OTH_ITEMLIST[ .Random ])+" จำนวน "+.@amount+" ea. ",bc_all,0x00FF00;
+			end;
+        }
+        break;
+    }
+end;
+
+KC_IF1:
+menu "• Costume",CC1;
+
+CC1:
+callfunc "kafracoin1123";
+end;
+
+CC2:
+callfunc "kafracoin2123";
+end;
+
+KC_ED:
+end;
+
+OnInit:
+waitingroom " สุ่ม Costume Token",0;
+end;
+}
+
+function	script	kafracoin1123	{
+callfunc "Shop_kafracoin1123","Q_kafracoin1123",1;
+OnBuyItem:
+callfunc "Q_kafracoin1123ItemBuy";
+end;
+}
+
+function	script	kafracoin2123	{
+callfunc "Shop_kafracoin1123","Q_kafracoin2123",1;
+OnBuyItem:
+callfunc "Q_kafracoin1123ItemBuy";
+end;
+}
+
+function	script	Shop_kafracoin1123	{
+npcshopattach getarg(0),1;
+close2;
+callshop getarg(0),getarg(1);
+end;
+}
+
+function	script	Q_kafracoin1123ItemBuy	{
+end;
+}
+
+-	shop	Q_kafracoin1123	-1,39006:1,39007:1,39008:1,39009:1;

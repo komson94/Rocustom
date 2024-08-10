@@ -1,0 +1,31 @@
+sanctum	mapflag	town
+sanctum	mapflag	nobranch
+
+m_pvp01	mapflag	pvp
+m_pvp01	mapflag	nomemo
+m_pvp01	mapflag	nosave	SavePoint
+m_pvp01	mapflag	noteleport
+m_pvp01	mapflag	nowarp
+m_pvp01	mapflag	noreturn
+m_pvp01	mapflag	nodrop
+m_pvp01	mapflag	nobranch
+
+m_pvp02	mapflag	pvp
+m_pvp02	mapflag	nomemo
+m_pvp02	mapflag	nosave	SavePoint
+m_pvp02	mapflag	noteleport
+m_pvp02	mapflag	nowarp
+m_pvp02	mapflag	noreturn
+m_pvp02	mapflag	nodrop
+m_pvp02	mapflag	nobranch
+
+m_pvp03	mapflag	pvp
+m_pvp03	mapflag	nomemo
+m_pvp03	mapflag	nosave	SavePoint
+m_pvp03	mapflag	noteleport
+m_pvp03	mapflag	nowarp
+m_pvp03	mapflag	noreturn
+m_pvp03	mapflag	nodrop
+m_pvp03	mapflag	nobranch
+
+m_league mapflag nobranch

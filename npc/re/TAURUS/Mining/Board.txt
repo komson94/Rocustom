@@ -1,0 +1,158 @@
+//===== rAthena Script ======================================= 
+//= Board & Mapflag
+//===== By: ================================================== 
+//= Mr.TAURUS
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+1@mine	mapflag	nobranch
+2@mine	mapflag	nobranch
+3@mine	mapflag	nobranch
+4@mine	mapflag	nobranch
+5@mine	mapflag	nobranch
+
+1@mine	mapflag	noicewall
+2@mine	mapflag	noicewall
+3@mine	mapflag	noicewall
+4@mine	mapflag	noicewall
+5@mine	mapflag	noicewall
+
+1@mine	mapflag	nomemo
+2@mine	mapflag	nomemo
+3@mine	mapflag	nomemo
+4@mine	mapflag	nomemo
+5@mine	mapflag	nomemo
+
+1@mine	mapflag	nopenalty
+2@mine	mapflag	nopenalty
+3@mine	mapflag	nopenalty
+4@mine	mapflag	nopenalty
+5@mine	mapflag	nopenalty
+
+1@mine	mapflag	noteleport
+2@mine	mapflag	noteleport
+3@mine	mapflag	noteleport
+4@mine	mapflag	noteleport
+5@mine	mapflag	noteleport
+
+1@mine	mapflag	noskill
+2@mine	mapflag	noskill
+3@mine	mapflag	noskill
+4@mine	mapflag	noskill
+5@mine	mapflag	noskill
+//============================================================
+firstcity,98,70,5	script	Board#0F	2_BOARD1,{
+end;
+OnInit:
+    setarray .messages$," ","ท","า","ง","เ","ข้","า"," ","เ","ห","มื","อ","ง","แ","ร่","ลั","บ";
+    while( 1 )
+    {
+        set .Display$,"";
+        for( set .i,0; .i < getarraysize( .messages$ ); set .i,.i + 1 )
+        {
+            set .Display$,.Display$ + .messages$[.i];
+            delwaitingroom;
+            waitingroom .Display$,0;
+            sleep 100;
+        }
+    sleep 5000;        // ดีเลย์ก่อนตัวอักษรวิ่งซ้ำ 1000 = 1 วินาที.
+    }
+    end;
+}
+
+1@mine,94,119,3	script	Board#1F	2_BOARD1,{
+end;
+OnInit:
+    setarray .messages$," ","เ","ห","มื","อ","ง","แ","ร่","ลั","บ"," ","ชั่","น","ที่"," ","1";
+    while( 1 )
+    {
+        set .Display$,"";
+        for( set .i,0; .i < getarraysize( .messages$ ); set .i,.i + 1 )
+        {
+            set .Display$,.Display$ + .messages$[.i];
+            delwaitingroom;
+            waitingroom .Display$,0;
+            sleep 100;
+        }
+    sleep 5000;        // ดีเลย์ก่อนตัวอักษรวิ่งซ้ำ 1000 = 1 วินาที.
+    }
+    end;
+}
+
+2@mine,94,119,3	script	Board#2F	2_BOARD1,{
+end;
+OnInit:
+    setarray .messages$," ","เ","ห","มื","อ","ง","แ","ร่","ลั","บ"," ","ชั่","น","ที่"," ","2";
+    while( 1 )
+    {
+        set .Display$,"";
+        for( set .i,0; .i < getarraysize( .messages$ ); set .i,.i + 1 )
+        {
+            set .Display$,.Display$ + .messages$[.i];
+            delwaitingroom;
+            waitingroom .Display$,0;
+            sleep 100;
+        }
+    sleep 5000;        // ดีเลย์ก่อนตัวอักษรวิ่งซ้ำ 1000 = 1 วินาที.
+    }
+    end;
+}
+
+3@mine,94,119,3	script	Board#3F	2_BOARD1,{
+end;
+OnInit:
+    setarray .messages$," ","เ","ห","มื","อ","ง","แ","ร่","ลั","บ"," ","ชั่","น","ที่"," ","3";
+    while( 1 )
+    {
+        set .Display$,"";
+        for( set .i,0; .i < getarraysize( .messages$ ); set .i,.i + 1 )
+        {
+            set .Display$,.Display$ + .messages$[.i];
+            delwaitingroom;
+            waitingroom .Display$,0;
+            sleep 100;
+        }
+    sleep 5000;        // ดีเลย์ก่อนตัวอักษรวิ่งซ้ำ 1000 = 1 วินาที.
+    }
+    end;
+}
+
+4@mine,94,119,3	script	Board#4F	2_BOARD1,{
+end;
+OnInit:
+    setarray .messages$," ","เ","ห","มื","อ","ง","แ","ร่","ลั","บ"," ","ชั่","น","ที่"," ","4";
+    while( 1 )
+    {
+        set .Display$,"";
+        for( set .i,0; .i < getarraysize( .messages$ ); set .i,.i + 1 )
+        {
+            set .Display$,.Display$ + .messages$[.i];
+            delwaitingroom;
+            waitingroom .Display$,0;
+            sleep 100;
+        }
+    sleep 5000;        // ดีเลย์ก่อนตัวอักษรวิ่งซ้ำ 1000 = 1 วินาที.
+    }
+    end;
+}
+
+5@mine,94,119,3	script	Board#5F	2_BOARD1,{
+end;
+OnInit:
+    setarray .messages$," ","เ","ห","มื","อ","ง","แ","ร่","ลั","บ"," ","ชั่","น","ที่"," ","5";
+    while( 1 )
+    {
+        set .Display$,"";
+        for( set .i,0; .i < getarraysize( .messages$ ); set .i,.i + 1 )
+        {
+            set .Display$,.Display$ + .messages$[.i];
+            delwaitingroom;
+            waitingroom .Display$,0;
+            sleep 100;
+        }
+    sleep 5000;        // ดีเลย์ก่อนตัวอักษรวิ่งซ้ำ 1000 = 1 วินาที.
+    }
+    end;
+}

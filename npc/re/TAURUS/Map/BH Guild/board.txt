@@ -1,0 +1,22 @@
+//===== rAthena Script =======================================
+//= Board
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+
+bounty_hall,124,118,3	script	ป้ายประกาศ#BH_01	4_BOARD3,{
+	mes .NPCname$;
+	mes "โปรดรอการอัพเดท เร็วๆนี้.";
+	end;
+OnInit:
+	.NPCname$  = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	waitingroom "Coming Soon...",0;
+	end;
+}
+
+bounty_hall,124,72,3	duplicate(ป้ายประกาศ#BH_01)	ป้ายประกาศ#BH_02	4_BOARD3
+bounty_hall,71,72,5	duplicate(ป้ายประกาศ#BH_01)	ป้ายประกาศ#BH_03	4_BOARD3

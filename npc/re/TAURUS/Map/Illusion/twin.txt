@@ -1,0 +1,476 @@
+//===== rAthena Script =======================================
+//= Illusion of Twins
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+
+//============================================================
+// mapflag
+//============================================================
+ant_d02_i	mapflag	nobranch
+ant_d02_i	mapflag	nopenalty
+ant_d02_i	mapflag	nomemo
+
+//==================================================
+// Warp
+//==================================================
+ant_d02_i,170,190,0	warp	anti_go_anthell02	1,1,anthell02,172,184
+
+anthell02,172,189,5	script	Entrance#illusion_twin	8W_SOLDIER,{
+	if(select("เข้าสู่ดันเจี้ยน:ยกเลิก") == 2){ end;	}
+	warp "ant_d02_i",172,184;
+	end;		
+}
+
+//============================================================
+// Mob Spawn.
+//============================================================
+-	script	illusion_mob#twins	-1,{
+	OnInit:
+		// ชื่อไฟล์แผนที่.
+		.mapname$ = "ant_d02_i";
+		// มอนสเตอร์ ID.
+		setarray .mobID,21386,21387,21388,21389,21390,21391,21392,21393,21394;
+		// มอนสเตอร์ MVP ID.
+		.bossID = 21395;		
+		.mob_count = 3000;	// จำนวนมอนสเตอร์ที่ต้องกำจัด เพื่อเรียกบอส.
+		$maya_boss = 0;		// นับจำนวนบอส หากบอสเกิดจะเป็น 1 และจำนวนมอนสเตอร์ที่ต้องกำจัด จะไม่ถูกนับเพิ่ม. (ป้องกันการสแปมบอส)
+							// ถ้าบอสตายจะนับจำนวนมอนสเตอร์ที่ต้องกำจัดใหม่อีกครั้ง.
+		$illusion_twin = 0;	//จะนับจำนวนมอนสเตอร์ที่ต้องกำจัดใหม่อีกครั้งเมื่อรีสคริป.
+		// มอนสเตอร์ภายในดัน.
+		monster .mapname$,0,0,"--ja--",.mobID[0],30,strnpcinfo(0)+"::OnMob0Dead";
+		monster .mapname$,0,0,"--ja--",.mobID[1],15,strnpcinfo(0)+"::OnMob1Dead";
+		monster .mapname$,0,0,"--ja--",.mobID[2],20,strnpcinfo(0)+"::OnMob2Dead";
+		monster .mapname$,0,0,"--ja--",.mobID[3],30,strnpcinfo(0)+"::OnMob3Dead";
+		monster .mapname$,0,0,"--ja--",.mobID[4],30,strnpcinfo(0)+"::OnMob4Dead";
+		monster .mapname$,0,0,"--ja--",.mobID[5],20,strnpcinfo(0)+"::OnMob5Dead";
+		monster .mapname$,0,0,"--ja--",.mobID[6],15,strnpcinfo(0)+"::OnMob6Dead";
+		monster .mapname$,0,0,"--ja--",.mobID[7],25,strnpcinfo(0)+"::OnMob7Dead";
+		monster .mapname$,0,0,"--ja--",.mobID[8],15,strnpcinfo(0)+"::OnMob8Dead";
+		end;
+		
+	OnMob0Dead:
+		if ($maya_boss == 0) { 
+			$illusion_twin++;
+			dispbottom "[ระบบ]: บอสมอนสเตอร์จะปรากฏตัวเมื่อกำจัดมอนสเตอร์ครบ ["+callfunc("F_InsertComma",$illusion_twin)+"/"+callfunc("F_InsertComma",.mob_count)+"] ตัว.";
+		}
+		if ($illusion_twin >= .mob_count && $maya_boss == 0) goto OnSummonMVP;
+		sleep 5000;
+		monster .mapname$,0,0,"--ja--",.mobID[0],1,strnpcinfo(0)+"::OnMob0Dead";
+		end;
+	OnMob1Dead:
+		if ($maya_boss == 0) { 
+			$illusion_twin++;
+			dispbottom "[ระบบ]: บอสมอนสเตอร์จะปรากฏตัวเมื่อกำจัดมอนสเตอร์ครบ ["+callfunc("F_InsertComma",$illusion_twin)+"/"+callfunc("F_InsertComma",.mob_count)+"] ตัว.";
+		}
+		if ($illusion_twin >= .mob_count && $maya_boss == 0) goto OnSummonMVP;
+		sleep 5000;
+		monster .mapname$,0,0,"--ja--",.mobID[1],1,strnpcinfo(0)+"::OnMob1Dead";
+		end;
+	OnMob2Dead:
+		if ($maya_boss == 0) { 
+			$illusion_twin++;
+			dispbottom "[ระบบ]: บอสมอนสเตอร์จะปรากฏตัวเมื่อกำจัดมอนสเตอร์ครบ ["+callfunc("F_InsertComma",$illusion_twin)+"/"+callfunc("F_InsertComma",.mob_count)+"] ตัว.";
+		}
+		if ($illusion_twin >= .mob_count && $maya_boss == 0) goto OnSummonMVP;
+		sleep 5000;
+		monster .mapname$,0,0,"--ja--",.mobID[2],1,strnpcinfo(0)+"::OnMob2Dead";
+		end;
+	OnMob3Dead:
+		if ($maya_boss == 0) { 
+			$illusion_twin++;
+			dispbottom "[ระบบ]: บอสมอนสเตอร์จะปรากฏตัวเมื่อกำจัดมอนสเตอร์ครบ ["+callfunc("F_InsertComma",$illusion_twin)+"/"+callfunc("F_InsertComma",.mob_count)+"] ตัว.";
+		}
+		if ($illusion_twin >= .mob_count && $maya_boss == 0) goto OnSummonMVP;
+		sleep 5000;
+		monster .mapname$,0,0,"--ja--",.mobID[3],1,strnpcinfo(0)+"::OnMob3Dead";
+		end;
+	OnMob4Dead:
+		if ($maya_boss == 0) { 
+			$illusion_twin++;
+			dispbottom "[ระบบ]: บอสมอนสเตอร์จะปรากฏตัวเมื่อกำจัดมอนสเตอร์ครบ ["+callfunc("F_InsertComma",$illusion_twin)+"/"+callfunc("F_InsertComma",.mob_count)+"] ตัว.";
+		}
+		if ($illusion_twin >= .mob_count && $maya_boss == 0) goto OnSummonMVP;
+		sleep 5000;
+		monster .mapname$,0,0,"--ja--",.mobID[4],1,strnpcinfo(0)+"::OnMob4Dead";
+		end;
+	OnMob5Dead:
+		if ($maya_boss == 0) { 
+			$illusion_twin++;
+			dispbottom "[ระบบ]: บอสมอนสเตอร์จะปรากฏตัวเมื่อกำจัดมอนสเตอร์ครบ ["+callfunc("F_InsertComma",$illusion_twin)+"/"+callfunc("F_InsertComma",.mob_count)+"] ตัว.";
+		}
+		if ($illusion_twin >= .mob_count && $maya_boss == 0) goto OnSummonMVP;
+		sleep 5000;
+		monster .mapname$,0,0,"--ja--",.mobID[5],1,strnpcinfo(0)+"::OnMob5Dead";
+		end;
+	OnMob6Dead:
+		if ($maya_boss == 0) { 
+			$illusion_twin++;
+			dispbottom "[ระบบ]: บอสมอนสเตอร์จะปรากฏตัวเมื่อกำจัดมอนสเตอร์ครบ ["+callfunc("F_InsertComma",$illusion_twin)+"/"+callfunc("F_InsertComma",.mob_count)+"] ตัว.";
+		}
+		if ($illusion_twin >= .mob_count && $maya_boss == 0) goto OnSummonMVP;
+		sleep 5000;
+		monster .mapname$,0,0,"--ja--",.mobID[6],1,strnpcinfo(0)+"::OnMob6Dead";
+		end;
+	OnMob7Dead:
+		if ($maya_boss == 0) { 
+			$illusion_twin++;
+			dispbottom "[ระบบ]: บอสมอนสเตอร์จะปรากฏตัวเมื่อกำจัดมอนสเตอร์ครบ ["+callfunc("F_InsertComma",$illusion_twin)+"/"+callfunc("F_InsertComma",.mob_count)+"] ตัว.";
+		}
+		if ($illusion_twin >= .mob_count && $maya_boss == 0) goto OnSummonMVP;
+		sleep 5000;
+		monster .mapname$,0,0,"--ja--",.mobID[7],1,strnpcinfo(0)+"::OnMob7Dead";
+		end;
+	OnMob8Dead:
+		if ($maya_boss == 0) { 
+			$illusion_twin++;
+			dispbottom "[ระบบ]: บอสมอนสเตอร์จะปรากฏตัวเมื่อกำจัดมอนสเตอร์ครบ ["+callfunc("F_InsertComma",$illusion_twin)+"/"+callfunc("F_InsertComma",.mob_count)+"] ตัว.";
+		}
+		if ($illusion_twin >= .mob_count && $maya_boss == 0) goto OnSummonMVP;
+		sleep 5000;
+		monster .mapname$,0,0,"--ja--",.mobID[8],1,strnpcinfo(0)+"::OnMob8Dead";
+		end;		
+	OnSummonMVP:
+		$maya_boss++;
+		mapannounce .mapname$,"[ระบบ] : บอสมอนสเตอร์จะปรากฏตัวในอีก 60 วินาที.",bc_map;
+		sleep 50000;
+		mapannounce .mapname$,"[ระบบ] : บอสมอนสเตอร์จะปรากฏตัวในอีก 10 วินาที.",bc_map;
+		sleep 1000;
+		mapannounce .mapname$,"[ระบบ] : บอสมอนสเตอร์จะปรากฏตัวในอีก 9 วินาที.",bc_map;
+		sleep 1000;
+		mapannounce .mapname$,"[ระบบ] : บอสมอนสเตอร์จะปรากฏตัวในอีก 8 วินาที.",bc_map;
+		sleep 1000;
+		mapannounce .mapname$,"[ระบบ] : บอสมอนสเตอร์จะปรากฏตัวในอีก 7 วินาที.",bc_map;
+		sleep 1000;
+		mapannounce .mapname$,"[ระบบ] : บอสมอนสเตอร์จะปรากฏตัวในอีก 6 วินาที.",bc_map;
+		sleep 1000;
+		mapannounce .mapname$,"[ระบบ] : บอสมอนสเตอร์จะปรากฏตัวในอีก 5 วินาที.",bc_map;
+		sleep 1000;
+		mapannounce .mapname$,"[ระบบ] : บอสมอนสเตอร์จะปรากฏตัวในอีก 4 วินาที.",bc_map;
+		sleep 1000;
+		mapannounce .mapname$,"[ระบบ] : บอสมอนสเตอร์จะปรากฏตัวในอีก 3 วินาที.",bc_map;
+		sleep 1000;
+		mapannounce .mapname$,"[ระบบ] : บอสมอนสเตอร์จะปรากฏตัวในอีก 2 วินาที.",bc_map;
+		sleep 1000;
+		mapannounce .mapname$,"[ระบบ] : บอสมอนสเตอร์จะปรากฏตัวในอีก 1 วินาที.",bc_map;
+		sleep 1000;	
+		mapannounce .mapname$,"[ระบบ] : บอสมอนสเตอร์ "+getmonsterinfo(.bossID,MOB_NAME)+" ได้ปรากฏตัวขึ้นแล้ว !!",bc_map;
+		monster .mapname$,0,0,"--ja--",.bossID,1,strnpcinfo(0)+"::OnMVPDead";	
+		$illusion_twin -= $illusion_twin;
+		end;		
+	OnMVPDead:
+		mapannounce .mapname$,"[ระบบ] : บอสมอนสเตอร์ "+getmonsterinfo(.bossID,MOB_NAME)+" ได้ถูกกำจัดลงแล้ว !!",bc_map;
+		$maya_boss--;
+		end;
+}
+
+
+//============================================================
+// Illusion Gears Trader.
+//============================================================
+-	exbartershop	illusion_of_twin	-1
+-	script	Twin_Item_Exchanger	-1,{
+	OnInit:
+	//	npcshopadditem "<Shop Name>",<Item>,<Quantity>,<Zeny Cost>,<Cost Item 1>,<Cost Amount 1>,<Cost Refine 1>,........<Cost Item 5>,<Cost Amount 5>,<Cost Refine 5>;
+		npcshopadditem "illusion_of_twin",450182,-1,0,2387,1,9,1000517,125,0,1000514,55,0,25271,100,0,0,0,0;
+		npcshopadditem "illusion_of_twin",470066,-1,0,2440,1,9,1000515,75,0,1000511,125,0,25271,100,0,0,0,0;
+		npcshopadditem "illusion_of_twin",550030,-1,0,1636,1,9,1000516,75,0,1000515,75,0,25271,135,0,0,0,0;
+		npcshopadditem "illusion_of_twin",550031,-1,0,2005,1,9,1000518,15,0,1000511,125,0,1000515,75,0,25271,150,0;
+		npcshopadditem "illusion_of_twin",530015,-1,0,1414,1,9,1000514,55,0,1000510,125,0,25271,150,0,0,0,0;
+		npcshopadditem "illusion_of_twin",500030,-1,0,1137,1,9,1000516,75,0,1000513,75,0,25271,135,0,0,0,0;
+		npcshopadditem "illusion_of_twin",620010,-1,0,1370,1,9,1000513,75,0,1000511,125,0,25271,150,0,0,0,0;
+		npcshopadditem "illusion_of_twin",510034,-1,0,13062,1,9,1000516,75,0,1000517,125,0,25271,135,0,0,0,0;
+		npcshopadditem "illusion_of_twin",460017,-1,0,2101,1,9,1000510,75,0,1000517,125,0,25271,100,0,0,0,0;
+		npcshopadditem "illusion_of_twin",460018,-1,0,2146,1,9,1000512,55,0,1000510,125,0,25271,100,0,0,0,0;
+		npcshopadditem "illusion_of_twin",490120,-1,0,2744,1,0,1000513,75,0,1000510,125,0,25271,120,0,0,0,0;
+		npcshopadditem "illusion_of_twin",490121,-1,0,2935,1,0,1000512,55,0,1000517,125,0,25271,120,0,0,0,0;
+		end;
+}
+ant_d02_i,175,186,3	script	Item Exchanger#ill_twins	3212,{
+	disable_items;
+	// Barter Shop: ใช้ไอเทมทุกอย่างตามเซิฟจริง.
+	if (.shop_mode == 1) { callshop "illusion_of_twin",1; end; }
+	// Quest Shop: ไม่ต้องใช้ไอเทม +9 แต่จะมีโอกาสสำเร็จ 80% แทน แก้ไขได้ที่ quest_shop_modified.txt
+	if (.shop_mode == 2) { callfunc "ill_qshop",1; end; }
+	else {
+		mes .NPCname$;
+		mes "^FF0000เกิดข้อผิดพลาดในการกำหนดร้านค้า!^000000";
+		end;
+	}
+	OnInit:
+		.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+		//Shop Mode 1: Barter Shop | 2: Quest Shop.
+		.shop_mode = 1;
+		end;
+}
+
+
+//============================================================
+// Daily Quest.
+//============================================================
+anthell02,177,190,3	script	Mirko#ill_twins	4_M_SAGE_A,{
+	disable_items;
+	if (checkquest(.questid[1],PLAYTIME) == 2) { erasequest .questid[0]; erasequest .questid[1]; }
+	if (checkquest(.questid[3],PLAYTIME) == 2) { erasequest .questid[2]; erasequest .questid[3]; }
+	if (checkquest(.questid[5],PLAYTIME) == 2) { erasequest .questid[4]; erasequest .questid[5]; }
+	if (checkquest(.questid[7],PLAYTIME) == 2) { erasequest .questid[6]; erasequest .questid[7]; }
+	mes .NPCname$;
+	mes "เข้ามาเลยเหล่านักผจญภัย";
+	mes "ข้ามีเควสประจำวันให้พวกเจ้าทำ";
+	mes "สนใจเควสไหนก็รับไปได้เลย.";
+	next;
+	switch(select(
+		"[^009900"+.sb$+"^000000] รวบรวม Fine Dry Sand",
+		"[^009900"+.sb$+"^000000] รวบรวม Opaque Liquid",
+		"[^009900"+.sb$+"^000000] รวบรวม Shell of Cognition",
+		"[^009900"+.sb$+"^000000] กำจัดมด",
+		"[^FF0000"+.sb$+"^000000] ยกเลิก"
+	)) {
+		case 1:
+			if (BaseLevel < .lvlrequest) {
+				mes .NPCname$;
+				mes "เจ้าต้องมีเลเวลอย่างน้อย ^990099"+.lvlrequest+"^000000";
+				mes "จึงจะสามารถรับเควสได้.";
+				close;
+			}
+			if (isbegin_quest(.questid[0]) == 0) {
+				mes .NPCname$;
+				mes "ข้าต้องการ <ITEM>"+getitemname(.qresource[0])+"<INFO>"+.qresource[0]+"</INFO></ITEM> x "+.qresource[1]+" อัน";
+				mes "เจ้าช่วยหามันมาให้ข้าได้ไหม?";
+				next;
+				if(select("[^009900"+.sb$+"^000000] ยอมรับเควส :[^FF0000"+.sb$+"^000000] ยกเลิก") == 2){
+					mes .NPCname$;
+					mes "แล้วพบกันใหม่.";
+					close;
+				}
+				mes .NPCname$;
+				mes "ขอบคุณเจ้ามาก";
+				mes "เจ้าสามารถหา <ITEM>"+getitemname(.qresource[0])+"<INFO>"+.qresource[0]+"</INFO></ITEM>";
+				mes "จากมอนเสตอร์ ^990099Gutsy Giearth^000000 ที่อยู่ภายในดันเจี้ยนลวงตา.";
+				setquest .questid[0];
+				close;
+			}
+			else if (isbegin_quest(.questid[0]) == 1) {
+				mes .NPCname$;
+				if (countitem(.qresource[0]) >= .qresource[1]) {
+					mes "ขอบคุณเจ้ามาก";
+					mes "นี่คือของรางวัลของเจ้า.";
+					delitem .qresource[0],.qresource[1];
+					getexp .rewardexp[0],.rewardexp[1];
+					getitem .reward[0],.reward[1];
+					completequest .questid[0];
+					setquest .questid[1];
+					close;
+				}
+				mes "เจ้าสามารถหา <ITEM>"+getitemname(.qresource[0])+"<INFO>"+.qresource[0]+"</INFO></ITEM>";
+				mes "จากมอนเสตอร์ ^990099Gutsy Giearth^000000 ที่อยู่ภายในดันเจี้ยนลวงตา";
+				mes "เมื่อหาครบแล้วให้กลับมาหาข้าอีกครั้ง.";
+				close;
+			}
+			else {
+				mes .NPCname$;
+				mes "วันนี้เจ้าได้ทำเควสนี้ไปแล้ว";
+				mes "โปรดกลับมาใหม่ในวันพรุ่งนี้.";
+				close;
+			}
+		case 2:
+			if (BaseLevel < .lvlrequest) {
+				mes .NPCname$;
+				mes "เจ้าต้องมีเลเวลอย่างน้อย ^990099"+.lvlrequest+"^000000";
+				mes "จึงจะสามารถรับเควสได้.";
+				close;
+			}
+			if (isbegin_quest(.questid[2]) == 0) {
+				mes .NPCname$;
+				mes "ข้าต้องการ <ITEM>"+getitemname(.qresource[2])+"<INFO>"+.qresource[2]+"</INFO></ITEM> x "+.qresource[3]+" อัน";
+				mes "เจ้าช่วยหามันมาให้ข้าได้ไหม?";
+				next;
+				if(select("[^009900"+.sb$+"^000000] ยอมรับเควส :[^FF0000"+.sb$+"^000000] ยกเลิก") == 2){
+					mes .NPCname$;
+					mes "แล้วพบกันใหม่.";
+					close;
+				}
+				mes .NPCname$;
+				mes "ขอบคุณเจ้ามาก";
+				mes "เจ้าสามารถหา <ITEM>"+getitemname(.qresource[2])+"<INFO>"+.qresource[2]+"</INFO></ITEM>";
+				mes "จากมอนเสตอร์ ^990099Diligent Andre Larva^000000 ที่อยู่ภายในดันเจี้ยนลวงตา.";
+				setquest .questid[2];
+				close;
+			}
+			else if (isbegin_quest(.questid[2]) == 1) {
+				mes .NPCname$;
+				if (countitem(.qresource[2]) >= .qresource[3]) {
+					mes "ขอบคุณเจ้ามาก";
+					mes "นี่คือของรางวัลของเจ้า.";
+					delitem .qresource[2],.qresource[3];
+					getexp .rewardexp[2],.rewardexp[3];
+					getitem .reward[0],.reward[1];
+					completequest .questid[2];
+					setquest .questid[3];
+					close;
+				}
+				mes "เจ้าสามารถหา <ITEM>"+getitemname(.qresource[2])+"<INFO>"+.qresource[2]+"</INFO></ITEM>";
+				mes "จากมอนเสตอร์ ^990099Diligent Andre Larva^000000 ที่อยู่ภายในดันเจี้ยนลวงตา";
+				mes "เมื่อหาครบแล้วให้กลับมาหาข้าอีกครั้ง.";
+				close;
+			}
+			else {
+				mes .NPCname$;
+				mes "วันนี้เจ้าได้ทำเควสนี้ไปแล้ว";
+				mes "โปรดกลับมาใหม่ในวันพรุ่งนี้.";
+				close;
+			}
+		case 3:
+			if (BaseLevel < .lvlrequest) {
+				mes .NPCname$;
+				mes "เจ้าต้องมีเลเวลอย่างน้อย ^990099"+.lvlrequest+"^000000";
+				mes "จึงจะสามารถรับเควสได้.";
+				close;
+			}
+			if (isbegin_quest(.questid[4]) == 0) {
+				mes .NPCname$;
+				mes "ข้าต้องการ <ITEM>"+getitemname(.qresource[4])+"<INFO>"+.qresource[4]+"</INFO></ITEM> x "+.qresource[5]+" อัน";
+				mes "เจ้าช่วยหามันมาให้ข้าได้ไหม?";
+				next;
+				if(select("[^009900"+.sb$+"^000000] ยอมรับเควส :[^FF0000"+.sb$+"^000000] ยกเลิก") == 2){
+					mes .NPCname$;
+					mes "แล้วพบกันใหม่.";
+					close;
+				}
+				mes .NPCname$;
+				mes "ขอบคุณเจ้ามาก";
+				mes "เจ้าสามารถหา <ITEM>"+getitemname(.qresource[4])+"<INFO>"+.qresource[4]+"</INFO></ITEM>";
+				mes "จากมอนเสตอร์ที่อยู่ภายในดันเจี้ยนลวงตา.";
+				setquest .questid[4];
+				close;
+			}
+			else if (isbegin_quest(.questid[4]) == 1) {
+				mes .NPCname$;
+				if (countitem(.qresource[4]) >= .qresource[5]) {
+					mes "ขอบคุณเจ้ามาก";
+					mes "นี่คือของรางวัลของเจ้า.";
+					delitem .qresource[4],.qresource[5];
+					getexp .rewardexp[4],.rewardexp[5];
+					getitem .reward[0],.reward[1];
+					completequest .questid[4];
+					setquest .questid[5];
+					close;
+				}
+				mes "เจ้าสามารถหา <ITEM>"+getitemname(.qresource[4])+"<INFO>"+.qresource[4]+"</INFO></ITEM>";
+				mes "จากมอนเสตอร์ที่อยู่ภายในดันเจี้ยนลวงตา";
+				mes "เมื่อหาครบแล้วให้กลับมาหาข้าอีกครั้ง.";
+				close;
+			}
+			else {
+				mes .NPCname$;
+				mes "วันนี้เจ้าได้ทำเควสนี้ไปแล้ว";
+				mes "โปรดกลับมาใหม่ในวันพรุ่งนี้.";
+				close;
+			}
+		case 4:
+			if (BaseLevel < .lvlrequest) {
+				mes .NPCname$;
+				mes "เจ้าต้องมีเลเวลอย่างน้อย ^990099"+.lvlrequest+"^000000";
+				mes "จึงจะสามารถรับเควสได้.";
+				close;
+			}
+			if (isbegin_quest(.questid[6]) == 0) {
+				mes .NPCname$;
+				mes "กำจัด ^990099"+getmonsterinfo(.qhunt[0],MOB_NAME)+"^000000 x "+.qhunt[1]+" ตัว";
+				mes "กำจัด ^990099"+getmonsterinfo(.qhunt[2],MOB_NAME)+"^000000 x "+.qhunt[3]+" ตัว";
+				mes "กำจัด ^990099"+getmonsterinfo(.qhunt[4],MOB_NAME)+"^000000 x "+.qhunt[5]+" ตัว";
+				mes "เจ้าช่วยข้าได้ไหม?";
+				next;
+				if(select("[^009900"+.sb$+"^000000] ยอมรับเควส :[^FF0000"+.sb$+"^000000] ยกเลิก") == 2){
+					mes .NPCname$;
+					mes "แล้วพบกันใหม่.";
+					close;
+				}
+				mes .NPCname$;
+				mes "ขอบคุณเจ้ามาก";
+				mes "อย่าลืมกำจัดมอนเสตอร์ที่อยู่ภายในดันเจี้ยนลวงตา.";
+				setquest .questid[6];
+				close;
+			}
+			else if (isbegin_quest(.questid[6]) == 1) {
+				mes .NPCname$;
+				if (checkquest(.questid[6],HUNTING) == 2) {
+					mes "ขอบคุณเจ้ามาก";
+					mes "นี่คือของรางวัลของเจ้า.";
+					getexp .rewardexp[6],.rewardexp[7];
+					getitem .reward[0],.reward[1];
+					completequest .questid[6];
+					setquest .questid[7];
+					close;
+				}
+				mes "อย่าลืมกำจัดมอนเสตอร์ที่อยู่ภายในดันเจี้ยนลวงตา.";
+				mes "เมื่อครบแล้วให้กลับมาหาข้าอีกครั้ง.";
+				close;
+			}
+			else {
+				mes .NPCname$;
+				mes "วันนี้เจ้าได้ทำเควสนี้ไปแล้ว";
+				mes "โปรดกลับมาใหม่ในวันพรุ่งนี้.";
+				close;
+			}
+		case 5: end;
+	}
+	end;
+	
+	OnInit:
+		.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+		.sb$ = ">";
+		//waitingroom "เควสประจำวัน",0;
+		//----------------------------------------
+		// base level request.
+		//----------------------------------------
+		.lvlrequest = 160;
+		//----------------------------------------
+		// quest reward.
+		//----------------------------------------
+		setarray .reward, 
+			25271, 1;			//Illusion Stone 1 ea.
+		setarray .rewardexp,
+			2000000, 1000000,	//BEXP ,JEXP for quest id 2000001
+			2000000, 1000000,	//BEXP ,JEXP for quest id 2000003
+			2000000, 1000000,	//BEXP ,JEXP for quest id 2000005
+			4000000, 2000000;	//BEXP ,JEXP for quest id 2000007	
+		//----------------------------------------
+		// quest id.
+		//----------------------------------------
+		setarray .questid,
+			2000001,	//Collect Fine Dry Sand x20
+			2000002,	//Collect Fine Dry Sand - Waiting
+			2000003,	//Collect Opaque Liquid x20
+			2000004,	//Collect Opaque Liquid - Waiting
+			2000005,	//Collect Shell of Cognition x20
+			2000006,	//Collect Shell of Cognition - Waiting
+			2000007,	//Ants Hunting
+			2000008;	//Ants Hunting - Waiting
+		//----------------------------------------
+		// quest request.
+		//----------------------------------------
+		setarray .qresource,
+			1000504, 20,	//Fine Dry Sand x20
+			1000505, 20,	//Opaque Liquid x20
+			1000506, 20;	//Shell of Cognition x20
+		//----------------------------------------
+		// moster hunt.
+		//----------------------------------------
+		setarray .qhunt,
+			21387, 10,	//Diligent Soldier Andre x10
+			21390, 10,	//Diligent Piere x10
+			21394, 10;	//Diligent Vitata x10
+		//----------------------------------------
+		// quest mark.
+		//----------------------------------------
+		questinfo QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(2000001) && BaseLevel >= 160";
+		questinfo QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(2000003) && BaseLevel >= 160";
+		questinfo QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(2000005) && BaseLevel >= 160";
+		questinfo QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(2000007) && BaseLevel >= 160";
+		end;
+}

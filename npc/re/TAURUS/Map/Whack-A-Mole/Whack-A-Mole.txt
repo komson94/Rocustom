@@ -1,0 +1,634 @@
+//==========================================================|
+//==========================================================|
+//==========================================================|
+//	 _    _                     _     _                     |
+//	| |  | |                   | |   (_)                    |
+//	| |__| |_   _ _ __ ___  ___| |__  _ _ __ ___   __ _     |
+//	|  __  | | | | '__/ _ \/ __| '_ \| | '_ ` _ \ / _` |    |
+//	| |  | | |_| | | | (_) \__ \ | | | | | | | | | (_| |    |
+//	|_|  |_|\__, |_|  \___/|___/_| |_|_|_| |_| |_|\__,_|    |
+// 	        __/ |Scripter                                   |
+// 	       |___/										    |
+//==========================================================|
+//==========================================================|
+//==========================================================|
+/* ------------------ SCRIPT INFO -------------------------	=
+Name: Whack-A-Mole				   							=
+Ver : 1.0				 					   				=
+For: rAthena				 					   			=
+Lang: English	 					   						=
+Cred: Tio Akima (map creator)			   					=
+Cred: Frost (guide add custom npc)			   				=
+---------------------------------------------------------- */
+//==========================================================|
+//==========================================================|
+//==========================================================|
+firstcity,268,321,3	script	เกมตีตัวตุ่น	TOUPEIRA,{
+
+	mes .NPCname$;
+	mes " ";
+	
+	if(getgroupid() == 99)
+	{
+		if(select("เมนูสำหรับ ผู้ดูแล:เมนูสำหรับ ผู้เล่น")==1)
+		{
+			mes "โปรดเลือกตัวเลือกจากเมนู.";
+			switch(select(""+($tCaca ? "เปิด":"ปิด")+" NPC:รีเซ็ตการจัดอันดับ:ออก"))
+			{
+				case 1:
+						clear;
+						mes .NPCname$;
+						mes " ";
+						mes "ฉันต้องการ "+($tCaca ? "เปิดใช้งาน":"เปิดใช้งาน")+" npc เกมตีตัวตุ่น หรือไม่?";
+						mes "หมายเหตุ: การรีสตาร์ทเซิร์ฟเวอร์ไม่ได้เป็นการ "+($tCaca ? "ปิดใช้งาน":"เปิดใช้งาน")+" npc!";
+						if(select("ยกเลิก:ยืนยัน")==1) close;
+						
+						announce "[เกมตีตัวตุ่น]: มันถูก "+($tCaca ? "เปิดใช้งานอีกครั้ง":"ปิดใช้งานชั่วคราว")+"!",bc_all;
+						set $tCaca,($tCaca ? 0:1);
+						close;
+						
+				case 2:
+						clear;
+						mes .NPCname$;
+						mes " ";
+						mes "เมื่อทำการรีเซ็ตด้วยตนเองอันดับจะถูกลบและแปลงเป็น points!";
+						if(select("ยกเลิก:ยืนยัน")==1) close;						
+						
+						query_sql "SELECT `account_id`,`name`,`total`,`games` FROM `caca_toupeira` ORDER BY `total` DESC LIMIT 100",.@accid,.@names$,.@points,.@runs;
+				
+						if(!getarraysize(.@points))
+						{
+							clear;
+							mes .NPCname$;
+							mes " ";
+							mes "^FF0000* ไม่มีข้อมูลที่ต้องดำเนินการ!";
+							close;							
+						}
+						
+						for(set .@i,0; .@i<getarraysize(.@accid); set .@i,.@i+1)
+						{ query_sql "UPDATE `login` SET `tpoints`=`tpoints`+"+.@points[.@i]+" WHERE `account_id`="+.@accid[.@i]+""; }
+						
+						query_sql "DELETE FROM `caca_toupeira`";
+						announce "[เกมตีตัวตุ่น]: อันดับถูกรีเซ็ตและคะแนนจะถูกแปลงเป็น points สำหรับผู้เล่น 100 อันดับแรก!",bc_all;
+						
+						mes "พร้อม!!";
+						close;
+						
+					case 3: close;
+			}
+		}
+	}
+	
+	mes "นักผจญภัยคุณพร้อมสำหรับการล่าที่สนุกสนานและน่าตื่นเต้นแล้วหรือยัง?";
+	switch(select("ไปล่ากันเถอะ!:อันดับ:วิธีการทำงาน?:เปิดร้านค้า"))
+	{
+		case 1:
+				if($tCaca){ if(getgroupid() < 99){ dispbottom "ขณะนี้การเข้าถึงถูกปิดใช้งาน แต่ GM 99 สามารถผ่านได้!"; } else { mes "^FF0000 ขออภัยการเข้าถึงถูกปิดใช้งานในขณะนี้!^000000"; close; } }
+				if(!#ctGuia){ mes "^FF0000 คุณต้องเข้าไปที่คู่มือ (วิธีการทำงาน?) เพื่อรับทราบเกี่ยวกับการดำเนินการ!^000000"; close; }
+				if(instance_id(IM_CHAR)){ mes"^FF0000* คุณเชื่อมโยงกับอินสแตนซ์แล้ว."; close; }
+				
+				instance_create("Whack-A-Mole",IM_CHAR);				
+				set .@x,instance_info("Whack-A-Mole",IIT_ENTER_X);
+				set .@y,instance_info("Whack-A-Mole",IIT_ENTER_Y);
+				instance_enter("Whack-A-Mole",.@x,.@y,getcharid(0),instance_id(IM_CHAR));
+				break;
+				
+		case 2:
+				clear;
+				mes "           .::[ ตีตัวตุ่น ]::.";
+				mes "^D8BFD8อันดับ : ชื่อ : การแข่งขัน ~ คะแนน^000000"; 
+				mes " ";
+				
+				query_sql "SELECT `account_id`,`name`,`total`,`games` FROM `caca_toupeira` ORDER BY `total` DESC LIMIT 100",.@accid,.@names$,.@points,.@runs;
+				
+				if(!getarraysize(.@points)){ mes "^FF0000* รายการยังว่างอยู่ ..."; close; }
+				
+				for(set .@i,0; .@i<getarraysize(.@points); set .@i,.@i+1)
+				{
+					if(.@accid[.@i] != getcharid(3)) mes "[ "+(.@i+1)+" ] : [ "+.@names$[.@i]+" ] : [ "+.@runs[.@i]+" ] ~ [ "+.@points[.@i]+" ]";
+					else
+					{
+						mes "^3CB371[ "+(.@i+1)+" ] : [ "+.@names$[.@i]+" ] : [ "+.@runs[.@i]+" ] ~ [ "+.@points[.@i]+" ]^000000";
+						dispbottom "[ อันดับ ] : [ ชื่อ ] : [ การแข่งขัน ] ~ [ คะแนน ]",0xF0E68C;
+						dispbottom "[ "+(.@i+1)+" ] : [ "+.@names$[.@i]+" ] : [ "+.@runs[.@i]+" ] ~ [ "+.@points[.@i]+" ]",0xF0E68C;
+						set .@r,1;
+					}
+				}
+				
+				if(.@r) close;
+				else if(select("อันดับของฉัน:ออก")==2) close;
+				
+				query_sql "SELECT `account_id`,`name`,`total`,`games` FROM `caca_toupeira` ORDER BY `total` DESC",.@accid,.@names$,.@points,.@runs;				
+				set .@index,inarray(.@accid[0],getcharid(3));
+				
+				if(.@index > -1)
+				{
+					clear;
+					mes .NPCname$;
+					mes " ";
+					mes "^D8BFD8อันดับ:^000000 [ "+(.@index+1)+" ]";
+					mes "^D8BFD8ชื่อ:^000000 "+.@names$[.@index]+"";
+					mes "^D8BFD8การแข่งขัน:^000000 "+.@runs[.@index]+" ครั้ง";
+					mes "^D8BFD8คะแนน:^000000 "+.@points[.@index]+" แต้ม";
+				}
+				else
+				{
+					clear;
+					mes .NPCname$;
+					mes " ";
+					mes "คุณยังไม่ได้เล่นเกมตีตัวตุ่น!!";
+				}
+				close;
+				
+		case 3:
+				clear;
+				mes .NPCname$;
+				mes "ก่อนอื่นคุณต้องปิดการใช้งานการสั่นของภูมิประเทศเนื่องจากจะส่งผลต่อการเล่นเกมเนื่องจากเอฟเฟกต์ค้อนขนาดใหญ่, คุณต้องพิมพ์ ^4169E1/quake^000000 (เพื่อให้มีความเสถียรของหน้าจอ).";
+				next;
+				
+				mes .NPCname$;
+				mes " ";
+				mes "หลังจากเข้าสู่แผนที่คุณจะมีเวลาเตรียมตัว 10 วินาที, จากนั้นตุ่นจะเริ่มปรากฏขึ้น, ในการตีด้วยค้อนขนาดใหญ่คุณเพียงแค่คลิก.";
+				next;
+				
+				mes .NPCname$;
+				mes " ";
+				mes "กับตุ่นแต่ละตัวที่โดนคุณจะได้รับคะแนน, ตุ่นจะปรากฏเร็วขึ้นและเร็วขึ้น,";
+				mes " ในบางจุดสุนัขล่าสัตว์จะปรากฏขึ้นและหากคุณตีมันจะนับเป็นจุดผิดพลาด, คุณจะมีโอกาส "+$ct_ten+" ครั้ง";
+				next;
+				
+				mes .NPCname$;
+				mes " ";
+				mes "คะแนนสุดท้ายจะไม่สะสม, เมื่อใดก็ตามที่คุณเกินขีด จำกัด อันดับปัจจุบันของคุณจะมีการอัปเดต แต่จะไม่สรุปผล!";
+				next;
+
+				mes .NPCname$;
+				mes " ";
+				mes "รางวัลจะทำการแจกทุกสัปดาห์ (ทุกวันอาทิตย์เวลา 12.00 น.), ดังนั้นคะแนน เกมตีตัวตุ่น จะถูกแปลงเป็น mole points.";
+				next;
+				
+				mes .NPCname$;
+				mes " ";
+				mes "คะแนนเหล่านี้จะให้คุณซื้อสินค้าพิเศษจากร้านค้าโดยการเข้าถึงผ่านการเลือกเมนู"+(.ctItem ? " และไม่สามารถแลกเปลี่ยนกับผู้เล่นคนอื่นได้.":".")+"";
+				set #ctGuia,1;
+				close;
+		
+		case 4:
+				close2;
+				query_sql "SELECT `tpoints` FROM `login` WHERE `account_id`="+getcharid(3)+"",.@tpoints;
+				if(.@tpoints) dispbottom "[เกมตีตัวตุ่น]: คุณมี "+.@tpoints+" points ของ เกมตีตัวตุ่น";
+				callshop "LojaT",1;
+				break;
+	}
+	end;
+
+
+OnBuyItem:
+
+	set .@i,inarray(.tShop[0],@bought_nameid);
+	mes ".::[ Mole Points ]::.";
+	mes " ";
+	mes "^551A8Bชื่อ:^000000  ^9FB6CD"+getitemname(.tShop[.@i])+"^000000";
+	mes "^551A8Bจำนวน:^000000  ^9FB6CD"+.tShop[(.@i+1)]+"^000000";
+	mes "^551A8Bราคา:^000000  ^9FB6CD"+.tShop[(.@i+2)]+"^000000";
+	if(select("ยกเลิก:ซื้อ")==1) close;
+	
+	query_sql "SELECT `tpoints` FROM `login` WHERE `account_id`="+getcharid(3)+"",.@tpoints;
+	if(.@tpoints < .tShop[(.@i+2)]){ mes "^FF0000* คุณมี points ไม่เพียงพอ!"; close; }
+	if(!checkweight(.tShop[.@i],.tShop[(.@i+1)])){ mes "^FF0000* กระเป๋าสัมภาระของคุณเต็ม!"; close; }
+	
+	query_sql "UPDATE `login` SET `tpoints`=`tpoints`-"+.tShop[(.@i+2)]+" WHERE `account_id`="+getcharid(3)+"";
+	
+	if(!.ctItem) getitem .tShop[.@i],.tShop[(.@i+1)]; else getitembound .tShop[.@i],.tShop[(.@i+1)],Bound_Account;
+
+	mes "พร้อม!!";
+	dispbottom "[เกมตีตัวตุ่น]: คุณมี "+(.@tpoints-.tShop[(.@i+2)])+" points ของ เกมตีตัวตุ่น";
+	close;
+
+
+OnHour12:
+
+	if(gettime(DT_DAYOFWEEK) == SUNDAY)
+	{
+		query_sql "SELECT `account_id`,`name`,`total`,`games` FROM `caca_toupeira` ORDER BY `total` DESC LIMIT 100",.@accid,.@names$,.@points,.@runs;
+				
+		if(!getarraysize(.@points)) end;
+		
+		for(set .@i,0; .@i<getarraysize(.@accid); set .@i,.@i+1)
+		{ query_sql "UPDATE `login` SET `tpoints`=`tpoints`+"+.@points[.@i]+" WHERE `account_id`="+.@accid[.@i]+""; }
+		
+		query_sql "DELETE FROM `caca_toupeira`";
+		announce "[เกมตีตัวตุ่น]: อันดับถูกรีเซ็ตและคะแนนจะถูกแปลงเป็น points สำหรับผู้เล่น 100 อันดับแรก!",bc_all;
+	}
+end;
+
+	
+
+OnInit:
+	//=== NPC Name
+	//====================
+	.NPCname$ = ".::[^0000FF ตีตัวตุ่น ^000000]::.";
+	
+	//=== CONFIGURA??ES
+	//====================
+	
+	//Maximum failures the player can commit
+	//==
+	set $ct_ten,3;
+	
+	//Chat balloon on top of npc (0 = Off, 1 = On)
+	//==
+	set .BalaoChat,0;
+	
+	
+	//Item restriction (in-store purchased items)
+	//-- 1 = You cannot trade.	
+	//-- 0 = without restriction.
+	//==
+	set .ctItem,1;
+	
+	//Points of Moles Shop
+	//-- item_id,amount,points
+	//-- ไอเท็ม id,จำนวน,ราคา
+	//==
+	setarray .tShop[0],
+		14154,1,10,
+		13989,10,10,
+		12913,10,10,
+		13759,2,10,
+		12034,20,10,
+		12028,50,20,
+		14216,5,50,
+		5137,1,80,
+		2254,1,15,
+		5776,1,50,
+		2279,1,40;
+	
+	//====================
+
+	for(set .@i,1; .@i<25; set .@i,.@i+1)
+	{ hideonnpc "Mole#"+.@i; hideonnpc "Dog#"+.@i; }
+
+	query_sql "CREATE TABLE IF NOT EXISTS `caca_toupeira` (`id` int(11) NOT NULL AUTO_INCREMENT,`char_id` int(11) NOT NULL,`account_id` INT(11) NOT NULL,`name` varchar(30) NOT NULL,`total` smallint(3) NOT NULL,`games` SMALLINT(5) NOT NULL,PRIMARY KEY (`id`))";
+	query_sql "SHOW COLUMNS FROM `login` LIKE 'tpoints'",.@rF$,.@rT,.@rN$,.@rK,.@rD,.@rE$;
+	
+	if(!getarraysize(.@rF$))
+	{ query_sql "ALTER TABLE `login` ADD `tpoints` SMALLINT(5) NOT NULL DEFAULT '0'"; }
+
+	//Don't Change !!
+	npcshopattach "LojaT",1;
+	npcshopdelitem "LojaT",512;
+	
+	for(set .@i,0; .@i<getarraysize(.tShop); set .@i,.@i+3)
+	{ npcshopadditem "LojaT",.tShop[.@i],1; }
+	
+	if(.BalaoChat) waitingroom "[ เกมตีตัวตุ่น ]",0;
+
+end;
+}
+
+//loja atch
+//==
+-	shop	LojaT	-1,512:-1
+
+//Main Init
+//==
+mapslap,0,0,0	script	sysMain	HIDDEN_NPC,{ end;
+
+OnInstanceDestroy:
+	set 'start_game,0;
+	end;
+
+OnInstanceInit:
+
+	set 'start_game,1;
+	set 'count,0;
+	set 'fail,0;
+	set 'prec,0;
+	set 'precT,0;
+	set 'precF,0;
+	set 'cid,instance_live_info(ILI_OWNER);
+	set 'accid,getcharid(3,strcharinfo(0,'cid));	
+	
+	for(set .@i,1; .@i<25; set .@i,.@i+1)
+	{
+		hideonnpc instance_npcname("Mole#"+.@i);
+		hideonnpc instance_npcname("Dog#"+.@i);
+	}
+
+	sleep 1000;
+	for(set .@i,5; .@i>0; set .@i,.@i-1){ instance_announce instance_id(),"STARTS AT [ "+.@i+" ]",bc_map; sleep 1000; }
+	sleep 500;
+	instance_announce instance_id()," ",bc_map;
+	
+	freeloop(1);
+	while('start_game)
+	{
+		set 'cycle,'cycle+1;
+		
+		switch(rand(1,24))
+		{
+			case 1: set .@ord$,('cycle < 10 ? "9,24":'cycle < 20 ? "6,17,9":'cycle < 40 ? "1,9,12,19":"3,9,18,24,5");		set .@st,1; break;
+			case 2: set .@ord$,('cycle < 10 ? "6,20":'cycle < 20 ? "1,12,24":'cycle < 40 ? "3,7,10,21":"3,12,14,11,5");		set .@st,2; break;
+			case 3: set .@ord$,('cycle < 10 ? "1,20":'cycle < 20 ? "5,17,22":'cycle < 40 ? "8,12,15,19":"9,12,16,19,24");	set .@st,3; break;			
+			case 4: set .@ord$,('cycle < 10 ? "20,8":'cycle < 20 ? "12,15,22":'cycle < 40 ? "5,11,19,24":"9,2,16,7,22");	set .@st,4; break;			
+			case 5: set .@ord$,('cycle < 10 ? "2,22":'cycle < 20 ? "9,2,20":'cycle < 40 ? "7,18,10,23":"24,23,20,18,12");	set .@st,5; break;			
+			case 6: set .@ord$,('cycle < 10 ? "24,5":'cycle < 20 ? "3,9,18":'cycle < 40 ? "22,1,13,17":"24,16,11,14,2");	set .@st,6; break;			
+			case 7: set .@ord$,('cycle < 10 ? "4,17":'cycle < 20 ? "2,8,5":'cycle < 40 ? "6,19,15,22":"2,14,9,1,8");		set .@st,7; break;
+			case 8: set .@ord$,('cycle < 10 ? "5,19":'cycle < 20 ? "22,15,7":'cycle < 40 ? "16,9,12,8":"11,19,4,2,23");		set .@st,8; break;
+			case 9: set .@ord$,('cycle < 10 ? "11,23":'cycle < 20 ? "6,1,9":'cycle < 40 ? "8,15,1,17":"7,17,24,1,20");		set .@st,9; break;			
+			case 10: set .@ord$,('cycle < 10 ? "20,22":'cycle < 20 ? "23,1,19":'cycle < 40 ? "18,5,11,7":"12,16,4,8,2");	set .@st,10; break;			
+			case 11: set .@ord$,('cycle < 10 ? "2,12":'cycle < 20 ? "15,6,3":'cycle < 40 ? "8,4,1,17":"3,19,14,18,22");		set .@st,11; break;
+			case 12: set .@ord$,('cycle < 10 ? "6,24":'cycle < 20 ? "2,4,9":'cycle < 40 ? "6,12,14,16":"18,22,24,8,2");		set .@st,12; break;
+			case 13: set .@ord$,('cycle < 10 ? "12,24":'cycle < 20 ? "3,5,22":'cycle < 40 ? "16,2,4,6":"8,3,14,17,22");		set .@st,13; break;			
+			case 14: set .@ord$,('cycle < 10 ? "2,9":'cycle < 20 ? "4,20,9":'cycle < 40 ? "13,22,9,7":"18,2,9,7,2");		set .@st,14; break;
+			case 15: set .@ord$,('cycle < 10 ? "3,23":'cycle < 20 ? "2,7,21":'cycle < 40 ? "13,5,19,1":"8,1,23,20,12");		set .@st,15; break;
+			case 16: set .@ord$,('cycle < 10 ? "10,5":'cycle < 20 ? "4,22,15":'cycle < 40 ? "13,24,8,1":"12,4,6,19,2");		set .@st,16; break;
+			case 17: set .@ord$,('cycle < 10 ? "18,16":'cycle < 20 ? "12,2,7":'cycle < 40 ? "4,11,8,6":"3,7,6,22,12");		set .@st,17; break;			
+			case 18: set .@ord$,('cycle < 10 ? "24,23":'cycle < 20 ? "22,17,12":'cycle < 40 ? "5,1,14,7":"9,10,18,1,5");	set .@st,18; break;			
+			case 19: set .@ord$,('cycle < 10 ? "7,21":'cycle < 20 ? "15,1,19":'cycle < 40 ? "18,8,16,24":"2,1,8,12,21");	set .@st,19; break;			
+			case 20: set .@ord$,('cycle < 10 ? "1,4":'cycle < 20 ? "6,8,11":'cycle < 40 ? "14,18,16,23":"1,15,9,11,20");	set .@st,20; break;			
+			case 21: set .@ord$,('cycle < 10 ? "22,11":'cycle < 20 ? "16,7,21":'cycle < 40 ? "14,19,20,24":"8,5,10,21,2");	set .@st,21; break;			
+			case 22: set .@ord$,('cycle < 10 ? "1,2":'cycle < 20 ? "4,5,6":'cycle < 40 ? "7,8,9,10":"11,12,13,14,15");		set .@st,22; break;			
+			case 23: set .@ord$,('cycle < 10 ? "20,21":'cycle < 20 ? "18,19,23":'cycle < 40 ? "14,15,4,5":"1,2,9,10,11");	set .@st,23; break;			
+			case 24: set .@ord$,('cycle < 10 ? "3,13":'cycle < 20 ? "22,4,7":'cycle < 40 ? "9,5,14,23":"21,12,19,1,11");	set .@st,24; break;
+		}
+		
+		if(rand(1,2) == 1)
+		{
+			switch(.@st)
+			{
+				case 1: set .@pre$,('cycle < 10 ? "6,20":'cycle < 20 ? "8,12,16":'cycle < 40 ? "5,17,15,24":"4,15,23,1,10");		break;
+				case 2: set .@pre$,('cycle < 10 ? "4,8":'cycle < 20 ? "5,6,19":'cycle < 40 ? "9,2,11,24":"6,9,17,24,2");			break;
+				case 3: set .@pre$,('cycle < 10 ? "5,9,10":'cycle < 20 ? "20,2,9,8":'cycle < 40 ? "5,9,18,24,23":"10,2,4,8,1,15");	break;				
+				case 4: set .@pre$,('cycle < 10 ? "17,5,2,7":'cycle < 20 ? "10,2,24,21":'cycle < 40 ? "9,1,17,3":"8,5,11,6,24,21"); break;				
+				case 5: set .@pre$,('cycle < 10 ? "5,12":'cycle < 20 ? "8,6,24":'cycle < 40 ? "5,12,1,9":"4,3,11,14");				break;				
+				case 6: set .@pre$,('cycle < 10 ? "4,9,8":'cycle < 20 ? "12,17,22":'cycle < 40 ? "20,5,9,7":"22,12,3,4,9");			break;				
+				case 7: set .@pre$,('cycle < 10 ? "1,7":'cycle < 20 ? "12,18,15":'cycle < 40 ? "16,9,5,2":"12,4,19,11,18");			break;
+				case 8: set .@pre$,('cycle < 10 ? "15,9":'cycle < 20 ? "6,9,18":'cycle < 40 ? "11,17,3,7":"8,9,14,15,24");			break;
+				case 9: set .@pre$,('cycle < 10 ? "1,3,9":'cycle < 20 ? "15,19,24":'cycle < 40 ? "5,2,16,7":"18,8,4,9,22");			break;				
+				case 10: set .@pre$,('cycle < 10 ? "2,19":'cycle < 20 ? "24,2,20":'cycle < 40 ? "1,6,12,8":"11,17,3,9,5");			break;				
+				case 11: set .@pre$,('cycle < 10 ? "22,13,5":'cycle < 20 ? "8,2,9,22":'cycle < 40 ? "18,14,11,22,5":"13,9,4,8,2,1");break;
+				case 12: set .@pre$,('cycle < 10 ? "7,2":'cycle < 20 ? "1,8,18":'cycle < 40 ? "3,19,4,22":"9,3,23,12,15");			break;
+				case 13: set .@pre$,('cycle < 10 ? "19,4":'cycle < 20 ? "13,15,14":'cycle < 40 ? "15,22,13,3":"18,23,4,7,12");		break;				
+				case 14: set .@pre$,('cycle < 10 ? "8,1":'cycle < 20 ? "14,2,23":'cycle < 40 ? "3,5,19,24":"8,22,11,17,3");			break;
+				case 15: set .@pre$,('cycle < 10 ? "13,17":'cycle < 20 ? "15,9,10":'cycle < 40 ? "12,11,14,2":"9,2,24,19,11");		break;
+				case 16: set .@pre$,('cycle < 10 ? "9,6,11":'cycle < 20 ? "5,21,16,3":'cycle < 40 ? "12,23,7,2,11":"11,5,3,17,1,8");break;
+				case 17: set .@pre$,('cycle < 10 ? "8,14":'cycle < 20 ? "18,4,11":'cycle < 40 ? "9,10,7,5":"9,17,2,5,13");			break;				
+				case 18: set .@pre$,('cycle < 10 ? "7,21":'cycle < 20 ? "9,13,11":'cycle < 40 ? "4,3,19,23":"11,15,3,14,24");		break;				
+				case 19: set .@pre$,('cycle < 10 ? "5,24":'cycle < 20 ? "5,16,9":'cycle < 40 ? "1,17,6,4":"22,11,18,13,23");		break;				
+				case 20: set .@pre$,('cycle < 10 ? "3,5":'cycle < 20 ? "9,2,19":'cycle < 40 ? "17,22,1,24":"10,5,19,12,21");		break;				
+				case 21: set .@pre$,('cycle < 10 ? "20,12":'cycle < 20 ? "15,6,24":'cycle < 40 ? "10,18,2,12":"18,24,1,20,6");		break;
+				case 22: set .@pre$,('cycle < 10 ? "3,4":'cycle < 20 ? "7,8,9":'cycle < 40 ? "11,12,13,14":"16,17,18,19,20");		break;				
+				case 23: set .@pre$,('cycle < 10 ? "10,11":'cycle < 20 ? "9,11,16":'cycle < 40 ? "6,7,21,22":"14,22,19,20,7");		break;				
+				case 24: set .@pre$,('cycle < 10 ? "9,23":'cycle < 20 ? "12,14,21":'cycle < 40 ? "19,15,24,13":"2,22,9,24,23");		break;
+			}			
+		}
+
+		set .@rst1,explode(.@npc1$,.@ord$,",");
+		if(.@pre$ != "") set .@rst2,explode(.@npc2$,.@pre$,",");
+		if(.@pre$ != "") for(set .@i,0; .@i<getarraysize(.@npc2$); set .@i,.@i+1){ hideoffnpc instance_npcname("Dog#"+.@npc2$[.@i]+""); sleep 50; }
+		for(set .@i,0; .@i<getarraysize(.@npc1$); set .@i,.@i+1){ hideoffnpc instance_npcname("Mole#"+.@npc1$[.@i]+""); sleep 100; }
+
+		sleep ('cycle < 10 ? 2000:'cycle < 25 ? 1500:'cycle < 50 ? 1300:1000);
+		
+		for(set .@i,0; .@i<getarraysize(.@npc1$); set .@i,.@i+1){ hideonnpc instance_npcname("Mole#"+.@npc1$[.@i])+""; }
+		if(.@pre$ != "") for(set .@i,0; .@i<getarraysize(.@npc2$); set .@i,.@i+1){ hideonnpc instance_npcname("Dog#"+.@npc2$[.@i]+""); }
+		
+		if('prec >= 'precT)
+		{
+			specialeffect 610,AREA,instance_npcname("#p4_arct");
+		}
+		else
+		{
+			if('fail < $ct_ten) set 'fail,'fail+1;
+			specialeffect 611,AREA,instance_npcname("#p4_arct");		
+			if('fail >= $ct_ten) set 'start_game,0;
+		}
+		
+		set .@st,0;
+		set .@ord$,"";
+		set .@pre$,"";
+		set 'prec,0;
+		deletearray .@npc1$[0],getarraysize(.@npc1$);
+		deletearray .@npc2$[0],getarraysize(.@npc2$);
+	}
+	freeloop(0);
+	
+	if('count)
+	{
+		query_sql "SELECT `account_id`,`total` FROM `caca_toupeira` WHERE `account_id`="+'accid+"",.@accid,.@total;	
+		if(!.@accid) query_sql "INSERT INTO `caca_toupeira` VALUES (null,"+'cid+","+'accid+",'"+strcharinfo(0,'cid)+"',0,0)";
+		query_sql "UPDATE `caca_toupeira` SET `games`=`games`+1 WHERE `account_id`="+'accid+"";
+	}
+	
+	if('count > .@total)
+	{
+		query_sql "UPDATE `caca_toupeira` SET `total`="+'count+" WHERE `account_id`="+'accid+"";
+		query_sql "SELECT `account_id` FROM `caca_toupeira` ORDER BY `total` DESC LIMIT 100",.@rankpos;
+		set .@rank,inarray(.@rankpos[0],'accid)+1;	
+		instance_announce instance_id(),"ฉันเห็นว่าคุณเป็นนักล่าที่ทุ่มเท!",bc_map,0x00BFFF;
+		instance_announce instance_id(),"บันทึกปัจจุบันของคุณคือ [ "+'count+" ] คะแนน",bc_map,0x00BFFF;
+		instance_announce instance_id(),"ตำแหน่งอันดับของคุณคือ [ "+.@rank+" ]",bc_map,0x00BFFF;
+	}
+	else if('count)
+	{
+		query_sql "SELECT `account_id`,`total` FROM `caca_toupeira` ORDER BY `total` DESC LIMIT 100",.@rankpos,.@total;
+		set .@rank,inarray(.@rankpos[0],'accid)+1;
+		set .@record,.@total[(.@rank-1)];
+		instance_announce instance_id(),"เล่นต่อไปและฝึกฝนเพื่อเลื่อนอันดับรายสัปดาห์",bc_map,0x00BFFF;
+		instance_announce instance_id(),"บันทึกปัจจุบันของคุณ / อันดับคือ [  "+'count+"x / "+.@record+"x ] moles และตำแหน่งของคุณในอันดับปัจจุบันคือ [ "+.@rank+"? ]",bc_map,0x00BFFF;
+	}
+	else
+	{ instance_announce instance_id(),"นักล่าหลงทาง...",bc_map,0x00BFFF; }
+	
+	sleep 2000;	
+	instance_destroy;
+	end;
+}
+
+
+//FUNC CT_Controle
+//==
+function	script	ct_func	{
+
+	switch(getarg(0))
+	{
+		case 1:
+				set 'count,'count+1;
+				set 'prec,'prec+1;				 
+				specialeffect 4,AREA,instance_npcname(getarg(1));
+				specialeffect 102,AREA,instance_npcname(getarg(1));
+				specialeffect 100,AREA,instance_npcname(getarg(1));
+				specialeffect 610,AREA,instance_npcname(getarg(1));
+				hideonnpc instance_npcname(getarg(1));
+				break;
+		
+		case 2:
+				if('fail < $ct_ten) set 'fail,'fail+1;
+				specialeffect 4,AREA,instance_npcname(getarg(1));
+				specialeffect 102,AREA,instance_npcname(getarg(1));
+				specialeffect 100,AREA,instance_npcname(getarg(1));
+				specialeffect 611,AREA,instance_npcname(getarg(1));
+				hideonnpc instance_npcname(getarg(1));
+				break;				
+	}
+	
+return;
+}
+
+//Conta Toupeiras
+//==
+mapslap,7,18,5	script	#p1_count	4_DOG01,{ end;
+
+OnInstanceInit:
+
+	freeloop(1);
+	while('start_game)
+	{
+		waitingroom "คะแนน [ "+'count+" ]",0;
+		sleep 199;
+		delwaitingroom;
+	}
+	waitingroom "คะแนน [ "+'count+" ]",0;
+	freeloop(0);
+	end;
+
+OnInit:
+	hideonnpc strnpcinfo(3);
+end;
+}
+
+//Conta Falhas
+//==
+mapslap,11,11,5	script	#p2_fail	4_BOARD3,{ end;
+
+OnInstanceInit:
+
+	freeloop(1);
+	while('start_game)
+	{
+		waitingroom "ตีพลาด [ "+'fail+" / "+$ct_ten+" ]",0;
+		sleep 199;
+		delwaitingroom;
+	}
+	waitingroom "ตีพลาด [ "+'fail+" / "+$ct_ten+" ]",0;
+	freeloop(0);
+	end;
+
+OnInit:
+	hideonnpc strnpcinfo(3);
+end;
+}
+
+//Conta Ciclos
+//==
+mapslap,32,18,5	script	#3_ciclo	4_BOARD3,{ end;
+
+OnInstanceInit:
+
+	freeloop(1);
+	while('start_game)
+	{
+		waitingroom "รอบ [ "+'cycle+" ]",0;
+		sleep 299;
+		delwaitingroom;
+	}
+	waitingroom "รอบ [ "+'cycle+" ]",0;
+	freeloop(0);
+	end;
+
+OnInit:
+	hideonnpc strnpcinfo(3);
+end;
+}
+
+//Conta Acertos
+//==
+mapslap,28,11,5	script	#p4_arct	4_BOARD3,{ end;
+
+OnInstanceInit:
+
+	freeloop(1);
+	while('start_game)
+	{
+		set 'precT,('cycle < 10 ? 1:'cycle < 20 ? 2:'cycle < 40 ? 3:4);		
+		waitingroom "ตีโดน [ "+'prec+" / "+'precT+" ]",0;
+		sleep 200;
+		delwaitingroom;
+	}
+	waitingroom "ตีโดน [ "+'prec+" / "+'precT+" ]",0;
+	freeloop(0);
+	end;
+
+OnInit:
+	hideonnpc strnpcinfo(3);
+end;
+}
+
+
+//Success
+//==
+mapslap,12,26,5	script	Mole#1	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,15,26,5	script	Mole#2	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,18,26,5	script	Mole#3	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,21,26,5	script	Mole#4	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,24,26,5	script	Mole#5	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,27,26,5	script	Mole#6	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+
+mapslap,12,23,5	script	Mole#7	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,15,23,5	script	Mole#8	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,18,23,5	script	Mole#9	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,21,23,5	script	Mole#10	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,24,23,5	script	Mole#11	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,27,23,5	script	Mole#12	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+
+mapslap,12,20,5	script	Mole#13	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,15,20,5	script	Mole#14	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,18,20,5	script	Mole#15	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,21,20,5	script	Mole#16	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,24,20,5	script	Mole#17	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,27,20,5	script	Mole#18	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+
+mapslap,12,17,5	script	Mole#19	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,15,17,5	script	Mole#20	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,18,17,5	script	Mole#21	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,21,17,5	script	Mole#22	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,24,17,5	script	Mole#23	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+mapslap,27,17,5	script	Mole#24	TOUPEIRA,{ callfunc "ct_func",1,strnpcinfo(0); }
+
+//Failure
+//==
+mapslap,12,26,5	script	Dog#1	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,15,26,5	script	Dog#2	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,18,26,5	script	Dog#3	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,21,26,5	script	Dog#4	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,24,26,5	script	Dog#5	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,27,26,5	script	Dog#6	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+
+mapslap,12,23,5	script	Dog#7	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,15,23,5	script	Dog#8	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,18,23,5	script	Dog#9	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,21,23,5	script	Dog#10	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,24,23,5	script	Dog#11	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,27,23,5	script	Dog#12	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+
+mapslap,12,20,5	script	Dog#13	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,15,20,5	script	Dog#14	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,18,20,5	script	Dog#15	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,21,20,5	script	Dog#16	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,24,20,5	script	Dog#17	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,27,20,5	script	Dog#18	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+
+mapslap,12,17,5	script	Dog#19	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,15,17,5	script	Dog#20	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,18,17,5	script	Dog#21	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,21,17,5	script	Dog#22	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,24,17,5	script	Dog#23	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+mapslap,27,17,5	script	Dog#24	4_DOG01,{ callfunc "ct_func",2,strnpcinfo(0); }
+
+//mapflags
+//==
+mapslap	mapflag	noteleport
+mapslap	mapflag	nowarp
+

@@ -1,0 +1,798 @@
+//===== rAthena Script =======================================
+//= Abyss 04 Script
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+
+//==================================================
+// abyss_04 - Mob Spanw
+//==================================================
+abyss_04,0,0	monster	Purple Ferus	20612,25,5000
+abyss_04,0,0	monster	Treasure Mimic	20613,15,5000
+abyss_04,0,0	monster	Black Acidus	20614,35,5000
+abyss_04,0,0	monster	Silver Acidus	20615,35,5000
+abyss_04,0,0	monster	Bone Ferus	20616,50,5000
+abyss_04,0,0	monster	Bone Acidus	20617,50,5000
+abyss_04,0,0,0,0	boss_monster	Bone Detardeurus	20618,1,7200000,600000,1
+
+//==================================================
+// abyss_04 - Warp
+//==================================================
+abyss_04,168,166,0	warp	goto_abyss03	1,1,abyss_03,92,104
+abyss_03,91,110,5	script	Board#goabyss4	2_BULLETIN_BOARD,{
+	mes .NPCname$;
+	mes "^FF0000คำเตือน^000000: Abyss Lake ชั้นที่ 4";
+	mes "เป็นสถานที่ที่อันตรายเป็นอย่างมาก";
+	mes "^1E90FFต้องการเลเวล 190 ขึ้นไป.^000000";
+	mes "ต้องการจะไปหรือไม่?";
+	next;
+	switch(select(""+.sb$+" ข้าพร้อมที่จะไป",""+.sb$+" ข้ายังไม่พร้อม")) {
+		case 1:	
+			if (BaseLevel < .req_lvl) {
+				mes .NPCname$;
+				mes "^1E90FFต้องการเลเวล 190 ขึ้นไป.^000000";
+				close;
+			}
+			warp "abyss_04",168,162;
+			end;
+		case 2: close;
+	}
+	end;
+
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	.req_lvl = 190;
+	//waitingroom "Abyss Lake 4: Lv.190+",0;
+	end;
+}
+
+//==================================================
+// NPC
+//==================================================
+-	exbartershop	#Redhead_Shop	-1
+//official npc position
+//hu_in01,95,322,5	script	Redhead#1	4_M_NOV_HUNT,{}	//craft equipment.
+//hu_in01,93,322,5	script	Redhead#2	4_M_NOV_HUNT,{} //craft enchant materials.
+witch,23,63,3	script	Redhead	4_M_NOV_HUNT,{
+	disable_items;
+	mes .NPCname$;
+	mes "สวัสดี "+strcharinfo(0)+"";
+	mes "ข้าสามารถสร้าง ^FF0000Dragon's Power^000000";
+	mes "และอะไรก็ตามที่เกี่ยวข้องกับ Abyss Lake.";
+	next;
+	switch(select(
+		""+.sb$+" สร้างไอเทม",
+		""+.sb$+" ซื้อไอเทม",
+		""+.sb$+" ไม่มีอะไร"
+	)) {
+		case 1:
+			switch(select(
+				""+.sb$+" สร้าง ชุดเกราะ",
+				""+.sb$+" สร้าง อุปกรณ์สวมใส่อื่นๆ",
+				""+.sb$+" สร้าง ^FF0000Dragon's Power^000000",
+				""+.sb$+" ไม่มีอะไร"
+			)) {
+				case 1:
+					next;
+					mes .NPCname$;
+					mes "โปรดเลือกชุดเกราะที่ต้องการจะสร้าง";
+					next;
+					switch(select(
+						""+.sb$+" สร้าง ^FF0000"+getitemname(.armors[1])+"^000000",
+						""+.sb$+" สร้าง ^00FF00"+getitemname(.armors[2])+"^000000",
+						""+.sb$+" สร้าง ^FFD700"+getitemname(.armors[3])+"^000000",
+						""+.sb$+" สร้าง ^A020F0"+getitemname(.armors[4])+"^000000",
+						""+.sb$+" สร้าง ^0000FF"+getitemname(.armors[5])+"^000000",
+						""+.sb$+" สร้าง ^00FFFF"+getitemname(.armors[6])+"^000000"
+					)) {
+						case 1:
+							mes .NPCname$;
+							mes "สร้าง <ITEM>"+getitemname(.armors[1])+"<INFO>"+.armors[1]+"</INFO></ITEM>";
+							mes "วัตถุดิบที่ต้องการ:";
+							mes "x^FF00003^000000 <ITEM>"+getitemname(.material[15])+"<INFO>"+.material[15]+"</INFO></ITEM>";
+							mes "x^FF000015^000000 <ITEM>"+getitemname(.material[16])+"<INFO>"+.material[16]+"</INFO></ITEM>";	
+							mes "x^FF000075^000000 <ITEM>"+getitemname(.material[1])+"<INFO>"+.material[1]+"</INFO></ITEM>";
+							mes "x^FF0000100^000000 <ITEM>"+getitemname(.material[2])+"<INFO>"+.material[2]+"</INFO></ITEM>";
+							mes "x^FF000050^000000 <ITEM>"+getitemname(.material[3])+"<INFO>"+.material[3]+"</INFO></ITEM>";
+							mes "x^FF0000100^000000 <ITEM>"+getitemname(.material[4])+"<INFO>"+.material[4]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[5])+"<INFO>"+.material[5]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[6])+"<INFO>"+.material[6]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[7])+"<INFO>"+.material[7]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[8])+"<INFO>"+.material[8]+"</INFO></ITEM>";
+							mes "x^FF000050^000000 <ITEM>"+getitemname(.material[11])+"<INFO>"+.material[11]+"</INFO></ITEM>";
+							next;
+							mes .NPCname$;
+							mes "เจ้าแน่ใจใช่ไหมที่จะสร้าง";
+							mes "<ITEM>"+getitemname(.armors[1])+"<INFO>"+.armors[1]+"</INFO></ITEM> ?";
+							next;
+							switch(select(""+.sb$+" ใช่",""+.sb$+" ไม่" )) {
+								case 1:
+									if (countitem(.material[15]) < 3) || (countitem(.material[16]) < 15) || (countitem(.material[1]) < 75) || (countitem(.material[2]) < 100) || (countitem(.material[3]) < 50) || (countitem(.material[4]) < 100) || (countitem(.material[5]) < 35) || (countitem(.material[6]) < 35) || (countitem(.material[7]) < 35) || (countitem(.material[8]) < 35) || (countitem(.material[11]) < 50) {
+										mes .NPCname$;
+										mes "ขอโทษด้วย";
+										mes "แต่เจ้ามีวัตถุดิบไม่เพียงพอ.";
+										close;
+									}
+									delitem .material[15],3;
+									delitem .material[16],15;
+									delitem .material[1],75;
+									delitem .material[2],100;
+									delitem .material[3],50;
+									delitem .material[4],100;
+									delitem .material[5],35;
+									delitem .material[6],35;
+									delitem .material[7],35;
+									delitem .material[8],35;
+									delitem .material[11],50;
+									specialeffect 101;
+									next;
+									getitem .armors[1],1;
+									mes .NPCname$;
+									mes "การแลกเปลี่ยนเสร็จสิ้น.";
+									close;
+									
+								case 2: end;
+							}
+							end;
+							
+						case 2:
+							mes .NPCname$;
+							mes "สร้าง <ITEM>"+getitemname(.armors[2])+"<INFO>"+.armors[2]+"</INFO></ITEM>";
+							mes "วัตถุดิบที่ต้องการ:";
+							mes "x^FF00003^000000 <ITEM>"+getitemname(.material[15])+"<INFO>"+.material[15]+"</INFO></ITEM>";
+							mes "x^FF000015^000000 <ITEM>"+getitemname(.material[16])+"<INFO>"+.material[16]+"</INFO></ITEM>";	
+							mes "x^FF000075^000000 <ITEM>"+getitemname(.material[1])+"<INFO>"+.material[1]+"</INFO></ITEM>";
+							mes "x^FF0000100^000000 <ITEM>"+getitemname(.material[2])+"<INFO>"+.material[2]+"</INFO></ITEM>";
+							mes "x^FF000050^000000 <ITEM>"+getitemname(.material[3])+"<INFO>"+.material[3]+"</INFO></ITEM>";
+							mes "x^FF0000100^000000 <ITEM>"+getitemname(.material[4])+"<INFO>"+.material[4]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[5])+"<INFO>"+.material[5]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[6])+"<INFO>"+.material[6]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[7])+"<INFO>"+.material[7]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[8])+"<INFO>"+.material[8]+"</INFO></ITEM>";
+							mes "x^FF000050^000000 <ITEM>"+getitemname(.material[9])+"<INFO>"+.material[9]+"</INFO></ITEM>";
+							next;
+							mes .NPCname$;
+							mes "เจ้าแน่ใจใช่ไหมที่จะสร้าง";
+							mes "<ITEM>"+getitemname(.armors[2])+"<INFO>"+.armors[2]+"</INFO></ITEM> ?";
+							next;
+							switch(select(""+.sb$+" ใช่",""+.sb$+" ไม่" )) {
+								case 1:
+									if (countitem(.material[15]) < 3) || (countitem(.material[16]) < 15) || (countitem(.material[1]) < 75) || (countitem(.material[2]) < 100) || (countitem(.material[3]) < 50) || (countitem(.material[4]) < 100) || (countitem(.material[5]) < 35) || (countitem(.material[6]) < 35) || (countitem(.material[7]) < 35) || (countitem(.material[8]) < 35) || (countitem(.material[9]) < 50) {
+										mes .NPCname$;
+										mes "ขอโทษด้วย";
+										mes "แต่เจ้ามีวัตถุดิบไม่เพียงพอ.";
+										close;
+									}
+									delitem .material[15],3;
+									delitem .material[16],15;
+									delitem .material[1],75;
+									delitem .material[2],100;
+									delitem .material[3],50;
+									delitem .material[4],100;
+									delitem .material[5],35;
+									delitem .material[6],35;
+									delitem .material[7],35;
+									delitem .material[8],35;
+									delitem .material[9],50;
+									specialeffect 101;
+									next;
+									getitem .armors[2],1;
+									mes .NPCname$;
+									mes "การแลกเปลี่ยนเสร็จสิ้น.";
+									close;
+									
+								case 2: end;
+							}
+							end;
+							
+						case 3:
+							mes .NPCname$;
+							mes "สร้าง <ITEM>"+getitemname(.armors[3])+"<INFO>"+.armors[3]+"</INFO></ITEM>";
+							mes "วัตถุดิบที่ต้องการ:";
+							mes "x^FF00003^000000 <ITEM>"+getitemname(.material[15])+"<INFO>"+.material[15]+"</INFO></ITEM>";
+							mes "x^FF000015^000000 <ITEM>"+getitemname(.material[16])+"<INFO>"+.material[16]+"</INFO></ITEM>";	
+							mes "x^FF000075^000000 <ITEM>"+getitemname(.material[1])+"<INFO>"+.material[1]+"</INFO></ITEM>";
+							mes "x^FF0000100^000000 <ITEM>"+getitemname(.material[2])+"<INFO>"+.material[2]+"</INFO></ITEM>";
+							mes "x^FF000050^000000 <ITEM>"+getitemname(.material[3])+"<INFO>"+.material[3]+"</INFO></ITEM>";
+							mes "x^FF0000100^000000 <ITEM>"+getitemname(.material[4])+"<INFO>"+.material[4]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[5])+"<INFO>"+.material[5]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[6])+"<INFO>"+.material[6]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[7])+"<INFO>"+.material[7]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[8])+"<INFO>"+.material[8]+"</INFO></ITEM>";
+							mes "x^FF000050^000000 <ITEM>"+getitemname(.material[12])+"<INFO>"+.material[12]+"</INFO></ITEM>";
+							next;
+							mes .NPCname$;
+							mes "เจ้าแน่ใจใช่ไหมที่จะสร้าง";
+							mes "<ITEM>"+getitemname(.armors[3])+"<INFO>"+.armors[3]+"</INFO></ITEM> ?";
+							next;
+							switch(select(""+.sb$+" ใช่",""+.sb$+" ไม่" )) {
+								case 1:
+									if (countitem(.material[15]) < 3) || (countitem(.material[16]) < 15) || (countitem(.material[1]) < 75) || (countitem(.material[2]) < 100) || (countitem(.material[3]) < 50) || (countitem(.material[4]) < 100) || (countitem(.material[5]) < 35) || (countitem(.material[6]) < 35) || (countitem(.material[7]) < 35) || (countitem(.material[8]) < 35) || (countitem(.material[12]) < 50) {
+										mes .NPCname$;
+										mes "ขอโทษด้วย";
+										mes "แต่เจ้ามีวัตถุดิบไม่เพียงพอ.";
+										close;
+									}
+									delitem .material[15],3;
+									delitem .material[16],15;
+									delitem .material[1],75;
+									delitem .material[2],100;
+									delitem .material[3],50;
+									delitem .material[4],100;
+									delitem .material[5],35;
+									delitem .material[6],35;
+									delitem .material[7],35;
+									delitem .material[8],35;
+									delitem .material[12],50;
+									specialeffect 101;
+									next;
+									getitem .armors[3],1;
+									mes .NPCname$;
+									mes "การแลกเปลี่ยนเสร็จสิ้น.";
+									close;
+									
+								case 2: end;
+							}
+							end;
+							
+						case 4:
+							mes .NPCname$;
+							mes "สร้าง <ITEM>"+getitemname(.armors[4])+"<INFO>"+.armors[4]+"</INFO></ITEM>";
+							mes "วัตถุดิบที่ต้องการ:";
+							mes "x^FF00003^000000 <ITEM>"+getitemname(.material[15])+"<INFO>"+.material[15]+"</INFO></ITEM>";
+							mes "x^FF000015^000000 <ITEM>"+getitemname(.material[16])+"<INFO>"+.material[16]+"</INFO></ITEM>";	
+							mes "x^FF000075^000000 <ITEM>"+getitemname(.material[1])+"<INFO>"+.material[1]+"</INFO></ITEM>";
+							mes "x^FF0000100^000000 <ITEM>"+getitemname(.material[2])+"<INFO>"+.material[2]+"</INFO></ITEM>";
+							mes "x^FF000050^000000 <ITEM>"+getitemname(.material[3])+"<INFO>"+.material[3]+"</INFO></ITEM>";
+							mes "x^FF0000100^000000 <ITEM>"+getitemname(.material[4])+"<INFO>"+.material[4]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[5])+"<INFO>"+.material[5]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[6])+"<INFO>"+.material[6]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[7])+"<INFO>"+.material[7]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[8])+"<INFO>"+.material[8]+"</INFO></ITEM>";
+							mes "x^FF000050^000000 <ITEM>"+getitemname(.material[13])+"<INFO>"+.material[13]+"</INFO></ITEM>";
+							next;
+							mes .NPCname$;
+							mes "เจ้าแน่ใจใช่ไหมที่จะสร้าง";
+							mes "<ITEM>"+getitemname(.armors[4])+"<INFO>"+.armors[4]+"</INFO></ITEM> ?";
+							next;
+							switch(select(""+.sb$+" ใช่",""+.sb$+" ไม่" )) {
+								case 1:
+									if (countitem(.material[15]) < 3) || (countitem(.material[16]) < 15) || (countitem(.material[1]) < 75) || (countitem(.material[2]) < 100) || (countitem(.material[3]) < 50) || (countitem(.material[4]) < 100) || (countitem(.material[5]) < 35) || (countitem(.material[6]) < 35) || (countitem(.material[7]) < 35) || (countitem(.material[8]) < 35) || (countitem(.material[13]) < 50) {
+										mes .NPCname$;
+										mes "ขอโทษด้วย";
+										mes "แต่เจ้ามีวัตถุดิบไม่เพียงพอ.";
+										close;
+									}
+									delitem .material[15],3;
+									delitem .material[16],15;
+									delitem .material[1],75;
+									delitem .material[2],100;
+									delitem .material[3],50;
+									delitem .material[4],100;
+									delitem .material[5],35;
+									delitem .material[6],35;
+									delitem .material[7],35;
+									delitem .material[8],35;
+									delitem .material[13],50;
+									specialeffect 101;
+									next;
+									getitem .armors[4],1;
+									mes .NPCname$;
+									mes "การแลกเปลี่ยนเสร็จสิ้น.";
+									close;
+									
+								case 2: end;
+							}
+							end;
+							
+						case 5:
+							mes .NPCname$;
+							mes "สร้าง <ITEM>"+getitemname(.armors[5])+"<INFO>"+.armors[5]+"</INFO></ITEM>";
+							mes "วัตถุดิบที่ต้องการ:";
+							mes "x^FF00003^000000 <ITEM>"+getitemname(.material[15])+"<INFO>"+.material[15]+"</INFO></ITEM>";
+							mes "x^FF000015^000000 <ITEM>"+getitemname(.material[16])+"<INFO>"+.material[16]+"</INFO></ITEM>";	
+							mes "x^FF000075^000000 <ITEM>"+getitemname(.material[1])+"<INFO>"+.material[1]+"</INFO></ITEM>";
+							mes "x^FF0000100^000000 <ITEM>"+getitemname(.material[2])+"<INFO>"+.material[2]+"</INFO></ITEM>";
+							mes "x^FF000050^000000 <ITEM>"+getitemname(.material[3])+"<INFO>"+.material[3]+"</INFO></ITEM>";
+							mes "x^FF0000100^000000 <ITEM>"+getitemname(.material[4])+"<INFO>"+.material[4]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[5])+"<INFO>"+.material[5]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[6])+"<INFO>"+.material[6]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[7])+"<INFO>"+.material[7]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[8])+"<INFO>"+.material[8]+"</INFO></ITEM>";
+							mes "x^FF000050^000000 <ITEM>"+getitemname(.material[10])+"<INFO>"+.material[10]+"</INFO></ITEM>";
+							next;
+							mes .NPCname$;
+							mes "เจ้าแน่ใจใช่ไหมที่จะสร้าง";
+							mes "<ITEM>"+getitemname(.armors[5])+"<INFO>"+.armors[5]+"</INFO></ITEM> ?";
+							next;
+							switch(select(""+.sb$+" ใช่",""+.sb$+" ไม่" )) {
+								case 1:
+									if (countitem(.material[15]) < 3) || (countitem(.material[16]) < 15) || (countitem(.material[1]) < 75) || (countitem(.material[2]) < 100) || (countitem(.material[3]) < 50) || (countitem(.material[4]) < 100) || (countitem(.material[5]) < 35) || (countitem(.material[6]) < 35) || (countitem(.material[7]) < 35) || (countitem(.material[8]) < 35) || (countitem(.material[10]) < 50) {
+										mes .NPCname$;
+										mes "ขอโทษด้วย";
+										mes "แต่เจ้ามีวัตถุดิบไม่เพียงพอ.";
+										close;
+									}
+									delitem .material[15],3;
+									delitem .material[16],15;
+									delitem .material[1],75;
+									delitem .material[2],100;
+									delitem .material[3],50;
+									delitem .material[4],100;
+									delitem .material[5],35;
+									delitem .material[6],35;
+									delitem .material[7],35;
+									delitem .material[8],35;
+									delitem .material[10],50;
+									specialeffect 101;
+									next;
+									getitem .armors[5],1;
+									mes .NPCname$;
+									mes "การแลกเปลี่ยนเสร็จสิ้น.";
+									close;
+									
+								case 2: end;
+							}
+							end;
+							
+						case 6:
+							mes .NPCname$;
+							mes "สร้าง <ITEM>"+getitemname(.armors[6])+"<INFO>"+.armors[6]+"</INFO></ITEM>";
+							mes "วัตถุดิบที่ต้องการ:";
+							mes "x^FF00003^000000 <ITEM>"+getitemname(.material[15])+"<INFO>"+.material[15]+"</INFO></ITEM>";
+							mes "x^FF000015^000000 <ITEM>"+getitemname(.material[16])+"<INFO>"+.material[16]+"</INFO></ITEM>";	
+							mes "x^FF000075^000000 <ITEM>"+getitemname(.material[1])+"<INFO>"+.material[1]+"</INFO></ITEM>";
+							mes "x^FF0000100^000000 <ITEM>"+getitemname(.material[2])+"<INFO>"+.material[2]+"</INFO></ITEM>";
+							mes "x^FF000050^000000 <ITEM>"+getitemname(.material[3])+"<INFO>"+.material[3]+"</INFO></ITEM>";
+							mes "x^FF0000100^000000 <ITEM>"+getitemname(.material[4])+"<INFO>"+.material[4]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[5])+"<INFO>"+.material[5]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[6])+"<INFO>"+.material[6]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[7])+"<INFO>"+.material[7]+"</INFO></ITEM>";
+							mes "x^FF000035^000000 <ITEM>"+getitemname(.material[8])+"<INFO>"+.material[8]+"</INFO></ITEM>";
+							mes "x^FF000050^000000 <ITEM>"+getitemname(.material[14])+"<INFO>"+.material[14]+"</INFO></ITEM>";
+							next;
+							mes .NPCname$;
+							mes "เจ้าแน่ใจใช่ไหมที่จะสร้าง";
+							mes "<ITEM>"+getitemname(.armors[6])+"<INFO>"+.armors[6]+"</INFO></ITEM> ?";
+							next;
+							switch(select(""+.sb$+" ใช่",""+.sb$+" ไม่" )) {
+								case 1:
+									if (countitem(.material[15]) < 3) || (countitem(.material[16]) < 15) || (countitem(.material[1]) < 75) || (countitem(.material[2]) < 100) || (countitem(.material[3]) < 50) || (countitem(.material[4]) < 100) || (countitem(.material[5]) < 35) || (countitem(.material[6]) < 35) || (countitem(.material[7]) < 35) || (countitem(.material[8]) < 35) || (countitem(.material[14]) < 50) {
+										mes .NPCname$;
+										mes "ขอโทษด้วย";
+										mes "แต่เจ้ามีวัตถุดิบไม่เพียงพอ.";
+										close;
+									}
+									delitem .material[15],3;
+									delitem .material[16],15;
+									delitem .material[1],75;
+									delitem .material[2],100;
+									delitem .material[3],50;
+									delitem .material[4],100;
+									delitem .material[5],35;
+									delitem .material[6],35;
+									delitem .material[7],35;
+									delitem .material[8],35;
+									delitem .material[14],50;
+									specialeffect 101;
+									next;
+									getitem .armors[6],1;
+									mes .NPCname$;
+									mes "การแลกเปลี่ยนเสร็จสิ้น.";
+									close;
+									
+								case 2: end;
+							}
+							end;
+					}
+					
+				case 2:
+					next;
+					mes .NPCname$;
+					mes "โปรดเลือกอุปกรณ์สวมใส่ที่ต้องการจะสร้าง";
+					next;
+					switch(select(
+						""+.sb$+" สร้าง "+getitemname(.other_eqs[1])+"",
+						""+.sb$+" สร้าง "+getitemname(.other_eqs[2])+""
+					)) {
+						case 1:
+							mes .NPCname$;
+							mes "สร้าง <ITEM>"+getitemname(.other_eqs[1])+"<INFO>"+.other_eqs[1]+"</INFO></ITEM>";
+							mes "วัตถุดิบที่ต้องการ:";
+							mes "x^FF00002^000000 <ITEM>"+getitemname(.material[15])+"<INFO>"+.material[15]+"</INFO></ITEM>";
+							mes "x^FF00006^000000 <ITEM>"+getitemname(.material[16])+"<INFO>"+.material[16]+"</INFO></ITEM>";
+							mes "x^FF000015^000000 <ITEM>"+getitemname(.material[1])+"<INFO>"+.material[1]+"</INFO></ITEM>";
+							mes "x^FF000075^000000 <ITEM>"+getitemname(.material[2])+"<INFO>"+.material[2]+"</INFO></ITEM>";
+							mes "x^FF000015^000000 <ITEM>"+getitemname(.material[3])+"<INFO>"+.material[3]+"</INFO></ITEM>";
+							mes "x^FF000075^000000 <ITEM>"+getitemname(.material[4])+"<INFO>"+.material[4]+"</INFO></ITEM>";
+							mes "x^FF000025^000000 <ITEM>"+getitemname(.material[5])+"<INFO>"+.material[5]+"</INFO></ITEM>";
+							mes "x^FF000025^000000 <ITEM>"+getitemname(.material[6])+"<INFO>"+.material[6]+"</INFO></ITEM>";
+							mes "x^FF000025^000000 <ITEM>"+getitemname(.material[7])+"<INFO>"+.material[7]+"</INFO></ITEM>";
+							mes "x^FF000025^000000 <ITEM>"+getitemname(.material[8])+"<INFO>"+.material[8]+"</INFO></ITEM>";
+							next;
+							mes .NPCname$;
+							mes "เจ้าแน่ใจใช่ไหมที่จะสร้าง";
+							mes "<ITEM>"+getitemname(.other_eqs[1])+"<INFO>"+.other_eqs[1]+"</INFO></ITEM> ?";
+							next;
+							switch(select(""+.sb$+" ใช่",""+.sb$+" ไม่" )) {
+								case 1:
+									if (countitem(.material[15]) < 2) || (countitem(.material[16]) < 6) || (countitem(.material[1]) < 15) || (countitem(.material[2]) < 75) || (countitem(.material[3]) < 15) || (countitem(.material[4]) < 75) || (countitem(.material[5]) < 25) || (countitem(.material[6]) < 25) || (countitem(.material[7]) < 25) || (countitem(.material[8]) < 25) {
+										mes .NPCname$;
+										mes "ขอโทษด้วย";
+										mes "แต่เจ้ามีวัตถุดิบไม่เพียงพอ.";
+										close;
+									}
+									delitem .material[15],2;
+									delitem .material[16],6;
+									delitem .material[1],15;
+									delitem .material[2],75;
+									delitem .material[3],15;
+									delitem .material[4],75;
+									delitem .material[5],25;
+									delitem .material[6],25;
+									delitem .material[7],25;
+									delitem .material[8],25;
+									specialeffect 101;
+									next;
+									getitem .other_eqs[1],1;
+									mes .NPCname$;
+									mes "การแลกเปลี่ยนเสร็จสิ้น.";
+									close;
+									
+								case 2: end;
+							}
+							end;
+							
+						case 2:
+							mes .NPCname$;
+							mes "สร้าง <ITEM>"+getitemname(.other_eqs[2])+"<INFO>"+.other_eqs[2]+"</INFO></ITEM>";
+							mes "วัตถุดิบที่ต้องการ:";
+							mes "x^FF00001^000000 <ITEM>"+getitemname(.material[15])+"<INFO>"+.material[15]+"</INFO></ITEM>";
+							mes "x^FF00008^000000 <ITEM>"+getitemname(.material[16])+"<INFO>"+.material[16]+"</INFO></ITEM>";
+							mes "x^FF000030^000000 <ITEM>"+getitemname(.material[1])+"<INFO>"+.material[1]+"</INFO></ITEM>";
+							mes "x^FF000060^000000 <ITEM>"+getitemname(.material[2])+"<INFO>"+.material[2]+"</INFO></ITEM>";
+							mes "x^FF000040^000000 <ITEM>"+getitemname(.material[3])+"<INFO>"+.material[3]+"</INFO></ITEM>";
+							mes "x^FF000060^000000 <ITEM>"+getitemname(.material[4])+"<INFO>"+.material[4]+"</INFO></ITEM>";
+							mes "x^FF000025^000000 <ITEM>"+getitemname(.material[5])+"<INFO>"+.material[5]+"</INFO></ITEM>";
+							mes "x^FF000025^000000 <ITEM>"+getitemname(.material[6])+"<INFO>"+.material[6]+"</INFO></ITEM>";
+							mes "x^FF000025^000000 <ITEM>"+getitemname(.material[7])+"<INFO>"+.material[7]+"</INFO></ITEM>";
+							mes "x^FF000025^000000 <ITEM>"+getitemname(.material[8])+"<INFO>"+.material[8]+"</INFO></ITEM>";
+							next;
+							mes .NPCname$;
+							mes "เจ้าแน่ใจใช่ไหมที่จะสร้าง";
+							mes "<ITEM>"+getitemname(.other_eqs[2])+"<INFO>"+.other_eqs[2]+"</INFO></ITEM> ?";
+							next;
+							switch(select(""+.sb$+" ใช่",""+.sb$+" ไม่" )) {
+								case 1:
+									if (countitem(.material[15]) < 1) || (countitem(.material[16]) < 8) || (countitem(.material[1]) < 30) || (countitem(.material[2]) < 60) || (countitem(.material[3]) < 40) || (countitem(.material[4]) < 60) || (countitem(.material[5]) < 25) || (countitem(.material[6]) < 25) || (countitem(.material[7]) < 25) || (countitem(.material[8]) < 25) {
+										mes .NPCname$;
+										mes "ขอโทษด้วย";
+										mes "แต่เจ้ามีวัตถุดิบไม่เพียงพอ.";
+										close;
+									}
+									delitem .material[15],1;
+									delitem .material[16],8;
+									delitem .material[1],30;
+									delitem .material[2],60;
+									delitem .material[3],40;
+									delitem .material[4],60;
+									delitem .material[5],25;
+									delitem .material[6],25;
+									delitem .material[7],25;
+									delitem .material[8],25;
+									specialeffect 101;
+									next;
+									getitem .other_eqs[2],1;
+									mes .NPCname$;
+									mes "การแลกเปลี่ยนเสร็จสิ้น.";
+									close;
+									
+								case 2: end;
+							}
+							end;
+					}
+
+				case 3:
+					next;
+					mes .NPCname$;
+					mes "โปรดเลือกประเภทของ ^FF0000Dragon's Power^000000";
+					next;
+					switch(select(
+						""+.sb$+" สร้าง "+getitemname(.dragon_power[1])+"",
+						""+.sb$+" สร้าง "+getitemname(.dragon_power[2])+"",
+						""+.sb$+" สร้าง "+getitemname(.dragon_power[3])+"",
+						""+.sb$+" สร้าง "+getitemname(.dragon_power[4])+""
+					)) {
+						case 1:
+							mes .NPCname$;
+							mes "สร้าง <ITEM>"+getitemname(.dragon_power[1])+"<INFO>"+.dragon_power[1]+"</INFO></ITEM>";
+							mes "วัตถุดิบที่ต้องการ:";
+							mes "x^FF00001^000000 <ITEM>"+getitemname(.material[15])+"<INFO>"+.material[15]+"</INFO></ITEM>";
+							mes "x^FF00005^000000 <ITEM>"+getitemname(.material[16])+"<INFO>"+.material[16]+"</INFO></ITEM>";
+							mes "x^FF000012^000000 <ITEM>"+getitemname(.material[9])+"<INFO>"+.material[9]+"</INFO></ITEM>";
+							mes "x^FF000012^000000 <ITEM>"+getitemname(.material[10])+"<INFO>"+.material[10]+"</INFO></ITEM>";
+							mes "x^FF000012^000000 <ITEM>"+getitemname(.material[11])+"<INFO>"+.material[11]+"</INFO></ITEM>";
+							mes "x^FF000012^000000 <ITEM>"+getitemname(.material[12])+"<INFO>"+.material[12]+"</INFO></ITEM>";
+							mes "x^FF000012^000000 <ITEM>"+getitemname(.material[13])+"<INFO>"+.material[13]+"</INFO></ITEM>";
+							mes "x^FF000012^000000 <ITEM>"+getitemname(.material[14])+"<INFO>"+.material[14]+"</INFO></ITEM>";
+							next;
+							mes .NPCname$;
+							mes "เจ้าต้องการจะสร้างกี่อัน?";
+							mes "^FF0000หากใส่ 0 จะเป็นการยกเลิก.^000000";
+							next;
+							input .@num;
+							if (.@num == 0) {
+								next;
+								mes .NPCname$;
+								mes "ยกเลิกเรียบร้อยแล้ว.";
+							}
+							if (.@num > 0) {
+								mes .NPCname$;
+								mes "เจ้าแน่ใจใช่ไหมที่จะสร้าง";
+								mes "<ITEM>"+getitemname(.dragon_power[1])+"<INFO>"+.dragon_power[1]+"</INFO></ITEM> x"+callfunc("F_InsertComma",.@num)+"?";
+								next;
+								switch(select(""+.sb$+" ใช่",""+.sb$+" ไม่" )) {
+									case 1:
+										if (countitem(.material[15]) < .@num*1) || (countitem(.material[16]) < .@num*5) || (countitem(.material[9]) < .@num*12) || (countitem(.material[10]) < .@num*12) || (countitem(.material[11]) < .@num*12) || (countitem(.material[12]) < .@num*12) || (countitem(.material[13]) < .@num*12) || (countitem(.material[14]) < .@num*12) {
+											mes .NPCname$;
+											mes "ขอโทษด้วย";
+											mes "แต่เจ้ามีวัตถุดิบไม่เพียงพอ.";
+											close;
+										}
+										delitem .material[15],.@num*1;
+										delitem .material[16],.@num*5;
+										delitem .material[9],.@num*12;
+										delitem .material[10],.@num*12;
+										delitem .material[11],.@num*12;
+										delitem .material[12],.@num*12;
+										delitem .material[13],.@num*12;
+										delitem .material[14],.@num*12;
+										specialeffect 101;
+										next;
+										getitem .dragon_power[1],.@num;
+										mes .NPCname$;
+										mes "การแลกเปลี่ยนเสร็จสิ้น.";
+										close;
+										
+									case 2: end;
+								}
+							}
+							end;
+							
+						case 2:
+							mes .NPCname$;
+							mes "สร้าง <ITEM>"+getitemname(.dragon_power[2])+"<INFO>"+.dragon_power[2]+"</INFO></ITEM>";
+							mes "วัตถุดิบที่ต้องการ:";
+							mes "x^FF00001^000000 <ITEM>"+getitemname(.material[15])+"<INFO>"+.material[15]+"</INFO></ITEM>";
+							mes "x^FF00002^000000 <ITEM>"+getitemname(.material[16])+"<INFO>"+.material[16]+"</INFO></ITEM>";
+							mes "x^FF00008^000000 <ITEM>"+getitemname(.material[9])+"<INFO>"+.material[9]+"</INFO></ITEM>";
+							mes "x^FF00008^000000 <ITEM>"+getitemname(.material[10])+"<INFO>"+.material[10]+"</INFO></ITEM>";
+							mes "x^FF00008^000000 <ITEM>"+getitemname(.material[11])+"<INFO>"+.material[11]+"</INFO></ITEM>";
+							mes "x^FF00008^000000 <ITEM>"+getitemname(.material[12])+"<INFO>"+.material[12]+"</INFO></ITEM>";
+							mes "x^FF00008^000000 <ITEM>"+getitemname(.material[13])+"<INFO>"+.material[13]+"</INFO></ITEM>";
+							mes "x^FF00008^000000 <ITEM>"+getitemname(.material[14])+"<INFO>"+.material[14]+"</INFO></ITEM>";
+							next;
+							mes .NPCname$;
+							mes "เจ้าต้องการจะสร้างกี่อัน?";
+							mes "^FF0000หากใส่ 0 จะเป็นการยกเลิก.^000000";
+							next;
+							input .@num;
+							if (.@num == 0) {
+								next;
+								mes .NPCname$;
+								mes "ยกเลิกเรียบร้อยแล้ว.";
+							}
+							if (.@num > 0) {
+								mes .NPCname$;
+								mes "เจ้าแน่ใจใช่ไหมที่จะสร้าง";
+								mes "<ITEM>"+getitemname(.dragon_power[2])+"<INFO>"+.dragon_power[2]+"</INFO></ITEM> x"+callfunc("F_InsertComma",.@num)+"?";
+								next;
+								switch(select(""+.sb$+" ใช่",""+.sb$+" ไม่" )) {
+									case 1:
+										if (countitem(.material[15]) < .@num*1) || (countitem(.material[16]) < .@num*2) || (countitem(.material[9]) < .@num*8) || (countitem(.material[10]) < .@num*8) || (countitem(.material[11]) < .@num*8) || (countitem(.material[12]) < .@num*8) || (countitem(.material[13]) < .@num*8) || (countitem(.material[14]) < .@num*8) {
+											mes .NPCname$;
+											mes "ขอโทษด้วย";
+											mes "แต่เจ้ามีวัตถุดิบไม่เพียงพอ.";
+											close;
+										}
+										delitem .material[15],.@num*1;
+										delitem .material[16],.@num*2;
+										delitem .material[9],.@num*8;
+										delitem .material[10],.@num*8;
+										delitem .material[11],.@num*8;
+										delitem .material[12],.@num*8;
+										delitem .material[13],.@num*8;
+										delitem .material[14],.@num*8;
+										specialeffect 101;
+										next;
+										getitem .dragon_power[2],.@num;
+										mes .NPCname$;
+										mes "การแลกเปลี่ยนเสร็จสิ้น.";
+										close;
+										
+									case 2: end;
+								}
+							}
+							end;
+							
+						case 3:
+							mes .NPCname$;
+							mes "สร้าง <ITEM>"+getitemname(.dragon_power[3])+"<INFO>"+.dragon_power[3]+"</INFO></ITEM>";
+							mes "วัตถุดิบที่ต้องการ:";
+							mes "x^FF00001^000000 <ITEM>"+getitemname(.material[15])+"<INFO>"+.material[15]+"</INFO></ITEM>";
+							mes "x^FF00001^000000 <ITEM>"+getitemname(.material[16])+"<INFO>"+.material[16]+"</INFO></ITEM>";
+							mes "x^FF00007^000000 <ITEM>"+getitemname(.material[9])+"<INFO>"+.material[9]+"</INFO></ITEM>";
+							mes "x^FF00007^000000 <ITEM>"+getitemname(.material[10])+"<INFO>"+.material[10]+"</INFO></ITEM>";
+							mes "x^FF00007^000000 <ITEM>"+getitemname(.material[11])+"<INFO>"+.material[11]+"</INFO></ITEM>";
+							mes "x^FF00007^000000 <ITEM>"+getitemname(.material[12])+"<INFO>"+.material[12]+"</INFO></ITEM>";
+							mes "x^FF00007^000000 <ITEM>"+getitemname(.material[13])+"<INFO>"+.material[13]+"</INFO></ITEM>";
+							mes "x^FF00007^000000 <ITEM>"+getitemname(.material[14])+"<INFO>"+.material[14]+"</INFO></ITEM>";
+							next;
+							mes .NPCname$;
+							mes "เจ้าต้องการจะสร้างกี่อัน?";
+							mes "^FF0000หากใส่ 0 จะเป็นการยกเลิก.^000000";
+							next;
+							input .@num;
+							if (.@num == 0) {
+								next;
+								mes .NPCname$;
+								mes "ยกเลิกเรียบร้อยแล้ว.";
+							}
+							if (.@num > 0) {
+								mes .NPCname$;
+								mes "เจ้าแน่ใจใช่ไหมที่จะสร้าง";
+								mes "<ITEM>"+getitemname(.dragon_power[3])+"<INFO>"+.dragon_power[3]+"</INFO></ITEM> x"+callfunc("F_InsertComma",.@num)+"?";
+								next;
+								switch(select(""+.sb$+" ใช่",""+.sb$+" ไม่" )) {
+									case 1:
+										if (countitem(.material[15]) < .@num*1) || (countitem(.material[16]) < .@num*1) || (countitem(.material[9]) < .@num*7) || (countitem(.material[10]) < .@num*7) || (countitem(.material[11]) < .@num*7) || (countitem(.material[12]) < .@num*7) || (countitem(.material[13]) < .@num*7) || (countitem(.material[14]) < .@num*7) {
+											mes .NPCname$;
+											mes "ขอโทษด้วย";
+											mes "แต่เจ้ามีวัตถุดิบไม่เพียงพอ.";
+											close;
+										}
+										delitem .material[15],.@num*1;
+										delitem .material[16],.@num*1;
+										delitem .material[9],.@num*7;
+										delitem .material[10],.@num*7;
+										delitem .material[11],.@num*7;
+										delitem .material[12],.@num*7;
+										delitem .material[13],.@num*7;
+										delitem .material[14],.@num*7;
+										specialeffect 101;
+										next;
+										getitem .dragon_power[3],.@num;
+										mes .NPCname$;
+										mes "การแลกเปลี่ยนเสร็จสิ้น.";
+										close;
+										
+									case 2: end;
+								}
+							}
+							end;
+							
+						case 4:
+							mes .NPCname$;
+							mes "สร้าง <ITEM>"+getitemname(.dragon_power[4])+"<INFO>"+.dragon_power[4]+"</INFO></ITEM>";
+							mes "วัตถุดิบที่ต้องการ:";
+							mes "x^FF00005^000000 <ITEM>"+getitemname(.dragon_power[1])+"<INFO>"+.dragon_power[1]+"</INFO></ITEM>";
+							next;
+							mes .NPCname$;
+							mes "เจ้าต้องการจะสร้างกี่อัน?";
+							mes "^FF0000หากใส่ 0 จะเป็นการยกเลิก.^000000";
+							next;
+							input .@num;
+							if (.@num == 0) {
+								next;
+								mes .NPCname$;
+								mes "ยกเลิกเรียบร้อยแล้ว.";
+							}
+							if (.@num > 0) {
+								mes .NPCname$;
+								mes "เจ้าแน่ใจใช่ไหมที่จะสร้าง";
+								mes "<ITEM>"+getitemname(.dragon_power[4])+"<INFO>"+.dragon_power[3]+"</INFO></ITEM> x"+callfunc("F_InsertComma",.@num)+"?";
+								next;
+								switch(select(""+.sb$+" ใช่",""+.sb$+" ไม่" )) {
+									case 1:
+										if (countitem(.dragon_power[1]) < .@num*5) {
+											mes .NPCname$;
+											mes "ขอโทษด้วย";
+											mes "แต่เจ้ามีวัตถุดิบไม่เพียงพอ.";
+											close;
+										}
+										delitem .dragon_power[1],.@num*5;
+										specialeffect 101;
+										next;
+										getitem .dragon_power[4],.@num;
+										mes .NPCname$;
+										mes "การแลกเปลี่ยนเสร็จสิ้น.";
+										close;
+										
+									case 2: end;
+								}
+							}
+							end;
+					}
+				case 4: end;
+			}
+		case 2:
+			close2;
+			callshop "#Redhead_Shop",1;
+			end;
+		case 3: end;
+	}
+OnInit:
+	waitingroom " Abyss Lake Shop",0;
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	setarray .material,
+					 0,	//null
+				  1035,	//Dragon Canine
+				  1036,	//Dragon Scale
+				  1037,	//Dragon Tail
+				  7123,	//Dragon Skin
+				  7445,	//Green Bijou
+				  7446,	//Blue Bijou
+				  7447,	//Red Bijou
+				  7448,	//Yellow Bijou
+				 25759,	//Green Dragon Orb
+				 25760,	//Blue Dragon Orb
+				 25761,	//Red Dragon Orb
+				 25762,	//Gold Dragon Orb
+				 25763,	//Purple Dragon Orb
+				 25764,	//Silver Dragon Orb
+				 25765,	//Large Dragon Bone
+				 25766;	//Small Dragon Bone
+	setarray .armors,
+				   0,	//null
+			   15391,	//Red Dragon Plate
+			   15392,	//Green Dragon Plate
+			   15393,	//Gold Dragon Plate
+			   15394,	//Purple Dragon Plate
+			   15395,	//Blue Dragon Plate
+			   15396;	//Silver Dragon Plate
+	setarray .other_eqs,
+					  0,	//null
+				  20946,	//Dragon Scale Hood
+				  22208;	//Dragon Scale Boots
+	setarray .dragon_power,
+						 0,	//null
+					 23981,	//Turbulence Dragon's Power
+					100144,	//Burning Dragon's Power
+					100145,	//Hot Dragon's Power
+					100142;	//Stable Dragon's Power
+	//Shop
+	npcshopadditem "#Redhead_Shop",23985,-1,10000,1035,100,0,1036,100,0,1037,100,0,7123,100,0,0,0,0;
+	npcshopadditem "#Redhead_Shop",23985,-1,10000,7445,50,0,7446,50,0,7447,50,0,7448,50,0,0,0,0;
+	end;	
+}
+
+//==================================================
+//Dragon's Treasure
+//==================================================
+function	script	Abyss_itembox	{
+	//Item List.
+	setarray .ITEM_LIST,25759,25760,25761,25762,25763,25764,25765,25766,1035,1036,1037,7123,23981,100144,100145,22208,20946;
+	.@i = .ITEM_LIST[rand(getarraysize(.ITEM_LIST))];
+	if (.@i >= 1035 && .@i <= 1037 || .@i == 7123) { 
+		.@num = rand(100);
+		getitem .@i,.@num;
+	}
+	else if (.@i >= 25759 && .@i <= 25766) {
+		getitem .@i,1;
+	}
+	else if (.@i == 23981 || .@i == 100144 || .@i == 100145) {
+		getitem .@i,1;
+		announce "[ระบบ]: ผู้เล่น [ "+strcharinfo(0)+" ] เปิด "+getitemname(23985)+" ได้รับ "+getitemname(.@i)+" !",bc_all,0x00FF00;
+	} 
+	else {
+		getitem .@i,1;
+		announce "[ระบบ]: ผู้เล่น [ "+strcharinfo(0)+" ] เปิด "+getitemname(23985)+" ได้รับ "+getitemname(.@i)+" !",bc_all,0x00FF00;
+	}
+	end; 
+}

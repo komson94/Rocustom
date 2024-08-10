@@ -1,0 +1,265 @@
+//@reloadnpc npc/re/momo-NPC/epequip/16-1.txt
+
+-	bartershop	Noblesses_Knight	-1
+-	bartershop	Noblesses_Crusader	-1
+-	bartershop	Noblesses_Hunter	-1
+-	bartershop	Noblesses_Music	-1
+-	bartershop	Noblesses_Prist	-1
+-	bartershop	Noblesses_blacksmit	-1
+-	bartershop	Noblesses_Creator	-1
+-	bartershop	Noblesses_Assass	-1
+-	bartershop	Noblesses_Rough	-1
+-	bartershop	Noblesses_Doram	-1
+-	bartershop	Noblesses_Gunner	-1
+-	bartershop	Noblesses_Wizard	-1
+-	bartershop	Noblesses_Sage	-1
+-	bartershop	Noblesses_Taekwon	-1
+-	bartershop	Noblesses_Ninja	-1
+-	bartershop	Noblesses_Reaper	-1
+-	bartershop	Noblesses_Monk	-1
+-	bartershop	Noblesses_Novice	-1
+
+prontera,116,154,5	script	Episode Equipment#ep16	734,{
+	mes "[Noblesses]";
+	mes "มีอะไรให้รับใช้";
+	next;
+	switch(select("ซื้อของหน่อย : ไม่มีอะไร")) {
+	Case 1:
+		If (checkquest (7706) >= 1) {
+			if (BaseJob == JOB_Knight){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Knight ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_Knight",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_CRUSADER){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Crusader ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_Crusader",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_HUNTER){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Hunter ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_Hunter",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_BARD || BaseJob == JOB_DANCER ){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Musician ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_Music",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_PRIEST){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Prist ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_Prist",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_BLACKSMITH){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Blacksmith ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_blacksmit",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_ALCHEMIST){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Alchemist ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_Creator",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_ASSASSIN){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Assassin ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_Assass",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_ROGUE){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Rogue ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_Rough",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_SUMMONER){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Doram ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_Doram",1;
+				Close;
+				
+			}
+			if (Class == JOB_GUNSLINGER || Class == Job_Rebellion){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Gunslinger ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_Gunner",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_WIZARD){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Wizard ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_Wizard",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_SAGE){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Sage ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_Sage",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_STAR_GLADIATOR){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Taekwon Master ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_Taekwon",1;
+				Close;
+				
+			}
+			if ( Class == Job_Ninja || Class == Job_Kagerou){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Ninja ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_Ninja",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_SOUL_LINKER){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Soul Linker ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_Reaper",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_MONK){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Monk ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_Monk",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_SUPER_NOVICE){
+				mes "[Noblesses]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Noblesses]";
+				mes "อาชีพของท่านคือ Super Novice ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Noblesses_Novice",1;
+				Close;
+				
+			}
+			else {
+				mes "ไม่มีที่ยืนของอาชีพแกหรอก เลิกเล่นเถอะ สมเพชตัวเองบ้าง";
+			close;
+			}
+		}
+		else {
+			mes "[Noblesses]";
+			mes "ขอความกรุณา ทำเควสเนื้อเรื่องของ EP 16.1 เพื่อรับสิทธิในการใช้บริการครับ!";
+			Next;
+		close;
+		};
+	Case 2:
+	mes "[Noblesses]";
+	mes "ถ้าต้องการอะไรมาหาข้าได้ทุกเมื่อเลยนะ";
+	next;
+	close;
+	}
+OnInit:
+	waitingroom "Noblesses Shop Lv100",0;
+	npcshopadditem	"Noblesses_Knight",100128,6919,10,-1,450018,6919,10,-1,450019,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	npcshopadditem	"Noblesses_Crusader",100128,25723,20,-1,450020,6919,10,-1,450021,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	npcshopadditem	"Noblesses_Hunter",100128,25723,20,-1,450022,6919,10,-1,450023,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	npcshopadditem	"Noblesses_Music",100128,25723,20,-1,450024,6919,10,-1,450025,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	npcshopadditem	"Noblesses_Prist",100128,25723,20,-1,450026,6919,10,-1,450027,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	npcshopadditem	"Noblesses_blacksmit",100128,25723,20,-1,450028,6919,10,-1,450029,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	npcshopadditem	"Noblesses_Creator",100128,25723,20,-1,450030,6919,10,-1,450031,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	npcshopadditem	"Noblesses_Assass",100128,25723,20,-1,450032,6919,10,-1,450033,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	npcshopadditem	"Noblesses_Rough",100128,25723,20,-1,450034,6919,10,-1,450035,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	npcshopadditem	"Noblesses_Doram",100128,25723,20,-1,450036,6919,10,-1,450037,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	npcshopadditem	"Noblesses_Gunner",100128,25723,20,-1,450038,6919,10,-1,450039,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	npcshopadditem	"Noblesses_Wizard",100128,25723,20,-1,450040,6919,10,-1,450041,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	npcshopadditem	"Noblesses_Sage",100128,25723,20,-1,450042,6919,10,-1,450043,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	npcshopadditem	"Noblesses_Taekwon",100128,25723,20,-1,450044,6919,10,-1,450045,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	npcshopadditem	"Noblesses_Ninja",100128,25723,20,-1,450046,6919,10,-1,450047,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	npcshopadditem	"Noblesses_Reaper",100128,25723,20,-1,450048,6919,10,-1,450049,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	npcshopadditem	"Noblesses_Monk",100128,25723,20,-1,450050,6919,10,-1,450051,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	npcshopadditem	"Noblesses_Novice",100128,25723,20,-1,450121,6919,10,-1,450122,6919,10,-1,480012,6919,10,-1,480014,6919,10,-1,470016,6919,10,-1,470017,6919,10,-1,490014,6919,10,-1,490015,6919,10,-1;
+	
+}

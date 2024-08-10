@@ -1,0 +1,350 @@
+// ========================================================
+// Odin Pass Enchantment
+// Remake Form Nightmarebiolabs Enchant
+//============================================================
+
+
+// Enchants NPCs
+morocc,187,68,5	script	Susan Grey#Odin_Enchant	10127,{
+	disable_items;
+	mes "[Susan Grey]";
+	mes "ไงวัยรุ่น!!";
+	next;
+	mes "[Susan Grey]";
+	mes "มาหาข้าคือเจ้าจะต้องมีของที่ดรอปจาก Odin pass ก่อนนะ";
+	mes "แต่ออฟมัพกับเท้าอะรอก่อน ยังไม่มาตอนนี้ เพราะถึงมาก็ออฟโง่ๆอยู่ดี";
+	next;
+	mes "[Susan Grey]";
+	mes "ต้องการให้ข้าช่วยอะไรเจ้าหละ";
+	next;
+	switch( select( "Odin Pass Enchant", "Odin Pass reset" ) ) {
+	case 1:
+		mes "[Susan Grey]";
+		mes "อย่างแรกเลยเจ้าจะต้องใส่ของสวมใส่ที่หาได้จากที่นั้น";
+		mes "และค่าบริการในแต่ละครั้งจะแตกต่างกัน อยากรู้ยังไงก็อ่านนะ";
+		next;
+		.@equip_id = getequipid(EQI_ARMOR);
+		switch(.@equip_id) {
+			case 15397:// Str
+			case 15398:// Agi
+			case 15399:// Vit
+			case 15400:// Dex
+			case 15401:// Int
+			case 15402:// Luk
+				break;
+			default:
+				npctalk "พวกขี้โกง", "", bc_self;
+				mes "[Susan Grey]";
+				mes "บอกแล้วไงว่าเจ้าต้องมีของก่อน!!";
+				close;
+		}
+		mes "[Susan Grey]";
+	
+		.@requirement = 10;
+		.@zenyuse = 1000000;
+		setarray .@card[0], getequipcardid(EQI_ARMOR,0), getequipcardid(EQI_ARMOR,1), getequipcardid(EQI_ARMOR,2), getequipcardid(EQI_ARMOR,3);
+		.@refine = getequiprefinerycnt(EQI_ARMOR);
+	
+		if (.@card[3] == 0) {
+			.@slot = 3;
+			mes "ช่องแรกเลยหรอ อืมมม";
+			mes "โอเค";
+			mes "เจ้าต้องใช้ Angel's Dream" + .@requirement + " กับเงินอีก 1 ล้าน เลยนะ";
+			mes "แน่ใจหรอ";
+			next;
+			if (select( "แน่นอน", "ไม่เอา" ) == 2) {
+				mes "[Susan Grey]";
+				mes "K";
+				close;
+			}
+			if (countitem(25767) < .@requirement || Zeny < .@zenyuse) {// Angle's Dream
+				mes "[Susan Grey]";
+				mes "ถึงได้บอกไงให้อ่านที่เราบอกบ้าง";
+				mes "ถ้ามัวแต่กด Enter รัวๆแล้วไปถามเดี๋ยวก็โดนด่าหรอก";
+				close;
+			}
+			progressbar "000000",1;
+			delitem 25767, .@requirement;
+			zeny -= .@zenyuse;
+		}
+		else if (.@card[2] == 0 && .@refine >= 7) {
+			.@slot = 2;
+			mes "ว้าา";
+			mes "ในขั้นนี้ เจ้าจะได้ใช้ มะละกอแมวแล้วนะ";
+			mes "แถมเจ้าต้องใช้มะละกอแมวถึง 5 อันเลยนะ";
+		if (select( "แน่นอน", "ไม่เอา" ) == 2) {
+				mes "[Susan Grey]";
+				mes "K";
+				close;
+			}
+			if (countitem(6909) < 5 ) {// Meow Meow Silvervine
+				mes "[Susan Grey]";
+				mes "ถึงได้บอกไงให้อ่านที่เราบอกบ้าง";
+				mes "ถ้ามัวแต่กด Enter รัวๆแล้วไปถามเดี๋ยวก็โดนด่าหรอก";
+				close;
+			}
+			progressbar "000000",1;
+			delitem 6909, 5;
+		}
+		else if (.@card[1] == 0 && .@refine >= 9) {
+			.@slot = 1;
+			mes "ว้าาวว เจ้ามีปัญญาออฟได้ถึงขนาดนี้ สมแล้วๆ";
+			mes "แต่ในขั้นนี้ เจ้าจะได้ใช้ ทุกอย่างจากที่แล้วมา แถม มันยังเพิ่มอีก 2 เท่าเลย";
+			mes "เงื่อนไขที่ไม่แฟร์ขนาดนี้ เจ้ายังจะออฟต่ออีกหรอ";
+		if (select( "แน่นอน", "ไม่เอา" ) == 2) {
+				mes "[Susan Grey]";
+				mes "K";
+				close;
+			}
+			if (countitem(6909) < 10 || zeny < .@zenyuse*2 ) {// Meow Meow Silvervine
+				mes "[Susan Grey]";
+				mes "ถึงได้บอกไงให้อ่านที่เราบอกบ้าง";
+				mes "ถ้ามัวแต่กด Enter รัวๆแล้วไปถามเดี๋ยวก็โดนด่าหรอก";
+				close;
+			}
+			progressbar "000000",1;
+			delitem 6909, 10;
+			delitem 25767, .@requirement*2;
+			zeny -= .@zenyuse*2;
+		}
+		else	.@slot = 999;
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", EQI_ARMOR, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_ARMOR, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_ARMOR, .@refine))
+			close;
+
+		switch(.@slot) {
+		case 3:
+			setarray .@enchant[0],
+				4705,	// str 6
+				4706,	// 7
+				4707,	// 8
+				4735,	// Agi 6
+				4736,	// 7
+				4737,	// 8
+				4725,	// Dex 6
+				4726,	// 7
+				4727,	// 8
+				4745,	// Vit 6
+				4746,	// 7
+				4747,	// 8
+				4715,	// Int 6
+				4716,	// 7
+				4717,	// 8
+				4755,	// Luk 6
+				4756,	// 7
+				4757,	// 8
+				4764,	// Cri 5
+				4765,	// 7
+				29241,	// 10
+				4762,	// Flee 6
+				29238,	// 10
+				4794,	// def 12
+				4902,	// 18
+				4786,	// mdef 2
+				4787,	// 4
+				4867,	// hp 3
+				4900,	// 5
+				4801,	// sp 100
+				4802;	// sp 150
+				
+		case 2:
+			setarray .@enchant[0],
+					// str 6
+				4706,	// 7
+				4707,	// 8
+					// Agi 6
+				4736,	// 7
+				4737,	// 8
+					// Dex 6
+				4726,	// 7
+				4727,	// 8
+					// Vit 6
+				4746,	// 7
+				4747,	// 8
+					// Int 6
+				4716,	// 7
+				4717,	// 8
+					// Luk 6
+				4756,	// 7
+				4757,	// 8
+					// Cri 5
+				4765,	// 7
+				29241,	// 10
+				4762,	// Flee 6
+				29238,	// 10
+				29026,	// def 20
+				4902,	// 18
+				4788,	// mdef 6
+				4789,	// 8
+				4867,	// hp 3
+				4900,	// 5
+				4801,	// sp 100
+				4802;	// sp 150
+			.@card[.@slot] = .@enchant[ rand( getarraysize(.@enchant) ) ];	// unknown rates
+			break;
+		case 1:
+			setarray .@enchant[0],
+				4705,	// str 6
+				4706,	// 7
+				4707,	// 8
+				4735,	// Agi 6
+				4736,	// 7
+				4737,	// 8
+				4725,	// Dex 6
+				4726,	// 7
+				4727,	// 8
+				4745,	// Vit 6
+				4746,	// 7
+				4747,	// 8
+				4715,	// Int 6
+				4716,	// 7
+				4717,	// 8
+				4755,	// Luk 6
+				4756,	// 7
+				4757,	// 8
+				4764,	// Cri 5
+				4765,	// 7
+				29241,	// 10
+				4762,	// Flee 6
+				29238,	// 10
+				4903,	// def 21
+				4790,	// mdef 10
+					// hp 3
+				4900,	// 5
+					// sp 100
+				4802,	// sp 150
+				4820,	//FS 5
+				4821,	//6
+				4812,	//spell 4
+				4526,	//5
+				4835,	//EA4
+				4835,	//5
+				4843,	//sharp4
+				4844,	//5
+				4873,	//aspd3
+				4881,	//4
+				310076,	//Str Bless
+				310077,	//Agi Bless
+				310078,	//Vit Bless
+				310079,	//Dex Bless
+				310080,	//Int Bless
+				310081;	//Luk Bless
+			.@card[1] = .@enchant[ rand( getarraysize(.@enchant) ) ];	// unknown rates
+			break;
+		default:
+			mes "[Susan Grey]";
+			mes "ออฟไปหมดแล้ว อยากออฟใหม่ก็ไปรีออฟเซ่ ปั๊ดโถ่";
+			close;
+		}
+		delequip EQI_ARMOR;
+		getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+	case 2:
+		.@equip_id = getequipid(EQI_ARMOR);
+		switch(.@equip_id) {
+			case 15397:// Str
+			case 15398:// Agi
+			case 15399:// Vit
+			case 15400:// Dex
+			case 15401:// Int
+			case 15402:// Luk
+				break;
+			default:
+				mes "[Susan Grey]";
+				mes "ใส่เสื้อด้วยสิ";
+				mes "มาแก้ผ้าแบบนี้ เดี๋ยวจับขายทาสซะเลยนิ";
+				mes "หรือชอบนั่งตู้กระจกหละ ห๊ะ!!!";
+				close;
+		}
+		setarray .@card[0], getequipcardid(EQI_ARMOR,0), getequipcardid(EQI_ARMOR,1), getequipcardid(EQI_ARMOR,2), getequipcardid(EQI_ARMOR,3);
+		.@refine = getequiprefinerycnt(EQI_ARMOR);
+
+		if (.@card[3] < 1) {// one enchant required
+			npctalk "วางถุงกาว แล้วตั้งสติซักครู่", "", bc_self;
+			mes "[Susan Grey]";
+			mes "คืองี้นะ แม่สาวน้อย";
+			mes "ไปออฟมาก่อน ค่อยมาลบ";
+			mes "เข้าใจเนาะ";
+			close;
+		}
+		npctalk "พัง แหก พัง แหก แหกให้หมด 555555", "", bc_self;
+		mes "[Susan Grey]";
+		mes "ก็แค่การทำให้อุปกรณ์ของท่านขาวใส";
+		mes "แต่จะใสแบบใส่ได้ หรือใสใส เสียไปไส นั้นก็อีกเรื่องงนึง";
+		next;
+		if (select( "- ขอแบบใสสะอาดออฟใหม่ได้", "- ม่ายยย กว่าจะได้ชุดมามันลำบาก" ) == 2) {
+			mes "[Susan Grey]";
+			mes "ก็ ถ้าหวงขนาดนั้นก็ไม่เป็นไร";
+			close;
+		}
+		mes "[Susan Grey]";
+		mes "การออฟเนี่ย มันมี 2 ประแภทนะ";
+		mes "อันแรกนี้คือใช้แต่ตัง พอดีรวยอะไรแบบเนี่ย"; 
+		next;
+		mes "[Susan Grey]";
+		mes "ก็แบบแรกนะ เราจะใช้เงินแค่ 500k ไม่มากเนาะ";
+		mes "แต่ก็นั้นแหละ มันก็มีแหกบ้างอะไรบ้าง โอกาศแหกก็น้อยอยู่";
+		mes "ไม่มั้นใจก็ลองถามๆหมบดู หมบเขียน";
+		next;
+		mes "[Susan Grey]";
+		mes "อีกแบบคือก็ใช้เงินเหมือนกันแต่รวยกว่า";
+		mes "ใช้เงินแค่ 1M ไม่หมดเพียงแค่นี้ ยังต้องใช้ มะละกอแมวอีก 5 อันเลยนะ";
+		mes "เกิดเป็นคนรวยใช้ยังไงก็ไม่กำหมัดหรอก เชื่อสิ";
+		mes "เจ้าชอบแบบไหนหละ";
+		next;
+			switch (select ("- ลบออฟแบบคนจน:- ลบออฟแบบคนรวย:- ไม่ลบแล้ว ขูดเลือดเกิน") ) {
+			case 1:
+				mes "[Susan Grey]";
+				if (zeny < 500000 ) {
+				mes "ไปหาเงินมาก่อนเถอะ!!";
+				close;
+				}
+				mes "กัดฟันไว้นะ";
+				next;
+				progressbar "000000",2;
+				if (callfunc("F_IsEquipIDHack", EQI_ARMOR, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_ARMOR, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_ARMOR, .@refine))
+				close;
+				set .resuccess,rand(100);
+				zeny -= 500000;
+				delequip EQI_ARMOR;
+				if (.resuccess < 70) {
+				specialeffect2 EF_SUI_EXPLOSION;
+				getitem2 .@equip_id,1,1,.@refine,0,.@card[0],0,0,0;
+				mes "[Susan Grey]";
+				mes "ว้าว ไม่แตกเฉย เสียดายจริง";
+				close;
+				}
+				specialeffect2 EF_SUI_EXPLOSION;
+				mes "55555555";
+				mes "ไปหาเสื้อใหม่นะคนดี";
+				close;
+			
+			case 2:
+				mes "[Susan Grey]";
+				if (zeny < 1000000 || countitem(6909) < 5 ) {
+				mes "ไปหาเงินไม่ก็มะละกอมาก่อนเถอะไอ้คนชั้นต่ำ ขอทานเดินได้";
+				close;
+				}
+				mes "ไม่ต้องลุ้นหรอก ไอ้พวกรวย";
+				next;
+				progressbar "000000",2;
+				if (callfunc("F_IsEquipIDHack", EQI_ARMOR, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_ARMOR, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_ARMOR, .@refine))
+				close;
+				zeny -= 1000000;
+				delitem 6909,5;
+				delequip EQI_ARMOR;
+				specialeffect2 EF_SUI_EXPLOSION;
+				getitem2 .@equip_id,1,1,.@refine,0,.@card[0],0,0,0;
+				mes "[Susan Grey]";
+				mes "พวกคนรวย เอาเปรียบคนจนชัดๆเลย";
+				close;
+	
+				
+			case 3:
+				mes "อืม";
+				end;
+
+			}
+	}
+}
+

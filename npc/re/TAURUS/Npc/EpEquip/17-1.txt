@@ -1,0 +1,267 @@
+//@reloadnpc npc/re/momo-NPC/epequip/16-1.txt
+
+-	bartershop	Grace_Knight	-1
+-	bartershop	Grace_Crusader	-1
+-	bartershop	Grace_Hunter	-1
+-	bartershop	Grace_Music	-1
+-	bartershop	Grace_Prist	-1
+-	bartershop	Grace_blacksmit	-1
+-	bartershop	Grace_Creator	-1
+-	bartershop	Grace_Assass	-1
+-	bartershop	Grace_Rough	-1
+-	bartershop	Grace_Doram	-1
+-	bartershop	Grace_Gunner	-1
+-	bartershop	Grace_Wizard	-1
+-	bartershop	Grace_Sage	-1
+-	bartershop	Grace_Taekwon	-1
+-	bartershop	Grace_Ninja	-1
+-	bartershop	Grace_Reaper	-1
+-	bartershop	Grace_Monk	-1
+-	bartershop	Grace_Novice	-1
+
+prontera,116,157,5	script	Episode Equipment#ep17.1	865,{
+	mes "[Grace]";
+	mes "มีอะไรให้รับใช้";
+	next;
+	switch(select("ซื้อของหน่อย : ไม่มีอะไร")) {
+	Case 1:
+		If (Baselevel >= 150) {
+			if (BaseJob == JOB_Knight){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Knight ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_Knight",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_CRUSADER){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Crusader ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_Crusader",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_HUNTER){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Hunter ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_Hunter",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_BARD || BaseJob == JOB_DANCER ){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Musician ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_Music",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_PRIEST){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Prist ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_Prist",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_BLACKSMITH){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Blacksmith ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_blacksmit",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_ALCHEMIST){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Alchemist ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_Creator",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_ASSASSIN){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Assassin ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_Assass",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_ROGUE){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Rogue ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_Rough",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_SUMMONER){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Doram ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_Doram",1;
+				Close;
+				
+			}
+			if (Class == JOB_GUNSLINGER || Class == Job_Rebellion){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Gunslinger ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_Gunner",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_WIZARD){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Wizard ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_Wizard",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_SAGE){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Sage ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_Sage",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_STAR_GLADIATOR){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Taekwon Master ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_Taekwon",1;
+				Close;
+				
+			}
+			if ( Class == Job_Ninja || Class == Job_Kagerou){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Ninja ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_Ninja",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_SOUL_LINKER){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Soul Linker ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_Reaper",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_MONK){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Monk ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_Monk",1;
+				Close;
+				
+			}
+			if (BaseJob == JOB_SUPER_NOVICE){
+				mes "[Grace]";
+				mes "แปบนะ ขอดูก่อนว่าอาชีพอะไรจะได้เปิด Catalog ถูก";
+				Next;
+				mes "[Grace]";
+				mes "อาชีพของท่านคือ Super Novice ถือว่าผ่านคุณสมบัติ";
+				next;
+					callshop "Grace_Novice",1;
+				Close;
+				
+			}
+			else {
+				mes "ไม่มีที่ยืนของอาชีพแกหรอก เลิกเล่นเถอะ สมเพชตัวเองบ้าง";
+			close;
+			}
+		}
+		else {
+			mes "[Grace]";
+			mes "ขอความกรุณา ทำเควสเนื้อเรื่องของ EP 17.1 เพื่อรับสิทธิในการใช้บริการครับ!";
+			Next;
+		close;
+		};
+	Case 2:
+	mes "[Grace]";
+	mes "ถ้าต้องการอะไรมาหาข้าได้ทุกเมื่อเลยนะ";
+	next;
+	close;
+	}
+
+OnInit:
+	waitingroom "Grace Shop Lv150",0;
+	npcshopadditem	"Grace_Knight",100130,25723 ,20,-1,450086,25669 ,10,-1,450087,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+	npcshopadditem	"Grace_Crusader",100130,909 ,10,-1,450088,25669 ,10,-1,450089,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+	npcshopadditem	"Grace_Hunter",100130,909 ,10,-1,450090,25669 ,10,-1,450091,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+	npcshopadditem	"Grace_Music",100130,909 ,10,-1,450092,25669 ,10,-1,450093,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+	npcshopadditem	"Grace_Prist",100130,909 ,10,-1,450094,25669 ,10,-1,450095,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+	npcshopadditem	"Grace_blacksmit",100130,909 ,10,-1,450098,25669 ,10,-1,450099,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+	npcshopadditem	"Grace_Creator",100130,909 ,10,-1,450100,25669 ,10,-1,450101,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+	npcshopadditem	"Grace_Assass",100130,909 ,10,-1,450102,25669 ,10,-1,450103,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+	npcshopadditem	"Grace_Rough",100130,909 ,10,-1,450104,25669 ,10,-1,450105,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+	npcshopadditem	"Grace_Doram",100130,909 ,10,-1,450106,25669 ,10,-1,450107,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+	npcshopadditem	"Grace_Gunner",100130,909 ,10,-1,450108,25669 ,10,-1,450109,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+	npcshopadditem	"Grace_Wizard",100130,909 ,10,-1,450110,25669 ,10,-1,450111,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+	npcshopadditem	"Grace_Sage",100130,909 ,10,-1,450112,25669 ,10,-1,450113,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+	npcshopadditem	"Grace_Taekwon",100130,909 ,10,-1,450114,25669 ,10,-1,450115,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+	npcshopadditem	"Grace_Ninja",100130,909 ,10,-1,450116,25669 ,10,-1,450117,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+	npcshopadditem	"Grace_Reaper",100130,909 ,10,-1,450118,25669 ,10,-1,450119,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+	npcshopadditem	"Grace_Monk",100130,909 ,10,-1,450096,25669 ,10,-1,450097,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+	npcshopadditem	"Grace_Novice",100130,909 ,10,-1,450125,25669 ,10,-1,450126,25669 ,10,-1,480018,25669 ,10,-1,480019,25669 ,10,-1,470020,25669 ,10,-1,470021,25669 ,10,-1,490019,25669 ,10,-1,490020,25669 ,10,-1;
+
+	
+}

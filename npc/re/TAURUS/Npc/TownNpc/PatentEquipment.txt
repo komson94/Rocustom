@@ -1,0 +1,46 @@
+-	exbartershop	#PatentEquipment	-1
+
+morocc,175,71,5	script	PatentEquipment#With out equipment	10187,{
+	callshop "#PatentEquipment",1;
+	end;
+
+OnInit:
+	waitingroom "PatentEquipment",0;
+	npcshopadditem "#PatentEquipment",700018,-1,3000000,1100007,1,0,18164,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",500013,-1,3000000,1100007,1,0,13485,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",510019,-1,3000000,1100007,1,0,28744,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",820001,-1,3000000,1100007,1,0,28256,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",800002,-1,3000000,1100007,1,0,32302,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",570009,-1,3000000,1100007,1,0,570002,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",550012,-1,3000000,1100007,1,0,26118,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",600009,-1,3000000,1100007,1,0,21038,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",540011,-1,3000000,1100007,1,0,28630,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",650004,-1,3000000,1100007,1,0,13345,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",840001,-1,3000000,1100007,1,0,28257,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",500014,-1,3000000,1100007,1,0,500004,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",560008,-1,3000000,1100007,1,0,1847,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",700013,-1,3000000,1100007,1,0,18170,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",530006,-1,3000000,1100007,1,0,32018,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",510022,-1,3000000,1100007,1,0,28764,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",810001,-1,3000000,1100007,1,0,28255,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",550014,-1,3000000,1100007,1,0,26155,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",640011,-1,3000000,1100007,1,0,2048,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",620004,-1,3000000,1100007,1,0,28130,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",610008,-1,3000000,1100007,1,0,28039,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",580009,-1,3000000,1100007,1,0,580002,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",830002,-1,3000000,1100007,1,0,28258,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",21058,-1,3000000,1100007,1,0,600004,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",610009,-1,3000000,1100007,1,0,610003,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",510020,-1,3000000,1100007,1,0,510006,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",590011,-1,3000000,1100007,1,0,590002,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",700019,-1,3000000,1100007,1,0,700003,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",550013,-1,3000000,1100007,1,0,550007,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",500017,-1,3000000,1100007,1,0,500003,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",560009,-1,3000000,1100007,1,0,560002,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",590012,-1,3000000,1100007,1,0,590003,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",640012,-1,3000000,1100007,1,0,640004,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",540010,-1,3000000,1100007,1,0,28631,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",550015,-1,3000000,1100007,1,0,26154,1,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#PatentEquipment",22238,-1,3000000,1100007,1,0,22171,1,0,0,0,0,0,0,0,0,0,0;
+	end;
+}
