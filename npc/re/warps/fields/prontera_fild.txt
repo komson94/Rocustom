@@ -82,7 +82,7 @@ prt_fild09,87,380,0	warp	prtf16-1	5,2,prt_fild07,84,16
 prt_fild10,20,122,0	warp	prtf19	2,4,prt_fild11,359,111
 prt_fild10,20,196,0	warp	prtf20	2,4,prt_fild11,358,184
 prt_fild10,227,299,0	warp	prtf020	5,2,gef_fild02,266,21
-prt_fild10,263,20,0	warp	prtf029	6,2,moc_fild05,144,372
+//prt_fild10,263,20,0	warp	prtf029	6,2,moc_fild05,144,372
 //prt_fild10,263,22,0	warp	prtf029	6,2,moc_fild20,209,333
 prt_fild10,339,126,0	warp	prtf17-2	2,8,prt_fild09,17,133
 prt_fild11,17,281,0	warp	prtf021	2,4,gef_fild11,374,293

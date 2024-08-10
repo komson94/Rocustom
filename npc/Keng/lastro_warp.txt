@@ -1,2 +1,0 @@
-morocc,153,59,0	warp	lastro01	2,2,league,15,12
-league,15,4,0	warp	lastro02	2,2,morocc,156,63,10

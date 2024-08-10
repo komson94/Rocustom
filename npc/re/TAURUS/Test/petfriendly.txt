@@ -1,9 +1,0 @@
-legend_ro,112,140,5	script	เพิ่มสนิทสัตว์เลี้ยง	877,{
-mes "ได้เพิ่มการ สนิทสนม ของสัตว์เลี้ยงคุณเรียบร้อยแล้ว";
-atcommand "@petfriendly 1000";
-atcommand "@homfriendly 1000";
-end;
-OnInit:
-waitingroom "เพิ่มความสนิทสนมสัตว์เลี้ยง",0;
-end;
-}

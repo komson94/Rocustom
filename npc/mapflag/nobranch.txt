@@ -372,6 +372,12 @@ spl_in01	mapflag	nobranch
 spl_in02	mapflag	nobranch
 
 //============================================================
+// Brasilis
+//============================================================
+brasilis	mapflag	nobranch
+bra_in01	mapflag	nobranch
+
+//============================================================
 // RWC
 //============================================================
 2009rwc_01	mapflag	nobranch
@@ -391,7 +397,7 @@ spl_in02	mapflag	nobranch
 2012rwc_06	mapflag	nobranch
 2012rwc_07	mapflag	nobranch
 2012rwc_08	mapflag	nobranch
-league	mapflag	pvp	off
+
 //============================================================
 // Events
 //============================================================

@@ -3,10 +3,9 @@
 
 #include "utils.hpp"
 
-#include <locale.h>
-#include <math.h> // floor()
-#include <stdlib.h>
-#include <string.h>
+#include <cmath> // floor()
+#include <cstdlib>
+#include <cstring>
 
 #ifdef WIN32
 	#include "winapi.hpp"
@@ -88,7 +87,7 @@ void ShowDump(const void* buffer, size_t length)
 static char* checkpath(char *path, const char *srcpath)
 {	// just make sure the char*path is not const
 	char *p=path;
-	if(NULL!=path && NULL!=srcpath)
+	if(nullptr!=path && nullptr!=srcpath)
 	while(*srcpath) {
 		if (*srcpath=='/') {
 			*p++ = '\\';
@@ -107,8 +106,8 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 	HANDLE hFind;
 	char tmppath[MAX_PATH+1];
 
-	const char *path    = (p  ==NULL)? "." : p;
-	const char *pattern = (pat==NULL)? "" : pat;
+	const char *path    = (p  ==nullptr)? "." : p;
+	const char *pattern = (pat==nullptr)? "" : pat;
 
 	checkpath(tmppath,path);
 	if( PATHSEP != tmppath[strlen(tmppath)-1])
@@ -199,7 +198,7 @@ int check_filepath(const char* filepath)
 static char* checkpath(char *path, const char*srcpath)
 {	// just make sure the char*path is not const
 	char *p=path;
-	if(NULL!=path && NULL!=srcpath)
+	if(nullptr!=path && nullptr!=srcpath)
 	while(*srcpath) {
 		if (*srcpath=='\\') {
 			*p++ = '/';
@@ -219,8 +218,8 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 	struct stat dir_stat;       // used by stat().
 	char tmppath[MAX_DIR_PATH * 2];
 	char path[MAX_DIR_PATH+1]= ".";
-	const char *pattern = (pat==NULL)? "" : pat;
-	if(p!=NULL) strcpy(path,p);
+	const char *pattern = (pat==nullptr)? "" : pat;
+	if(p!=nullptr) strcpy(path,p);
 
 	// open the directory for reading
 	dir = opendir( checkpath(path, path) );
@@ -400,34 +399,4 @@ uint32 get_percentage_exp(const uint64 a, const uint64 b)
 	}
 
 	return (uint32)floor(result);
-}
-
-char *GetComma(unsigned long n)
-{
-	static int comma = '\0';
-	static char retbuf[30];
-	char *p = &retbuf[sizeof(retbuf)-1];
-	int i = 0;
-
-	if(comma == '\0') {
-		struct lconv *lcp = localeconv();
-		if(lcp != NULL) {
-			if(lcp->thousands_sep != NULL &&
-				*lcp->thousands_sep != '\0')
-				comma = *lcp->thousands_sep;
-			else	comma = ',';
-		}
-	}
-
-	*p = '\0';
-
-	do {
-		if(i%3 == 0 && i != 0)
-			*--p = comma;
-		*--p = '0' + n % 10;
-		n /= 10;
-		i++;
-	} while(n != 0);
-
-	return p;
 }

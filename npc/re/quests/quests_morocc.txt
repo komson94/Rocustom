@@ -49,13 +49,13 @@ morocc,169,168,4	duplicate(Alchemist)	Alchemist#moc	64
 }
 moc_fild07,380,202,1	duplicate(Continental Guard#man)	Continental Guard#man1	852
 moc_fild11,189,360,6	duplicate(Continental Guard#man)	Continental Guard#man2	852
-//prt_fild10,263,23,1	duplicate(Continental Guard#man)	Continental Guard#man3	852
-//prt_fild09,95,19,1	duplicate(Continental Guard#man)	Continental Guard#man4	852
-//prt_fild09,246,17,1	duplicate(Continental Guard#man)	Continental Guard#man5	852
-//moc_fild13,32,171,6	duplicate(Continental Guard#man)	Continental Guard#man6	852
-//moc_fild16,124,381,4	duplicate(Continental Guard#man)	Continental Guard#man7	852
-//moc_fild16,333,380,4	duplicate(Continental Guard#man)	Continental Guard#man8	852
-//moc_fild01,84,19,1	duplicate(Continental Guard#man)	Continental Guard#man9	852
+prt_fild10,263,23,1	duplicate(Continental Guard#man)	Continental Guard#man3	852
+prt_fild09,95,19,1	duplicate(Continental Guard#man)	Continental Guard#man4	852
+prt_fild09,246,17,1	duplicate(Continental Guard#man)	Continental Guard#man5	852
+moc_fild13,32,171,6	duplicate(Continental Guard#man)	Continental Guard#man6	852
+moc_fild16,124,381,4	duplicate(Continental Guard#man)	Continental Guard#man7	852
+moc_fild16,333,380,4	duplicate(Continental Guard#man)	Continental Guard#man8	852
+moc_fild01,84,19,1	duplicate(Continental Guard#man)	Continental Guard#man9	852
 
 morocc,176,101,3	duplicate(Continental Official)	Continental Official#mor	754
 

@@ -507,7 +507,7 @@ malangdo,224,172,6	script	Clink#mal_normal	544,{
 		mes "I knew you were not worth trying my magical refining hammer for.";
 		close;
 	}
-	if (getequippercentrefinery(.@part, REFINE_COST_NORMAL) < 100) {
+	if (getequippercentrefinery(.@part) < 100) {
 		mes "[Clink]";
 		mes "Wow!!";
 		mes "This "+.@type$+" has been refined quite a bit, huh?";
@@ -546,7 +546,7 @@ malangdo,224,172,6	script	Clink#mal_normal	544,{
 		close;
 	}
 
-	if (getequippercentrefinery(.@part, REFINE_COST_NORMAL) <= rand(100)) {
+	if (getequippercentrefinery(.@part) <= rand(100)) {
 		failedrefitem .@part;
 		mes "[Clink]";
 		mes "Cry Hammer!! Cry!!!";
@@ -686,7 +686,7 @@ lhz_in02,281,24,5	duplicate(Dietrich#ns_prt)	Fruel#2	4_M_02
 // Shadowdecon/Zelunium exchange npcs
 prt_in,64,57,3	script	Pauline	4_M_02,{
 	mes "[" + strnpcinfo(1) + "]";
-	mes "Do you have <ITEM>[Shadowdecon Gemstone]<INFO>25728</INFO></ITEM> or <ITEM>[Zelunium Gemstone]<INFO>25730</INFO></ITEM>?";
+	mes "Do you have " + mesitemlink( 25728 ) + " or " + mesitemlink( 25730 ) + "?";
 	mes "We will exchange them for refined products for use as smelting goods.";
 	close2;
 	callshop "barter_refine_3";
