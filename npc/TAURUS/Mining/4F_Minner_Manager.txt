@@ -1,0 +1,824 @@
+//===== rAthena Script =======================================
+//= 4F Minner Manager
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+
+4@mine,110,120,4	script	ผู้จัดการ คนขุดแร่#4F	4_F_KAFRA2,{
+	disable_items;
+	.GMMenu = (getgmlevel() == 99);
+	cutin "kafra_02",2;
+	mes .NPCname$;
+	mes "สวัสดีค่ะ";
+	mes "ยินดีต้อนรับ";
+	mes "มีอะไรให้ฉันช่วยไหมคะ?";
+	next;
+	switch(select(
+		""+.symbol$+" จ้าง | อัพเกรด คนขุดแร่",
+		(.GMMenu) ? ""+.symbol$+" GM Menu " : "",
+		""+.symbol$+" สอบถามรายละเอียด"
+		)){
+		case 1:
+			mes .NPCname$;
+			mes "โปรดเลือกคนขุดแร่ที่ต้องการ";
+			mes "จ้าง หรือ อัพเกรด";
+			next;
+			switch(select(
+				""+.symbol$+" คนขุดแร่ [ หมายเลข 1 ]",
+				""+.symbol$+" คนขุดแร่ [ หมายเลข 2 ]",
+				""+.symbol$+" คนขุดแร่ [ หมายเลข 3 ]",
+				""+.symbol$+" คนขุดแร่ [ หมายเลข 4 ]"
+				)){
+					case 1:
+						if (!#4F_MinnerLv_Slot1) {
+							mes .NPCname$;
+							mes "คุณยังไม่ได้จ้างคนขุดแร่ จะจ้างเลยหรือไม่?";
+							mes "ราคา: [^FF0000 " + .Cash_Price_1 + " ^000000] Cash";
+							mes "คุณมี: [ " + #CASHPOINTS + " ] Cash";
+							mes "--------------------";
+							mes "ราคา: [^0000FF " + .Zeny_Price_1 + " ^000000] Zeny";
+							mes "คุณมี: [ " + Zeny + " ] Zeny";
+							next;
+							switch(select(
+								""+.symbol$+" จ้างคนขุดแร่ [^FF0000 Cash ^000000]",
+								""+.symbol$+" จ้างคนขุดแร่ [^0000FF Zeny ^000000]",
+								""+.symbol$+" ยังไม่จ้าง"
+								)){
+									case 1:
+										if (#CASHPOINTS < .Cash_Price_1) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Cash Point ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										#CASHPOINTS -= .Cash_Price_1;
+										#4F_MinnerLv_Slot1 = 1;
+										#4F_MiningCount_Slot1 = $4F_MiningCount_Slot1;
+										mes "คุณได้จ้างคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot1;
+										close2;
+										cutin "",255;
+										end;
+									
+									case 2:
+										if (Zeny < .Zeny_Price_1) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Zeny ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										Zeny -= .Zeny_Price_1;
+										#4F_MinnerLv_Slot1 = 1;
+										#4F_MiningCount_Slot1 = $4F_MiningCount_Slot1;
+										mes "คุณได้จ้างคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot1;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 3:
+										mes .NPCname$;
+										mes "ยกเลิกเรียบร้อยแล้ว";
+										close2;
+										cutin "",255;
+										end;
+							}
+						}
+						if (#4F_MinnerLv_Slot1 == .MinnerMaxLv) {
+							mes .NPCname$;
+							mes "ปัจจุบัน Lv ของคนขุดแร่ สูงสุดแล้ว";
+							close2;
+							cutin "",255;
+							end;
+						}
+						else {
+							mes .NPCname$;
+							mes "คุณมีคนขุดแร่ Lv "+#4F_MinnerLv_Slot1+" แล้ว จะอัพเกรดหรือไม่?";
+							mes "ราคา: [^FF0000 " + (#4F_MinnerLv_Slot1 * .Cash_Price_1) + " ^000000] Cash";
+							mes "คุณมี: [ " + #CASHPOINTS + " ] Cash";
+							mes "--------------------";
+							mes "ราคา: [^0000FF " + (#4F_MinnerLv_Slot1 * .Zeny_Price_1) + " ^000000] Zeny";
+							mes "คุณมี: [ " + Zeny + " ] Zeny";
+							next;
+							switch(select(
+								""+.symbol$+" อัพเกรด [^FF0000 Cash ^000000]",
+								""+.symbol$+" อัพเกรด [^0000FF Zeny ^000000]",
+								""+.symbol$+" ยังไม่อัพเกรด"
+								)){
+									case 1:
+										if (#CASHPOINTS < #4F_MinnerLv_Slot1 * .Cash_Price_1) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Cash Point ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										#CASHPOINTS -= #4F_MinnerLv_Slot1 * .Cash_Price_1;
+										#4F_MinnerLv_Slot1++;
+										mes "คุณได้อัพเกรดคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot1;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 2:
+										if (Zeny < #4F_MinnerLv_Slot1 * .Zeny_Price_1) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Zeny ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										Zeny -= #4F_MinnerLv_Slot1 * .Zeny_Price_1;
+										#4F_MinnerLv_Slot1++;
+										mes "คุณได้อัพเกรดคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot1;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 3:
+										mes .NPCname$;
+										mes "ยกเลิกเรียบร้อยแล้ว";
+										close2;
+										cutin "",255;
+										end;
+							}
+						}
+						cutin "",255;
+						end;
+						
+					case 2:
+						if (!#4F_MinnerLv_Slot2) {
+							mes .NPCname$;
+							mes "คุณยังไม่ได้จ้างคนขุดแร่ จะจ้างเลยหรือไม่?";
+							mes "ราคา: [^FF0000 " + .Cash_Price_2 + " ^000000] Cash";
+							mes "คุณมี: [ " + #CASHPOINTS + " ] Cash";
+							mes "--------------------";
+							mes "ราคา: [^0000FF " + .Zeny_Price_2 + " ^000000] Zeny";
+							mes "คุณมี: [ " + Zeny + " ] Zeny";
+							next;
+							switch(select(
+								""+.symbol$+" จ้างคนขุดแร่ [^FF0000 Cash ^000000]",
+								""+.symbol$+" จ้างคนขุดแร่ [^0000FF Zeny ^000000]",
+								""+.symbol$+" ยังไม่จ้าง"
+								)){
+									case 1:
+										if (#CASHPOINTS < .Cash_Price_2) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Cash Point ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										#CASHPOINTS -= .Cash_Price_2;
+										#4F_MinnerLv_Slot2 = 1;
+										#4F_MiningCount_Slot2 = $4F_MiningCount_Slot2;
+										mes "คุณได้จ้างคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot2;
+										close2;
+										cutin "",255;
+										end;
+									
+									case 2:
+										if (Zeny < .Zeny_Price_2) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Zeny ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										Zeny -= .Zeny_Price_2;
+										#4F_MinnerLv_Slot2 = 1;
+										#4F_MiningCount_Slot2 = $4F_MiningCount_Slot2;
+										mes "คุณได้จ้างคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot2;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 3:
+										mes .NPCname$;
+										mes "ยกเลิกเรียบร้อยแล้ว";
+										close2;
+										cutin "",255;
+										end;
+							}
+						}
+						if (#4F_MinnerLv_Slot2 == .MinnerMaxLv) {
+							mes .NPCname$;
+							mes "ปัจจุบัน Lv ของคนขุดแร่ สูงสุดแล้ว";
+							close2;
+							cutin "",255;
+							end;
+						}
+						else {
+							mes .NPCname$;
+							mes "คุณมีคนขุดแร่ Lv "+#4F_MinnerLv_Slot2+" แล้ว จะอัพเกรดหรือไม่?";
+							mes "ราคา: [^FF0000 " + (#4F_MinnerLv_Slot2 * .Cash_Price_2) + " ^000000] Cash";
+							mes "คุณมี: [ " + #CASHPOINTS + " ] Cash";
+							mes "--------------------";
+							mes "ราคา: [^0000FF " + (#4F_MinnerLv_Slot2 * .Zeny_Price_2) + " ^000000] Zeny";
+							mes "คุณมี: [ " + Zeny + " ] Zeny";
+							next;
+							switch(select(
+								""+.symbol$+" อัพเกรด [^FF0000 Cash ^000000]",
+								""+.symbol$+" อัพเกรด [^0000FF Zeny ^000000]",
+								""+.symbol$+" ยังไม่อัพเกรด"
+								)){
+									case 1:
+										if (#CASHPOINTS < #4F_MinnerLv_Slot2 * .Cash_Price_2) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Cash Point ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										#CASHPOINTS -= #4F_MinnerLv_Slot2 * .Cash_Price_2;
+										#4F_MinnerLv_Slot2++;
+										mes "คุณได้อัพเกรดคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot2;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 2:
+										if (Zeny < #4F_MinnerLv_Slot2 * .Zeny_Price_2) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Zeny ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										Zeny -= #4F_MinnerLv_Slot2 * .Zeny_Price_2;
+										#4F_MinnerLv_Slot2++;
+										mes "คุณได้อัพเกรดคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot2;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 3:
+										mes .NPCname$;
+										mes "ยกเลิกเรียบร้อยแล้ว";
+										close2;
+										cutin "",255;
+										end;
+							}
+						}
+						cutin "",255;
+						end;
+						
+					case 3:
+						if (!#4F_MinnerLv_Slot3) {
+							mes .NPCname$;
+							mes "คุณยังไม่ได้จ้างคนขุดแร่ จะจ้างเลยหรือไม่?";
+							mes "ราคา: [^FF0000 " + .Cash_Price_3 + " ^000000] Cash";
+							mes "คุณมี: [ " + #CASHPOINTS + " ] Cash";
+							mes "--------------------";
+							mes "ราคา: [^0000FF " + .Zeny_Price_3 + " ^000000] Zeny";
+							mes "คุณมี: [ " + Zeny + " ] Zeny";
+							next;
+							switch(select(
+								""+.symbol$+" จ้างคนขุดแร่ [^FF0000 Cash ^000000]",
+								""+.symbol$+" จ้างคนขุดแร่ [^0000FF Zeny ^000000]",
+								""+.symbol$+" ยังไม่จ้าง"
+								)){
+									case 1:
+										if (#CASHPOINTS < .Cash_Price_3) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Cash Point ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										#CASHPOINTS -= .Cash_Price_3;
+										#4F_MinnerLv_Slot3 = 1;
+										#4F_MiningCount_Slot3 = $4F_MiningCount_Slot3;
+										mes "คุณได้จ้างคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot3;
+										close2;
+										cutin "",255;
+										end;
+									
+									case 2:
+										if (Zeny < .Zeny_Price_3) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Zeny ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										Zeny -= .Zeny_Price_3;
+										#4F_MinnerLv_Slot3 = 1;
+										#4F_MiningCount_Slot3 = $4F_MiningCount_Slot3;
+										mes "คุณได้จ้างคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot3;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 3:
+										mes .NPCname$;
+										mes "ยกเลิกเรียบร้อยแล้ว";
+										close2;
+										cutin "",255;
+										end;
+							}
+						}
+						if (#4F_MinnerLv_Slot3 == .MinnerMaxLv) {
+							mes .NPCname$;
+							mes "ปัจจุบัน Lv ของคนขุดแร่ สูงสุดแล้ว";
+							close2;
+							cutin "",255;
+							end;
+						}
+						else {
+							mes .NPCname$;
+							mes "คุณมีคนขุดแร่ Lv "+#4F_MinnerLv_Slot3+" แล้ว จะอัพเกรดหรือไม่?";
+							mes "ราคา: [^FF0000 " + (#4F_MinnerLv_Slot3 * .Cash_Price_3) + " ^000000] Cash";
+							mes "คุณมี: [ " + #CASHPOINTS + " ] Cash";
+							mes "--------------------";
+							mes "ราคา: [^0000FF " + (#4F_MinnerLv_Slot3 * .Zeny_Price_3) + " ^000000] Zeny";
+							mes "คุณมี: [ " + Zeny + " ] Zeny";
+							next;
+							switch(select(
+								""+.symbol$+" อัพเกรด [^FF0000 Cash ^000000]",
+								""+.symbol$+" อัพเกรด [^0000FF Zeny ^000000]",
+								""+.symbol$+" ยังไม่อัพเกรด"
+								)){
+									case 1:
+										if (#CASHPOINTS < #4F_MinnerLv_Slot3 * .Cash_Price_3) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Cash Point ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										#CASHPOINTS -= #4F_MinnerLv_Slot3 * .Cash_Price_3;
+										#4F_MinnerLv_Slot3++;
+										mes "คุณได้อัพเกรดคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot3;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 2:
+										if (Zeny < #4F_MinnerLv_Slot3 * .Zeny_Price_3) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Zeny ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										Zeny -= #4F_MinnerLv_Slot3 * .Zeny_Price_3;
+										#4F_MinnerLv_Slot3++;
+										mes "คุณได้อัพเกรดคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot3;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 3:
+										mes .NPCname$;
+										mes "ยกเลิกเรียบร้อยแล้ว";
+										close2;
+										cutin "",255;
+										end;
+							}
+						}
+						cutin "",255;
+						end;
+						
+					case 4:
+						if (!#4F_MinnerLv_Slot4) {
+							mes .NPCname$;
+							mes "คุณยังไม่ได้จ้างคนขุดแร่ จะจ้างเลยหรือไม่?";
+							mes "ราคา: [^FF0000 " + .Cash_Price_4 + " ^000000] Cash";
+							mes "คุณมี: [ " + #CASHPOINTS + " ] Cash";
+							mes "--------------------";
+							mes "ราคา: [^0000FF " + .Zeny_Price_4 + " ^000000] Zeny";
+							mes "คุณมี: [ " + Zeny + " ] Zeny";
+							next;
+							switch(select(
+								""+.symbol$+" จ้างคนขุดแร่ [^FF0000 Cash ^000000]",
+								""+.symbol$+" จ้างคนขุดแร่ [^0000FF Zeny ^000000]",
+								""+.symbol$+" ยังไม่จ้าง"
+								)){
+									case 1:
+										if (#CASHPOINTS < .Cash_Price_4) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Cash Point ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										#CASHPOINTS -= .Cash_Price_4;
+										#4F_MinnerLv_Slot4 = 1;
+										#4F_MiningCount_Slot4 = $4F_MiningCount_Slot4;
+										mes "คุณได้จ้างคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot4;
+										close2;
+										cutin "",255;
+										end;
+									
+									case 2:
+										if (Zeny < .Zeny_Price_4) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Zeny ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										Zeny -= .Zeny_Price_4;
+										#4F_MinnerLv_Slot4 = 1;
+										#4F_MiningCount_Slot4 = $4F_MiningCount_Slot4;
+										mes "คุณได้จ้างคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot4;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 3:
+										mes .NPCname$;
+										mes "ยกเลิกเรียบร้อยแล้ว";
+										close2;
+										cutin "",255;
+										end;
+							}
+						}
+						if (#4F_MinnerLv_Slot4 == .MinnerMaxLv) {
+							mes .NPCname$;
+							mes "ปัจจุบัน Lv ของคนขุดแร่ สูงสุดแล้ว";
+							close2;
+							cutin "",255;
+							end;
+						}
+						else {
+							mes .NPCname$;
+							mes "คุณมีคนขุดแร่ Lv "+#4F_MinnerLv_Slot4+" แล้ว จะอัพเกรดหรือไม่?";
+							mes "ราคา: [^FF0000 " + (#4F_MinnerLv_Slot4 * .Cash_Price_4) + " ^000000] Cash";
+							mes "คุณมี: [ " + #CASHPOINTS + " ] Cash";
+							mes "--------------------";
+							mes "ราคา: [^0000FF " + (#4F_MinnerLv_Slot4 * .Zeny_Price_4) + " ^000000] Zeny";
+							mes "คุณมี: [ " + Zeny + " ] Zeny";
+							next;
+							switch(select(
+								""+.symbol$+" อัพเกรด [^FF0000 Cash ^000000]",
+								""+.symbol$+" อัพเกรด [^0000FF Zeny ^000000]",
+								""+.symbol$+" ยังไม่อัพเกรด"
+								)){
+									case 1:
+										if (#CASHPOINTS < #4F_MinnerLv_Slot4 * .Cash_Price_4) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Cash Point ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										#CASHPOINTS -= #4F_MinnerLv_Slot4 * .Cash_Price_4;
+										#4F_MinnerLv_Slot4++;
+										mes "คุณได้อัพเกรดคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot4;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 2:
+										if (Zeny < #4F_MinnerLv_Slot4 * .Zeny_Price_4) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Zeny ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										Zeny -= #4F_MinnerLv_Slot4 * .Zeny_Price_4;
+										#4F_MinnerLv_Slot4++;
+										mes "คุณได้อัพเกรดคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot4;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 3:
+										mes .NPCname$;
+										mes "ยกเลิกเรียบร้อยแล้ว";
+										close2;
+										cutin "",255;
+										end;
+							}
+						}
+						cutin "",255;
+						end;
+			}
+			
+		case 2:
+			mes .NPCname$;
+			mes "ยินดีต้อนรับสู่เมนู่สำหรับ GM";
+			mes "โปรดเลือกเมนูที่ท่านต้องการ.";
+			next;
+			switch(select(
+				""+.symbol$+" จ้าง | อัพเกรด คนขุดแร่",
+				""+.symbol$+" เร่งความเร็วในการขุดแร่",
+				""+.symbol$+" รีเซ็ตการขุดแร่"
+				)){
+					case 1:
+						mes .NPCname$;
+						mes "โปรดเลือกคนขุดแร่ที่ต้องการ";
+						mes "จ้าง หรือ อัพเกรด";
+						next;
+						switch(select(
+							""+.symbol$+" คนขุดแร่ [ หมายเลข 1 ]",
+							""+.symbol$+" คนขุดแร่ [ หมายเลข 2 ]",
+							""+.symbol$+" คนขุดแร่ [ หมายเลข 3 ]",
+							""+.symbol$+" คนขุดแร่ [ หมายเลข 4 ]"
+							)){
+								case 1:
+									if (!#4F_MinnerLv_Slot1) {
+										mes .NPCname$;
+										#4F_MinnerLv_Slot1 = 1;
+										#4F_MiningCount_Slot1 = $4F_MiningCount_Slot1;
+										mes "ท่านได้จ้างคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot1;
+										close2;
+										cutin "",255;
+										end;
+									}
+									if (#4F_MinnerLv_Slot1 == .MinnerMaxLv) {
+										mes .NPCname$;
+										mes "ปัจจุบัน Lv ของคนขุดแร่ สูงสุดแล้ว";
+										close2;
+										cutin "",255;
+										end;
+									}
+									else {
+										mes .NPCname$;
+										#4F_MinnerLv_Slot1++;
+										mes "คุณได้อัพเกรดคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot1;
+										close2;
+										cutin "",255;
+										end;
+									}
+									close2;
+									cutin "",255;
+									end;
+									
+								case 2:
+									if (!#4F_MinnerLv_Slot2) {
+										mes .NPCname$;
+										#4F_MinnerLv_Slot2 = 1;
+										#4F_MiningCount_Slot2 = $4F_MiningCount_Slot2;
+										mes "ท่านได้จ้างคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot2;
+										close2;
+										cutin "",255;
+										end;
+									}
+									if (#4F_MinnerLv_Slot2 == .MinnerMaxLv) {
+										mes .NPCname$;
+										mes "ปัจจุบัน Lv ของคนขุดแร่ สูงสุดแล้ว";
+										close2;
+										cutin "",255;
+										end;
+									}
+									else {
+										mes .NPCname$;
+										#4F_MinnerLv_Slot2++;
+										mes "คุณได้อัพเกรดคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot2;
+										close2;
+										cutin "",255;
+										end;
+									}
+									close2;
+									cutin "",255;
+									end;
+									
+								case 3:
+									if (!#4F_MinnerLv_Slot3) {
+										mes .NPCname$;
+										#4F_MinnerLv_Slot3 = 1;
+										#4F_MiningCount_Slot3 = $4F_MiningCount_Slot3;
+										mes "ท่านได้จ้างคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot3;
+										close2;
+										cutin "",255;
+										end;
+									}
+									if (#4F_MinnerLv_Slot3 == .MinnerMaxLv) {
+										mes .NPCname$;
+										mes "ปัจจุบัน Lv ของคนขุดแร่ สูงสุดแล้ว";
+										close2;
+										cutin "",255;
+										end;
+									}
+									else {
+										mes .NPCname$;
+										#4F_MinnerLv_Slot3++;
+										mes "คุณได้อัพเกรดคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot3;
+										close2;
+										cutin "",255;
+										end;
+									}
+									close2;
+									cutin "",255;
+									end;
+									
+								case 4:
+									if (!#4F_MinnerLv_Slot4) {
+										mes .NPCname$;
+										#4F_MinnerLv_Slot4 = 1;
+										#4F_MiningCount_Slot4 = $4F_MiningCount_Slot4;
+										mes "ท่านได้จ้างคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot4;
+										close2;
+										cutin "",255;
+										end;
+									}
+									if (#4F_MinnerLv_Slot4 == .MinnerMaxLv) {
+										mes .NPCname$;
+										mes "ปัจจุบัน Lv ของคนขุดแร่ สูงสุดแล้ว";
+										close2;
+										cutin "",255;
+										end;
+									}
+									else {
+										mes .NPCname$;
+										#4F_MinnerLv_Slot4++;
+										mes "คุณได้อัพเกรดคนขุดแร่ เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของคนขุดแร่ คือ: "+#4F_MinnerLv_Slot4;
+										close2;
+										cutin "",255;
+										end;
+									}
+									close2;
+									cutin "",255;
+									end;
+						}
+					
+					case 2:
+						mes .NPCname$;
+						mes "เร่งความเร็วในการขุดแร่ของท่านเรียบร้อยแล้วค่ะ.";
+						donpcevent "คนขุดแร่ หมายเลข 1#Mininer_4F_Slot1::OnGMAding";
+						donpcevent "คนขุดแร่ หมายเลข 2#Mininer_4F_Slot2::OnGMAding";
+						donpcevent "คนขุดแร่ หมายเลข 3#Mininer_4F_Slot3::OnGMAding";
+						donpcevent "คนขุดแร่ หมายเลข 4#Mininer_4F_Slot4::OnGMAding";
+						close2;
+						cutin "",255;
+						end;
+						
+					case 3:
+						mes .NPCname$;
+						mes "ทำการรีเซ็ตการขุดแร่ของท่านเรียบร้อยแล้วค่ะ.";
+						$4F_MiningCount_Slot1 = 0;
+						$4F_MiningCount_Slot2 = 0;
+						$4F_MiningCount_Slot3 = 0;		
+						$4F_MiningCount_Slot4 = 0;
+						close2;
+						cutin "",255;
+						end;
+			}
+			cutin "",255;
+			end;
+			
+		case 3:	
+			mes .NPCname$;
+			mes "คนขุดแร่จะสามารถขุดหาแร่ให้ท่านได้ตลอดเวลา";
+			mes "ท้านสามารถไปรับแร่ได้ทุกๆ 15 นาที";
+			mes "และถ้าเลเวลของคนขุดแร่มากเท่าไร";
+			mes "ก็จะมีโอกาสได้แร่ที่หายากมากขึ้นไปด้วย.";
+			next;
+			mes .NPCname$;
+			mes "ท่านสามารถจ้างคนขุดแร่ได้โดยการใช้";
+			mes "Zeny หรือ Cash Point ก็ได้";
+			mes "เลเวลของคนขุดแร่จะสูงสุดที่ 20.";
+			next;
+			mes .NPCname$;
+			mes "อัตราการได้รับแร่ ทั่วไป: ^006600"+.Normal_Rate+"^000000 %";
+			mes "อัตราการได้รับแร่: +^FF00001^000000 % | เลเวลคนขุดแร่";
+			mes "รายการแร่ที่ขุดพบของชั้นนี้:";
+			mes "^D63E08>^000000 <ITEM>Tree Root<INFO>902</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Iron<INFO>998</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Iron Ore<INFO>1002</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Coal<INFO>1003</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Phracon<INFO>1010</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Emveretarcon<INFO>1011</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Rough Oridecon<INFO>756</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Rough Elunium<INFO>757</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Silver Ore<INFO>7232</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Cracked Diamond<INFO>733</INFO></ITEM>";
+			next;
+			mes .NPCname$;mes "อัตราการได้รับแร่ ทั่วไป: ^006600"+.Medium_Rate+"^000000 %";
+			mes "อัตราการได้รับแร่: +^FF00001^000000 % | เลเวลคนขุดแร่";
+			mes "รายการแร่ที่ขุดพบของชั้นนี้:";
+			mes "^D63E08>^000000 <ITEM>Yellow Gemstone<INFO>715</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Red Gemstone<INFO>716</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Blue Gemstone<INFO>717</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Cursed Ruby<INFO>724</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Oridecon<INFO>984</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Elunium<INFO>985</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Red Blood<INFO>990</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Crystal Blue<INFO>991</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Wind of Verdure<INFO>992</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Green Live<INFO>993</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Steel<INFO>999</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Star Dust<INFO>1001</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Gold Ore<INFO>7231</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Mithril Ore<INFO>7233</INFO></ITEM>";
+			next;
+			mes .NPCname$;mes "อัตราการได้รับแร่ ทั่วไป: ^006600"+.High_Rate+"^000000 %";
+			mes "อัตราการได้รับแร่: +^FF00001^000000 % | เลเวลคนขุดแร่";
+			mes "รายการแร่ที่ขุดพบของชั้นนี้:";
+			mes "^D63E08>^000000 <ITEM>Garnet<INFO>718</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Amethyst<INFO>719</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Aquamarine<INFO>720</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Emerald<INFO>721</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Pearl<INFO>722</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Ruby<INFO>723</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Sardonyx<INFO>725</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Sapphire<INFO>726</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Opal<INFO>727</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Topaz<INFO>728</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Zircon<INFO>729</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>1carat Diamond<INFO>730</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>2carat Diamond<INFO>731</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>3carat Diamond<INFO>732</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Flame Heart<INFO>994</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Mystic Frozen<INFO>995</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Rough Wind<INFO>996</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Great Nature<INFO>997</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Star Crumb<INFO>1000</INFO></ITEM>";
+			next;
+			mes .NPCname$;mes "อัตราการได้รับแร่ ทั่วไป: ^006600"+.Rare_Rate+"^000000 %";
+			mes "อัตราการได้รับแร่: +^FF00001^000000 % | เลเวลคนขุดแร่";
+			mes "รายการแร่ที่ขุดพบของชั้นนี้:";
+			mes "^D63E08>^000000 <ITEM>Gold<INFO>969</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Gold Bullion<INFO>7228</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Silver Bullion<INFO>7229</INFO></ITEM>";
+			mes "^D63E08>^000000 <ITEM>Platinum Bullion<INFO>7230</INFO></ITEM>";
+			close2;
+			cutin "",255;
+			end;
+	}
+	cutin "",255;
+	end;
+	
+OnInit:
+	waitingroom "จ้าง | อัพเกรด คนขุดแร่",0;
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.symbol$ = "~";
+	.MinnerMaxLv = 20;			// เลเวลสูงสุดของ คนขุดแร่.
+	.Cash_Price_1 = 100;		// จำนวนเงินที่ใช้ในการอัพเกรดต่อ Lv. คนขุดแร่ หมายเลข 1 (Cash Points)
+	.Cash_Price_2 = 300;		// จำนวนเงินที่ใช้ในการอัพเกรดต่อ Lv. คนขุดแร่ หมายเลข 2 (Cash Points)	
+	.Cash_Price_3 = 500;		// จำนวนเงินที่ใช้ในการอัพเกรดต่อ Lv. คนขุดแร่ หมายเลข 3 (Cash Points)
+	.Cash_Price_4 = 1000;		// จำนวนเงินที่ใช้ในการอัพเกรดต่อ Lv. คนขุดแร่ หมายเลข 4 (Cash Points)
+	.Zeny_Price_1 = 1000000;	// จำนวนเงินที่ใช้ในการอัพเกรดต่อ Lv. คนขุดแร่ หมายเลข 1 (Zeny)
+	.Zeny_Price_2 = 3000000;	// จำนวนเงินที่ใช้ในการอัพเกรดต่อ Lv. คนขุดแร่ หมายเลข 2 (Zeny)
+	.Zeny_Price_3 = 5000000;	// จำนวนเงินที่ใช้ในการอัพเกรดต่อ Lv. คนขุดแร่ หมายเลข 3 (Zeny)
+	.Zeny_Price_4 = 10000000;	// จำนวนเงินที่ใช้ในการอัพเกรดต่อ Lv. คนขุดแร่ หมายเลข 4 (Zeny)
+	.Normal_Rate = 35;	// อัตราได้รับแร่ ทั่วไป
+	.Medium_Rate = 35;	// อัตราได้รับแร่ กลาง
+	.High_Rate = 15;	// อัตราได้รับแร่ หายาก
+	.Rare_Rate = 3;		// อัตราได้รับแร่ แรร์				
+	end;
+}

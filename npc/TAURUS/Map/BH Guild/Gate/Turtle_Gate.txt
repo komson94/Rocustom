@@ -1,0 +1,802 @@
+//===== rAthena Script =======================================
+//= Demonic Turtle Mission Instance
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Description: =========================================
+//= Custom Instance
+//===== Changelogs: ==========================================
+//= 1.0 เวอร์ชั่นแรก.
+//= 1.1 อัพเดท สุ่ม MVP.
+//= 1.2 รวม npc สร้างดันเจี้ยนกับทางเข้าเอาไว้ด้วยกัน.
+//= 1.3 เพิ่ม hard mode.
+//= 1.4 เพิ่มเมนูรีเซ็ตดันเจี้ยน ปรับเพิ่ม hp mvp.
+//============================================================
+
+//============================================================
+// mapflag
+//============================================================
+1@tur_n	mapflag	noteleport
+1@tur_n	mapflag	monster_noteleport
+1@tur_n	mapflag	nomemo
+1@tur_n	mapflag	noloot
+1@tur_n	mapflag	nopenalty
+1@tur_n	mapflag	nobranch
+1@tur_n	mapflag	nosave	SavePoint
+1@tur_n	mapflag	nochat
+1@tur_n	mapflag	novending
+
+1@tur_h	mapflag	noteleport
+1@tur_h	mapflag	monster_noteleport
+1@tur_h	mapflag	nomemo
+1@tur_h	mapflag	noloot
+1@tur_h	mapflag	nopenalty
+1@tur_h	mapflag	nobranch
+1@tur_h	mapflag	nosave	SavePoint
+1@tur_h	mapflag	nochat
+1@tur_h	mapflag	novending
+
+//============================================================
+//= Create & Enter Instance.
+//============================================================
+bounty_hall,63,127,3	script	Demonic Turtle	11008,{
+	disable_items;
+	mes .NPCname$;
+	mes "ภารกิจ Demonic Turtle";
+	mes "ต้องเอาชนะบอสให้ได้ภายในเวลาที่กำหนด";
+	mes "เมื่อเอาชนะได้กล่องสมบัติก็จะปรากฎขึ้นมา.";
+	next;
+	switch(select(
+		""+.sb$+" "+.instance_n$+"",
+		""+.sb$+" "+.instance_h$+""
+	)) {
+		case 1:
+			mes .NPCname$;
+			mes ""+.instance_n$+"";
+			next;
+			switch(select(
+				""+.sb$+" เข้าสู่ดันเจี้ยน",
+				""+.sb$+" สร้างดันเจี้ยน",
+				""+.sb$+" รีเซ็ตดันเจี้ยน"
+			)) {
+				case 1:
+					if (BaseLevel < .lvlreq_n) {
+						mes .NPCname$;
+						mes "ต้องการเลเวล: ^FF0000"+.lvlreq_n+"^000000 ขึ้นไป!";
+						close;
+					}
+					.@party_id = getcharid(1);
+					if (.@party_id == 0) {
+						mes .NPCname$;
+						mes "จำเป็นต้องจัดตั้งปาร์ตี้หรือเข้าร่วมก่อน.";
+						close;
+					}
+					switch( checkquest(.quest_id[0],PLAYTIME) ) {
+						case -1:
+							switch( instance_enter(.instance_n$) ) {
+							case IE_NOMEMBER:
+							case IE_NOINSTANCE:
+								mes .NPCname$;
+								mes "ต้องทำการสร้างดันเจี้ยนก่อน.";
+								close;
+							case IE_OTHER:
+								mes .NPCname$;
+								mes "ข้อผิดพลาดที่ไม่รู้จัก.";
+								close;
+							case IE_OK:
+								mapannounce "bounty_hall", "" + strcharinfo(0) + " ของปาร์ตี้, " + getpartyname(.@party_id) + ", กำลังเข้าสู่ "+.instance_n$+".",bc_map,"0x00FF99";
+								setquest .quest_id[0];
+								#TurtleTreasure = 0;
+								#TurtleTreasureReset = 0;
+								end;
+							}
+							end;
+						case 0:
+						case 1:
+							mes .NPCname$;
+							mes "มีร่องรอยของเหตุการณ์สุดท้ายที่เหลืออยู่. ปฏิเสธการเข้าใช้.";
+							close;
+						case 2:
+							mes "^0000ffการใช้ Mission Gate ดูเหมือนจะเป็นไปได้.^000000";
+							erasequest .quest_id[0];
+							close;
+					}
+					
+				case 2:
+					if (is_party_leader() == false) {
+						mes .NPCname$;
+						mes "เจ้าไม่ใช่หัวหน้าปาร์ตี้.";
+						close;
+					}
+					switch( checkquest(.quest_id[0],PLAYTIME) ) {
+						case -1:
+							if (is_party_leader() == false) {
+								mes .NPCname$;
+								mes "อา. เจ้าไม่ใช่หัวหน้าปาร์ตี้. พาข้าไปหาหัวหน้าของเจ้า! หรือบางทีอาจจะพาหัวหน้าของเจ้ามาหาข้า.";
+								close;
+							}
+							mes .NPCname$;
+							mes "โปรดเลือกสิ่งที่เจ้าต้องการ";
+							next;
+							if (select( ""+.sb$+" สร้างดันเจี้ยน", ""+.sb$+" ยกเลิก" ) == 2)
+								close;
+							if (instance_create(.instance_n$) < 1) {
+								mes "ปาร์ตี้: " + getpartyname( getcharid(1) ) + "";
+								mes "หัวหน้า: " + getpartyleader( getcharid(1) ) + "";
+								mes "^0000FF"+.instance_n$+"^000000 - ข้อผิดพลาดที่ไม่รู้จัก";
+								close;
+							}
+							mes "สร้างดันเจี้ยนเรียบร้อยแล้ว.";
+							close;
+						case 0:
+						case 1:
+							mes "คูลดาวน์ของ "+.instance_n$+" ยังคงเหลืออยู่. เราไม่สามารถเดินทางได้อีกในเวลานี้.";
+							close;
+						case 2:
+							mes "^0000FFคูลดาวน์ของ "+.instance_n$+" ทั้งหมดถูกลบออก. สามารถเข้าสู่ "+strnpcinfo(1)+" ได้อีกครั้ง.^000000";
+							erasequest .quest_id[0];
+							close;
+					}
+					
+				case 3:
+					mes .NPCname$;
+					mes "เจ้าสามารถรีเซ็ตดันเจี้ยนได้โดยการใช้";
+					mes "<ITEM>"+getitemname(.ItemReset)+"<INFO>"+.ItemReset+"</INFO></ITEM>";
+					mes "เจ้าต้องการรีเซ็ตดันเจี้ยนหรือไม่?";
+					next;
+					switch(select(
+						""+.sb$+" ยกเลิก",
+						""+.sb$+" รีเซ็ตดันเจี้ยน"
+					)) {
+						case 1:
+							mes .NPCname$;
+							mes "เจ้าสามารถซื้อกับพ่อค้าภายใน";
+							mes "บาวตี้ฮันเตอร์กิลด์ได้.";
+							close;
+							
+						case 2:
+							mes .NPCname$;
+							switch( checkquest(.quest_id[0],PLAYTIME) ) {
+								case -1:
+									mes "ไม่พบการเข้าถึงภารกิจดังกล่าว.";
+									close;
+								case 0:
+								case 1:
+									if (countitem(.ItemReset) == 0) {
+										mes "เจ้ายังไม่มี";
+										mes "<ITEM>"+ getitemname(.ItemReset)+ "<INFO>"+ .ItemReset +"</INFO></ITEM>";
+										mes "^FF0000ไม่สามารถทำการรีเซ็ตดันเจี้ยนได้.^000000";
+										close;
+									}
+									mes "ทำการรีเซ็ตดันเจี้ยนเรียบร้อยแล้ว.";
+									erasequest .quest_id[0];
+									delitem .ItemReset,1;
+									close;
+							}
+					}
+			}
+			
+		case 2:
+			mes .NPCname$;
+			mes ""+.instance_h$+"";
+			next;
+			switch(select(
+				""+.sb$+" เข้าสู่ดันเจี้ยน",
+				""+.sb$+" สร้างดันเจี้ยน",
+				""+.sb$+" รีเซ็ตดันเจี้ยน"
+			)) {
+				case 1:
+					switch( checkquest(.quest_id[1],PLAYTIME) ) {
+						case -1:
+							switch( instance_enter(.instance_h$) ) {
+							case IE_NOMEMBER:
+							case IE_NOINSTANCE:
+								mes .NPCname$;
+								mes "ต้องทำการสร้างดันเจี้ยนก่อน.";
+								close;
+							case IE_OTHER:
+								mes .NPCname$;
+								mes "ข้อผิดพลาดที่ไม่รู้จัก.";
+								close;
+							case IE_OK:
+								mapannounce "bounty_hall", "" + strcharinfo(0) + " ของปาร์ตี้, " + getpartyname(.@party_id) + ", กำลังเข้าสู่ "+.instance_h$+".",bc_map,"0x00FF99";
+								setquest .quest_id[1];
+								#TurtleTreasure = 0;
+								#TurtleTreasureReset = 0;
+								end;
+							}
+							end;
+						case 0:
+						case 1:
+							mes .NPCname$;
+							mes "มีร่องรอยของเหตุการณ์สุดท้ายที่เหลืออยู่. ปฏิเสธการเข้าใช้.";
+							close;
+						case 2:
+							mes "^0000FFการใช้ Mission Gate ดูเหมือนจะเป็นไปได้.^000000";
+							erasequest .quest_id[1];
+							close;
+					}
+					
+				case 2:
+					if (BaseLevel < .lvlreq_h) {
+						mes .NPCname$;
+						mes "ต้องการเลเวล: ^FF0000"+.lvlreq_h+"^000000 ขึ้นไป!";
+						close;
+					}
+					.@party_id = getcharid(1);
+					if (.@party_id == 0) {
+						mes .NPCname$;
+						mes "จำเป็นต้องจัดตั้งปาร์ตี้หรือเข้าร่วมก่อน.";
+						close;
+					}
+					switch( checkquest(.quest_id[1],PLAYTIME) ) {
+						case -1:
+							if (is_party_leader() == false) {
+								mes .NPCname$;
+								mes "เจ้าไม่ใช่หัวหน้าปาร์ตี้.";
+								close;
+							}
+							mes .NPCname$;
+							mes "โปรดเลือกสิ่งที่เจ้าต้องการ";
+							next;
+							if (select( ""+.sb$+" สร้างดันเจี้ยน", ""+.sb$+" ยกเลิก" ) == 2)
+								close;
+							if (instance_create(.instance_h$) < 1) {
+								mes "ปาร์ตี้: " + getpartyname( getcharid(1) ) + "";
+								mes "หัวหน้า: " + getpartyleader( getcharid(1) ) + "";
+								mes "^0000FF"+.instance_h$+"^000000 - ข้อผิดพลาดที่ไม่รู้จัก";
+								close;
+							}
+							mes "สร้างดันเจี้ยนเรียบร้อยแล้ว.";
+							close;
+						case 0:
+						case 1:
+							mes "คูลดาวน์ของ "+.instance_h$+" ยังคงเหลืออยู่. เราไม่สามารถเดินทางได้อีกในเวลานี้.";
+							close;
+						case 2:
+							mes "^0000FFคูลดาวน์ของ "+.instance_h$+" ทั้งหมดถูกลบออก. สามารถเข้าสู่ "+strnpcinfo(1)+" ได้อีกครั้ง.^000000";
+							erasequest .quest_id[1];
+							close;
+					}
+					
+				case 3:
+					mes .NPCname$;
+					mes "เจ้าสามารถรีเซ็ตดันเจี้ยนได้โดยการใช้";
+					mes "<ITEM>"+getitemname(.ItemReset)+"<INFO>"+.ItemReset+"</INFO></ITEM>";
+					mes "เจ้าต้องการรีเซ็ตดันเจี้ยนหรือไม่?";
+					next;
+					switch(select(
+						""+.sb$+" ยกเลิก",
+						""+.sb$+" รีเซ็ตดันเจี้ยน"
+					)) {
+						case 1:
+							mes .NPCname$;
+							mes "เจ้าสามารถซื้อกับพ่อค้าภายใน";
+							mes "บาวตี้ฮันเตอร์กิลด์ได้.";
+							close;
+							
+						case 2:
+							mes .NPCname$;
+							switch( checkquest(.quest_id[1],PLAYTIME) ) {
+								case -1:
+									mes "ไม่พบการเข้าถึงภารกิจดังกล่าว.";
+									close;
+								case 0:
+								case 1:
+									if (countitem(.ItemReset) == 0) {
+										mes "เจ้ายังไม่มี";
+										mes "<ITEM>"+ getitemname(.ItemReset)+ "<INFO>"+ .ItemReset +"</INFO></ITEM>";
+										mes "^FF0000ไม่สามารถทำการรีเซ็ตดันเจี้ยนได้.^000000";
+										close;
+									}
+									mes "ทำการรีเซ็ตดันเจี้ยนเรียบร้อยแล้ว.";
+									erasequest .quest_id[1];
+									delitem .ItemReset,1;
+									close;
+							}
+					}
+			}
+	}
+
+
+OnInit:
+	.NPCname$  = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	.instance_n$ = "Demonic Turtle Normal";
+	.instance_h$ = "Demonic Turtle Hard";
+	.lvlreq_n = 100; // เลเวลขั้นต่ำที่ต้องการสำหรับโหมด Normal.
+	.lvlreq_h = 150; // เลเวลขั้นต่ำที่ต้องการสำหรับโหมด Hard.
+	.ItemReset = 10000004; //Demonic Spike Turtle Shell.
+	setarray .quest_id,1000015,1000016;
+	end;
+}
+
+//============================================================
+//= Instance Start.
+//============================================================
+//============================================================
+1@tur_n,8,97,3	script	#Control_tur_n	CLEAR_NPC,{
+	end;
+OnStart:
+	donpcevent instance_npcname("#Mob_tur_n") + "::OnSpawn";
+	sleep 10000;
+	mapannounce 'map_name$,"[ ระบบ ] : ภารกิจกำจัด Demonic Turtle !!",bc_map,0xAAEC37;
+	sleep 5000;
+	donpcevent instance_npcname("#Boss_tur_n") + "::OnStart";
+	end;
+	
+OnInstanceInit:
+	'map_name$ = instance_mapname("1@tur_n");
+	donpcevent instance_npcname("#Control_tur_n") + "::OnStart";
+	disablenpc instance_npcname("#Control_tur_n");
+	disablenpc instance_npcname("#Mob_tur_n");
+	disablenpc instance_npcname("#Boss_tur_n");
+	disablenpc instance_npcname("Treasure Box#tur_n");
+	disablenpc instance_npcname("Secret Merchant#tur_n");
+	disablenpc instance_npcname("Warp Portal#tur_n");
+	end;
+}
+1@tur_h,8,97,3	script	#Control_tur_h	CLEAR_NPC,{
+	end;
+OnStart:
+	donpcevent instance_npcname("#Mob_tur_h") + "::OnSpawn";
+	sleep 10000;
+	mapannounce 'map_name$,"[ ระบบ ] : ภารกิจกำจัด Demonic Turtle !!",bc_map,0xAAEC37;
+	sleep 5000;
+	donpcevent instance_npcname("#Boss_tur_h") + "::OnStart";
+	end;
+	
+OnInstanceInit:
+	'map_name$ = instance_mapname("1@tur_h");
+	donpcevent instance_npcname("#Control_tur_h") + "::OnStart";
+	disablenpc instance_npcname("#Control_tur_h");
+	disablenpc instance_npcname("#Mob_tur_h");
+	disablenpc instance_npcname("#Boss_tur_h");
+	disablenpc instance_npcname("Treasure Box#tur_h");
+	disablenpc instance_npcname("Secret Merchant#tur_h");
+	disablenpc instance_npcname("Warp Portal#tur_h");
+	end;
+}
+
+//============================================================
+//= Mob Spawn Normal & Hard.
+//============================================================
+1@tur_n,8,98,3	script	#Mob_tur_n	CLEAR_NPC,{
+	end;
+OnSpawn:
+	monster 'map_name$,0,0,"--ja--",.MobID[0],42, instance_npcname("#Mob_tur_n") + "::OnMob0Dead";
+	monster 'map_name$,0,0,"--ja--",.MobID[1],33, instance_npcname("#Mob_tur_n") + "::OnMob1Dead";
+	monster 'map_name$,0,0,"--ja--",.MobID[2],30, instance_npcname("#Mob_tur_n") + "::OnMob2Dead";
+	monster 'map_name$,0,0,"--ja--",.MobID[3],40, instance_npcname("#Mob_tur_n") + "::OnMob3Dead";
+	monster 'map_name$,0,0,"--ja--",.MobID[4],25, instance_npcname("#Mob_tur_n") + "::OnMob4Dead";
+	end;
+	
+OnMob0Dead:
+	monster 'map_name$,0,0,"--ja--",.MobID[0],1, instance_npcname("#Mob_tur_n") + "::OnMob0Dead";
+	end;
+OnMob1Dead:
+	monster 'map_name$,0,0,"--ja--",.MobID[1],1, instance_npcname("#Mob_tur_n") + "::OnMob1Dead";
+	end;
+OnMob2Dead:
+	monster 'map_name$,0,0,"--ja--",.MobID[2],1, instance_npcname("#Mob_tur_n") + "::OnMob2Dead";
+	end;
+OnMob3Dead:
+	monster 'map_name$,0,0,"--ja--",.MobID[3],1, instance_npcname("#Mob_tur_n") + "::OnMob3Dead";
+	end;
+OnMob4Dead:
+	monster 'map_name$,0,0,"--ja--",.MobID[4],1, instance_npcname("#Mob_tur_n") + "::OnMob4Dead";
+	end;
+	
+OnInit:
+	setarray .MobID,
+			   1314, // Permeter
+			   1315, // Assaulter
+			   1316, // Solider
+			   1318, // Heater
+			   1319; // Freezer
+	end;
+}
+1@tur_h,8,98,3	script	#Mob_tur_h	CLEAR_NPC,{
+	end;
+OnSpawn:
+	monster 'map_name$,0,0,"--ja--",.MobID[0],42, instance_npcname("#Mob_tur_h") + "::OnMob0Dead";
+	monster 'map_name$,0,0,"--ja--",.MobID[1],33, instance_npcname("#Mob_tur_h") + "::OnMob1Dead";
+	monster 'map_name$,0,0,"--ja--",.MobID[2],30, instance_npcname("#Mob_tur_h") + "::OnMob2Dead";
+	monster 'map_name$,0,0,"--ja--",.MobID[3],40, instance_npcname("#Mob_tur_h") + "::OnMob3Dead";
+	monster 'map_name$,0,0,"--ja--",.MobID[4],25, instance_npcname("#Mob_tur_h") + "::OnMob4Dead";
+	end;
+	
+OnMob0Dead:
+	monster 'map_name$,0,0,"--ja--",.MobID[0],1, instance_npcname("#Mob_tur_h") + "::OnMob0Dead";
+	end;
+OnMob1Dead:
+	monster 'map_name$,0,0,"--ja--",.MobID[1],1, instance_npcname("#Mob_tur_h") + "::OnMob1Dead";
+	end;
+OnMob2Dead:
+	monster 'map_name$,0,0,"--ja--",.MobID[2],1, instance_npcname("#Mob_tur_h") + "::OnMob2Dead";
+	end;
+OnMob3Dead:
+	monster 'map_name$,0,0,"--ja--",.MobID[3],1, instance_npcname("#Mob_tur_h") + "::OnMob3Dead";
+	end;
+OnMob4Dead:
+	monster 'map_name$,0,0,"--ja--",.MobID[4],1, instance_npcname("#Mob_tur_h") + "::OnMob4Dead";
+	end;
+	
+OnInit:
+	setarray .MobID,
+			   1314, // Permeter
+			   1315, // Assaulter
+			   1316, // Solider
+			   1318, // Heater
+			   1319; // Freezer
+	end;
+}
+
+//============================================================
+//= Boss MVP Spawn Normal & Hard.
+//============================================================
+1@tur_n,8,99,3	script	#Boss_tur_n	CLEAR_NPC,{
+	end;
+OnStart:
+	enablenpc instance_npcname("#Boss_tur_n");
+	killmonster 'map_name$, instance_npcname("#Boss_tur_n") + "::OnMyMobDead";
+	
+	.@mob_id = 1312;	// Turtle General
+	mapannounce 'map_name$, "[ระบบ]: Demonic Turtle ได้ปรากฏขึ้นตัวขึ้นแล้ว!", bc_map, 0xffff00,FW_NORMAL,13,0;	
+	monster 'map_name$,100,92, "Demonic Turtle",.@mob_id,1, instance_npcname("#Boss_tur_n") + "::OnMyMobDead",Size_Large,AI_NONE;
+	.@gid = $@mobid[0];
+	// Monsters default attributes
+	.MOB_LEVEL = 100;			// แก้ไข เลเวลมอนสเตอร์.
+	.MOB_MAXHP = 10000000;		// แก้ไข HP สูงสุด.
+	.MOB_HP = 10000000;			// แก้ไข HP ตอนเกิด.
+	.MOB_SPEED = 100;           // แก้ไข ความเร็วในการเคลื่อนที่.
+	.MOB_ATKMIN = 2000;			// แก้ไข Attack ขั้นต่ำ
+	.MOB_ATKMAX = 4000;			// แก้ไข Attack สูงสุด
+	.MOB_MATKMIN = 2000;        // แก้ไข Magic Attack ขั้นต่ำ
+	.MOB_MATKMAX = 4000;		// แก้ไข Magic Attack สูงสุด
+	.MOB_DEF = 200;				// แก้ไข Defence
+	.MOB_MDEF = 70;             // แก้ไข Magic Defence
+	.MOB_CRIT = 300;            // แก้ไข Crit rate (1000 = 100%)
+	// Change unit data to defaults
+	setunitdata .@gid, UMOB_LEVEL, .MOB_LEVEL;
+	setunitdata .@gid, UMOB_MAXHP, .MOB_MAXHP;
+	setunitdata .@gid, UMOB_HP, .MOB_HP;
+	setunitdata .@gid, UMOB_SPEED, .MOB_SPEED;
+	setunitdata .@gid, UMOB_ATKMIN, .MOB_ATKMIN;
+	setunitdata .@gid, UMOB_ATKMAX, .MOB_ATKMAX;
+	setunitdata .@gid, UMOB_MATKMIN, .MOB_MATKMIN;
+	setunitdata .@gid, UMOB_MATKMAX, .MOB_MATKMAX;
+	setunitdata .@gid, UMOB_DEF, .MOB_DEF;
+	setunitdata .@gid, UMOB_MDEF, .MOB_MDEF;
+	setunitdata .@gid, UMOB_CRIT, .MOB_CRIT;
+	getunitdata(.@gid, .@unit);
+	end;
+
+OnMyMobDead:
+	mapannounce 'map_name$, "[ระบบ]: Demonic Turtle ได้ถูกกำจัดลงแล้ว!", bc_map, 0xffff00,FW_NORMAL,13,0;
+	disablenpc instance_npcname("#Mob_tur_n");
+	killmonsterall 'map_name$;
+	if (mobcount( 'map_name$, instance_npcname("#Boss_tur_n") + "::OnMyMobDead" ) < 1)
+		initnpctimer;
+	end;
+OnTimer1000:
+	killmonster 'map_name$, instance_npcname("#Boss_tur_n") + "::OnMyMobDead";
+	sleep 6000;
+	mapannounce 'map_name$, "[ระบบ]: ทางออกและกล่องสมบัติ ได้ปรากฏขึ้นแล้ว!", bc_map, 0xffff00,FW_NORMAL,13,0;
+	disablenpc instance_npcname("#Boss_tur_n");
+	enablenpc instance_npcname("Treasure Box#tur_n");
+	enablenpc instance_npcname("Secret Merchant#tur_n");
+	enablenpc instance_npcname("Warp Portal#tur_n");
+	stopnpctimer;
+	end;
+}
+1@tur_h,8,99,3	script	#Boss_tur_h	CLEAR_NPC,{
+	end;
+OnStart:
+	enablenpc instance_npcname("#Boss_tur_h");
+	killmonster 'map_name$, instance_npcname("#Boss_tur_h") + "::OnMyMobDead";
+	
+	.@mob_id = 1312;	// Turtle General
+	mapannounce 'map_name$, "[ระบบ]: Demonic Turtle ได้ปรากฏขึ้นตัวขึ้นแล้ว!", bc_map, 0xffff00,FW_NORMAL,13,0;	
+	monster 'map_name$,100,92, "Demonic Turtle Lord",.@mob_id,1, instance_npcname("#Boss_tur_h") + "::OnMyMobDead",Size_Large,AI_NONE;
+	.@gid = $@mobid[0];
+	// Monsters default attributes
+	.MOB_LEVEL = 150;			// แก้ไข เลเวลมอนสเตอร์.
+	.MOB_MAXHP = 50000000;		// แก้ไข HP สูงสุด.
+	.MOB_HP = 50000000;			// แก้ไข HP ตอนเกิด.
+	.MOB_SPEED = 100;           // แก้ไข ความเร็วในการเคลื่อนที่.
+	.MOB_ATKMIN = 3000;			// แก้ไข Attack ขั้นต่ำ
+	.MOB_ATKMAX = 6000;			// แก้ไข Attack สูงสุด
+	.MOB_MATKMIN = 3000;        // แก้ไข Magic Attack ขั้นต่ำ
+	.MOB_MATKMAX = 6000;		// แก้ไข Magic Attack สูงสุด
+	.MOB_DEF = 400;				// แก้ไข Defence
+	.MOB_MDEF = 100;            // แก้ไข Magic Defence
+	.MOB_CRIT = 500;            // แก้ไข Crit rate (1000 = 100%)
+	// Change unit data to defaults
+	setunitdata .@gid, UMOB_LEVEL, .MOB_LEVEL;
+	setunitdata .@gid, UMOB_MAXHP, .MOB_MAXHP;
+	setunitdata .@gid, UMOB_HP, .MOB_HP;
+	setunitdata .@gid, UMOB_SPEED, .MOB_SPEED;
+	setunitdata .@gid, UMOB_ATKMIN, .MOB_ATKMIN;
+	setunitdata .@gid, UMOB_ATKMAX, .MOB_ATKMAX;
+	setunitdata .@gid, UMOB_MATKMIN, .MOB_MATKMIN;
+	setunitdata .@gid, UMOB_MATKMAX, .MOB_MATKMAX;
+	setunitdata .@gid, UMOB_DEF, .MOB_DEF;
+	setunitdata .@gid, UMOB_MDEF, .MOB_MDEF;
+	setunitdata .@gid, UMOB_CRIT, .MOB_CRIT;
+	getunitdata(.@gid, .@unit);
+	end;
+
+OnMyMobDead:
+	mapannounce 'map_name$, "[ระบบ]: Demonic Turtle ได้ถูกกำจัดลงแล้ว!", bc_map, 0xffff00,FW_NORMAL,13,0;
+	disablenpc instance_npcname("#Mob_tur_h");
+	killmonsterall 'map_name$;
+	if (mobcount( 'map_name$, instance_npcname("#Boss_tur_h") + "::OnMyMobDead" ) < 1)
+		initnpctimer;
+	end;
+OnTimer1000:
+	killmonster 'map_name$, instance_npcname("#Boss_tur_h") + "::OnMyMobDead";
+	sleep 6000;
+	mapannounce 'map_name$, "[ระบบ]: ทางออกและกล่องสมบัติ ได้ปรากฏขึ้นแล้ว!", bc_map, 0xffff00,FW_NORMAL,13,0;
+	disablenpc instance_npcname("#Boss_tur_h");
+	enablenpc instance_npcname("Treasure Box#tur_h");
+	enablenpc instance_npcname("Secret Merchant#tur_h");
+	enablenpc instance_npcname("Warp Portal#tur_h");
+	stopnpctimer;
+	end;
+}
+
+//============================================================
+//= Treasure Box Normal & Hard.
+//============================================================
+1@tur_n,100,111,3	script	Treasure Box#tur_n	4_TREASURE_BOX,{
+	if (#TurtleTreasure == 1) {
+		npctalk ""+strnpcinfo(1)+" : กล่องสมบัติว่างเปล่า...",strnpcinfo(0),bc_self;
+		end;
+	}
+	if (#TurtleTreasure == 0) {
+		specialeffect EF_COIN;
+		#TurtleTreasure = 1;
+		.@num = rand(1,10);					// Random Amount of Bounty Hunter Token
+		.@List1_num = rand(1,5);			// Random Amount of .ITEMLIST_1
+		.@List2_num = rand(1,3);			// Random Amount of .ITEMLIST_2
+		getitem .ITEMLIST_1[0],.@num;		// Bounty Hunter Coin
+		if (rand(1,100) <= .RateList_1) {	// Drop Rate of .ITEMLIST_1
+			set .List1,rand( getarraysize( .ITEMLIST_1 ) );
+			getitem .ITEMLIST_1[ .List1 ],.@List1_num;
+		}
+		if (rand(1,100) <= .RateList_2) {	// Drop Rate of .ITEMLIST_2
+			set .List2,rand( getarraysize( .ITEMLIST_2 ) );
+			getitem .ITEMLIST_2[ .List2 ],.@List2_num;
+		}
+		if (rand(1,100) <= .RateList_3) {	// Drop Rate of .ITEMLIST_3
+			set .List3,rand( getarraysize( .ITEMLIST_3 ) );
+			getitem .ITEMLIST_3[ .List3 ],1;
+		}
+		end;
+	}
+	end;
+	
+OnInit:
+	// Drop Rate
+	//----------------------------------------------------------------
+	.RateList_1 = 80;						// Drop Rate of .ITEMLIST_1
+	.RateList_2 = 40;						// Drop Rate of .ITEMLIST_1
+	.RateList_3 = 10;						// Drop Rate of .ITEMLIST_1
+	
+	// Item List
+	//----------------------------------------------------------------
+	setarray .ITEMLIST_1[0],	10000000,	// Bounty Hunter Coin
+								604,		// Dead Branch
+								644,		// Gift Box
+								664,		// Gift Box
+								665,		// Gift Box
+								666,		// Gift Box
+								667,		// Gift Box
+								662,		// Authoritative Badge
+								668;		// Red Envelope
+								
+	setarray .ITEMLIST_2[0],	7227,		// TCG Card
+								7229,		// Silver Bullion
+								7539,		// Poring Coin
+								603,		// Old Blue Box
+								617,		// Old Purple Box
+								522,		// Mastela Fruit
+								607,		// Yggdrasil Berry
+								608,		// Yggdrasil Seed
+								610;		// Yggdrasil Leaf
+								
+	setarray .ITEMLIST_3[0],	7228,		// Gold Bullion
+								616,		// Old Card Album
+								7444,		// Treasure Box
+								12246;		// Mystical Card Album
+	end;
+}
+1@tur_h,100,111,3	script	Treasure Box#tur_h	4_TREASURE_BOX,{
+	if (#TurtleTreasure == 1) {
+		npctalk ""+strnpcinfo(1)+" : กล่องสมบัติว่างเปล่า...",strnpcinfo(0),bc_self;
+		end;
+	}
+	if (#TurtleTreasure == 0) {
+		specialeffect EF_COIN;
+		#TurtleTreasure = 1;
+		.@num = rand(5,10);					// Random Amount of Bounty Hunter Token
+		.@List1_num = rand(1,5);			// Random Amount of .ITEMLIST_1
+		.@List2_num = rand(1,3);			// Random Amount of .ITEMLIST_2
+		getitem .ITEMLIST_1[0],.@num;		// Bounty Hunter Coin
+		if (rand(1,100) <= .RateList_1) {	// Drop Rate of .ITEMLIST_1
+			set .List1,rand( getarraysize( .ITEMLIST_1 ) );
+			getitem .ITEMLIST_1[ .List1 ],.@List1_num;
+		}
+		if (rand(1,100) <= .RateList_2) {	// Drop Rate of .ITEMLIST_2
+			set .List2,rand( getarraysize( .ITEMLIST_2 ) );
+			getitem .ITEMLIST_2[ .List2 ],.@List2_num;
+		}
+		if (rand(1,100) <= .RateList_3) {	// Drop Rate of .ITEMLIST_3
+			set .List3,rand( getarraysize( .ITEMLIST_3 ) );
+			getitem .ITEMLIST_3[ .List3 ],1;
+		}
+		end;
+	}
+	end;
+	
+OnInit:
+	// Drop Rate
+	//----------------------------------------------------------------
+	.RateList_1 = 80;						// Drop Rate of .ITEMLIST_1
+	.RateList_2 = 40;						// Drop Rate of .ITEMLIST_1
+	.RateList_3 = 10;						// Drop Rate of .ITEMLIST_1
+	
+	// Item List
+	//----------------------------------------------------------------
+	setarray .ITEMLIST_1[0],	10000000,	// Bounty Hunter Coin
+								604,		// Dead Branch
+								644,		// Gift Box
+								664,		// Gift Box
+								665,		// Gift Box
+								666,		// Gift Box
+								667,		// Gift Box
+								662,		// Authoritative Badge
+								668;		// Red Envelope
+								
+	setarray .ITEMLIST_2[0],	7227,		// TCG Card
+								7229,		// Silver Bullion
+								7539,		// Poring Coin
+								603,		// Old Blue Box
+								617,		// Old Purple Box
+								522,		// Mastela Fruit
+								607,		// Yggdrasil Berry
+								608,		// Yggdrasil Seed
+								610;		// Yggdrasil Leaf
+								
+	setarray .ITEMLIST_3[0],	7228,		// Gold Bullion
+								616,		// Old Card Album
+								7444,		// Treasure Box
+								12246;		// Mystical Card Album
+	end;
+}
+
+//============================================================
+//= Secret Merchant Normal & Hard.
+//============================================================
+1@tur_n,95,109,5	script	Secret Merchant#tur_n	4_M_HUMERCHANT,{
+	disable_items;
+	mes .NPCname$;
+	mes "ข้าสามารถทำการรีเซ็ต";
+	mes "^FF0000Treasure Box^000000";
+	mes "ให้กับเจ้าได้ โดยค่าคิดค่าธรรมเนียม";
+	mes "ทั้งหมด ^006600"+callfunc("F_InsertComma",.Price)+"^000000 z.";
+	mes "เจ้าสนใจหรือไม่?";
+	next;
+	switch(select( ""+.sb$+" ข้าไม่สนใจ",""+.sb$+" ข้าต้องการรีเซ็ต" )) {
+		case 1: end;
+		case 2:
+			if (#TurtleTreasureReset == 1) {
+				mes .NPCname$;
+				mes "ข้าสามารถทำการรีเซ็ต";
+				mes "^FF0000Treasure Box^000000";
+				mes "ได้เพียงแค่ครั้งเดียวเท่านั้น.";
+				close;
+			}
+			if (Zeny < .Price) {
+				mes .NPCname$;
+				mes "เจ้ามีเงินไม่พอที่จะจ่ายค่าธรรมเนียม.";
+				close;
+			}
+			mes .NPCname$;
+			mes "ข้าได้ทำการรีเซ็ต";
+			mes "^FF0000Treasure Box^000000";
+			mes "ให้เจ้าเป็นที่เรียบร้อยแล้ว";
+			Zeny -= .Price;
+			#TurtleTreasure = 0;
+			#TurtleTreasureReset = 1;
+			specialeffect2 EF_MAGNIFICAT;
+			end;
+	}
+	
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	.Price = 100000;
+	end;
+}
+1@tur_h,95,109,5	script	Secret Merchant#tur_h	4_M_HUMERCHANT,{
+	disable_items;
+	mes .NPCname$;
+	mes "ข้าสามารถทำการรีเซ็ต";
+	mes "^FF0000Treasure Box^000000";
+	mes "ให้กับเจ้าได้ โดยค่าคิดค่าธรรมเนียม";
+	mes "ทั้งหมด ^006600"+callfunc("F_InsertComma",.Price)+"^000000 z.";
+	mes "เจ้าสนใจหรือไม่?";
+	next;
+	switch(select( ""+.sb$+" ข้าไม่สนใจ",""+.sb$+" ข้าต้องการรีเซ็ต" )) {
+		case 1: end;
+		case 2:
+			if (#TurtleTreasureReset == 1) {
+				mes .NPCname$;
+				mes "ข้าสามารถทำการรีเซ็ต";
+				mes "^FF0000Treasure Box^000000";
+				mes "ได้เพียงแค่ครั้งเดียวเท่านั้น.";
+				close;
+			}
+			if (Zeny < .Price) {
+				mes .NPCname$;
+				mes "เจ้ามีเงินไม่พอที่จะจ่ายค่าธรรมเนียม.";
+				close;
+			}
+			mes .NPCname$;
+			mes "ข้าได้ทำการรีเซ็ต";
+			mes "^FF0000Treasure Box^000000";
+			mes "ให้เจ้าเป็นที่เรียบร้อยแล้ว";
+			Zeny -= .Price;
+			#TurtleTreasure = 0;
+			#TurtleTreasureReset = 1;
+			specialeffect2 EF_MAGNIFICAT;
+			end;
+	}
+	
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	.Price = 100000;
+	end;
+}
+
+//============================================================
+//= Warp Portal.
+//============================================================
+1@tur_n,105,97,3	script	Warp Portal#tur_n	PORTAL,{
+	mes .NPCname$;
+	mes "เจ้าต้องการจะออกหรือไม่?";
+	next;
+	if (select( ""+.sb$+" ลองดูรอบ ๆ", ""+.sb$+" ออกไปข้างนอก" ) == 1) {
+		mes .NPCname$;
+		mes "หยุดเครื่อง.";
+		close;
+	}
+	close2;
+	warp "bounty_hall",55,120;
+	end;
+	
+OnInit:
+	.NPCname$  = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	end;
+}
+1@tur_h,105,97,3	script	Warp Portal#tur_h	PORTAL,{
+	mes .NPCname$;
+	mes "เจ้าต้องการจะออกหรือไม่?";
+	next;
+	if (select( ""+.sb$+" ลองดูรอบ ๆ", ""+.sb$+" ออกไปข้างนอก" ) == 1) {
+		mes .NPCname$;
+		mes "หยุดเครื่อง.";
+		close;
+	}
+	close2;
+	warp "bounty_hall",55,120;
+	end;
+	
+OnInit:
+	.NPCname$  = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	end;
+}

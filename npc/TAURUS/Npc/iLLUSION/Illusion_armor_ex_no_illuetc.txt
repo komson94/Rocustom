@@ -1,0 +1,27 @@
+-	exbartershop	#ex_barter_Illu_armor	-1
+
+morocc,175,65,5	script	Illusion armor#With out equipment	10181,{
+	callshop "#ex_barter_Illu_armor",1;
+	end;
+
+OnInit:
+	waitingroom "Illusion armor",0;
+	npcshopadditem "#ex_barter_Illu_armor",15195,-1,1000000,15012,1,7,25256,100,0,25271,10,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_armor",20838,-1,1000000,2504,1,7,23228,100,0,25271,10,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_armor",22133,-1,1000000,2404,1,7,23228,100,0,25271,10,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_armor",28922,-1,1000000,2128,1,7,25298,300,0,25271,100,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_armor",20847,-1,1000000,2509,1,7,25297,200,0,25271,100,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_armor",19223,-1,1000000,2227,1,9,25297,100,0,25271,50,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_armor",20840,-1,1000000,2525,1,7,25263,200,0,25271,30,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_armor",22190,-1,1000000,2406,1,7,25618,50,0,25271,85,0,25616,50,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_armor",15348,-1,1000000,2354,1,7,25638,150,0,25271,80,0,25641,100,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_armor",22192,-1,1000000,2419,1,7,25635,100,0,25271,80,0, 25633,150,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_armor",20923,-1,1000000,2520,1,7,25638,150,0,25271,120,0,25639,7,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_armor",20948,-1,1000000,2518,1,7,25778,100,0,25271,100,0,25782,30,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_armor",450144,-1,1000000,2326,1,9,25893,100,0,25271,90,0,25899,20,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_armor",450145,-1,1000000,2347,1,9,25896,100,0,25271,90,0,25899,20,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_armor",450146,-1,1000000,2315,1,9,25895,100,0,25271,90,0,25899,20,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_armor",480054,-1,1000000,2519,1,9,25894,100,0,25271,100,0,25272,50,0,0,0,0;
+
+	end;
+}

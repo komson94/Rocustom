@@ -1,0 +1,95 @@
+//===== eAthena Script =======================================
+//= Custom-Currency Multi-Shop
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.2
+//===== Description: =========================================
+//= Allows for better organization in a single shop call.
+//= Note that there are two configuration areas.
+//============================================================
+
+// -------------------- Config 1 --------------------
+// For each shop added, copy this MSHOPX dummy data.
+// Write your shop names in the select() function.
+
+-	shop	MSHOP1	-1,512:-1
+-	shop	MSHOP2	-1,512:-1
+-	shop	MSHOP3	-1,512:-1
+-	shop	MSHOP4	-1,512:-1
+-	shop	MSHOP5	-1,512:-1
+
+louyang,205,108,5	script	VoteShop	984,{
+
+
+mes "[ร้านนี้แลกของโหวตนะจ๊ะ]";
+        mes " ร้านนี่ใช้เหรียญที่ได้จากโหวตมาแลกของนะครับ 1  Vote Coin = 1 แต้ม ";
+	mes "อิอิ";
+	next;
+
+	
+	
+	set @s, select("อาวุธ:โล่:ของใช้ทั่วไป:หมวก:ใบออฟ");
+
+// --------------------------------------------------
+
+	message strcharinfo(0)," ร้านนี้ใช้  Vote Coin ในการแลกเปลี่ยนเท่านั้น .";
+	dispbottom "คุณมี "+countitem(.Currency[@s])+" "+getitemname(.Currency[@s])+".";
+	callshop "MSHOP"+@s,1;
+	npcshopattach "MSHOP"+@s;
+	end;
+
+OnBuyItem:
+	set .@i,0;
+	while (.@i < getarraysize(@bought_nameid)) {
+		set .@j, 0;
+		while (.@j < getarraysize(getd(".Shop"+@s))) {
+			if(getd(".Shop"+@s+"["+.@j+"]") == @bought_nameid[.@i]) {
+				set @itemcost, (getd(".Shop"+@s+"["+(.@j+1)+"]") * @bought_quantity[.@i]);
+				set @totalcost, @totalcost + @itemcost;
+				break; }
+			set .@j, .@j+2; }
+		set .@i, .@i+1; }
+	if (@totalcost > countitem(.Currency[@s])) dispbottom "คุณมีเหรียญไม่พอนะครับ อีดอกมึงดูดีๆๆ อย่ามั่ว ไปหามานะ เหรียญ >> "+getitemname(.Currency[@s])+".";
+	else {
+		set .@i,0;
+		while (.@i < getarraysize(@bought_nameid)) {
+			getitem @bought_nameid[.@i], @bought_quantity[.@i];
+			dispbottom "Purchased "+@bought_quantity[.@i]+"x "+getitemname(@bought_nameid[.@i])+".";
+			set .@i, .@i+1; }
+		delitem .Currency[@s], @totalcost; }
+	set @totalcost, 0;
+	deletearray @bought_nameid[0], 128;
+	deletearray @bought_quantity[0], 128;
+	end;
+
+OnInit:
+
+// -------------------- Config 2 --------------------
+// Currency:  The ID of each shop currency,
+//    in the same order as the shops.
+// Shop order follows that of the select() call,
+//   and is formatted "ID1,Count1,ID2,Count2,..."
+waitingroom "แลกของโหวต",0;
+	setarray .Currency[1],7720,7720,7720,7720,7720,7720,7720,7720,7720,7720;
+	setarray .Shop1[0],21018,1000,2027,1000,28010,1000,1181,300;
+	setarray .Shop2[0],2170,300,2156,300,2162,300,2176,300,2158,300,2159,300,2163,300,2164,300,2165,300,2167,300,2174,300,2175,300,2171,300,2172,300,2173,300,2140,300,28900,300,2126,300,2181,300,2196,300,2198,300,2189,300,2185,300,2137,300,2157,300,28903,300,2127,300,2177,300,2187,300,2188,300;
+	setarray .Shop3[0],6635,60,6230,500,6229,700,6228,1000,6234,500,6233,700,6232,1000,12246,1000,14601,300,12883,300;
+	setarray .Shop4[0],18971,500,18972,500,18973,500,18974,500,18975,500,18976,500,18977,500,18978,500,18980,500,18979,500,18981,500,18982,500,18983,500,18984,500;
+	setarray .Shop5[0],23887,200,23545,300,23546,500,23547,600,9551,250;
+// -------------------------------------------------
+
+	set .@i,1;
+	while (.@i <= getarraysize(.Currency)) {
+		set .@j,0;
+		while (.@j < getarraysize(getd(".Shop"+.@i))) {
+			npcshopdelitem "MSHOP"+.@i,512;
+			npcshopadditem "MSHOP"+.@i, getd(".Shop"+.@i+"["+.@j+"]"), getd(".Shop"+.@i+"["+(.@j+1)+"]");
+			set .@j, .@j+2; }
+		set .@i, .@i+1; }
+	end;
+	
+
+}
+
+

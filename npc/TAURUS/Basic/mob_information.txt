@@ -1,0 +1,34 @@
+//===== rAthena Script ======================================= 
+//= Mob Information.
+//===== By: ================================================== 
+//= Mr.TAURUS
+//===== Current Version: ===================================== 
+//= v1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================ 
+
+askald,120,121,5	script	Monster Information	4_M_DSTMAN,{
+	mes .NPCname$;
+	mes "สวัสดี !";
+	mes "เจ้าสามารถตรวจสอบข้อมูล";
+	mes "ของมอนสเตอร์ต่างๆกับข้าได้";
+	mes "เพียงแค่กรอก ID ของมอนสเตอร์";
+	mes "ที่เจ้าต้องการ เท่านั้น.";
+	next;
+	input .@mob_id;
+	mes .NPCname$;
+	if (getmobdrops(.@mob_id)) {
+		mes "ข้อมูลมอนสเตอร์จะแสดงที่กล่องสนทนา.";
+		atcommand "@mi "+ .@mob_id;
+		end;
+	} else {
+		mes "ID มอนสเตอร์ที่ไม่รู้จัก.";
+	}
+	close;
+	
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	//waitingroom "ตรวจสอบข้อมูลมอนสเตอร์",0;
+	end;
+}

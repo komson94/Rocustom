@@ -1,0 +1,696 @@
+/*
+//---------------------------------------------------------
+// Mob_db
+//---------------------------------------------------------
+เอาไปใส่ทับแทนของเดิม ( re)txt
+2718,C5_PECOPECO,Elusive Peco Peco,Elusive Peco Peco,55,2155,1,486,548,1,180,21,95,3,54,4,14,1,62,0,10,12,1,1,49,0x3885,300,1772,72,384,0,0,0,0,0,0,0,930,9000,756,100,934,550,2604,1,2611,10,525,250,508,850,0,0,0,0,4106,1
+2810,C2_GRAND_PECO,Solid Grand Peco,Solid Grand Peco,55,2155,1,486,548,1,180,21,95,3,54,4,14,1,62,0,10,12,1,1,49,0x3885,300,1772,72,384,0,0,0,0,0,0,0,930,9000,756,100,934,550,2604,1,2611,10,525,250,508,850,0,0,0,0,4106,1
+///////////////////////////////////////
+เอาไปใส่ทับแทนของเดิม (pre-re)txt
+2718,C5_PECOPECO,Elusive Peco Peco,Elusive Peco Peco,55,817,0,120,78,1,56,67,0,0,24,17,34,20,24,10,10,12,0,2,22,0x3885,150,1864,864,1008,0,0,0,0,0,0,0,1026,9000,2502,20,914,3000,919,2500,516,500,2402,25,578,600,0,0,0,0,4041,1
+2810,C2_GRAND_PECO,Solid Grand Peco,Solid Grand Peco,55,817,0,120,78,1,56,67,0,0,24,17,34,20,24,10,10,12,0,2,22,0x3885,150,1864,864,1008,0,0,0,0,0,0,0,1026,9000,2502,20,914,3000,919,2500,516,500,2402,25,578,600,0,0,0,0,4041,1
+////////////////////////////////////////
+1904,BOMBPORING,Bomb Poring,Bomb Poring,1,1,1,1,1,1,120,200,160,99,1,28,28,0,33,50,10,12,0,0,20,0x308D,300,1672,672,480,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+
+//---------------------------------------------------------
+// Mob_skill_db
+//---------------------------------------------------------
+2718,Elusive Peco Peco@AS_SONICBLOW,attack,136,1,500,800,5000,no,target,always,,,,,,,6,
+2718,Elusive Peco Peco@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,,6,,,,,,
+2718,Elusive Peco Peco@NPC_FIREATTACK,attack,186,1,2000,0,5000,yes,target,always,,,,,,,,
+2718,Elusive Peco Peco@NPC_PROVOCATION,chase,194,1,200,0,5000,yes,target,always,,,,,,,19,
+2810,Solid Grand Peco@AS_SONICBLOW,attack,136,5,500,800,5000,no,target,always,,,,,,,6,
+2810,Solid Grand Peco@NPC_EMOTION,idle,197,1,200,0,30000,yes,self,always,,9,0x81,,,,,
+2810,Solid Grand Peco@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,,19,0x81,,,,,
+2810,Solid Grand Peco@NPC_EMOTION_ON,attack,474,1,10000,0,30000,yes,self,always,,6,0x3885,,,,,
+2810,Solid Grand Peco@NPC_FIREATTACK,attack,186,3,500,500,5000,no,target,always,,,,,,,6,
+
+//---------------------------------------------------------
+// SQL Table
+//---------------------------------------------------------
+CREATE TABLE tharakan_monster (
+char_id  int(11) UNSIGNED NOT NULL DEFAULT 0 ,
+name  varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' ,
+monster  varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' ,
+PRIMARY KEY (char_id)
+)
+ENGINE=MyISAM
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+CHECKSUM=0
+ROW_FORMAT=DYNAMIC
+DELAY_KEY_WRITE=0
+;
+*/
+
+
+-	script	monstervsmonster_seting#1	-1,{
+OnInit:
+set $redteam,2718; //ID Monster
+set $blueteam,2810; //ID Monster
+/////////////////////////////////
+set $monsterzenyre,100; //ราคาเดิมพัน
+set $monsterzenyrservece,10; //ราคาค่าน้ำ
+set $Monterteimset,15000; //เวลานับถอยหลัง 1000=1วินาที
+set $delyofftime,1000; //เวลาปิด NPC (GM Mode) 1000=1วินาที
+/////////////**Mode จำกัดผู้เล่นสองฝั่ง**//////////////////
+set $Montermaxon,0; // 1=เปิด 0=ปิด $MonterRungameplayer
+set $MonterRungameplayer,1; //แทงฝั่งละกี่คนเริ่มเกม
+set $MonterRungameplayermax,3; //จำกัดการแทงต่อคน
+///////////////Anti Mode///////////////
+set $antilogoutmons,3; //ออกเกมตอนเดิมพันกี่ครั้งโดนระงับการเล่น 1 วัน
+///////////////Lucky Bom Mode///////////////
+set $monsbomon,2; // 1=เปิด 2=ปิด
+set $monsbomid,1904; //ID Monster
+set $monsbomread,10; //%โอกาสระเบิดออก
+end;
+}
+-	script	monstervsmonster_seting#2	-1,{
+	OnInit:
+	if(getd("$monterrungame") == 1){
+donpcevent "บ่อนไก่::Oneffect2";}
+	end;
+}
+
+///////////////////////////////////////////
+-	script	Montervsmonster_reset#1	-1,{
+	OnClock2400:  setd "$monswin2",0;   setd "$monswin1",0; end;
+}
+//////////////////////////////////////////
+firstcity,327,264,5	script	บ่อนไก่	526,{
+
+			if(getgmlevel()){
+		mes "^FF0000---GM MODE---^000000";
+		menu "^FF0000รีเซ็ตค่าทั้งหมด^000000",gm01,"เมนูปกติ",gm02;
+		
+		gm01:
+		mes "^FF0000หมายเหตุ^000000 : หากใช้เมนูนี้ ระบบเดิมพันของ NPC จะใช้งานไม่ได้ ^FF0000"+($delyofftime/1000/60)+" นาที^000000  ถึงจะกลับมาใช้งานได้ปกติ";
+		next;
+		menu "^FF0000ยกเลิก^000000",no,"ยืนยัน",gmok;
+		gmok:
+	setd "$monsdie1",0;
+	setd "$monsdie2",0;
+	setd "$mons1",0;
+	setd "$mons2",0;
+	setd "$monterrungame",0;
+	setd "$monterrungame2",0;
+	setd "$monternpcoff",1;
+	announce "เกิดการผิดพลาดร้ายแรงจากระบบ [บ่อนไก่] ถูกรีเซ็ตโดย GM",bc_map|bc_npc;
+	donpcevent strnpcinfo(0) +"::OnNPCresetdely";
+		end;
+		gm02:
+			}
+	
+if(#antigamecasino > gettimetick(2)){
+	mes "^FF0000คุนถูกระงับการเล่นพนันทั้งหมดเป็นเวลาหนึ่งวัน!!! ถ้าอยากเล่นก็รอพรุ่งนี้ กรุณาเล่นเกมโดยให้เกียรติผู้เล่นท่านอื่น และไม่ก่อกวน^000000"; 
+	end;
+	}
+if(#antigamecasinocheck == 1){
+set #antigamecasinocheck,0;
+set #montercheckantiloguot,0;
+set monscheckred,0;
+set monzenycheckerred,0;
+set monscheckblue,0;
+set monzenycheckerblue,0;
+mes "^FF0000คุณสารมาถเล่นพนันต่อได้^000000 แต่กรุณาเล่นเกมโดยให้เกียรติผู้เล่นท่านอื่น และไม่ก่อกวน";
+next;
+}
+if(getd("$monternpcoff") == 1){
+	mes "^FF0000ขออภัย^000000 : ระบบมีปัญหา กรุณารอการเปิด NPC ใหม่ในอีก "+($delyofftime/1000/60)+" นาที...";
+	if(monscheckred > 0){
+dispbottom "-------------------คืนเงินบ่อนไก่----------------------";
+dispbottom "คุณได้เดิมพัน : PECOPECO";
+dispbottom "ราคา : "+callfunc("F_InsertComma",monzenycheckerred)+" Cash";
+dispbottom "ค่าน้ำ : "+callfunc("F_InsertComma",($monsterzenyrservece*monscheckred))+" Cash";
+dispbottom "รวม : "+callfunc("F_InsertComma",($monsterzenyrservece*monscheckred+monzenycheckerred))+" Cash";
+dispbottom "---------------------------------------------";
+dispbottom "หมายเหตุ : เกิดการขัดค่องของระบบ Server ระบบคืนเงินโดน GM";
+dispbottom "---------------------------------------------";
+set #CASHPOINTS,#CASHPOINTS + ($monsterzenyrservece*monscheckred+monzenycheckerred);
+set monscheckred,0;
+set monzenycheckerred,0;
+	}
+	
+		if(monscheckblue > 0){
+dispbottom "-------------------คืนเงินบ่อนไก่----------------------";
+dispbottom "คุณได้เดิมพัน : GRANDPECO";
+dispbottom "ราคา : "+callfunc("F_InsertComma",monzenycheckerblue)+" Cash";
+dispbottom "ค่าน้ำ : "+callfunc("F_InsertComma",($monsterzenyrservece*monscheckblue))+" Cash";
+dispbottom "รวม : "+callfunc("F_InsertComma",($monsterzenyrservece*monscheckblue+monzenycheckerblue))+" Cash";
+dispbottom "---------------------------------------------";
+dispbottom "หมายเหตุ : เกิดการขัดค่องของระบบ Server ระบบคืนเงินโดน GM";
+dispbottom "---------------------------------------------";
+set #CASHPOINTS,#CASHPOINTS + ($monsterzenyrservece*monscheckblue+monzenycheckerblue);
+set monscheckblue,0;
+set monzenycheckerblue,0;
+	}
+	
+end;	
+}
+	mes "[ สถิติวันนี้ ]";
+mes "^FF0000PECOPECO^000000 : ชนะ ^3366FF"+getd("$monswin1")+"^000000 ครั้ง";
+mes "^9966CCGRANDPECO^000000 : ชนะ ^3366FF"+getd("$monswin2") +"^000000 ครั้ง";		
+mes "-----------------------------";
+mes "หมายเหตุ : ^FF0000สถิติจะเริ่มใหม่ทุกวันตอนเที่ยงคืน^000000";	
+next;
+if(getd("$MosNPCdely") == 1){mes "หมายเหตุ : ^FF0000กรุณารอคิว "+($MosNPCdelydown/1000)+" วินาที^000000";end;}
+if($Montermaxon == 1){if(getd("$monterrungame") == 1){mes "หมายเหตุ : ^FF0000เกมเริ่มไปแล้ว กรุณารอสักครู่....^000000";	end;}
+}else{
+	if(getd("$monterrungame2") == 1){mes "หมายเหตุ : ^FF0000เกมเริ่มไปแล้ว กรุณารอสักครู่....^000000";	end;}
+	}
+menu 
+"• ^FF0000PECOPECO^000000",mons1,
+"• ^9966CCGRANDPECO^000000",mons2,
+"• ^FF6633สุ่มเลือก^000000",randommon,
+"• วิธีเล่น",info;
+
+info:
+mes "เลือก Monter ที่คุณคิดว่าจะชนะ แล้วรับเงินเดิมพัน ^FF0000x2^000000";
+mes "^FF0000หมายเหตุ^000000 : หากคุณออกจากการเดิมพันเกิน "+$antilogoutmons+" ครั้ง คุณจะไม่ได้รับเงินคืน และไม่สามารถเดิมพันได้เป็นเวลา 1 วัน";
+end;
+
+randommon:
+set @rn,rand(1,2);
+if(@rn == 1){goto mons1;}else{goto mons2;}
+end;
+
+mons1:
+if(monscheckred == $MonterRungameplayermax){mes "^FF0000หมายเหตุ^000000 :  ผู้เล่น ^FF00001^000000 คน สามารถเดิมพันได้เพียง ^FF0000"+$MonterRungameplayermax+" เท่านั้น!^000000";	end;}
+if(getd("$mons1") == $MonterRungameplayer){mes "^FF0000หมายเหตุ^000000 : จำนวนเดิมพันฝั่ง ^FF0000PECOPECO^000000 ครบ "+$MonterRungameplayer+" แล้ว";end;}
+mes "คุณเลือก : ^FF0000PECOPECO^000000";
+mes "ราคา :  "+callfunc("F_InsertComma",$monsterzenyre)+" Cash";
+mes "ค่าน้ำ : "+$monsterzenyrservece+" Cash";
+menu 
+"• ^FF0000ยกเลิก^000000",no,
+"• ยืนยัน",yes1;
+yes1:
+if(#CASHPOINTS < ($monsterzenyre+$monsterzenyrservece)){mes "หมายเหตุ : ^FF0000ยอดเงินขอคุณไม่พอสำหรับเดิมพัน^000000";	end;}
+setd "$mons1",getd("$mons1")+1;
+set #CASHPOINTS,#CASHPOINTS - ($monsterzenyre+$monsterzenyrservece);
+set monscheckred,monscheckred+1;
+set monzenycheckerred,monzenycheckerred+$monsterzenyre;
+dispbottom "-------------------โพย----------------------";
+dispbottom "คุณได้เดิมพัน : PECOPECO";
+dispbottom "ราคา : "+callfunc("F_InsertComma",$monsterzenyre)+" Cash";
+dispbottom "ค่าน้ำ : "+callfunc("F_InsertComma",$monsterzenyrservece)+" Cash";
+if(monscheckred > 1){dispbottom "รวม ["+monscheckred+"] ไม้ : "+callfunc("F_InsertComma",monzenycheckerred)+" Cash";}
+dispbottom "---------------------------------------------";
+npctalk "[  บ่อนไก่ ] "+strcharinfo(0)+" แทง PECOPECO "+callfunc("F_InsertComma",monzenycheckerred)+" Cash" ;
+if(monscheckred == 0	&&	monscheckblue == 0){
+	query_sql( "INSERT INTO `tharakan_monster` SET `char_id`='"+getcharid(0)+"',`name`='"+strcharinfo(0)+"'" );
+}
+if(monscheckred > 0	&&	monscheckblue > 0){query_sql( "INSERT INTO `tharakan_monster` SET `char_id`='"+getcharid(0)+"',`name`='"+strcharinfo(0)+"',`monster`='PECOPECO+GRANDPECO' ON DUPLICATE KEY UPDATE `monster`='PECOPECO+GRANDPECO'" );
+}else{query_sql( "INSERT INTO `tharakan_monster` SET `char_id`='"+getcharid(0)+"',`name`='"+strcharinfo(0)+"',`monster`='PECOPECO' ON DUPLICATE KEY UPDATE `monster`='PECOPECO'" );
+}
+setd "$MosNPCdely",1;
+setd "$MosNPCdelydown",5000;
+donpcevent strnpcinfo(0) +"::OnNPCdely";
+goto checkgame;
+end;
+
+mons2:
+if(monscheckblue == $MonterRungameplayermax){mes "^FF0000หมายเหตุ^000000 :  ผู้เล่น ^FF00001^000000 คน สามารถเดิมพันได้เพียง ^FF0000"+$MonterRungameplayermax+" เท่านั้น!^000000";	end;}
+if(getd("$mons2") == $MonterRungameplayer){mes "^FF0000หมายเหตุ^000000 : จำนวนเดิมพันฝั่ง ^FF0000GRANDPECO^000000 ครบ "+$MonterRungameplayer+" แล้ว";end;}
+mes "คุณเลือก : ^FF0000GRANDPECO^000000";
+mes "ราคา : "+callfunc("F_InsertComma",$monsterzenyre)+" Cash";
+mes "ค่าน้ำ : "+$monsterzenyrservece+" Cash";
+menu 
+"• ^FF0000ยกเลิก^000000",no,
+"• ยืนยัน",yes2;
+yes2:
+if(#CASHPOINTS < ($monsterzenyre+$monsterzenyrservece)){mes "หมายเหตุ : ^FF0000ยอดเงินขอคุณไม่พอสำหรับเดิมพัน^000000";	end;}
+setd "$mons2",getd("$mons2")+1;
+set #CASHPOINTS,#CASHPOINTS - ($monsterzenyre+$monsterzenyrservece);
+set monscheckblue,monscheckblue+1;
+set monzenycheckerblue,monzenycheckerblue+$monsterzenyre;
+dispbottom "-------------------โพย----------------------";
+dispbottom "คุณได้เดิมพัน : GRANDPECO";
+dispbottom "ราคา : "+callfunc("F_InsertComma",$monsterzenyre)+" Cash";
+dispbottom "ค่าน้ำ : "+callfunc("F_InsertComma",$monsterzenyrservece)+" Cash";
+if(monscheckblue > 1){dispbottom "รวม ["+monscheckblue+"] ไม้ : "+callfunc("F_InsertComma",monzenycheckerblue)+" Cash";}
+dispbottom "---------------------------------------------";
+npctalk "[  บ่อนไก่ ] "+strcharinfo(0)+" แทง GRANDPECO "+callfunc("F_InsertComma",monzenycheckerblue)+" Cash" ;
+if(monscheckred == 0	&&	monscheckblue == 0){
+query_sql( "INSERT INTO `tharakan_monster` SET `char_id`='"+getcharid(0)+"',`name`='"+strcharinfo(0)+"'" );
+}
+if(monscheckred > 0	&&	monscheckblue > 0){query_sql( "INSERT INTO `tharakan_monster` SET `char_id`='"+getcharid(0)+"',`name`='"+strcharinfo(0)+"',`monster`='PECOPECO+GRANDPECO' ON DUPLICATE KEY UPDATE `monster`='PECOPECO+GRANDPECO'" );
+}else{query_sql( "INSERT INTO `tharakan_monster` SET `char_id`='"+getcharid(0)+"',`name`='"+strcharinfo(0)+"',`monster`='GRANDPECO' ON DUPLICATE KEY UPDATE `monster`='GRANDPECO'" );
+}
+setd "$MosNPCdely",1;
+setd "$MosNPCdelydown",5000;
+donpcevent strnpcinfo(0) +"::OnNPCdely";
+goto checkgame;
+end;	
+		
+checkgame:
+if($Montermaxon == 1){
+	if(getd("$mons1") == getd("$mons2")	&&	getd("$mons2") == $MonterRungameplayer	&&	getd("$mons1") == $MonterRungameplayer){
+	set $Monterteimsetloop,$Monterteimset;
+	setd "$monterrungame",1;
+	donpcevent strnpcinfo(0) +"::OnPlayed";
+	
+	
+}}else{
+if(getd("$mons1") == getd("$mons2")){
+	set $Monterteimsetloop,$Monterteimset;
+	setd "$monterrungame",1;
+	donpcevent strnpcinfo(0) +"::OnPlayed";
+	
+	
+	}
+}	
+end;
+	no:
+	end;
+OnPlayed:
+if(getd("$monterrungame") == 0)+
+(getd("$mons1") != getd("$mons2")){npctalk "[ บ่อนไก่ ] : การเริ่มถูกขัดจังหวะ ผู้เล่นสองฝั่งไม่เท่ากัน !";setd "$monterrungame",0;setd "$monterrungame2",0;end;}
+if($Monterteimsetloop == 0){goto OnPlayedgo;}
+	if($Monterteimsetloop == $Monterteimset){npctalk "[ บ่อนไก่ ] : จะเริ่มในอีก "+($Monterteimsetloop/1000)+" วินาที  !";}
+	if($Monterteimsetloop == 10000){npctalk "[ บ่อนไก่ ] : จะเริ่มในอีก "+($Monterteimsetloop/1000)+" วินาที  !";}
+	if($Monterteimsetloop < 6000){killmonsterall "firstcity";npctalk "[ บ่อนไก่ ] : จะเริ่มในอีก "+($Monterteimsetloop/1000)+" วินาที  !";}
+	set $Monterteimsetloop,$Monterteimsetloop-1000;
+	sleep 1000;
+	goto OnPlayed;
+	
+OnPlayedgo:
+	setd "$monterrungame2",1;
+	npctalk "[ บ่อนไก่ ] : ศึกการประลอง ได้เริ่มขึ้นแล้ว ฝ่ายใดจะเป็นฝ่ายชนะ" ;
+	setd "$monsdie1",0;
+	setd "$monsdie2",0;
+
+	/////////////////////////////////////
+	monster "firstcity",323,258,"PECOPECO",$redteam,1,strnpcinfo(0) +"::Onbluedie",0,0;
+	monster "firstcity",323,257,"PECOPECO",$redteam,1,strnpcinfo(0) +"::Onbluedie",0,0;
+	monster "firstcity",323,256,"PECOPECO",$redteam,1,strnpcinfo(0) +"::Onbluedie",0,0;
+	/////////////////////////////////////
+	monster "firstcity",332,258,"GRANDPECO",$blueteam,1,strnpcinfo(0) +"::Onreddie",0,1;
+	monster "firstcity",332,257,"GRANDPECO",$blueteam,1,strnpcinfo(0) +"::Onreddie",0,1;
+	monster "firstcity",332,256,"GRANDPECO",$blueteam,1,strnpcinfo(0) +"::Onreddie",0,1;
+
+	setmapflag "firstcity", mf_monster_noteleport;
+	setmapflag "firstcity", mf_nomobloot;
+	end;
+	
+	
+Onbluedie:
+setd "$monsdie1",getd("$monsdie1")+1;
+donpcevent "PECOPECO#01::Oneffect3";
+if(getd("$monsdie1") == 3){
+	npctalk "[ บ่อนไก่ ] : GRANDPECO เป็นฝ่ายชนะ....." ;
+		setd "$monswin2",getd("$monswin2")+1;
+		setd "$monswincheck",2;
+		donpcevent "GRANDPECO#02::Oneffect1";	
+		if($monsbomon == 1){
+		if(rand(100) > $monsbomread){donpcevent strnpcinfo(0) +"::OnEnd"; end;}
+	specialeffect 12;
+	sleep 2000;
+	announce "แต่..................................",bc_map|bc_npc;
+	sleep 1000;
+	npctalk "[ บ่อนไก่ ] : มีระเบิดสุ่มดวงกำเนิดขึ้นมา....." ;
+		killmonsterall "firstcity";
+	setd "$monswin2",getd("$monswin2")-1;
+	setd "$monswincheck",0;
+	setd "$mobboomr",rand(1,2);
+	if(getd("$mobboomr") == 1){monster "firstcity",127,54,"ระเบิดดวง",$monsbomid,1,strnpcinfo(0) +"::Onbluedie2",0,0;}
+	if(getd("$mobboomr") == 2){monster "firstcity",127,54,"ระเบิดดวง",$monsbomid,1,strnpcinfo(0) +"::Onreddie2",0,1;}
+}else{
+		donpcevent strnpcinfo(0) +"::OnEnd";
+
+}
+
+}
+		end;	
+
+Onbluedie2:
+announce "ระเบิดเวลา... อ๊าาาาาาาาาาา~!!!",bc_map|bc_npc;
+npctalk "[ บ่อนไก่ ] : GRANDPECO เป็นฝ่ายชนะ....." ;
+		setd "$monswin2",getd("$monswin2")+1;
+		setd "$monswincheck",2;
+		donpcevent "GRANDPECO#02::Oneffect1";
+		donpcevent strnpcinfo(0) +"::OnEnd";
+		end;		
+	
+Onreddie:
+setd "$monsdie2",getd("$monsdie2")+1;
+donpcevent "GRANDPECO#02::Oneffect3";
+if(getd("$monsdie2") == 3){
+	npctalk "[ บ่อนไก่ ] : PECOPECO เป็นฝ่ายชนะ....." ;
+		setd "$monswin1",getd("$monswin1")+1;
+		setd "$monswincheck",1;
+		donpcevent "PECOPECO#01::Oneffect1";
+if($monsbomon == 1){
+	if(rand(100) > $monsbomread){donpcevent strnpcinfo(0) +"::OnEnd"; end;}
+	specialeffect 12;
+	sleep 2000;
+	announce "แต่..................................",bc_map|bc_npc;
+	sleep 1000;
+	npctalk "[ บ่อนไก่ ] : มีระเบิดสุ่มดวงกำเนิดขึ้นมา....." ;
+	killmonsterall "firstcity";
+	setd "$monswin1",getd("$monswin1")-1;
+	setd "$monswincheck",0;
+	setd "$mobboomr",rand(1,2);
+	if(getd("$mobboomr") == 1){monster "firstcity",127,54,"ระเบิดดวง",$monsbomid,1,strnpcinfo(0) +"::Onbluedie2",0,0;}
+	if(getd("$mobboomr") == 2){monster "firstcity",127,54,"ระเบิดดวง",$monsbomid,1,strnpcinfo(0) +"::Onreddie2",0,1;}
+}else{
+		donpcevent strnpcinfo(0) +"::OnEnd";
+
+}
+}
+		end;	
+		
+Onreddie2:
+announce "ระเบิดเวลา... อ๊าาาาาาาาาาา~!!!",bc_map|bc_npc;
+npctalk "[ บ่อนไก่ ] : PECOPECO เป็นฝ่ายชนะ....." ;
+		setd "$monswin1",getd("$monswin1")+1;
+		setd "$monswincheck",1;
+		donpcevent "PECOPECO#01::Oneffect1";	
+		donpcevent strnpcinfo(0) +"::OnEnd";
+	
+end;		
+	
+
+OnEnd:
+	setd "$monsdie1",0;
+	setd "$monsdie2",0;
+	setd "$mons1",0;
+	setd "$mons2",0;
+	setd "$monterrungame",0;
+	setd "$monterrungame2",0;
+	donpcevent strnpcinfo(0) +"::OnKillmontersz";
+	query_sql("SELECT name FROM `tharakan_monster`", .@namemons$);
+if( getarraysize( .@namemons$ ) ){
+	for( set .@b,0; .@b < getarraysize( .@namemons$ ); set .@b,.@b + 1 ){
+	attachrid(getcharid(3,.@namemons$[.@b])); callfunc("lucky_monsterz",1,3);}
+		
+}
+	end;
+	
+	OnKillmontersz:
+	sleep 5000;
+	announce "บ่อนไก่ เปิดให้วางเดิมพันแล้ว............",bc_map|bc_npc;
+	end;
+
+OnInit:
+OnTimer500:
+    delwaitingroom;
+	waitingroom "     บ่",0;
+	sleep 100;
+	delwaitingroom;
+	waitingroom "     บ",0;
+	sleep 100;
+	 delwaitingroom;
+	waitingroom "     บ่อ",0;
+	sleep 100;
+	delwaitingroom;
+	waitingroom "     บ่อน",0;
+	sleep 100;
+	delwaitingroom;
+	waitingroom "     บ่อนไ",0;
+	sleep 100;
+	delwaitingroom;
+	waitingroom "     บ่อนไก",0;
+	sleep 100;
+	delwaitingroom;
+	waitingroom "     บ่อนไก่",0;
+	sleep 300;
+	delwaitingroom;
+	waitingroom "",0;
+	sleep 100;
+	delwaitingroom;
+	waitingroom "     พาโชค!",0;
+	sleep 100;
+	delwaitingroom;
+	waitingroom "",0;
+	sleep 100;
+	delwaitingroom;
+	waitingroom "     พาโชค!",0;
+	sleep 100;
+	delwaitingroom;
+	waitingroom "",0;
+	sleep 100;
+	delwaitingroom;
+	waitingroom "     พาโชค!",0;
+	if(getd("$mons1") < 0)+(getd("$mons2") < 0){
+	setd "$mons1",0;
+	setd "$mons2",0;}
+	initnpctimer;
+	end;
+
+	Oneffect1:	npctalk "[ บ่อนไก่ ] : การแข่งขั้นถุกขัดจังหวะ มีผู้เล่นออกจากเกม...." ;end;
+	Oneffect2:	npctalk "[ บ่อนไก่ ] : เกิดข้อผิดพลาดทางการเชื่อมต่อ Server ระบบกำลังเริ่มเกมใหม่" ;
+	set $Monterteimsetloop,$Monterteimset;
+	setd "$monterrungame",1;
+	goto OnPlayed;
+	end;
+	Oneffect3:	npctalk "[ บ่อนไก่ ] : เกิดข้อผิดพลาดทางการเชื่อมต่อ Server ระบบกำลังเริ่มเกมใหม่ ในอีก "+($delyofftime/1000/60)+" นาที...." ;end;
+	Oneffect4:	npctalk "[ บ่อนไก่ ] : คำเตือน หากคุณออกเกมตอนนี้จะถูกระงับ 1 วัน และยึดเงินทั้งหมดทันที!!" ;end;
+	OnNPCresetdely:
+	donpcevent strnpcinfo(0) +"::Oneffect3";
+	sleep $delyofftime;
+	setd "$monternpcoff",0;
+	announce "บ่อนไก่ กลับมาให้บริการแล้ว มันกันต่อเลย.....",bc_map|bc_npc;
+end;
+OnNPCdely:
+if(getd("$MosNPCdelydown") == 0){setd "$MosNPCdely",0;end;}
+setd "$MosNPCdelydown",getd("$MosNPCdelydown")-1000;
+sleep 1000;
+goto OnNPCdely;
+end;
+}
+
+
+
+
+firstcity,322,262,6	script	PECOPECO#01	2718,{
+	goto npc;
+	Oneffect1:	specialeffect 568;specialeffect 518;end;
+	Oneffect2:	specialeffect 568;specialeffect 518;specialeffect 68;end;
+	Oneffect3:	specialeffect 108;specialeffect 372;end;
+OnInit:
+OnTimer1000:
+    delwaitingroom;
+	if(getd("$monterrungame") == 0)+
+	(getd("$monterrungame2") == 0){
+	waitingroom "คนแทง ["+getd("$mons1")+"] คน",0;}else{
+	waitingroom "ตาย ["+getd("$monsdie1")+"/3]",0;
+	}
+	if(getd("$antibadout") == 0){
+	if(getd("$monsdie1") == 2)+
+	(getd("$monsdie2") == 2){setd "$antibadout",1;donpcevent "บ่อนไก่::Oneffect4";}}
+
+	initnpctimer;
+end;
+
+npc:
+	mes "[ ^FF0000ผู้เดิมพัน^000000  ]";
+query_sql("SELECT name,monster FROM `tharakan_monster` ", .@name1$, .@monster1$);
+if( getarraysize( .@name1$ ) ){
+	for( set .@b,0; .@b < getarraysize( .@name1$ ); set .@b,.@b + 1 )
+		mes "^FF0000" +(.@b + 1) +"^000000 : "+.@name1$[.@b]+" [^FF0000"+.@monster1$[.@b]+"^000000]";
+
+}else{
+	mes "ไม่มีคนเดิมพัน.";
+	
+}
+end;
+}
+
+firstcity,333,262,4	script	GRANDPECO#02	2810,{
+	goto npc;
+	Oneffect1:	specialeffect 568;specialeffect 518;end;
+	Oneffect2:	specialeffect 568;specialeffect 518;specialeffect 68;end;
+	Oneffect3:	specialeffect 108;specialeffect 372;end;
+OnInit:
+OnTimer1000:
+    delwaitingroom;
+	if(getd("$monterrungame") == 0)+
+	(getd("$monterrungame2") == 0){
+	waitingroom "คนแทง ["+getd("$mons2")+"] คน",0;}else{
+	waitingroom "ตาย ["+getd("$monsdie2")+"/3]",0;
+	}
+	initnpctimer;
+end;
+
+npc:
+	mes "[ ^FF0000ผู้เดิมพัน^000000  ]";
+query_sql("SELECT name,monster FROM `tharakan_monster` ", .@name1$, .@monster1$);
+if( getarraysize( .@name1$ ) ){
+	for( set .@b,0; .@b < getarraysize( .@name1$ ); set .@b,.@b + 1 )
+		mes "^FF0000" +(.@b + 1) +"^000000 : "+.@name1$[.@b]+" [^FF0000"+.@monster1$[.@b]+"^000000]";
+
+}else{
+	mes "ไม่มีคนเดิมพัน.";
+	
+}
+end;
+}
+firstcity,322,259,3	script	เขตุmons#1	858 ,{}
+firstcity,333,259,3	script	เขตุmons#2	858 ,{}
+firstcity,333,254,3	script	เขตุmons#3	858 ,{}
+firstcity,322,254,3	script	เขตุmons#4	858 ,{}
+-	script	กรงไก่ชนer	FAKE_NPC,{
+	end;
+	
+OnInit:
+	setwall "firstcity",322,259,1,1,0,"wallanti#1";
+	setwall "firstcity",323,259,1,1,0,"wallanti#2";
+	setwall "firstcity",324,259,1,1,0,"wallanti#3";
+	setwall "firstcity",325,259,1,1,0,"wallanti#4";
+	setwall "firstcity",326,259,1,1,0,"wallanti#5";
+	setwall "firstcity",327,259,1,1,0,"wallanti#6";
+	setwall "firstcity",328,259,1,1,0,"wallanti#7";
+	setwall "firstcity",329,259,1,1,0,"wallanti#8";
+	setwall "firstcity",330,259,1,1,0,"wallanti#9";
+	setwall "firstcity",331,259,1,1,0,"wallanti#10";
+	setwall "firstcity",332,259,1,1,0,"wallanti#11";
+	setwall "firstcity",333,259,1,1,0,"wallanti#12";
+	
+	setwall "firstcity",333,258,1,1,0,"wallanti#13";
+	setwall "firstcity",333,257,1,1,0,"wallanti#14";
+	setwall "firstcity",333,256,1,1,0,"wallanti#15";
+	setwall "firstcity",333,255,1,1,0,"wallanti#16";
+	setwall "firstcity",333,254,1,1,0,"wallanti#17";
+	
+	setwall "firstcity",333,254,1,1,0,"wallanti#18";
+	setwall "firstcity",332,254,1,1,0,"wallanti#19";
+	setwall "firstcity",331,254,1,1,0,"wallanti#20";
+	setwall "firstcity",330,254,1,1,0,"wallanti#21";
+	setwall "firstcity",329,254,1,1,0,"wallanti#22";
+	setwall "firstcity",328,254,1,1,0,"wallanti#23";
+	setwall "firstcity",327,254,1,1,0,"wallanti#24";
+	setwall "firstcity",326,254,1,1,0,"wallanti#25";
+	setwall "firstcity",325,254,1,1,0,"wallanti#26";
+	setwall "firstcity",324,254,1,1,0,"wallanti#27";
+	setwall "firstcity",323,254,1,1,0,"wallanti#28";
+	setwall "firstcity",322,254,1,1,0,"wallanti#29";
+	
+	setwall "firstcity",322,255,1,1,0,"wallanti#30";
+	setwall "firstcity",322,256,1,1,0,"wallanti#31";
+	setwall "firstcity",322,257,1,1,0,"wallanti#32";
+	setwall "firstcity",322,258,1,1,0,"wallanti#33";
+	setwall "firstcity",322,259,1,1,0,"wallanti#34";
+	
+	setcell "firstcity",322,259,333,254,cell_landprotector,1;
+	setcell "firstcity",322,259,333,254,cell_basilica,1;
+	end;
+	
+}
+
+////////////////////////////////////////////////////////
+
+function	script	lucky_monsterz	{
+
+if(getd("$monswincheck") == 1){
+if(monscheckred > 0){
+dispbottom "---------------------------------------------";
+dispbottom "คุณได้รับ : "+callfunc("F_InsertComma",(monzenycheckerred*2))+" Cash";
+dispbottom "จากการเดิมพัน : PECOPECO";
+dispbottom "---------------------------------------------";
+set #CASHPOINTS,#CASHPOINTS + (monzenycheckerred*2);
+specialeffect2 10;
+}
+}
+
+if(getd("$monswincheck") == 2){
+if(monscheckblue > 0){
+dispbottom "---------------------------------------------";
+dispbottom "คุณได้รับ : "+callfunc("F_InsertComma",(monzenycheckerblue*2))+" Cash";
+dispbottom "จากการเดิมพัน : GRANDPECO";
+dispbottom "---------------------------------------------";
+set #CASHPOINTS,#CASHPOINTS + (monzenycheckerblue*2);
+specialeffect2 10;
+}
+}
+set monscheckblue,0;
+set monzenycheckerblue,0;
+set monscheckred,0;
+set monzenycheckerred,0;
+query_sql("DELETE FROM `tharakan_monster` WHERE `char_id` = '"+getcharid(0)+"'");
+return;
+}
+
+
+-	script	monter2012#1	-1,{
+OnPCLogoutEvent:
+
+if(monscheckred > 0){
+query_sql("DELETE FROM `tharakan_monster` WHERE `char_id` = '"+getcharid(0)+"'");
+setd "$mons1",getd("$mons1")-monscheckred;
+if(getd("$monterrungame2") == 1){donpcevent "บ่อนไก่::Oneffect1";killmonsterall "firstcity";setd "$monterrungame2",0;setd "$monterrungame",0;}
+
+}
+if(monscheckblue > 0){
+query_sql("DELETE FROM `tharakan_monster` WHERE `char_id` = '"+getcharid(0)+"'");
+setd "$mons2",getd("$mons2")-monscheckblue;
+if(getd("$monterrungame2") == 1){donpcevent "บ่อนไก่::Oneffect1";killmonsterall "firstcity";setd "$monterrungame2",0;setd "$monterrungame",0;}
+}
+end;
+}
+-	script	monter2012#2	-1,{
+OnPCLogoutEvent:
+if(getd("$monterrungame") == 1){
+if(monscheckred > 0)+(monscheckblue > 0)
+{set #montercheckantiloguot,#montercheckantiloguot +1;setd "$monterrungame",0;}
+
+}
+if(monscheckblue > 0)+(monscheckred > 0){
+if(getd("$antibadout") == 1){set #antigamebadout,1;sleep2 1000;setd "$antibadout",0;}
+end;
+}
+}
+
+-	script	monsterkillchecklogin#2	-1,{
+ OnPCLoginEvent:
+ if(#antigamebadout == 1){	
+	if(#antigamecasinocheck2 == 0){set #antigamecasino,gettimetick(2) + 86400;}
+	set #antigamecasinocheck2,1;	
+	dispbottom "-------------------ระบบป้องกัน----------------------";
+	dispbottom "หมายเหตุ : คุณทำผิดกฎขั้นรุนแรง คุณจะไม่ได้รับเงินคืน และทำให้ถูกระงับการเล่น 1 วันทันที!";
+	dispbottom "---------------------------------------------";
+	set #antigamebadout,0;
+end;		
+}
+if(#montercheckantiloguot > 0){
+	if(#montercheckantiloguot > $antilogoutmons){		
+	if(#antigamecasinocheck == 0){set #antigamecasino,gettimetick(2) + 86400;}
+	set #antigamecasinocheck,1;	
+	dispbottom "-------------------ระบบป้องกัน----------------------";
+	dispbottom "หมายเหตุ : คุณออกจากการเดิมพันเกิน "+$antilogoutmons+" ครั้ง คุณจะไม่ได้รับเงินคืน และไม่สามารถเดิมพันได้เป้นเวลา 1 วัน";
+	dispbottom "---------------------------------------------";
+	set #montercheckantiloguot,0;
+end;		
+}
+ }
+	if(monscheckred > 0){
+dispbottom "-------------------คืนเงินบ่อนไก่----------------------";
+dispbottom "คุณได้เดิมพัน : PECOPECO";
+dispbottom "ราคา : "+callfunc("F_InsertComma",monzenycheckerred)+" Cash";
+dispbottom "ค่าน้ำ : "+callfunc("F_InsertComma",($monsterzenyrservece*monscheckred))+" Cash";
+dispbottom "รวม : "+callfunc("F_InsertComma",($monsterzenyrservece*monscheckred+monzenycheckerred))+" Cash";
+dispbottom "ออกจากการเดิมพัน : "+#montercheckantiloguot+" ครั้ง";
+dispbottom "---------------------------------------------";
+dispbottom "หมายเหตุ : หากคุณออกจากการเดิมพันเกิน "+$antilogoutmons+" ครั้ง คุณจะไม่ได้รับเงินคืน และไม่สามารถเดิมพันได้เป้นเวลา 1 วัน";
+dispbottom "---------------------------------------------";
+set #CASHPOINTS,#CASHPOINTS + ($monsterzenyrservece*monscheckred+monzenycheckerred);
+set monscheckred,0;
+set monzenycheckerred,0;
+	}
+	
+		if(monscheckblue > 0){
+dispbottom "-------------------คืนเงินบ่อนไก่----------------------";
+dispbottom "คุณได้เดิมพัน : GRANDPECO";
+dispbottom "ราคา : "+callfunc("F_InsertComma",monzenycheckerblue)+" Cash";
+dispbottom "ค่าน้ำ : "+callfunc("F_InsertComma",($monsterzenyrservece*monscheckblue))+" Cash";
+dispbottom "รวม : "+callfunc("F_InsertComma",($monsterzenyrservece*monscheckblue+monzenycheckerblue))+" Cash";
+dispbottom "ออกจากการเดิมพัน : "+#montercheckantiloguot+" ครั้ง";
+dispbottom "---------------------------------------------";
+dispbottom "หมายเหตุ : หากคุณออกจากการเดิมพันเกิน "+$antilogoutmons+" ครั้ง คุณจะไม่ได้รับเงินคืน และไม่สามารถเดิมพันได้เป้นเวลา 1 วัน";
+dispbottom "---------------------------------------------";
+set #CASHPOINTS,#CASHPOINTS + ($monsterzenyrservece*monscheckblue+monzenycheckerblue);
+set monscheckblue,0;
+set monzenycheckerblue,0;
+	}
+
+
+end;
+}

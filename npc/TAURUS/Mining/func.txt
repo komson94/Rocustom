@@ -1,0 +1,33 @@
+//===== rAthena Script ======================================= 
+//= Mining Energy Potion
+//===== By: ================================================== 
+//= Mr.TAURUS
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+
+function	script	Small_Mining_Potion	{
+	.EnergyRegen = 100;
+	MiningEnergy += .EnergyRegen;
+	specialeffect2 312;
+	dispbottom "[ระบบ]: ฟื้นฟู [ "+.EnergyRegen+" ] พลังงาน | คงเหลือ [ "+MiningEnergy+" ] พลังงาน.";
+	end;
+}
+
+function	script	Medium_Mining_Potion	{
+	.EnergyRegen = 300;
+	MiningEnergy += .EnergyRegen;
+	specialeffect2 312;
+	dispbottom "[ระบบ]: ฟื้นฟู [ "+.EnergyRegen+" ] พลังงาน | คงเหลือ [ "+MiningEnergy+" ] พลังงาน.";
+	end;
+}
+
+function	script	Large_Mining_Potion	{
+	.EnergyRegen = 500;
+	MiningEnergy += .EnergyRegen;
+	specialeffect2 312;
+	dispbottom "[ระบบ]: ฟื้นฟู [ "+.EnergyRegen+" ] พลังงาน | คงเหลือ [ "+MiningEnergy+" ] พลังงาน.";
+	end;
+}

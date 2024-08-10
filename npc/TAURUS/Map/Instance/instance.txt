@@ -1,0 +1,3 @@
+1@gol1,0,0,0,0	monster	Rekenber Senior Guard	20541,50,0,0,50
+1@gol1,0,0,0,0	monster	Rekenber Guard	20542,50,0,0,50
+1@gol1,0,0,0,0	monster	Rengenschirm Scientist	20543,50,0,0,50

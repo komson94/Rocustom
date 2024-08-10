@@ -1,0 +1,36 @@
+//===== rAthena Script =======================================
+//= Bounty Hunter Armor Shop
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: ===================================== 
+//= 1.0 Add Shop NPC with Barter Shop Src.
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+// Dummy Barter Shop
+-	bartershop	Barter_BH_AR_SHOP	-1
+
+// Barter Shop
+//============================================================
+bounty_hall,87,141,5	script	Bounty Armor Shop	4_F_EINWOMAN,{
+	disable_items;
+	mes .NPCname$;
+	mes "ยินดีต้อนรับเหล่านักผจญภัย";
+	mes "หากเจ้ามี <ITEM>"+getitemname(.Req_ItemID)+"<INFO>"+.Req_ItemID+"</INFO></ITEM>";
+	mes "เจ้าสามารถนำมาแลกไอเท็มต่างๆกับข้าได้.";
+	mes "--------------------";
+	mes "เจ้ามีอยู่ทั้งหมด [ ^006600"+callfunc("F_InsertComma",countitem(.Req_ItemID))+" ^000000] อัน.";
+	mes "--------------------";
+	callshop "Barter_BH_AR_SHOP",1;
+	end;
+
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.Req_ItemID = 10000000;
+	//npcshopadditem "<Shop Name>",<Item>,<Cost Item>,<Cost Amount>,<Quantity>;
+	npcshopadditem "Barter_BH_AR_SHOP",2345,10000000,500,-1;
+	npcshopadditem "Barter_BH_AR_SHOP",2347,10000000,500,-1;
+	npcshopadditem "Barter_BH_AR_SHOP",2349,10000000,500,-1;
+	npcshopadditem "Barter_BH_AR_SHOP",2351,10000000,500,-1;
+	end;
+}

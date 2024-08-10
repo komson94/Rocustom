@@ -1,0 +1,82 @@
+//============================================================
+//====== Ex.NPC
+//============================================================
+
+-	bartershop	#temporal_shop	-1
+-	bartershop	#royal_guardian_weapon	-1
+
+glast_01,141,291,4	script	HUGINN2001#item_ex	564,{
+	if (lvcom <= 1 ) { mes "Please Complete Glast Heim Challenger Frist."; end; }
+	mes "[HUGINN2001]";
+	mes "Choose.";
+	mes "What ever you what ?";
+	mes "We got it.";
+	next;
+	mes "[HUGINN2001]";
+	mes "Anti-Hack System";
+	mes "Please Wait";
+	callshop "#temporal_shop",0;
+	end;
+	
+OnInit:
+	//CardMonster
+	npcshopadditem "#temporal_shop",27384,25866,50,-1,27385,25866,70,-1;
+	//Temporal Circlet
+	npcshopadditem "#temporal_shop",19474,25864,5,-1,19475,25864,5,-1,19476,25864,5,-1,19477,25864,5,-1,19478,25864,5,-1,19479,25864,5,-1,19480,25864,5,-1,19481,25864,5,-1,19482,25864,5,-1,19483,25864,5,-1,19484,25864,5,-1,19485,25864,5,-1,19486,25864,5,-1,19487,25864,5,-1,19488,25864,5,-1,19489,25864,5,-1,19490,25864,5,-1,19491,25864,5,-1,19492,25864,5,-1;
+	end;
+}
+
+glast_01,139,291,4	script	MUNINN2003#Ex_weapon	562,{
+	if (lvcom <= 1 ) { mes "Please Complete Glast Heim Challenger Frist."; end; }
+	mes "[MUNINN2003]";
+	mes "Choose.";
+	mes "What ever you what ?";
+	mes "We got it.";
+	next;
+	switch(select ("Random Royal/Guardian Weapon:Choose your Weapon") ) {
+		case 1:
+			mes "[HUGINN2001]";
+			mes "You will certificate to get Weapon";
+			next;
+			if (select ("I know : Not today") == 2 ) end;
+			mes "[HUGINN2001]";
+			mes "Are you sure about that";
+			next;
+			mes "[HUGINN2001]";
+			mes "In this case you still need 2 thing.";
+			next;
+			mes "[HUGINN2001]";
+			mes "Frist";
+			mes "You Need <ITEM>"+getitemname(25865)+"<INFO>25865</INFO></ITEM> 2 ea";
+			mes "And";
+			mes "<ITEM>"+getitemname(25867)+"<INFO>25867</INFO></ITEM> 20 ea";
+			mes "For random get weapon";
+			next;
+			mes "[HUGINN2001]";
+			mes "Are you still need it ?";
+			next;
+			if (select ("Sure:No Thanks") == 2 ) end;
+			if (countitem (25868) < 2 || countitem(25867) < 20) {
+			mes "[HUGINN2001]";
+			mes "Please,We still need item for do it";
+			end;
+			}
+			delitem 25868,2;
+			delitem 25867,20;
+			specialeffect2 721;
+			setArray .@weapons[0],1336,28141,18191,21055,32353,32027,32403,32111,26165,26172,28774,13347,28046,18198,1870,28776,2060,26166,32401,32304,28636,32402,26216;
+			getitem .@weapons[rand(22)],1;
+			end;
+		case 2:
+			mes "[HUGINN2001]";
+			mes "Anti-Hack System";
+			mes "Please Wait";
+			callshop "#royal_guardian_weapon",0;
+			end;
+	}
+	end;
+OnInit:
+	//RoyalandGuardian
+	npcshopadditem "#royal_guardian_weapon",1336,25866,20,-1,28141,25866,20,-1,18191,25866,20,-1,21055,25866,20,-1,32353,25866,20,-1,32027,25866,20,-1,32403,25866,20,-1,32111,25866,20,-1,26165,25866,20,-1,26172,25866,20,-1,28774,25866,20,-1,13347,25866,20,-1,28046,25866,20,-1,18198,25866,20,-1,1870,25866,20,-1,28776,25866,20,-1,2060,25866,20,-1,26166,25866,20,-1,32401,25866,20,-1,32304,25866,20,-1,28636,25866,20,-1,32402,25866,20,-1,26216,25866,20,-1;
+	end;
+}

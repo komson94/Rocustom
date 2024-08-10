@@ -1,0 +1,92 @@
+-	script	VIPCentral	-1,{
+OnTalk:
+	cutin "kafra_01",2;
+	mes .npc$;
+	mes (gettime(3)>= 6&&gettime(3)<= 12?"สวัสดี ยามเช้าค่ะ":(gettime(3)>=13&&gettime(3)<=18?"สวัสดี ตอนบ่ายค่ะ":"สวัสดี ยามค่ำค่ะ"))+", คุณ ^008aff"+strcharinfo(0)+"^000000 !";
+	mes "ยินดีต้อนรับสู่ ศูนย์กลาง VIP.";
+	mes "มีอะไรให้ฉันช่วยไหมคะ?";
+	next;
+	switch (select(.bcor$+"ตรวจสอบระยะเวลา VIP ของฉัน.",""+((vip_status(1))?""+.bcor$+"ฉันต้องการขยายเวลา ^008affVIP^000000 ของฉัน.":""+.bcor$+"ฉันต้องการซื้อ ^008affVIP^000000."),""+.rcor$+"ฉันไม่ต้องการอะไร.")){
+		case 1:
+			if (!vip_status(1) ) {
+				mes .npc$;
+				mes "ขออภัยค่ะ! คุณ ^008aff"+strcharinfo(0)+"^000000 !";
+				mes "-----------------------------------";
+				mes "ขณะนี้ ระยะเวลา ^008affVIP^000000 ของคุณหมดแล้ว หรือคุณยังไม่ได้เป็น ^008affVIP^000000 ค่ะ.";
+				mes "-----------------------------------";
+				close2;
+				cutin "kafra_01",255;
+				end;
+			}
+			mes .npc$;
+			mes "คุณ ^008aff"+strcharinfo(0)+"^000000 !";
+			mes "-----------------------------------";
+			mes "^008affระยะเวลา VIP ของคุณจะหมดอายุในวันที่ " + callfunc("Time2Str",vip_status(2)) + ".^000000";
+			mes "-----------------------------------";
+			close2;
+			cutin "kafra_01",255;
+			end;
+		case 2:
+			mes .npc$;
+			mes "คุณต้องการ ^008affVIP^000000 กี่วัน?";
+			next;
+			.@i = select(
+				.bcor$+""+.vip_day[0] + " วัน."
+				,.bcor$+""+.vip_day[1] + " วัน."
+				,.bcor$+""+.vip_day[2] + " วัน."
+				) - 1;
+				
+			mes .npc$;
+			mes "รายการของคุณ:";
+			mes "^4527A0VIP:^000000 "+.vip_day[.@i]+" วัน.";
+			mes "^4527A0ราคา:^000000 "+F_InsertComma(.vip_cashpoint[.@i])+" #CASHPOINTS.";
+			sleep2 1000;
+			mes " ";
+			mes " ";
+			mes "คุณต้องการซื้อหรือไม่?";
+			next;
+			switch(select(.bcor$+"ซื้อ:"+.rcor$+"ยกเลิก")){
+				case 1:
+					if ( #CASHPOINTS < .vip_cashpoint[.@i] ) {
+					mes .npc$;
+					mes "คุณมี Cash Points ไม่เพียงพอสำหรับ ^008aff"+F_InsertComma(.vip_cashpoint[.@i])+" #CASHPOINTS^000000.";
+					close2;
+					cutin "kafra_01",255;
+					end;
+				}
+				else {
+					#CASHPOINTS -= .vip_cashpoint[.@i];
+					vip_time (.vip_day[.@i] * 1440);
+					mes .npc$;
+					mes "ขอแสดงความยินดีด้วยค่ะ คุณได้รับ VIP "+.vip_day[.@i]+" วัน.";
+					close2;
+					cutin "kafra_01",255;
+					end;
+				}
+				end;
+				case 2:
+					mes .npc$;
+					mes "เอาล่ะ, ไว้กลับมาพบฉันอีกครั้งเมื่อคุณต้องการ.";
+					close2;
+					cutin "kafra_01",255;
+					end;
+			}
+
+		case 3:		
+			close2;
+			cutin "kafra_01",255;
+			end;
+	}
+
+OnInit:
+	.npc$ = "^FF7F00[ ศูนย์กลาง VIP ]^000000";			// Name of NPC;
+	.bcor$ = "^008aff[•]^000000 ";					// Option Button Symbol;
+	.rcor$ = "^ff0000[•]^000000 ";					// Cancel button symbol;
+	setarray .vip_day,7,14,30;						// Number of days that can be purchased;
+	setarray .vip_cashpoint,700,1400,3000;			// Price in #CASHPOINTS;
+	waitingroom "ศูนย์กลาง VIP",0; 
+	end;
+}
+//= Duplicate :: ตำแหน่ง NPC
+//============================================================
+askald,140,161,3	duplicate(VIPCentral)	ศูนย์กลาง VIP#askald	4_F_KAFRA1

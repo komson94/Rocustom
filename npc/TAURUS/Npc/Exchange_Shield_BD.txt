@@ -1,0 +1,48 @@
+louyang,237,100,3	script	For The Shield	4_ED_OSCAR,{
+	mes "เจ้ามาหาข้ามีธุระอันใดรึ";
+	mes "โล่ Bloody Knight ที่พังแล้ว แลกเป็นโล่ต้องสาบใหม่ได้";
+	mes "เพียงแค่นำ 500cc มาแลกกับข้าเองเท่านั้น";
+	next;
+	menu "มาเปลี่ยนโล่อันใหม่หนะ",Ex_shield,"กดผิดเฉยๆอย่าโกรธกันดิ",cl_exit;
+	
+Ex_shield:
+	if (Countitem (28945) < 1 || #CASHPOINTS < 500 ) {
+	mes "เจ้าต้องรู้จักกองเกลือก่อนที่จะมาคุยกับข้า";
+	mes "แต่เจ้ามาเห็นข้อความนี้อาจจะลืมก็ได้ ไม่เป็นไรข้าอภัยให้";
+	Close;	
+	}
+	else {
+	mes "ได้เสมอ แต่เจ้าอย่าลืมว่าเจ้าต้องใช้ Cash ด้วยนะ";
+	next;
+	sleep2 1000;
+	delitem 28945,1;
+	#CASHPOINTS -= 500;
+	getitem 28942,1;
+	next;
+	mes "โล่โง่ๆของเจ้าได้แล้ว รับไปสิ";
+	close;
+	}
+cl_exit:
+	mes "เวลามีค่าไอ้หนูมาซ่ากับข้าแบบนี้สงสัยวอนหาเรื่อง";
+	mes "อย่าอยู่เลยไอ้คนไร้ประโยชน์";
+	next;
+	atcommand "@die";
+	mes "สมน้ำหน้าเจ้ายิ่งนัก","ขอให้เจ้าเค็มไปตลอดชีวิต","ที่บังอาจมารบกวนเวลาของข้า";
+	close;
+Oninit:
+    setarray .messages$,"โ","ล่","พั","ง","แ","ล","ก","~ ","โ","ล่","เ","ก","ลื","อ";
+    while( 1 )
+    {
+        set .Display$,"";
+        for( set .i,0; .i < getarraysize( .messages$ ); set .i,.i + 1 )
+        {
+            set .Display$,.Display$ + .messages$[.i];
+            delwaitingroom;
+            waitingroom .Display$,0;
+            sleep 200;
+        }
+    sleep 2000;        // ดีเลย์ก่อนตัวอักษรวิ่งซ้ำ 1000 = 1 วินาที.
+    }
+    end;
+}
+	

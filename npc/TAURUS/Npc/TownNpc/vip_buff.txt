@@ -1,0 +1,349 @@
+//============================================================
+//=สคลิปทั้งหมดในนี้
+//=เขียนขึ้นใหม่
+//=ปรับแต่งแก้ไขใหม่และแปลไทยโดย Pcmedias : by Ittiphol Live
+//============================================================
+
+
+-	script	VipB	-1,{
+if (getgroupid()<4) {
+goto Geustz;
+}
+
+set .@Timer, vip_status(VIP_STATUS_EXPIRE);
+mes "[VIP FIT-RO System]";
+mes "ยินดีต้อนรับ "+strcharinfo(0)+",";
+mes "-----------------------------";
+mes "^FF0000• สถานะ VIP ของคุณจะหมดใน:^000000";
+mes gettimestr("%d-%m-%Y %H:%M:%S",21,vip_status(VIP_STATUS_EXPIRE));
+mes "^FF0000• เหลืออีก: ^000000";
+mes "" + callfunc("Time2Str",.@Timer);
+next;
+mes "[VIP-Buffer]";
+mes "สวัสดี ^0000FF" + strcharinfo(0) + "^000000";
+mes "ข้าคือตัวแทนบริษัท";
+mes "FIT-RO Corporation ";
+mes " ";
+mes "^FF0000[บริการฟรีสำหรับ VIP]^000000";
+emotion 21;
+OnTouch:
+
+	if( @delay_buff ) end;
+	specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,1800000,10;
+	specialeffect2 EF_BLESSING; sc_start SC_BLESSING,1800000,10;
+	specialeffect2 EF_ANGELUS; sc_start SC_ANGELUS,1800000,10;
+	specialeffect2 EF_SUFFRAGIUM; sc_start SC_SUFFRAGIUM,1800000,10;
+	specialeffect2 EF_IMPOSITIO; sc_start SC_IMPOSITIO,1800000,10;
+	specialeffect2 EF_GLORIA; sc_start SC_GLORIA,1800000,10;
+	specialeffect2 EF_MAGNIFICAT; sc_start SC_MAGNIFICAT,1800000,10;
+	specialeffect2 EF_ASSUMPTIO; sc_start SC_ASSUMPTIO,1800000,10;
+	specialeffect2 EF_PERFECTION; sc_start SC_WEAPONPERFECTION,1800000,10;
+	specialeffect2 EF_ENDURE; sc_start SC_ENDURE,1800000,10;
+	sc_start SC_STRFOOD,1800000,10;
+	sc_start SC_AGIFOOD,1800000,10;
+	sc_start SC_DEXFOOD,1800000,10;
+	sc_start SC_VITFOOD,1800000,10;
+	sc_start SC_LUKFOOD,1800000,10;
+	sc_start SC_INTFOOD,1800000,10;
+	specialeffect2 EF_HEAL2; percentheal 1000,1000;
+
+close;
+
+
+
+
+First:
+sc_start SC_STRFOOD,18000000,8;
+sc_start SC_AGIFOOD,18000000,6;
+sc_start SC_DEXFOOD,18000000,4;
+sc_start SC_ATKPOTION,18000000,32;
+percentheal 100,100;
+	specialeffect 76;
+	specialeffect 83;
+emotion 21;
+next;
+goto buffx;
+
+Second:
+sc_start SC_INTFOOD,18000000,8;
+sc_start SC_DEXFOOD,18000000,6;
+sc_start SC_VITFOOD,18000000,4;
+sc_start SC_MATKPOTION,18000000,40;
+percentheal 100,100;
+	specialeffect 76;
+	specialeffect 83;
+emotion 21;
+next;
+goto buffx;
+
+Third:
+sc_start SC_DEXFOOD,18000000,8;
+sc_start SC_AGIFOOD,18000000,6;
+sc_start SC_LUKFOOD,18000000,4;
+sc_start SC_ATKPOTION,18000000,24;
+sc_start SC_MATKPOTION,18000000,24;
+percentheal 100,100;
+	specialeffect 76;
+	specialeffect 83;
+emotion 21;
+next;
+goto buffx;
+
+Fourth:
+sc_start SC_STRFOOD,18000000,6;
+sc_start SC_AGIFOOD,18000000,6;
+sc_start SC_VITFOOD,18000000,6;
+sc_start SC_INTFOOD,18000000,6;
+sc_start SC_DEXFOOD,18000000,6;
+sc_start SC_LUKFOOD,18000000,6;
+sc_start SC_ATKPOTION,18000000,24;
+sc_start SC_MATKPOTION,18000000,24;
+percentheal 100,100;
+	specialeffect 76;
+	specialeffect 83;
+emotion 21;
+next;
+goto buffx;
+
+buffx:
+mes "[VIP-Buffer]";
+mes "พลังจงอยู่กับเจ้า....! .. !";
+	end;
+
+Geustz:
+
+
+if (countitem(60056) >= 1) {
+mes "[FIT-RO Ranking]";
+mes "ยินดีต้อนรับ Semi VIP";
+mes "=======================";
+mes "^FF0000Novice^000000 ^0000FF[••]^000000";
+mes "=======================";
+mes "คุณมีสิทธิ์ใช้พิเศษของอันดับคุณ";
+next;
+					
+	if( @delay_buff ) end;
+	skilleffect 34,0; sc_start SC_BLESSING,1800000,10;
+	skilleffect 29,0; sc_start SC_INCREASEAGI,1800000,10;
+	specialeffect2 EF_HEAL2; percentheal 1000,1000;
+		specialeffect 76;
+	specialeffect 83;
+	@delay_buff++;
+	sleep2 1000;
+	@delay_buff = 0;
+emotion 21;
+	end;
+					}
+
+
+
+else if(countitem(60057) >= 1) {
+mes "[FIT-RO Ranking]";
+mes "ยินดีต้อนรับ Semi VIP";
+mes "=======================";
+mes "^FF0000Gamer^000000 ^0000FF[•••]^000000";
+mes "=======================";
+mes "คุณมีสิทธิ์ใช้พิเศษของอันดับคุณ";
+specialeffect2 EF_HEAL2; percentheal 1000,1000;
+	if( @delay_buff ) end;
+	
+	skilleffect 33,0; sc_start SC_ANGELUS,18000000,10;
+	skilleffect 34,0; sc_start SC_BLESSING,1800000,10;
+	skilleffect 29,0; sc_start SC_INCREASEAGI,1800000,10;
+	specialeffect2 EF_HEAL2; percentheal 1000,1000;
+		specialeffect 76;
+	specialeffect 83;
+	@delay_buff++;
+	sleep2 1000;
+	@delay_buff = 0;
+emotion 21;
+	end;
+					}
+
+
+
+else if(countitem(60058) >= 1) {
+mes "[FIT-RO Ranking]";
+mes "ยินดีต้อนรับ Semi VIP";
+mes "=======================";
+mes "^FF0000Professional^000000 ^0000FF[•••••]^000000";
+mes "=======================";
+mes "คุณมีสิทธิ์ใช้พิเศษของอันดับคุณ";
+next;
+specialeffect2 EF_HEAL2; percentheal 1000,1000;
+	if( @delay_buff ) end;
+	
+	skilleffect 33,0; sc_start SC_ANGELUS,18000000,10;
+	skilleffect 74,0; sc_start SC_MAGNIFICAT,18000000,10;
+	skilleffect 34,0; sc_start SC_BLESSING,1800000,10;
+	skilleffect 29,0; sc_start SC_INCREASEAGI,1800000,10;
+	specialeffect2 EF_HEAL2; percentheal 1000,1000;
+		specialeffect 76;
+	specialeffect 83;
+	@delay_buff++;
+	sleep2 1000;
+	@delay_buff = 0;
+emotion 21;
+	end;
+					}
+
+
+
+else if(countitem(60059) >= 1) {
+mes "[FIT-RO Ranking]";
+mes "ยินดีต้อนรับ Semi VIP";
+mes "=======================";
+mes "^FF0000Game Master^000000 ^0000FF[•••••] Max^000000";
+mes "=======================";
+mes "คุณมีสิทธิ์ใช้พิเศษของอันดับคุณ";
+next;
+specialeffect2 EF_HEAL2; percentheal 1000,1000;
+	if( @delay_buff ) end;
+	
+	skilleffect 33,0; sc_start SC_ANGELUS,18000000,10;
+	skilleffect 74,0; sc_start SC_MAGNIFICAT,18000000,10;
+	skilleffect 75,0; sc_start SC_GLORIA,18000000,10;
+	skilleffect 34,0; sc_start SC_BLESSING,1800000,10;
+	skilleffect 29,0; sc_start SC_INCREASEAGI,1800000,10;
+	specialeffect2 EF_HEAL2; percentheal 1000,1000;
+		specialeffect 76;
+	specialeffect 83;
+	@delay_buff++;
+	sleep2 1000;
+	@delay_buff = 0;
+emotion 21;
+	end;
+					}
+
+
+mes "[VIP-Buffer]";
+mes "สวัสดี ^0000FF" + strcharinfo(0) + "^000000";
+mes "ข้าคือตัวแทนบริษัท";
+mes "FIT-RO Corporation ";
+mes "ข้าเพิ่มพลังให้เจ้าเวลา 1 ชั่วโมง";
+mes "^FF0000[บริการฟรีสำหรับ VIP]^000000";
+mes "ที่ให้เจ้ามีดังรายการนี้";
+next;
+mes "^FF0000ฟื้น HP และ SP ^000000";
+mes "^0000FFBuff ANGELUS ";
+mes "Buff MAGNIFICAT";
+mes "Buff GLORIA";
+mes "Buff IMPOSITIO";
+mes "Buff BLESSING";
+mes "Buff INCREASEAGI^000000";
+next;
+mes "^FF0000[ถ้าไม่ใช่ VIP]^000000";
+mes "ฟื้น HP และ SP";
+mes "Buff BLESSING";
+mes "Buff INCREASEAGI^000000";
+mes "ข้าสามารถเพิ่มพลังให้เจ้า";
+mes "ติดตัวเจ้าเป็นเวลา 10 นาที";
+mes "คิดค่าบริการครั้งละ 500,000z";
+next;
+	switch(select("ไม่ดีกว่า:^FF3355ซื้อบัพ^000000")) {
+		case 1:
+			mes "[VIP-Buffer]";
+			mes "ข้าช่วยเจ้าได้เยอะนะ ตัดสินใจแล้วกัน";
+				close;
+		case 2:
+				if (Zeny < 500000) {
+				mes "[VIP-Buffer]";
+				mes "ขออภัยคุณมี Zeny ไม่เพียงพอ";
+				close;
+						}
+			mes "[VIP-Buffer]";
+			mes "พลังจงอยู่กับเจ้า....! .. !";
+			set Zeny,zeny-500000;
+
+
+	if( @delay_buff ) end;
+	
+	skilleffect 34,0; sc_start SC_BLESSING,1800000,10;
+	skilleffect 29,0; sc_start SC_INCREASEAGI,1800000,10;
+	specialeffect2 EF_HEAL2; percentheal 1000,1000;
+		specialeffect 76;
+	specialeffect 83;
+	@delay_buff++;
+	sleep2 1000;
+	@delay_buff = 0;
+emotion 21;
+	end;
+
+
+}
+		
+
+OnInit:
+while (1) {
+	sleep 8000;
+	npctalk "";
+}
+end;
+}
+
+
+
+prontera,150,108,5	script	Healera	139,1,1,{
+	end;
+OnTouch_:
+
+	if( @delay_buff ) end;
+	specialeffect2 EF_HEAL2; percentheal 1000,1000;
+	@delay_buff++;
+	sleep2 1000;
+	@delay_buff = 0;
+		
+	
+	end;
+}
+
+//prontera,146,108,6	duplicate(VipB)	VIP-Buffer#pro	10270
+prontera,160,193,6	duplicate(VipB)	VIP-Buffer#pro	10299
+izlude,125,148,3	duplicate(VipB)	VIP-Buffer#izl	10299
+geffen,136,56,3	duplicate(VipB)	VIP-Buffer#gef	10299
+payon,174,119,3	duplicate(VipB)	VIP-Buffer#pay	10299
+morocc,166,97,3	duplicate(VipB)	VIP-Buffer#mBufr	10299
+//morocc,167,258,3	duplicate(VipB)	VIP-Buffer#m0rW	10299
+//morocc,162,45,3	duplicate(VipB)	VIP-Buffer#m0rW2	10299
+//morocc,209,65,3	duplicate(VipB)	VIP-Buffer#m0rW3	10299
+//morocc,221,96,3	duplicate(VipB)	VIP-Buffer#m0rW4	10299
+//morocc,196,110,3	duplicate(VipB)	VIP-Buffer#m0rW5	10299
+//morocc,237,60,3	duplicate(VipB)	VIP-Buffer#m0rW6	10299
+//morocc,200,42,3	duplicate(VipB)	VIP-Buffer#m0rW7	10299
+
+
+
+alberta,106,74,3	duplicate(VipB)	VIP-Buffer#alb	10299
+comodo,215,148,3	duplicate(VipB)	VIP-Buffer#com	10299
+umbala,95,162,3	duplicate(VipB)	VIP-Buffer#umb	10299
+aldebaran,146,117,3	duplicate(VipB)	VIP-Buffer#ald	10299
+yuno,150,122,3	duplicate(VipB)	VIP-Buffer#yun	10299
+mjolnir_02,88,358,3	duplicate(VipB)	VIP-Buffer#mjo	10299
+xmas,138,142,3	duplicate(VipB)	VIP-Buffer#xma	10299
+amatsu,102,162,3	duplicate(VipB)	VIP-Buffer#ama	10299
+gonryun,155,122,3	duplicate(VipB)	VIP-Buffer#gon	10299
+niflheim,206,179,3	duplicate(VipB)	VIP-Buffer#nif	10299
+louyang,210,108,3	duplicate(VipB)	VIP-Buffer#lou	10299
+ayothaya,206,169,3	duplicate(VipB)	VIP-Buffer#ayo	10299
+einbroch,55,203,3	duplicate(VipB)	VIP-Buffer#ein	10299
+lighthalzen,167,104,3	duplicate(VipB)	VIP-Buffer#lig	10299
+einbech,186,123,3	duplicate(VipB)	VIP-Buffer#ein2	10299
+hugel,84,149,3	duplicate(VipB)	VIP-Buffer#hug	10299
+rachel,127,135,3	duplicate(VipB)	VIP-Buffer#rac	10299
+veins,210,135,3	duplicate(VipB)	VIP-Buffer#vei	10299
+moscovia,220,191,3	duplicate(VipB)	VIP-Buffer#mos	10299
+brasilis,194,221,3	duplicate(VipB)	VIP-Buffer#bra	10299
+dewata,202,190,3	duplicate(VipB)	VIP-Buffer#dew	10299
+malaya,228,195,3	duplicate(VipB)	VIP-Buffer#mal	10299
+lasagna,204,196,3	duplicate(VipB)	VIP-Buffer#las	10299
+glast_01,191,273,3	duplicate(VipB)	VIP-Buffer#gla	10299
+dicastes01,188,213,3	duplicate(VipB)	VIP-Buffer#dic	10299
+mid_camp,202,288,4	duplicate(VipB)	VIP-Buffer#mid	10299
+
+//doubrius,119,151,4	duplicate(VipB)	VIP-Buffer#Minas	10299
+//veil,131,126,4	duplicate(VipB)	VIP-Buffer#veil	10299
+//skycity,158,189,4	duplicate(VipB)	VIP-Buffer#skycity	10299
+//ilyo_kwan,148,132,4	duplicate(VipB)	VIP-Buffer#TheShire	10299
+
+//invek,146,172,6	duplicate(VipB)	VIP-Buffer#TheRenewal	10299
+

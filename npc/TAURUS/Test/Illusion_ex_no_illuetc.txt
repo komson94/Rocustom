@@ -1,0 +1,37 @@
+-	exbartershop	#ex_barter_Illu_weapon	-1
+
+byako,103,91,4	script	Illusion Weapon#With out equipment	902,{
+	callshop "#ex_barter_Illu_weapon",1;
+	end;
+
+OnInit:
+	waitingroom "Illusion Weapon",0;
+	npcshopadditem "#ex_barter_Illu_weapon",16063,-1,3000000,1525,1,7,25256,20,0,25271,10,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",26007,-1,3000000,1479,1,7,25256,100,0,25271,10,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",28725,-1,3000000,1234,1,7,25256,100,0,25271,30,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",13337,-1,3000000,13314,1,7,25300,5,0,25271,100,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",1846,-1,3000000,1822,1,7,25299,100,0,25271,100,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",28022,-1,3000000,1266,1,7,25261,10,0,25271,80,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",28023,-1,3000000,1260,1,7,25264,100,0,25271,10,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",2039,-1,3000000,1473,1,7,25267,100,0,25271,40,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",18149,-1,3000000,1727,1,7,25265,100,0,25271,50,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",28612,-1,3000000,1557,1,7,25262,5,0,25271,50,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",13469,-1,3000000,1141,1,7,25314,6,0,25271,100,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",1326,-1,3000000,1306,1,7,25311,200,0,25271,100,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",32005,-1,3000000,1417,1,7,25311,200,0,25271,100,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",13338,-1,3000000,13300,1,7,25313,200,0,25271,100,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",28244,-1,3000000,13167,1,7,25618,75,0,25271,95,0,25615,150,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",2051,-1,3000000,1620,1,7,25619,4,0,25271,125,0,25618,100,0,25617,100,0;
+	npcshopadditem "#ex_barter_Illu_weapon",18174,-1,3000000,1726,1,7,25636,50,0,25271,80,0,25640,50,0,25637,50,0;
+	npcshopadditem "#ex_barter_Illu_weapon",28254,-1,3000000,13159,1,7,25772,150,0,25271,120,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",21050,-1,3000000,1181,1,7,25779,150,0,25271,120,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",32301,-1,3000000,13106,1,7,25773,150,0,25271,120,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",28762,-1,3000000,1231,1,7,25774,150,0,25271,120,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",580008,-1,3000000,1972,1,9,25895,150,0,25271,120,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",570008,-1,3000000,1913,1,9,25895,150,0,25271,120,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",630006,-1,3000000,1470,1,9,25893,150,0,25271,120,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",610012,-1,3000000,1256,1,9,25896,150,0,25271,120,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",600011,-1,3000000,1186,1,9,25894,150,0,25271,120,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_barter_Illu_weapon",630007,-1,3000000,1481,1,9,25892,150,0,25271,120,0,0,0,0,0,0,0;
+	end;
+}

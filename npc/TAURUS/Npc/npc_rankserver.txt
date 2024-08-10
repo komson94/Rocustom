@@ -1,0 +1,180 @@
+-	shop	dig_shop2	-1,501:-1
+
+prontera,164,168,4	script	แลกของขุด::rank_shop	879,{
+
+	function showmsg;
+	function check_pos;
+	function show_requirement;
+	function check_requirement;
+	function make_trade;
+	
+	set .@accid, getcharid(3);
+
+	cleararray @katoo$[0] , 0, getarraysize(@katoo$);
+	cleararray .@point1[0] , 0, getarraysize(.@point1);
+	query_sql "SELECT `point` FROM `rankserver` WHERE `account_id` = " + .@accid + " LIMIT 1", .@point1;
+	if( .@point1[0] > 0 ) {
+			set #DIGPOINTS1, #DIGPOINTS1 + .@point1[0];
+			query_sql "UPDATE `rankserver` SET `point`= '0' WHERE `account_id` = " + .@accid + " LIMIT 1";
+	}
+
+	cleararray @quest[ 0 ] , 0 , getarraysize(  @quest ) ;
+	
+	mes "ปัจจุบันท่านมี แต้มขุด ^0000FF"+ #DIGPOINTS1 +"^000000";
+	close2;
+
+	set @s, 1;
+	callshop "dig_shop2", 1;
+	npcshopattach "dig_shop2";
+	end;
+
+L_cancel:
+	mes " วันหลังโปรดใช้บริการใหม่นะคะ";
+	close;
+
+OnBuyItem:
+	for( set @i, 0; @i < getarraysize(@bought_nameid); set @i, @i + 1 )
+	{
+		if( @bought_quantity[@i] <= 0 )
+		{
+			showmsg("เกิดข้อผิดพลาด โปรดลองอีกครั้ง!!");
+			break;
+		}
+		
+		set @j, check_pos( @bought_nameid[ @i ], @s );
+		if( @j == 0 )
+		{
+			showmsg("ไม่พบของที่ท่านต้องการ โปรดลองใหม่อีกครั้ง!!");
+			break;
+		}
+		cleararray @quest[ 0 ], 0, getarraysize(@quest);
+		copyarray @quest[ 0 ] , getd( ".quest" + @s + "_" + @j + "[ 0 ]" ) , getarraysize( getd( ".quest" + @s + "_" + @j ) ) ;
+		if( !check_requirement(@bought_quantity[@i]) )
+			make_trade(@bought_quantity[@i]) ;
+		else
+		{
+			showmsg("=====================================");
+			showmsg("ไอเทมที่ใช้ในการแลกเปลี่ยน " + getitemname(@bought_nameid[ @i ]) + "");
+			show_requirement();
+		}
+	}
+
+	deletearray @bought_quantity, getarraysize(@bought_quantity);
+	deletearray @bought_nameid, getarraysize(@bought_nameid);
+	end;
+
+
+/*---- FUNCTIONS ! -------------------------------------------------------------------------
+--- Edit at your own risk ------------------------------------------------------------------
+------------------------------------------------------------------------------------------*/
+
+	function	showmsg
+	{
+		dispbottom getarg(0);
+	}
+
+	function	check_pos
+	{
+		if( getarg(1) < 1 || getarg(1) > 9 )
+			return 0;
+
+		for( set .@i, 1; .@i <= 100; set .@i, .@i+1 )
+			if( getd(".quest" + getarg(1) + "_" + .@i + "[ 0 ]") == getarg(0) )
+				return .@i;
+		return 0;
+	}
+
+//-- Function who show the requirement
+	function	show_requirement	{
+	
+		// Show items need
+		for ( set @j , 2 ; @j < getarraysize( @quest ) ; set @j , @j + 2 )
+		{
+			set @slot$, "";
+			set @k, getiteminfo(@quest[ @j ], 10);
+			if( @k > 0 )
+				set @slot$, "[" + @k + "]";
+			// showmsg(" -  " + getitemname( @quest[ @j ] ) +  @slot$ + " - " + @quest[ @j + 1 ] + " ea.");
+			showmsg(" DIGPOINTS :  " + @quest[ @j + 1 ] + " แต้ม");
+		}
+
+		return ;
+	}
+
+//-- Check if the player has all requirement.
+	function	check_requirement	{
+
+		set @l , 0 ;
+
+// Look if player has all items
+		for ( set @j , 2 ; @j < getarraysize( @quest ) ; set @j , @j + 2 )
+		{
+			if ( #DIGPOINTS1 < @quest[ @j + 1 ] * getarg(0) )
+			{
+				set @l , 1 ;
+			}
+		}
+		return @l ;
+	}
+
+//-- Make The trade (delete requirements/give item)
+	function	make_trade	{
+
+	// Remove items
+		for ( set @j , 2 ; @j < getarraysize( @quest ) ; set @j , @j + 2 )
+		{
+			set #DIGPOINTS1, #DIGPOINTS1 - (@quest[ @j + 1 ] * getarg(0)) ;
+		}
+
+	// Give item.
+		getitem @quest[ 0 ] , getarg(0);
+		showmsg("คุณเหลือแต้มขุด: " + #DIGPOINTS1);
+		
+		return ;
+	}
+
+	function	digadditem1	{
+
+		set .lastpos[getarg(0)], .lastpos[getarg(0)] + 1;
+
+		set .@i, 1;
+		while( getarg(.@i,-1) != -1 )
+		{
+			setd ".quest" + getarg(0) + "_" + .lastpos[getarg(0)] +"[ " + (.@i-1) + " ]",getarg(.@i);
+			set .@i, .@i + 1;
+		}
+		npcshopadditem( "dig_shop2", getd(".quest" + getarg(0) + "_" + .lastpos[getarg(0)] + "[ 0 ]"), getd(".quest" + getarg(0) + "_" + .lastpos[getarg(0)] + "[ 3 ]")  );
+
+		return;
+		end;
+	}
+
+OnInit:
+	setarray .lastpos[1],0,0,0,0;
+	
+	npcshopdelitem( "dig_shop2", 501 );
+	waitingroom "แลกของขุดRankserver", 0;
+	
+	if( .inited != 1 )
+		set .inited, 1;
+	else
+		end;
+
+//digadditem(1,501,0,512,5); // Redpotion ใช้ 5p
+digadditem1( 1, 601, 0, 512, 10 );
+digadditem1( 1, 601, 0, 512, 40 );
+digadditem1( 1, 601, 0, 512, 200 );
+digadditem1( 1, 601, 0, 512, 2000 );
+digadditem1( 1, 601, 0, 512, 5000 );
+digadditem1( 1, 601, 0, 512, 5000 );
+digadditem1( 1, 601, 0, 512, 5000 );
+digadditem1( 1, 601, 0, 512, 5000 );
+digadditem1( 1, 601, 0, 512, 200 );
+digadditem1( 1, 601, 0, 512, 20000 );
+digadditem1( 1, 601, 0, 512, 20000 );
+digadditem1( 1, 601, 0, 512, 20000 );
+digadditem1( 1, 601, 0, 512, 20000 );
+digadditem1( 1, 601, 0, 512, 20000 );
+digadditem1( 1, 601, 0, 512, 20000 );
+	end;
+}

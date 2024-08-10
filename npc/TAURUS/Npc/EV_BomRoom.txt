@@ -1,0 +1,473 @@
+
+quiz_02,337,82,4	script	แม่มด ดูแลกิจกรรม	970,{
+
+if (getgmlevel() > 10) goto L_GM;
+//== ตัวแปรห้ามแก้ไข ============================================
+set @npc$,"[^000080"+strnpcinfo(0)+"^000000]";
+set .@s$,strcharinfo(0);
+//=========================================================
+mes @npc$;
+mes "^880000การเตรียมตัว: ไม่จำเป็นต้องนำอะไรไปขอให้นำใจและดวงไปอย่างเดี่ยว";
+mes "^330000รายละเอียด: กิจกรรมนี้ จะให้คุณเลือก 4 ห้อง ซึ่ง ห้องใด ห้อง 1 จะมีระเบิด อยู่ และระเบิดจะตูมทีละห้อง ทั้งหมด 3 ครั้ง ถ้ายังรอดอยู่ก็จะได้รับรางวัล";
+mes "^770000รางวัล: Zeny 50,000^000000";
+mes "^660000ผู้เข้าร่วม(ไม่ได้รางวัล): Zeny 5,000^000000";
+close;
+
+L_GM:
+mes "สวัสดี Game Master";
+mes "มีธุระอะไรล่ะ ??";
+next;
+menu "เปิดกิจกรรม",L_Sss,"ไม่มีอะไร",-;
+close;
+
+L_Sss:
+
+//callfunc "Ev_Bome444";
+addtimer 1,"Ev_BomeLucky_time::Ontime_game";
+close;
+
+
+
+OnInit:
+set $Ev_BomeLucky,0;	//สถานะกิจกรรม
+set $Ev_BomeLucky_time$,"GM เป็นผู้เปิดกิจกรรม";	//เวลากิจกรรม
+disablenpc "LUCKYportal";
+end;
+
+OnClock2200: 
+set $@EvBometimeST$,"22:00";
+addtimer 1,"Ev_BomeLucky_time::Ontime_game";
+end;
+
+}
+
+-	script	Ev_BomeLucky_time	-1,{
+
+Ontime_game:
+enablenpc "LUCKYportal";
+set $Ev_BomeLucky,1;
+set $Ev_BomeLucky_Boom1,0;
+set $Ev_BomeLucky_Boom2,0;
+set $Ev_BomeLucky_Boom3,0;
+set $Ev_BomeLucky_Boom4,0;
+set $EvBomeBoom1,0;
+set $EvBomeBoom2,0;
+set $EvBomeBoom3,0;
+set $EvBomeBoom4,0;
+disablenpc "BomeLucky_Warp1";
+disablenpc "BomeLucky_Warp2"; 
+disablenpc "BomeLucky_Warp3"; 
+disablenpc "BomeLucky_Warp4"; 
+announce "....ปิง....ปอง....ดอง....ด่อง....ด๋อง....",bc_all,0xFFFF00;
+sleep2 5000;
+announce "ขออภัยผู้เล่นทุกท่านในความไม่สะดวก....",bc_all,0xFFFF00;
+sleep2 5000;
+announce "ซึงตอนนี้ก็ถึงเวลา "+$@EvBometimeST$+"  ซึ่งเป็นเวลาของ....",bc_all,0xFFFF00;
+sleep2 5000;
+announce "......กิจกรรม เกมส์วัดดวง.....",bc_all,0xFFFF00;
+sleep2 5000;
+announce "มีเวลา 3นาที ในการรับผู้เข้าร่วมเล่นกิจกรรม",bc_all,0xFFFF00;
+sleep2 5000;
+announce "สามารถ เข้าร่วมกิจกรรมได้ที่ Warp Portal กลาง Morocc ได้เลยจ้ะ",bc_all,0xFFFF00;
+addtimer 60000,"Ev_BomeLucky_time::Ontime3_1";
+deltimer "Ev_BomeLucky_time::Ontime_game";
+end;
+
+Ontime3_1:
+announce "เหลือเวลาอีก 2 นาที ในการเข้าร่วมกิจกรรม เกมส์วัดดวง เข้าวาร์ป ที่อยู่ กลาง Morocc ได้เลยค่ะ",bc_all,0xFFFF00;
+addtimer 60000,"Ev_BomeLucky_time::Ontime3_2";
+deltimer "Ev_BomeLucky_time::Ontime3_1";
+close;
+
+Ontime3_2:
+announce "เหลือเวลาอีก 1 นาที ในการเข้าร่วมกิจกรรม เกมส์วัดดวง เข้าวาร์ป ที่อยู่ กลาง Morocc ได้เลยค่ะ",bc_all,0xFFFF00;
+addtimer 60000,"Ev_BomeLucky_time::Ontime3_3";
+deltimer "Ev_BomeLucky_time::Ontime3_2";
+close;
+
+Ontime3_3:
+set $Ev_BomeLucky,0;
+set $Ev_BomeLucky_item,1;
+announce "หมดเวลาการเข้าร่วมกิจกรรม เกมส์วัดดวง ค่ะ",bc_all,0xFFFF00;
+addtimer 15000,"Ev_BomeLucky_time::Ongame4_1a";
+deltimer "Ev_BomeLucky_time::Ontime3_3";
+disablenpc "LUCKYportal";
+close;
+
+Ongame4_1a:
+areaannounce "quiz_02",310,87,359,34,"วิธีร่วมกิจกรรมนี้ก็คือให้ท่านเลือกห้องที่คิดว่าไม่มีระเบิด",0xFFFF00;
+sleep2 5000;
+areaannounce "quiz_02",310,87,359,34,"แต่ถ้าคุณเข้าห้องผิดเป็นห้องที่มีระเบิดก็จะถูกระเบิดถือว่าตกรอบก็รับรางวัลสมน้ำหน้าคุณแล้วกลับเมืองไปได้เลย",0xFFFF00;
+sleep2 5000;
+areaannounce "quiz_02",310,87,359,34,"สำหรับผู้ที่ยังอยู่รอดในห้องสุดท้ายและไม่มีระเบิดก็จะได้ถูกส่งตัวไปห้องรับรางวัลเป็นอันจบกิจกรรมค่ะ",0xFFFF00;
+sleep2 5000;
+areaannounce "quiz_02",310,87,359,34,"เรามาเริ่มกิจกรรมเลยดีกว่า",0xFFFF00;
+sleep2 2000;
+enablenpc "BomeLucky_Warp1";
+enablenpc "BomeLucky_Warp2"; 
+enablenpc "BomeLucky_Warp3"; 
+enablenpc "BomeLucky_Warp4"; 
+areaannounce "quiz_02",310,87,359,34,"กรุณาเลือกห้องที่คุณคิดว่าหน้าจะไม่มีระเบิดภายในเวลา 1 นาที",0xFFFF00;
+addtimer 60000,"Ev_BomeLucky_time::Ongame4_1b";
+deltimer "Ev_BomeLucky_time::Ongame4_1a";
+close;
+
+Ongame4_1b:
+areaannounce "quiz_02",310,87,359,34,"หมดเวลาในการเข้าห้องผู้ที่ไม่ได้อยู่ในห้องทางเราจะส่งกลับโดยไม่ได้รับรางวัลอะไรเลยเนื่องจากไม่ทำตามข้อตกลง",0xFFFF00;
+areawarp "quiz_02",310,87,358,59,"morocc",159,49;
+sleep2 5000;
+areaannounce "quiz_02",310,87,359,34,"ตอนนี้เราก็มาเริ่มวัดดวงกันดีกว่าละ....",0xFFFF00;
+sleep2 5000;
+areaannounce "quiz_02",310,87,359,34,"3",0xFFFF00;
+sleep2 3000;
+areaannounce "quiz_02",310,87,359,34,"2",0xFFFF00;
+sleep2 3000;
+areaannounce "quiz_02",310,87,359,34,"1",0xFFFF00;
+sleep2 3000;
+set .@BomeBoom,rand(1,4);
+set $EvBomeBoom1,.@BomeBoom;
+areaannounce "quiz_02",310,87,359,34,"ระเบิดนั้นอยู่ในห้องหมายเลย ..."+.@BomeBoom+"...ค่ะ....",0xFFFF00;
+sleep2 1000;
+areaannounce "quiz_02",310,87,359,34,"........ระเบิดทำงาน.......",0xFFFF00;
+if (.@BomeBoom == 1) set $Ev_BomeLucky_Boom1,1;
+if (.@BomeBoom == 2) set $Ev_BomeLucky_Boom2,1;
+if (.@BomeBoom == 3) set $Ev_BomeLucky_Boom3,1;
+if (.@BomeBoom == 4) set $Ev_BomeLucky_Boom4,1;
+addtimer 10000,"Ev_BomeLucky_time::Ongame4_2a";
+deltimer "Ev_BomeLucky_time::Ongame4_1b";
+close;
+
+Ongame4_2a:
+areaannounce "quiz_02",310,87,359,34,"ยินดีกับผู้ที่รอดชีวิตด้วยนะค่ะ",0xFFFF00;
+if (.@BomeBoom != 1) set $Ev_BomeLucky_Boom1,2;
+if (.@BomeBoom != 2) set $Ev_BomeLucky_Boom2,2;
+if (.@BomeBoom != 3) set $Ev_BomeLucky_Boom3,2;
+if (.@BomeBoom != 4) set $Ev_BomeLucky_Boom4,2;
+sleep2 3000;
+areaannounce "quiz_02",310,87,359,34,"เล่นเอาหายใจไม่ทั่วท้องกันเลยหะ...",0xFFFF00;
+sleep2 3000;
+areaannounce "quiz_02",310,87,359,34,"งั้นเรามาเริ่มกันต่อเลยดีกว่านะค่ะ",0xFFFF00;
+sleep2 4000;
+areaannounce "quiz_02",310,87,359,34,"กรุณาเลือกห้องที่คุณคิดว่าหน้าจะไม่มีระเบิดภายในเวลา 1 นาที",0xFFFF00;
+addtimer 60000,"Ev_BomeLucky_time::Ongame4_2b";
+deltimer "Ev_BomeLucky_time::Ongame4_2a";
+close;
+
+Ongame4_2b:
+areaannounce "quiz_02",310,87,359,34,"หมดเวลาในการเข้าห้องผู้ที่ไม่ได้อยู่ในห้องทางเราจะส่งกลับโดยไม่ได้รับรางวัลอะไรเลยเนื่องจากไม่ทำตามข้อตกลง",0xFFFF00;
+areawarp "quiz_02",310,87,358,59,"morocc",159,49;
+sleep2 5000;
+areaannounce "quiz_02",310,87,359,34,"ตอนนี้เราก็มาเริ่มวัดดวงครั้งที่ 2 กันดีกว่าละ....",0xFFFF00;
+sleep2 5000;
+areaannounce "quiz_02",310,87,359,34,"3",0xFFFF00;
+sleep2 3000;
+areaannounce "quiz_02",310,87,359,34,"2",0xFFFF00;
+sleep2 3000;
+areaannounce "quiz_02",310,87,359,34,"1",0xFFFF00;
+sleep2 3000;
+goto Lradom_2b;
+
+Lradom_2b:
+set .@BomeBoom,rand(1,4);
+if (.@BomeBoom == $EvBomeBoom1) goto Lradom_2b;
+set $EvBomeBoom2,.@BomeBoom;
+
+areaannounce "quiz_02",310,87,359,34,"ระเบิดนั้นอยู่ในห้องหมายเลย ..."+.@BomeBoom+"...ค่ะ....",0xFFFF00;
+sleep2 1000;
+areaannounce "quiz_02",310,87,359,34,"........ระเบิดทำงาน.......",0xFFFF00;
+if (.@BomeBoom == 1) set $Ev_BomeLucky_Boom1,1;
+if (.@BomeBoom == 2) set $Ev_BomeLucky_Boom2,1;
+if (.@BomeBoom == 3) set $Ev_BomeLucky_Boom3,1;
+if (.@BomeBoom == 4) set $Ev_BomeLucky_Boom4,1;
+addtimer 10000,"Ev_BomeLucky_time::Ongame4_3a";
+deltimer "Ev_BomeLucky_time::Ongame4_2b";
+close;
+
+Ongame4_3a:
+areaannounce "quiz_02",310,87,359,34,"ยินดีกับผู้ที่รอดชีวิตด้วยนะค่ะ",0xFFFF00;
+if (.@BomeBoom != 1) set $Ev_BomeLucky_Boom1,2;
+if (.@BomeBoom != 2) set $Ev_BomeLucky_Boom2,2;
+if (.@BomeBoom != 3) set $Ev_BomeLucky_Boom3,2;
+if (.@BomeBoom != 4) set $Ev_BomeLucky_Boom4,2;
+sleep2 3000;
+areaannounce "quiz_02",310,87,359,34,"เล่นเอาหายใจไม่ทั่วท้องกันเลยหะ...",0xFFFF00;
+sleep2 3000;
+areaannounce "quiz_02",310,87,359,34,"งั้นเรามาเริ่มกันต่อเลยดีกว่านะค่ะ",0xFFFF00;
+sleep2 4000;
+areaannounce "quiz_02",310,87,359,34,"กรุณาเลือกห้องที่คุณคิดว่าหน้าจะไม่มีระเบิดภายในเวลา 1 นาที",0xFFFF00;
+addtimer 60000,"Ev_BomeLucky_time::Ongame4_3b";
+deltimer "Ev_BomeLucky_time::Ongame4_3a";
+close;
+
+Ongame4_3b:
+areaannounce "quiz_02",310,87,359,34,"หมดเวลาในการเข้าห้องผู้ที่ไม่ได้อยู่ในห้องทางเราจะส่งกลับโดยไม่ได้รับรางวัลอะไรเลยเนื่องจากไม่ทำตามข้อตกลง",0xFFFF00;
+areawarp "quiz_02",310,87,358,59,"morocc",159,49;
+sleep2 5000;
+areaannounce "quiz_02",310,87,359,34,"ตอนนี้เราก็มาเริ่มวัดดวงครั้งที่ 3 กันดีกว่าละ.ห้องที่เหลือห้องไหนเน่อจะระเบิด...",0xFFFF00;
+sleep2 5000;
+areaannounce "quiz_02",310,87,359,34,"3",0xFFFF00;
+sleep2 3000;
+areaannounce "quiz_02",310,87,359,34,"2",0xFFFF00;
+sleep2 3000;
+areaannounce "quiz_02",310,87,359,34,"1",0xFFFF00;
+sleep2 3000;
+goto Lradom_3b;
+
+Lradom_3b:
+set .@BomeBoom,rand(1,4);
+if (.@BomeBoom == $EvBomeBoom1) goto Lradom_3b;
+if (.@BomeBoom == $EvBomeBoom2) goto Lradom_3b;
+set $EvBomeBoom3,.@BomeBoom;
+
+areaannounce "quiz_02",310,87,359,34,"ระเบิดนั้นอยู่ในห้องหมายเลย ..."+.@BomeBoom+"...ค่ะ....",0xFFFF00;
+sleep2 1000;
+areaannounce "quiz_02",310,87,359,34,"........ระเบิดทำงาน.......",0xFFFF00;
+if (.@BomeBoom == 1) set $Ev_BomeLucky_Boom1,1;
+if (.@BomeBoom == 2) set $Ev_BomeLucky_Boom2,1;
+if (.@BomeBoom == 3) set $Ev_BomeLucky_Boom3,1;
+if (.@BomeBoom == 4) set $Ev_BomeLucky_Boom4,1;
+addtimer 10000,"Ev_BomeLucky_time::Ongame4_4a";
+deltimer "Ev_BomeLucky_time::Ongame4_3b";
+close;
+
+Ongame4_4a:
+areaannounce "quiz_02",310,87,359,34,"ตอนนี้เราก็เหลือแค่ ห้องเดี่ยวแล้วละที่ไม่โดน ระเบิด อิอิ",0xFFFF00;
+addtimer 10000,"Ev_BomeLucky_time::Ongame_end";
+deltimer "Ev_BomeLucky_time::Ongame4_4a";
+close;
+
+Ongame_end:
+areaannounce "quiz_02",310,87,359,34,"ยินดีกับผู้ชนะด้วยนะค่ะ...และขอบคุณที่เข้ามาร่วมสนุกกันงั้นไปรับของรางวัลกันดีกว่าค่ะ",0xFFFF00;
+deltimer "Ev_BomeLucky_time::Ongame_end";
+sleep2 3000;
+goto Lwinwin;
+
+Lwinwin:
+set .@BomeBoom,rand(1,4);
+if (.@BomeBoom == $EvBomeBoom1) goto Lwinwin;
+if (.@BomeBoom == $EvBomeBoom2) goto Lwinwin;
+if (.@BomeBoom == $EvBomeBoom3) goto Lwinwin;
+set $EvBomeBoom4,.@BomeBoom;
+
+areaannounce "quiz_02",310,87,359,34,"สงสัย เลข "+$EvBomeBoom4+" จะเป็นเลขดีสำหรับพวกคุณแล้วละมั้ง หึหึ",0xFFFF00;
+sleep2 3000;
+if ($EvBomeBoom4 == 1) set $Ev_BomeLucky_Boom1,3;
+if ($EvBomeBoom4 == 2) set $Ev_BomeLucky_Boom2,3;
+if ($EvBomeBoom4 == 3) set $Ev_BomeLucky_Boom3,3;
+if ($EvBomeBoom4 == 4) set $Ev_BomeLucky_Boom4,3;
+sleep2 3000;
+announce "กิจกรรม Bome Lucky (วัดดวง) ก็ได้จบลงแล้วค่ะ",bc_all,0xFFFF00;
+sleep2 180000;
+set $Ev_BomeLucky_item,0;
+close;
+
+}
+
+
+quiz_02,319,61,4	script	BomeLucky_Warp1	45,1,1,{
+	warp "quiz_02",319,47;
+	end;
+}
+
+quiz_02,331,61,4	script	BomeLucky_Warp2	45,1,1,{
+	warp "quiz_02",331,47;
+	end;
+}
+
+quiz_02,343,61,4	script	BomeLucky_Warp3	45,1,1,{
+	warp "quiz_02",343,47;
+	end;
+}
+
+quiz_02,355,61,4	script	BomeLucky_Warp4	45,1,1,{
+	warp "quiz_02",355,47;
+	end;
+}
+
+
+
+-	script	BomeLuckyEffect1	-1,{
+
+OnInit:
+
+Lst_effect:
+if($Ev_BomeLucky_Boom1 == 1) disablenpc "BomeLucky_Warp1"; 
+if($Ev_BomeLucky_Boom1 == 1) specialeffect 90;	//หลอดวินเลม
+if($Ev_BomeLucky_Boom1 == 1) sleep2 1000;
+if($Ev_BomeLucky_Boom1 == 1) specialeffect 106;	//ระเบิด1
+if($Ev_BomeLucky_Boom1 == 1) sleep2 1000;
+if($Ev_BomeLucky_Boom1 == 1) specialeffect 183;	//ระเบิด2
+if($Ev_BomeLucky_Boom1 == 1) sleep2 1000;
+if($Ev_BomeLucky_Boom1 == 1) specialeffect 585;	//ระเบิด3
+if($Ev_BomeLucky_Boom1 == 1) sleep2 1000;
+if($Ev_BomeLucky_Boom1 == 1) areawarp "quiz_02",314,57,323,34,"job_star",99,12;
+if($Ev_BomeLucky_Boom1 == 1) set $Ev_BomeLucky_Boom1,0;
+if($Ev_BomeLucky_Boom1 == 2) areawarp "quiz_02",314,57,323,34,"quiz_02",337,74;
+if($Ev_BomeLucky_Boom1 == 2) set $Ev_BomeLucky_Boom1,0;
+if($Ev_BomeLucky_Boom1 == 3) specialeffect 91;	//นางฟ้า
+if($Ev_BomeLucky_Boom1 == 3) sleep2 1000;
+if($Ev_BomeLucky_Boom1 == 3) areawarp "quiz_02",314,57,323,34,"job_star",33,12;
+if($Ev_BomeLucky_Boom1 == 3) set $Ev_BomeLucky_Boom1,0;
+sleep2 1000;
+goto Lst_effect;
+
+ end;
+}
+
+-	script	BomeLuckyEffect2	-1,{
+
+OnInit:
+
+Lst_effect:
+if($Ev_BomeLucky_Boom2 == 1) disablenpc "BomeLucky_Warp2"; 
+if($Ev_BomeLucky_Boom2 == 1) specialeffect 90;	//หลอดวินเลม
+if($Ev_BomeLucky_Boom2 == 1) sleep2 1000;
+if($Ev_BomeLucky_Boom2 == 1) specialeffect 106;	//ระเบิด1
+if($Ev_BomeLucky_Boom2 == 1) sleep2 1000;
+if($Ev_BomeLucky_Boom2 == 1) specialeffect 183;	//ระเบิด2
+if($Ev_BomeLucky_Boom2 == 1) sleep2 1000;
+if($Ev_BomeLucky_Boom2 == 1) specialeffect 585;	//ระเบิด3
+if($Ev_BomeLucky_Boom2 == 1) sleep2 1000;
+if($Ev_BomeLucky_Boom2 == 1) areawarp "quiz_02",326,57,335,34,"job_star",99,12;
+if($Ev_BomeLucky_Boom2 == 1) set $Ev_BomeLucky_Boom2,0;
+if($Ev_BomeLucky_Boom2 == 2) areawarp "quiz_02",326,57,335,34,"quiz_02",337,74;
+if($Ev_BomeLucky_Boom2 == 2) set $Ev_BomeLucky_Boom2,0;
+if($Ev_BomeLucky_Boom2 == 3) specialeffect 91;	//นางฟ้า
+if($Ev_BomeLucky_Boom2 == 3) sleep2 1000;
+if($Ev_BomeLucky_Boom2 == 3) areawarp "quiz_02",326,57,335,34,"job_star",33,12;
+if($Ev_BomeLucky_Boom2 == 3) set $Ev_BomeLucky_Boom2,0;
+sleep2 1000;
+goto Lst_effect;
+
+ end;
+}
+
+-	script	BomeLuckyEffect3	-1,{
+
+OnInit:
+
+Lst_effect:
+if($Ev_BomeLucky_Boom3 == 1) disablenpc "BomeLucky_Warp3"; 
+if($Ev_BomeLucky_Boom3 == 1) specialeffect 90;	//หลอดวินเลม
+if($Ev_BomeLucky_Boom3 == 1) sleep2 1000;
+if($Ev_BomeLucky_Boom3 == 1) specialeffect 106;	//ระเบิด1
+if($Ev_BomeLucky_Boom3 == 1) sleep2 1000;
+if($Ev_BomeLucky_Boom3 == 1) specialeffect 183;	//ระเบิด2
+if($Ev_BomeLucky_Boom3 == 1) sleep2 1000;
+if($Ev_BomeLucky_Boom3 == 1) specialeffect 585;	//ระเบิด3
+if($Ev_BomeLucky_Boom3 == 1) sleep2 1000;
+if($Ev_BomeLucky_Boom3 == 1) areawarp "quiz_02",338,57,347,34,"job_star",99,12;
+if($Ev_BomeLucky_Boom3 == 1) set $Ev_BomeLucky_Boom3,0;
+if($Ev_BomeLucky_Boom3 == 2) areawarp "quiz_02",338,57,347,34,"quiz_02",337,74;
+if($Ev_BomeLucky_Boom3 == 2) set $Ev_BomeLucky_Boom3,0;
+if($Ev_BomeLucky_Boom3 == 3) specialeffect 91;	//นางฟ้า
+if($Ev_BomeLucky_Boom3 == 3) sleep2 1000;
+if($Ev_BomeLucky_Boom3 == 3) areawarp "quiz_02",338,57,347,34,"job_star",33,12;
+if($Ev_BomeLucky_Boom3 == 3) set $Ev_BomeLucky_Boom3,0;
+sleep2 1000;
+goto Lst_effect;
+
+ end;
+}
+
+-	script	BomeLuckyEffect4	-1,{
+
+OnInit:
+
+Lst_effect:
+if($Ev_BomeLucky_Boom4 == 1) disablenpc "BomeLucky_Warp4"; 
+if($Ev_BomeLucky_Boom4 == 1) specialeffect 90;	//หลอดวินเลม
+if($Ev_BomeLucky_Boom4 == 1) sleep2 1000;
+if($Ev_BomeLucky_Boom4 == 1) specialeffect 106;	//ระเบิด1
+if($Ev_BomeLucky_Boom4 == 1) sleep2 1000;
+if($Ev_BomeLucky_Boom4 == 1) specialeffect 183;	//ระเบิด2
+if($Ev_BomeLucky_Boom4 == 1) sleep2 1000;
+if($Ev_BomeLucky_Boom4 == 1) specialeffect 585;	//ระเบิด3
+if($Ev_BomeLucky_Boom4 == 1) sleep2 1000;
+if($Ev_BomeLucky_Boom4 == 1) areawarp "quiz_02",350,57,359,34,"job_star",99,12;
+if($Ev_BomeLucky_Boom4 == 1) set $Ev_BomeLucky_Boom4,0;
+if($Ev_BomeLucky_Boom4 == 2) areawarp "quiz_02",350,57,359,34,"quiz_02",337,74;
+if($Ev_BomeLucky_Boom4 == 2) set $Ev_BomeLucky_Boom4,0;
+if($Ev_BomeLucky_Boom4 == 3) specialeffect 91;	//นางฟ้า
+if($Ev_BomeLucky_Boom4 == 3) sleep2 1000;
+if($Ev_BomeLucky_Boom4 == 3) areawarp "quiz_02",350,57,359,34,"job_star",33,12;
+if($Ev_BomeLucky_Boom4 == 3) set $Ev_BomeLucky_Boom4,0;
+sleep2 1000;
+goto Lst_effect;
+
+ end;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+job_star,100,37,4	script	พนักงานของกิจกรรม#แพ้	893,{
+//cutin "jpn_ellen01",2;
+//== ตัวแปรห้ามแก้ไข ============================================
+set @npc$,"[^000080"+strnpcinfo(0)+"^000000]";
+set .@s$,strcharinfo(0);
+//=========================================================
+if ($Ev_BomeLucky_item == 0) {
+	mes @npc$;
+	mes "นี่ไม่ใช่ช่วงเวลากิจกรรม ";
+	mes "ไม่สามารถทำรายการได้";
+	close;
+	}
+mes @npc$;
+mes "เสียใจด้วยนะถึงแพ้ก็ไม่เป็นไรหลอกนะ";
+mes "รับรางวัลสมน้ำหน้าคุณไปเลย...!!";
+close2;
+getitem 616,1;
+set Zeny, Zeny + 5000;
+dispbottom "คุณได้รับรางวัล Zeny 5,000z";
+warp "SavePoint",0,0;
+//cutin "jpn_ellen01",255;
+close;
+
+OnInit:
+waitingroom "แจกรางวัลสำหรับคนตกรอบ",0;
+end;
+}
+
+job_star,34,37,4	script	พนักงานของกิจกรรม#ชนะ	893,{
+//cutin "jpn_ellen01",2;
+//== ตัวแปรห้ามแก้ไข ============================================
+set @npc$,"[^000080"+strnpcinfo(0)+"^000000]";
+set .@s$,strcharinfo(0);
+//=========================================================
+if ($Ev_BomeLucky_item == 0) {
+	mes @npc$;
+	mes "นี่ไม่ใช่ช่วงเวลากิจกรรม ";
+	mes "ไม่สามารถทำรายการได้";
+	close;
+	}
+mes @npc$;
+mes "ยินดีด้วยนะที่คุณได้มากับดวงจริงๆ";
+mes "ผ่านมาได้ถือว่าแจ่มสุดๆ.งั้นเอารางวัลไปเลยละกัน..!!";
+close2;
+getitem 7539,5;
+set Zeny, Zeny + 50000;
+dispbottom "คุณได้รับรางวัล Zeny 50,000z";
+warp "SavePoint",0,0;
+//cutin "jpn_ellen01",255;
+close;
+
+OnInit:
+waitingroom "แจกรางวัลสำหรับผู้ดวงดี",0;
+end;
+}
+
+louyang,242,120	warp	LUCKYportal	3,3,quiz_02,337,75
+
+
+quiz_02	mapflag	nowarpto
+quiz_02	mapflag	noteleport
+quiz_02	mapflag	nosave	SavePoint
+quiz_02	mapflag	nomemo
+quiz_02	mapflag	nowarp
+quiz_02	mapflag	noreturn
+quiz_02	mapflag	noloot
+quiz_02	mapflag	nobranch
+quiz_02	mapflag	noicewall
+quiz_02	mapflag	noexp
+quiz_02	mapflag	noskill

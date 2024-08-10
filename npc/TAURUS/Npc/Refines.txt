@@ -1,0 +1,43 @@
+-	script	refineui	-1,{
+
+atcommand "@refineui";
+end;
+}
+prt_in,63,60,0	duplicate(refineui)	บริการตีบวก#01	63
+
+
+
+//============================================================
+// Refine:
+//============================================================
+morocc,143,76,3	script	Hollgrehenn#fscity1	2_M_OLDBLSMITH,{
+	if( getbattleflag( "feature.refineui" ) ){
+		mes "[Hollgrehenn]";
+		mes "ข้าเป็นช่างตีเหล็กที่สามารถปรับแต่งอาวุธและอุปกรณ์ได้.";
+		mes "เจ้ามีไอเท็มที่ต้องการปรับแต่งหรือไม่?";
+		close2;
+		refineui();
+		end;
+	}else{
+		callfunc "refinemain","Hollgrehenn",0;
+		end;
+	}
+}
+
+
+//==================================================
+// Training Dummy Area
+//==================================================
+morocc,122,57	monster	Dummy Lv50	2409,1,5000
+morocc,126,57	monster	Dummy Lv50	2409,1,5000
+morocc,130,57	monster	Dummy Lv100	2410,1,5000
+morocc,134,57	monster	Dummy Lv100	2410,1,5000
+morocc,138,57	monster	Dummy Lv150	2411,1,5000
+morocc,142,57	monster	Dummy Lv150	2411,1,5000
+morocc,146,54,3	script	Board#TDM	2_BULLETIN_BOARD,{
+end;
+OnInit:
+	//waitingroom "ทดสอบดาเมจ",0;
+	end;
+}
+

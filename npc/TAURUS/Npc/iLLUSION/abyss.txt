@@ -1,0 +1,234 @@
+//============================================================
+// mapflag
+//============================================================
+tur_d03_i	mapflag	nobranch
+tur_d03_i	mapflag	nopenalty
+tur_d03_i	mapflag	nomemo
+
+tur_d04_i	mapflag	nobranch
+tur_d04_i	mapflag	nopenalty
+tur_d04_i	mapflag	nomemo
+
+//============================================================
+// warp
+//============================================================
+tur_d03_i,218,70,0	warp	tur_d03_i-tur_d04_i	1,1,tur_d04_i,100,189
+tur_d04_i,100,192,0	warp	tur_d04_i-tur_d03_i	1,1,tur_d03_i,216,74
+
+//============================================================
+// Illusion Gears Trader.
+//============================================================
+alberta,225,28,3	script	Equipment Researcher#illusion_abyss	4_M_LGTMAN,{
+	mes .NPCname$;
+	mes "มีอะไรให้ข้าช่วยไหม?";
+	next;
+	switch(select(
+		""+.sb$+" อัพเกรด อาวุธ.",
+		""+.sb$+" อัพเกรด ชุดเกราะ."
+	)){			
+		case 1:
+			mes .NPCname$;
+			mes "ต่อไปนี้เป็นรายการอุปกรณ์ที่ข้าสามารถจัดการได้.";
+			for(.@i = 0; .@i < getarraysize(.weapon_upgrade$); .@i += 3){
+				mes "<ITEM>"+getitemname(atoi(.weapon_upgrade$[.@i]))+"<INFO>"+atoi(.weapon_upgrade$[.@i])+"</INFO></ITEM>";
+			}
+			next;
+			mes .NPCname$;
+			mes "ตรวจสอบให้แน่ใจว่า ^0000FFอุปกรณ์ของคุณผ่านการอัพเกรดอย่างน้อย +7^000000 ก่อนที่จะนำมาให้ข้า.","นั่นคือข้อกำหนดขั้นต่ำสำหรับบริการอัพเกรดของข้าที่จะต้องมีผลกระทบใด ๆ กับอุปกรณ์ของเจ้า.";
+			next;
+			mes .NPCname$;
+			mes "ตรวจสอบให้แน่ใจว่า ^0000FFเจ้ามีอุปกรณ์ที่ต้องการปรับปรุง.^000000","มิฉะนั้น, ข้าจะไม่สามารถประเมินสภาพของมันได้ .";
+			next;
+			mes .NPCname$;
+			mes "อย่างที่เจ้าอาจเดาได้, อุปกรณ์ของเจ้าจะเปลี่ยนเป็นสิ่งใหม่หลังจากนี้ .","กล่าวอีกนัยหนึ่ง, ^0000FFมันจะสูญเสียระดับการอัพเกรด การ์ด และ ออพชั่นทั้งหมด.^000000";
+			next;
+			mes .NPCname$;
+			mes "และข้าต้องการ ^0000FFIllusion Stones และวัสดุอื่น ๆ^000000 เพื่ออัพเกรดอุปกรณ์ของคุณ.","เลือกไอเทมที่เจ้าต้องการและข้าจะบอกเจ้าว่าข้าต้องการอะไรบ้าง.";
+			next;
+			for(.@i = 0; .@i < getarraysize(.weapon_upgrade$); .@i += 3){
+				.@menu$ += getitemname(atoi(.weapon_upgrade$[.@i])) + ":";
+			}
+			.@s = (select(.@menu$) - 1) * 3;
+			mes .NPCname$;
+			mes "สำหรับอุปกรณ์นี้, ข้าต้องการวัสดุดังต่อไปนี้.";
+			mes "^0000FF+7 " + getitemname(atoi(.weapon_upgrade$[.@s+1])) +"^000000";
+			getinventorylist(getcharid(0));
+			for(.@i = 0; .@i < @inventorylist_count; .@i++){
+				if(@inventorylist_id[.@i] !=  atoi(.weapon_upgrade$[.@s+1])){ 
+					continue;
+				}
+				if(@inventorylist_refine[.@i] >= 7){
+					.@index = .@i;
+					.@weapon_check = 1;
+					break;
+				} else {
+					continue;
+				}	
+			}
+			explode(.@data$,.weapon_upgrade$[.@s+2],",");
+			for(.@i = 0; .@i < getarraysize(.@data$); .@i += 2){
+				if(countitem(atoi(.@data$[.@i])) < atoi(.@data$[.@i+1])) .@missing += 1;
+				mes "^0000FF"+.@data$[.@i+1]+ " " +getitemname(atoi(.@data$[.@i]))+"^000000";
+			}
+			mes "เจ้าต้องการดำเนินการต่อหรือไม่?";
+			next;
+			if(select(""+.sb$+" ดำเนินการต่อ.:"+.sb$+" ข้าจะนำวัสดุเหล่านั้นมา") == 2){
+				mes .NPCname$;
+				mes "กลับมาอีกครั้งเมื่อเจ้าพร้อม.";
+				close;
+			}
+			if(.@weapon_check < 1 || .@missing > 0){
+				mes .NPCname$;
+				mes "เจ้าไม่มีวัสดุทั้งหมดที่ต้องใช้.";
+				end;
+			}
+			delitem2 @inventorylist_id[.@index],1,@inventorylist_identify[.@index],@inventorylist_refine[.@index],@inventorylist_attribute[.@index],@inventorylist_card1[.@index],@inventorylist_card2[.@index],@inventorylist_card3[.@index],@inventorylist_card4[.@index]; 
+			for(.@i = 0; .@i < getarraysize(.@data$); .@i += 2){
+				delitem atoi(.@data$[.@i]),atoi(.@data$[.@i+1]);
+			}
+			mes .NPCname$;
+			mes "นี่คืออุปกรณ์อัพเกรดของเจ้า.";
+			getitem atoi(.weapon_upgrade$[.@s]),1;
+			end;
+			
+		case 2:
+			mes .NPCname$;
+			mes "ต่อไปนี้เป็นรายการอุปกรณ์ที่ข้าสามารถจัดการได้.";
+			for(.@i = 0; .@i < getarraysize(.armor_upgrade$); .@i += 3){
+				mes "<ITEM>"+getitemname(atoi(.armor_upgrade$[.@i]))+"<INFO>"+atoi(.armor_upgrade$[.@i])+"</INFO></ITEM>";
+			}
+			next;
+			mes .NPCname$;
+			mes "ตรวจสอบให้แน่ใจว่า ^0000FFอุปกรณ์ของคุณผ่านการอัพเกรดอย่างน้อย +7^000000 ก่อนที่จะนำมาให้ข้า.","นั่นคือข้อกำหนดขั้นต่ำสำหรับบริการอัพเกรดของข้าที่จะต้องมีผลกระทบใด ๆ กับอุปกรณ์ของเจ้า.";
+			next;
+			mes .NPCname$;
+			mes "ตรวจสอบให้แน่ใจว่า ^0000FFเจ้ามีอุปกรณ์ที่ต้องการปรับปรุง.^000000","มิฉะนั้น, ข้าจะไม่สามารถประเมินสภาพของมันได้ .";
+			next;
+			mes .NPCname$;
+			mes "อย่างที่เจ้าอาจเดาได้, อุปกรณ์ของเจ้าจะเปลี่ยนเป็นสิ่งใหม่หลังจากนี้ .","กล่าวอีกนัยหนึ่ง, ^0000FFมันจะสูญเสียระดับการอัพเกรด การ์ด และ ออพชั่นทั้งหมด.^000000";
+			next;
+			mes .NPCname$;
+			mes "และข้าต้องการ ^0000FFIllusion Stones และวัสดุอื่น ๆ^000000 เพื่ออัพเกรดอุปกรณ์ของคุณ.","เลือกไอเทมที่เจ้าต้องการและข้าจะบอกเจ้าว่าข้าต้องการอะไรบ้าง.";
+			next;
+			for(.@i = 0; .@i < getarraysize(.armor_upgrade$); .@i += 3){
+				.@menu$ += getitemname(atoi(.armor_upgrade$[.@i])) + ":";
+			}
+			.@s = (select(.@menu$) - 1) * 3;
+			mes .NPCname$;
+			mes "สำหรับอุปกรณ์นี้, ข้าต้องการวัสดุดังต่อไปนี้.";
+			mes "^0000FF+7 " + getitemname(atoi(.armor_upgrade$[.@s+1])) +"^000000";
+			getinventorylist(getcharid(0));
+			for(.@i = 0; .@i < @inventorylist_count; .@i++){
+				if(@inventorylist_id[.@i] !=  atoi(.armor_upgrade$[.@s+1])){ 
+					continue;
+				}
+				if(@inventorylist_refine[.@i] >= 7){
+					.@index = .@i;
+					.@weapon_check = 1;
+					break;
+				} else {
+					continue;
+				}	
+			}
+			explode(.@data$,.armor_upgrade$[.@s+2],",");
+			for(.@i = 0; .@i < getarraysize(.@data$); .@i += 2){
+				if(countitem(atoi(.@data$[.@i])) < atoi(.@data$[.@i+1])) .@missing += 1;
+				mes "^0000FF"+.@data$[.@i+1]+ " " +getitemname(atoi(.@data$[.@i]))+"^000000";
+			}
+			mes "เจ้าต้องการดำเนินการต่อหรือไม่?";
+			next;
+			if(select(""+.sb$+" ดำเนินการต่อ.:"+.sb$+" ข้าจะนำวัสดุเหล่านั้นมา") == 2){
+				mes .NPCname$;
+				mes "กลับมาอีกครั้งเมื่อเจ้าพร้อม.";
+				close;
+			}
+			if(.@weapon_check < 1 || .@missing > 0){
+				mes .NPCname$;
+				mes "เจ้าไม่มีวัสดุทั้งหมดที่ต้องใช้.";
+				end;
+			}
+			delitem2 @inventorylist_id[.@index],1,@inventorylist_identify[.@index],@inventorylist_refine[.@index],@inventorylist_attribute[.@index],@inventorylist_card1[.@index],@inventorylist_card2[.@index],@inventorylist_card3[.@index],@inventorylist_card4[.@index]; 
+			for(.@i = 0; .@i < getarraysize(.@data$); .@i += 2){
+				delitem atoi(.@data$[.@i]),atoi(.@data$[.@i+1]);
+			}
+			mes .NPCname$;
+			mes "นี่คืออุปกรณ์อัพเกรดของเจ้า.";
+			getitem atoi(.armor_upgrade$[.@s]),1;
+			end;
+	}
+	end;
+	
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	setarray .weapon_upgrade$,
+	//<ill_item>,<wp_req>,"<item 1>,<amount 1>,<item 2>,<amount 2>,...";
+		13469,1141,"25271,100,25314,6",		//Illusion Immaterial Sword
+		1326,1306,"25271,100,25311,200",	//Illusion War Axe
+		32005,1417,"25271,100,25311,200",	//Illusion Pole Axe
+		13338,13300,"25271,100,25313,200",	//Illusion Wing Shuriken
+		16065,1529,"25271,100,25313,200";	//Illusion Iron Driver
+		
+	setarray .armor_upgrade$,
+	//<ill_item>,<ar_req>,"<item 1>,<amount 1>,<item 2>,<amount 2>,...";
+		19247,2207,"25271,50,25312,50";		//Illusion Fancy Flower
+	end;
+}
+
+//============================================================
+// Mob Spawn
+//============================================================
+tur_d03_i,0,0	monster	Ominous Assaulter	3799,25,5000
+tur_d03_i,0,0	monster	Ominous Permeter	3800,30,5000
+tur_d03_i,0,0	monster	Ominous Freezer	3801,30,5000
+tur_d03_i,0,0	monster	Ominous Solider	3802,30,5000
+tur_d03_i,0,0	monster	Ominous Heater	3803,30,5000
+
+-	script	illusion_mob#abyss	-1,{
+	OnInit:
+		setarray .mobID,3799,3800,3801,3802,3803,3804;
+		.mob_count = 1000;
+		monster "tur_d04_i",0,0,"--ja--",.mobID[0],30,strnpcinfo(0)+"::OnMob0Dead";
+		monster "tur_d04_i",0,0,"--ja--",.mobID[1],20,strnpcinfo(0)+"::OnMob1Dead";
+		monster "tur_d04_i",0,0,"--ja--",.mobID[2],20,strnpcinfo(0)+"::OnMob2Dead";
+		monster "tur_d04_i",0,0,"--ja--",.mobID[3],20,strnpcinfo(0)+"::OnMob3Dead";
+		monster "tur_d04_i",0,0,"--ja--",.mobID[4],20,strnpcinfo(0)+"::OnMob4Dead";
+		end;
+		
+	OnMob0Dead:
+		if ($abyss_boss == 0) { $illusion_abyss += 1; }
+		monster "tur_d04_i",0,0,"--ja--",.mobID[0],1,strnpcinfo(0)+"::OnMob0Dead";
+		if ($illusion_abyss >= .mob_count) goto OnSummonMVP;
+		end;
+	OnMob1Dead:
+		if ($abyss_boss == 0) { $illusion_abyss += 1; }
+		monster "tur_d04_i",0,0,"--ja--",.mobID[1],1,strnpcinfo(0)+"::OnMob1Dead";
+		if ($illusion_abyss >= .mob_count) goto OnSummonMVP;
+		end;
+	OnMob2Dead:
+		if ($abyss_boss == 0) { $illusion_abyss += 1; }
+		monster "tur_d04_i",0,0,"--ja--",.mobID[2],1,strnpcinfo(0)+"::OnMob2Dead";
+		if ($illusion_abyss >= .mob_count) goto OnSummonMVP;
+		end;
+	OnMob3Dead:
+		if ($abyss_boss == 0) { $illusion_abyss += 1; }
+		monster "tur_d04_i",0,0,"--ja--",.mobID[3],1,strnpcinfo(0)+"::OnMob3Dead";
+		if ($illusion_abyss >= .mob_count) goto OnSummonMVP;
+		end;
+	OnMob4Dead:
+		if ($abyss_boss == 0) { $illusion_abyss += 1; }
+		monster "tur_d04_i",0,0,"--ja--",.mobID[4],1,strnpcinfo(0)+"::OnMob4Dead";
+		if ($illusion_abyss >= .mob_count) goto OnSummonMVP;
+		end;
+		
+	OnSummonMVP:
+		mapannounce "tur_d04_i","[ระบบ] : Ominous Turtle General ได้ปรากฏตัวขึ้นแล้ว !!",bc_map;
+		monster "tur_d04_i",99,93,"--ja--",.mobID[5],1,strnpcinfo(0)+"::OnMVPDead";
+		$abyss_boss += 1;
+		$illusion_abyss = 0;
+		end;
+		
+	OnMVPDead:
+		$abyss_boss = 0;
+		end;
+}

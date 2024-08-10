@@ -1,0 +1,201 @@
+//=============================================================
+//			-             mOnster studiO Scripts               -
+//				www.monsterstudio.in.th
+//#############################################################
+
+prontera,0,0,0	script	::TreasureEvent	-1,{
+close;
+trevstart:
+set .Map$,"prontera";	// เมื่องที่จะจัดกิจกรรม 
+set $treasureid,41003;	// รหัสไอเทมที่จะได้รับเมื่อตีกล่องได้
+set $treasuream,1;		// จำนวนไอเทมที่จะได้รับเมื่อตีกล่องได้
+set $@trevent,rand(50,80);	// จำนวนกล่องที่จะเกิดในเมืองกิจกรรม ค่าเดิม :: (สุ่ม20-30กล่อง)
+set $@ftrevent,0;
+announce "Treasure Event : กล่องสมบัติ Treasure Box ปรากฏตัว ณ เมือง "+.Map$+" จำนวน "+$@trevent+" กล่อง มีเวลาในการล่าสมบัติ 3 นาที[ของราวัลคือ  " + getitemname($treasureid) + "  จำนวน "+$treasuream+" ea ]",0,0xFF5555;
+monster  .Map$,0,0,"Treasure Box",1845,$@trevent,"TreasureEvent::OnTreasureDie";
+end;
+
+OnTreasureDie:
+set $@ftrevent,$@ftrevent+1;
+if($@ftrevent!=$@trevent)
+announce "ผู้เล่น " + strcharinfo(0) + " ได้ค้นพบ Treasure Box กล่องที่ "+$@ftrevent+"/"+$@trevent+" ได้รับ   " + getitemname($treasureid) + " จำนวน "+$treasuream+" ea",0,0xFF5555;
+getitem $treasureid,$treasuream;
+end;
+
+trevend:
+
+if($@ftrevent!=$@trevent)
+announce "หมดเวลาในการล่าสมบัติ Treasure Box ทุกกล่องถูกทำลาย",0,0xFF5555;
+killmonster .Map$,"TreasureEvent::OnTreasureDie";
+end;
+OnTimeout:
+end;
+
+OnClock0120:
+goto trevstart;
+end;
+OnClock0123:
+goto trevend;
+end;
+
+OnClock0220:
+goto trevstart;
+end;
+OnClock0223:
+goto trevend;
+end;
+
+OnClock0320:
+goto trevstart;
+end;
+OnClock0323:
+goto trevend;
+end;
+
+OnClock0420:
+goto trevstart;
+end;
+OnClock0423:
+goto trevend;
+end;
+
+OnClock0520:
+goto trevstart;
+end;
+OnClock0523:
+goto trevend;
+end;
+
+OnClock0620:
+goto trevstart;
+end;
+OnClock0623:
+goto trevend;
+end;
+
+OnClock0720:
+goto trevstart;
+end;
+OnClock0723:
+goto trevend;
+end;
+
+OnClock0820:
+goto trevstart;
+end;
+OnClock0823:
+goto trevend;
+end;
+
+OnClock0920:
+goto trevstart;
+end;
+OnClock0923:
+goto trevend;
+end;
+
+OnClock1020:
+goto trevstart;
+end;
+OnClock1023:
+goto trevend;
+end;
+
+OnClock1120:
+goto trevstart;
+end;
+OnClock1123:
+goto trevend;
+end;
+
+OnClock1220:
+goto trevstart;
+end;
+OnClock1223:
+goto trevend;
+end;
+
+OnClock1320:
+goto trevstart;
+end;
+OnClock1323:
+goto trevend;
+end;
+
+OnClock1420:
+goto trevstart;
+end;
+OnClock1423:
+goto trevend;
+end;
+
+OnClock1520:
+goto trevstart;
+end;
+OnClock1523:
+goto trevend;
+end;
+
+OnClock1620:
+goto trevstart;
+end;
+OnClock1623:
+goto trevend;
+end;
+
+OnClock1720:
+goto trevstart;
+end;
+OnClock1723:
+goto trevend;
+end;
+
+OnClock1820:
+goto trevstart;
+end;
+OnClock1823:
+goto trevend;
+end;
+
+OnClock1920:
+goto trevstart;
+end;
+OnClock1923:
+goto trevend;
+end;
+
+OnClock2020:
+goto trevstart;
+end;
+OnClock2023:
+goto trevend;
+end;
+
+OnClock2120:
+goto trevstart;
+end;
+OnClock2123:
+goto trevend;
+end;
+
+OnClock2220:
+goto trevstart;
+end;
+OnClock2223:
+goto trevend;
+end;
+
+OnClock2320:
+goto trevstart;
+end;
+OnClock2321:
+goto trevend;
+end;
+
+OnClock0020:
+goto trevstart;
+end;
+OnClock0023:
+goto trevend;
+end;
+}

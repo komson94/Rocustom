@@ -1,0 +1,280 @@
+//===== rAthena Script ======================================= 
+//= Lucky Spin
+//===== By: ================================================== 
+//= Mr.TAURUS
+//===== Current Version: 1.0 =================================
+//===== Compatible With: =====================================
+//= rAthena Project
+//============================================================
+
+-	script	Lucky Spin	-1,{
+
+	disable_items;
+	.@menu1 = (getgmlevel() == .gmlvl) && (.machine_mode == false);
+	.@menu2 = (getgmlevel() == .gmlvl) && (.machine_mode == true);
+	mes .NPCname$;	
+	if (.@menu1 || .@menu2) {
+		mes "ยินดีต้อนรับ GM: ^1E90FF"+strcharinfo(0)+"^000000";
+		mes "สู่ตู้ ^990099"+strnpcinfo(1)+"^000000";
+		if (.machine_mode == false) { mes "สถานะ : ^009900เปิดทำการอยู่^000000"; }
+		if (.machine_mode == true) { mes "สถานะ : ^FF0000ปิดทำการอยู่^000000"; }
+		mes "ต้องการจะทำอะไรล่ะ?";		
+	}
+	else if (.machine_mode == true) {
+		mes "ขออภัย ขณะนี้ ตู้ ^990099"+strnpcinfo(1)+"^000000";
+		mes "^FF0000กำลังปิดอยู่ หรือ ยังไม่ถึงช่วงเวลากิจกรรม.^000000";
+		close;
+	}
+	else {
+		mes "ยินดีต้อนรับสู่ตู้ ^990099"+strnpcinfo(1)+"^000000";
+		mes "ต้องการจะทำอะไรล่ะ?";
+	}
+	next;
+	switch(select(
+		"["+.sb$+"] ใช้งานตู้ ^990099"+strnpcinfo(1)+"^000000",
+		(.@menu1) ? "[^FF0000"+.sb$+"^000000] GM - ปิดตู้" : "",
+		(.@menu2) ? "[^009900"+.sb$+"^000000] GM - เปิดตู้" : "",
+		"["+.sb$+"] ยกเลิก"
+	)) {
+		case 1:
+			mes .NPCname$;
+			mes "ในการใช้งานตู้ ^990099"+strnpcinfo(1)+"^000000";
+			mes "จะต้องใช้ :";
+			if (.price_type == 1) {	mes "^FF0000"+F_InsertComma(.zprice)+"^000000 zeny."; }
+			if (.price_type == 2) { mes "^FF0000"+F_InsertComma(.cprice)+"^000000 cash."; }
+			if (.price_type == 3) {	mes "<ITEM>"+getitemname(.reqitem[0])+"<INFO>"+.reqitem[0]+"</INFO></ITEM> จำนวน "+.reqitem[1]+" อัน."; }
+			if (.price_type < 1 && .price_type > 3) { mes "^FF0000เกิดข้อผิดพลาด^000000."; end; }
+			next;
+			switch(select(
+				"[^009900"+.sb$+"^000000] สุ่มเลย! ",
+				"[^FF0000"+.sb$+"^000000] ยกเลิก"
+			)) {
+				case 1:
+					mes .NPCname$;
+					if (.price_type == 1) {
+						if (Zeny < .zprice) {
+							mes "ขออภัย คุณมีเงินไม่เพียงพอ.";
+							close;
+						}
+						Zeny -= .zprice;
+						dispbottom "[ "+strnpcinfo(1)+" ] : คุณใช้ "+F_InsertComma(.zprice)+" zeny ในการเล่น !";
+					}
+					if (.price_type == 2) {
+						if (#CASHPOINTS < .cprice) {
+							mes "ขออภัย คุณมี Cash ไม่เพียงพอ.";
+							close;
+						}
+						#CASHPOINTS -= .cprice;
+						dispbottom "[ "+strnpcinfo(1)+" ] : คุณใช้ "+F_InsertComma(.cprice)+" cash ในการเล่น !";
+					}
+					if (.price_type == 3) {
+						if (countitem(.reqitem[0]) < .reqitem[1]) {
+							mes "ขออภัย คุณมี <ITEM>"+getitemname(.reqitem[0])+"<INFO>"+.reqitem[0]+"</INFO></ITEM> ไม่เพียงพอ.";
+							close;
+						}
+						delitem .reqitem[0],.reqitem[1];
+						dispbottom "[ "+strnpcinfo(1)+" ] : คุณใช้ "+getitemname(.reqitem[0])+" จำนวน "+.reqitem[1]+" อัน ในการเล่น !";
+					}
+					mes "เริ่มสุ่มกันเลย !!";
+					mes "ขอให้โชคดี.";
+					close2;
+					doevent strnpcinfo(1) + "::OnSpin";
+				case 2: end;
+			}
+		case 2:
+			mes .NPCname$;
+			mes "ขณะนี้ ตู้ ^990099"+strnpcinfo(1)+"^000000";
+			mes "สถานะ : ^009900เปิดทำการอยู่^000000";
+			mes "ต้องการปิดทำการหรือไม่?";
+			next;
+			if (select( "["+.sb$+"] ยกเลิก", "["+.sb$+"] ปิดตู้ทันที" ) == 2) {
+				mes .NPCname$;
+				mes "ทำการปิดตู้ ^990099"+strnpcinfo(1)+"^000000";
+				mes "เรียบร้อยแล้ว.";
+				.machine_mode = true;
+				if (.announce) { announce "[ "+strnpcinfo(1)+" ] : ขณะนี้ ตู้ "+strnpcinfo(1)+" ได้ปิดให้บริการแล้ว !!",bc_all,0xFF0000; }
+				close;
+			}
+			end;			
+		case 3:
+			mes .NPCname$;
+			mes "ขณะนี้ ตู้ ^990099"+strnpcinfo(1)+"^000000";
+			mes "สถานะ : ^FF0000ปิดทำการอยู่^000000";
+			mes "ต้องการเปิดทำการหรือไม่?";
+			next;
+			if (select( "["+.sb$+"] ยกเลิก", "["+.sb$+"] เปิดตู้ทันที" ) == 2) {
+				mes .NPCname$;
+				mes "ทำการเปิดตู้ ^990099"+strnpcinfo(1)+"^000000";
+				mes "เรียบร้อยแล้ว.";
+				.machine_mode = false;
+				if (.announce) { announce "[ "+strnpcinfo(1)+" ] : ขณะนี้ ตู้ "+strnpcinfo(1)+" ได้เปิดให้บริการแล้ว !!",bc_all,0xFCFF00; }
+				close;
+			}
+			end;
+		case 4:
+			mes .NPCname$;
+			mes "โอกาสหน้าเชิญใหม่.";
+			close;
+	}
+
+	OnSpin:
+		//----------------------------------------
+		// play system (dont fix it).
+		//----------------------------------------
+		pcblockmove getcharid(3),1;
+		.@img = 0;
+		.@round = rand(10,15);
+		.@speed = 10;
+		for (.@i = 0; .@i < .@round; .@i = .@i+1) {
+			.@mini = rand($@sizedb[0]/2, $@sizedb[0]);
+			for (.@j = 0; .@j < .@mini; .@j = .@j+1)
+			.@img = callfunc("Next_Spin", .@img, .@speed);
+			.@speed = .@speed+10;
+		}
+		.@round = rand($@sizedb[0]/2, $@sizedb[0]);
+		for (.@i = 0; .@i < .@round; .@i = .@i+1) {
+			.@img = callfunc("Next_Spin", .@img, .@speed);
+			.@speed = .@speed+50;
+		}
+		.@min = ($@sizedb[0]/2)/2;
+		.@round = rand(.@min, $@sizedb[0]/2);
+		.@round_per_50 = .@round/2;
+		.@round_per_25 = .@round_per_50/2;
+		for (.@i = 0; .@i < .@round; .@i = .@i+1) {
+			.@img = callfunc("Next_Spin", .@img, .@speed);
+			if (.@i < .@round_per_25)
+				.@speed = .@speed+25;
+			else if (.@i < .@round_per_50)
+				.@speed = .@speed+100;
+			else
+				.@speed = .@speed+250;			
+			if(.@i == .@round-1 && $@reward_rate[.@img] < rand(100)) {
+				.@i = .@i-1;
+			}
+		}
+		pcblockmove getcharid(3),0;
+		.@reward = $@reward_itemid[.@img];
+		.@prize = $@reward_amount[.@img];
+		//----------------------------------------
+		// show script for give empty slot.
+		//----------------------------------------
+		if (.@reward == 0) { 
+			showscript "[ "+strnpcinfo(1)+" ] : โชคไม่ดี ไม่ได้รับอะไรเลย !";
+			dispbottom "[ "+strnpcinfo(1)+" ] : โชคไม่ดี ไม่ได้รับอะไรเลย !";
+			cutin "",255;
+			end;
+		}
+		getitem .@reward, .@prize;
+		//----------------------------------------
+		// announce for all reward.
+		//----------------------------------------
+		if (.reward_announce == 1) { announce "[ "+strnpcinfo(1)+" ] : ยินดีด้วย  "+strcharinfo(0)+"  ได้รับ "+getitemname(.@reward)+" จำนวน "+.@prize+" ea.",bc_all,0x1E90FF; }
+		//----------------------------------------
+		// announce for some reward.
+		//----------------------------------------
+		if (.reward_announce == 2) {
+			// รานการที่ต้องการให้ประกาศเมื่อได้รับ.
+			// ตัวอย่าง: (.@reward == itemid || ...
+			if (.@reward == 616 || .@reward == 480110 || .@reward == 910038) {
+				announce "[ "+strnpcinfo(1)+" ] : ยินดีด้วย  "+strcharinfo(0)+"  ได้รับ "+getitemname(.@reward)+" จำนวน "+.@prize+" ea.",bc_all,0x1E90FF;
+			}
+		}
+		cutin "",255;
+		end;
+	
+	OnInit:
+		.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+		.sb$ = ">";
+		//waitingroom "Lucky Spin",0;
+		//----------------------------------------
+		// lucky spin setting.
+		//----------------------------------------
+		.machine_mode = false;	// true = เปิดตู้ | false = ปิดตู้.
+		.gmlvl = 99;			// เลเวล gm สำหรับเข้าใช้งาน gm เมนู.
+		.announce = true;		// ประกาศเมื่อ เปิด|ปิด ตู้.
+		.reward_announce = 2;	// 1: ประกาศเมื่อได้รับไอเทม. | 2: ประกาศเมื่อได้รับไอเทมที่กำหนด.
+		//----------------------------------------
+		// price setting.
+		//----------------------------------------
+		.price_type = 3;			// 1:ใช้ zeny ในการเล่น. | 2: ใช้ cash ในการเล่น. | 3: ใช้ item ในการเล่น. 
+		.zprice = 5000000;			// zeny ในการเล่น.
+		.cprice = 100;				// cash ในการเล่น.
+		setarray .reqitem, 6417, 1;	// itemID และ จำนวน ในการเล่น.	
+		//----------------------------------------
+		// lucky spin picture setting.
+		//----------------------------------------
+		$@default_filename$ = "Lucky_Spin_01";
+		setarray $@spin_filename$,
+			"Lucky_Spin_01",
+			"Lucky_Spin_02",
+			"Lucky_Spin_03",
+			"Lucky_Spin_04",
+			"Lucky_Spin_05",
+			"Lucky_Spin_06",
+			"Lucky_Spin_07",
+			"Lucky_Spin_08",
+			"Lucky_Spin_09",
+			"Lucky_Spin_10";
+			
+		setarray $@sizedb, getarraysize($@spin_filename$);
+		//----------------------------------------
+		// reward itemid setting.
+		//----------------------------------------	
+		setarray $@reward_itemid,
+			12208,	// ItemID สำหรับรูป Lucky_Spin_01.
+			616,	// ItemID สำหรับรูป Lucky_Spin_02.
+			12221,	// ItemID สำหรับรูป Lucky_Spin_03.
+			12103,	// ItemID สำหรับรูป Lucky_Spin_04.
+			910038,	// ItemID สำหรับรูป Lucky_Spin_05.
+			0,		// ItemID สำหรับรูป Lucky_Spin_06.
+			12210,	// ItemID สำหรับรูป Lucky_Spin_07.
+			23209,	// ItemID สำหรับรูป Lucky_Spin_08.
+			12211,	// ItemID สำหรับรูป Lucky_Spin_09.
+			480110;	// ItemID สำหรับรูป Lucky_Spin_10.
+		//----------------------------------------
+		// reward amount setting.
+		//----------------------------------------	
+		setarray $@reward_amount,
+			3,		// จำนวน สำหรับรูป Lucky_Spin_01.
+			1,		// จำนวน สำหรับรูป Lucky_Spin_02.
+			3,		// จำนวน สำหรับรูป Lucky_Spin_03.
+			3,		// จำนวน สำหรับรูป Lucky_Spin_04.
+			1,		// จำนวน สำหรับรูป Lucky_Spin_05.
+			0,		// จำนวน สำหรับรูป Lucky_Spin_06.
+			3,		// จำนวน สำหรับรูป Lucky_Spin_07.
+			1,		// จำนวน สำหรับรูป Lucky_Spin_08.
+			3,		// จำนวน สำหรับรูป Lucky_Spin_09.
+			1;		// จำนวน สำหรับรูป Lucky_Spin_10.
+		//----------------------------------------
+		// reward rate setting. 
+		//----------------------------------------	
+		setarray $@reward_rate[0],
+			50,		// เรทออกสำหรับรูป Lucky_Spin_01.
+			10,		// เรทออกสำหรับรูป Lucky_Spin_02.
+			60,		// เรทออกสำหรับรูป Lucky_Spin_03.
+			30,		// เรทออกสำหรับรูป Lucky_Spin_04.
+			5,		// เรทออกสำหรับรูป Lucky_Spin_05.
+			50,		// เรทออกสำหรับรูป Lucky_Spin_06.
+			50,		// เรทออกสำหรับรูป Lucky_Spin_07.
+			20,		// เรทออกสำหรับรูป Lucky_Spin_08.
+			50,		// เรทออกสำหรับรูป Lucky_Spin_09.
+			1;		// เรทออกสำหรับรูป Lucky_Spin_10.
+	end;
+}
+
+function	script	Next_Spin	{
+	.@img = getarg(0) + 1;
+	
+	if (.@img >= $@sizedb[0])
+		.@img = 0;
+		
+	cutin $@spin_filename$[.@img], 4;
+	sleep2 getarg(1);
+	
+	return .@img;
+}
+
+//------------------------------------------------------------
+// ตำแหน่ง NPC.
+//------------------------------------------------------------
+firstcity,150,234,5	duplicate(Lucky Spin)	Lucky Spin#fsc	2_SLOT_MACHINE

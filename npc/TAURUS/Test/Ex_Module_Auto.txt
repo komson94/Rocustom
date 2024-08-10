@@ -1,0 +1,129 @@
+//===== Script =======================================
+//= Exchange Modification Parts
+//= Exchange Modification Modules
+//= By JumBo
+// Modifile to Automatic by Striker
+//====================================================
+
+-	exbartershop	#ex_auto_equip	-1
+legend_ro,160,121,3	script	 Automatic Modules	982,{
+	disable_items;
+	if ((MaxWeight - Weight) < 1000) {
+		mes "เจ้าแบกของมาหนักเกินไป. ลองลดน้ำหนักลงแล้วมาใหม่.";
+		close;
+	}
+	if (checkweight(501,1) == 0) {
+		mes "เจ้าพกของมามากเกินไป. ลองลดของลงแล้วมาใหม่.";
+		close;
+	}
+	mes "[Automatic]";
+	mes "ข้ามีหน้าที่แลกเปลี่ยน อุปกรณ์ automatic.";
+	mes "100 ^FF0000Varmeal Ticket^000000.";
+	mes "แลกกับ ^0000cdAutomatic Modification Modules^000000.";
+	mes "150 ^FF0000Varmeal Ticket^000000.";
+	mes "แลกกับ ^0000cdEpic Skill Modification Parts^000000.";
+	next;
+	switch( select( "- แลก Automatic Eqiupment:- แลก Module ปกติ:- แลก Module Skill" ) ) {
+	case 1:
+		mes "[Automatic]";
+		mes "อ้างอิงตามจริงแหละ  ";
+		mes "ตามนั้นแหละ ";
+		next;
+		callshop "#ex_auto_equip",1;
+		end;
+	case 2:
+		mes "[Automatic]";
+		mes "^0000cdAutomatic Modification Modules^000000.";
+		mes "ไว้ใช้ออฟชุด Automatic.";
+		mes "100 ^FF0000Varmeal Ticket^000000.";
+		mes "แลกกับ ^0000cdAutomatic Modification Modules^000000.";
+		next;
+		mes "[Automatic]";
+		mes "มีทั้งหมด 4 ระดับ.";
+		mes "Normal Rare Unique Legendary.";
+		mes "เกรดยิ่งสูงยิ่งออกยาก.";
+		mes "เจ้าพร้อมที่แลกแล้วรึยัง ?";
+		next;
+			if (select("พร้อมแล้ว", "หยุดก่อน" )== 2) {
+				mes "[Automatic]";
+				mes "ไว้วันหลังก็ได้.";
+				close;
+			}
+		mes "[Automatic]";
+		mes "เจ้าต้องการแลกกี่อันหละ";
+		next;
+		input .@varcube;
+		.@nmcubeuse = .@varcube*100;
+		next;
+		mes "[Automatic]";
+		mes "เจ้าต้องใช้ <ITEM>"+getitemname(1000103)+"<INFO>1000103</INFO></ITEM>";
+		mes "รวมทั้งสิ้น" +.@nmcubeuse+"อัน";
+		mes "เจ้ามีพอใช่ไหม";
+		next;
+		if (select("พอ:ไม่พอ") == 2 ) end;
+			if ((countitem(1000103) < .@nmcubeuse)) { // Ticket
+			next;
+			mes "[Automatic]";
+			mes "เจ้ามี ^FF0000Varmeal Ticket^000000 ไม่พอ.";
+			close;
+			}
+		delitem 1000103,.@nmcubeuse;// Ticket
+		getitem 100160,.@varcube;
+		dispbottom "ขอให้เกลือแล้วไปฟามใหม่นะ";
+		close;
+	case 3:
+		mes "[Automatic]";
+		mes "^0000cdAutomatic Skill Modification Modules^000000.";
+		mes "ไว้ใช้ออฟชุด Automatic.";
+		mes "150 ^FF0000Varmeal Ticket^000000.";
+		mes "แลกกับ ^0000cdAutomatic Skill Modification Modules^000000.";
+		next;
+		mes "[Automatic]";
+		mes "มีทุกอาชีพ.";
+		mes "โอกาสออกเท่ากัน ไม่ต้องบ่น";
+		mes "เจ้าพร้อมที่แลกแล้วรึยัง ?";
+		next;
+			if (select("พร้อมแล้ว", "หยุดก่อน" )== 2) {
+				mes "[Automatic]";
+				mes "ไว้วันหลังก็ได้.";
+				close;
+			}
+		mes "[Automatic]";
+		mes "เจ้าต้องการแลกกี่อันหละ";
+		next;
+		input .@varscube;
+		.@skcubeuse = .@varscube*150;
+		next;
+		mes "[Automatic]";
+		mes "เจ้าต้องใช้ <ITEM>"+getitemname(1000103)+"<INFO>1000103</INFO></ITEM>";
+		mes "รวมทั้งสิ้น" +.@skcubeuse+"อัน";
+		mes "เจ้ามีพอใช่ไหม";
+		next;
+		if (select("พอ:ไม่พอ") == 2 ) end;
+			if ((countitem(1000103) < .@skcubeuse)) { // Ticket
+			next;
+			mes "[Automatic]";
+			mes "เจ้ามี ^FF0000Varmeal Ticket^000000 ไม่พอ.";
+			close;
+			}
+		delitem 1000103,.@skcubeuse;// Ticket
+		getitem 100161,.@varscube;
+		dispbottom "ขอให้เกลือแล้วไปฟามใหม่นะ";
+		close;
+		
+	}	
+	
+OnInit:
+	waitingroom "SetAutomatic/Module-Skill",0;
+	npcshopadditem "#ex_auto_equip",450127,-1,0,15376,1,9,1000103,225,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_auto_equip",450128,-1,0,15377,1,9,1000103,225,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_auto_equip",470022,-1,0,22196,1,9,1000103,225,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_auto_equip",470023,-1,0,22197,1,9,1000103,225,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_auto_equip",480020,-1,0,20933,1,9,1000103,225,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_auto_equip",480021,-1,0,20934,1,9,1000103,225,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_auto_equip",490024,-1,0,32207,1,0,1000103,300,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_auto_equip",490025,-1,0,32208,1,0,1000103,300,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_auto_equip",490026,-1,0,32209,1,0,1000103,300,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#ex_auto_equip",490027,-1,0,32210,1,0,1000103,300,0,0,0,0,0,0,0,0,0,0;
+	
+}

@@ -1,0 +1,22 @@
+-	exbartershop	#zodiac_headgears_set	-1
+
+prontera,140,161,5	script	zodiac headgears set#With out equipment	998,{
+	callshop "#zodiac_headgears_set",1;
+	end;
+
+OnInit:
+	waitingroom "เควสหมวกจักรราศี",0;
+	npcshopadditem "#zodiac_headgears_set",400078,-1,500000,25786,300,0,25787,300,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#zodiac_headgears_set",400079,-1,500000,25786,300,0,25787,300,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#zodiac_headgears_set",400094,-1,500000,25786,300,0,25787,300,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#zodiac_headgears_set",400095,-1,500000,25786,300,0,25787,300,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#zodiac_headgears_set",400098,-1,500000,25786,300,0,25787,300,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#zodiac_headgears_set",400099,-1,500000,25786,300,0,25787,300,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#zodiac_headgears_set",400116,-1,500000,25786,300,0,25787,300,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#zodiac_headgears_set",400117,-1,500000,25786,300,0,25787,300,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#zodiac_headgears_set",400118,-1,500000,25786,300,0,25787,300,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#zodiac_headgears_set",400119,-1,500000,25786,300,0,25787,300,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#zodiac_headgears_set",400120,-1,500000,25786,300,0,25787,300,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "#zodiac_headgears_set",400121,-1,500000,25786,300,0,25787,300,0,0,0,0,0,0,0,0,0,0;
+	end;
+}

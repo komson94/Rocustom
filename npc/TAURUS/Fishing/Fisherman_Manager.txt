@@ -1,0 +1,597 @@
+//===== rAthena Script =======================================
+//= Fisherman Manager
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+
+moonhaven,219,194,5	script	ผู้จัดการ ชาวประมง#FMM	4_F_KAFRA2,{
+	disable_items;
+	.GMMenu = (getgmlevel() == 99);
+	cutin "kafra_02",2;
+	mes .NPCname$;
+	mes "สวัสดีค่ะ";
+	mes "ยินดีต้อนรับ";
+	mes "มีอะไรให้ฉันช่วยไหมคะ?";
+	next;
+	switch(select(
+		""+.sb$+" จ้าง | อัพเกรด ชาวประมง",
+		(.GMMenu) ? ""+.sb$+" เมนูสำหรับ [^FF0000GM^000000] " : "",
+		""+.sb$+" สอบถามรายละเอียด"
+		)){
+		case 1:
+			mes .NPCname$;
+			mes "โปรดเลือกชาวประมงที่ต้องการ";
+			mes "จ้าง หรือ อัพเกรด";
+			next;
+			switch(select(
+				""+.sb$+" ชาวประมง [ Lv.1 ]",
+				""+.sb$+" ชาวประมง [ Lv.2 ]",
+				""+.sb$+" ชาวประมง [ Lv.3 ]"
+				)){
+					case 1:
+						if (!#Lv1_FishermanLv) {
+							mes .NPCname$;
+							mes "คุณยังไม่ได้จ้างชาวประมง จะจ้างเลยหรือไม่?";
+							mes "ราคา: [^FF0000 " + .Cash[0] + " ^000000] Cash";
+							mes "คุณมี: [ " + #CASHPOINTS + " ] Cash";
+							mes "--------------------";
+							mes "ราคา: [^0000FF " + .Zeny[0] + " ^000000] Zeny";
+							mes "คุณมี: [ " + Zeny + " ] Zeny";
+							next;
+							switch(select(
+								""+.sb$+" จ้างชาวประมง [^FF0000 Cash ^000000]",
+								""+.sb$+" จ้างชาวประมง [^0000FF Zeny ^000000]",
+								""+.sb$+" ยังไม่จ้าง"
+								)){
+									case 1:
+										if (#CASHPOINTS < .Cash[0]) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Cash Point ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										#CASHPOINTS -= .Cash[0];
+										#Lv1_FishermanLv = 1;
+										#Lv1_FishingCount = $Lv1_FishingCount;
+										mes "คุณได้จ้างชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv1_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+									
+									case 2:
+										if (Zeny < .Zeny[0]) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Zeny ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										Zeny -= .Zeny[0];
+										#Lv1_FishermanLv = 1;
+										#Lv1_FishingCount = $Lv1_FishingCount;
+										mes "คุณได้จ้างชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv1_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 3:
+										mes .NPCname$;
+										mes "ยกเลิกเรียบร้อยแล้ว";
+										close2;
+										cutin "",255;
+										end;
+							}
+						}
+						if (#Lv1_FishermanLv == .FishermanMaxLv) {
+							mes .NPCname$;
+							mes "ปัจจุบัน Lv ของชาวประมง สูงสุดแล้ว";
+							close2;
+							cutin "",255;
+							end;
+						}
+						else {
+							mes .NPCname$;
+							mes "คุณมีชาวประมง Lv "+#Lv1_FishermanLv+" แล้ว จะอัพเกรดหรือไม่?";
+							mes "ราคา: [^FF0000 " + (#Lv1_FishermanLv * .Cash[0]) + " ^000000] Cash";
+							mes "คุณมี: [ " + #CASHPOINTS + " ] Cash";
+							mes "--------------------";
+							mes "ราคา: [^0000FF " + (#Lv1_FishermanLv * .Zeny[0]) + " ^000000] Zeny";
+							mes "คุณมี: [ " + Zeny + " ] Zeny";
+							next;
+							switch(select(
+								""+.sb$+" อัพเกรด [^FF0000 Cash ^000000]",
+								""+.sb$+" อัพเกรด [^0000FF Zeny ^000000]",
+								""+.sb$+" ยังไม่อัพเกรด"
+								)){
+									case 1:
+										if (#CASHPOINTS < #Lv1_FishermanLv * .Cash[0]) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Cash Point ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										#CASHPOINTS -= #Lv1_FishermanLv * .Cash[0];
+										#Lv1_FishermanLv++;
+										mes "คุณได้อัพเกรดชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv1_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 2:
+										if (Zeny < #Lv1_FishermanLv * .Zeny[0]) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Zeny ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										Zeny -= #Lv1_FishermanLv * .Zeny[0];
+										#Lv1_FishermanLv++;
+										mes "คุณได้อัพเกรดชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv1_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 3:
+										mes .NPCname$;
+										mes "ยกเลิกเรียบร้อยแล้ว";
+										close2;
+										cutin "",255;
+										end;
+							}
+						}
+						cutin "",255;
+						end;
+						
+					case 2:
+						if (!#Lv2_FishermanLv) {
+							mes .NPCname$;
+							mes "คุณยังไม่ได้จ้างชาวประมง จะจ้างเลยหรือไม่?";
+							mes "ราคา: [^FF0000 " + .Cash[1] + " ^000000] Cash";
+							mes "คุณมี: [ " + #CASHPOINTS + " ] Cash";
+							mes "--------------------";
+							mes "ราคา: [^0000FF " + .Zeny[1] + " ^000000] Zeny";
+							mes "คุณมี: [ " + Zeny + " ] Zeny";
+							next;
+							switch(select(
+								""+.sb$+" จ้างชาวประมง [^FF0000 Cash ^000000]",
+								""+.sb$+" จ้างชาวประมง [^0000FF Zeny ^000000]",
+								""+.sb$+" ยังไม่จ้าง"
+								)){
+									case 1:
+										if (#CASHPOINTS < .Cash[1]) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Cash Point ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										#CASHPOINTS -= .Cash[1];
+										#Lv2_FishermanLv = 1;
+										#Lv2_FishingCount = $Lv2_FishingCount;
+										mes "คุณได้จ้างชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv2_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+									
+									case 2:
+										if (Zeny < .Zeny[1]) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Zeny ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										Zeny -= .Zeny[1];
+										#Lv2_FishermanLv = 1;
+										#Lv2_FishingCount = $Lv2_FishingCount;
+										mes "คุณได้จ้างชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv2_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 3:
+										mes .NPCname$;
+										mes "ยกเลิกเรียบร้อยแล้ว";
+										close2;
+										cutin "",255;
+										end;
+							}
+						}
+						if (#Lv2_FishermanLv == .FishermanMaxLv) {
+							mes .NPCname$;
+							mes "ปัจจุบัน Lv ของชาวประมง สูงสุดแล้ว";
+							close2;
+							cutin "",255;
+							end;
+						}
+						else {
+							mes .NPCname$;
+							mes "คุณมีชาวประมง Lv "+#Lv2_FishermanLv+" แล้ว จะอัพเกรดหรือไม่?";
+							mes "ราคา: [^FF0000 " + (#Lv2_FishermanLv * .Cash[1]) + " ^000000] Cash";
+							mes "คุณมี: [ " + #CASHPOINTS + " ] Cash";
+							mes "--------------------";
+							mes "ราคา: [^0000FF " + (#Lv2_FishermanLv * .Zeny[1]) + " ^000000] Zeny";
+							mes "คุณมี: [ " + Zeny + " ] Zeny";
+							next;
+							switch(select(
+								""+.sb$+" อัพเกรด [^FF0000 Cash ^000000]",
+								""+.sb$+" อัพเกรด [^0000FF Zeny ^000000]",
+								""+.sb$+" ยังไม่อัพเกรด"
+								)){
+									case 1:
+										if (#CASHPOINTS < #Lv2_FishermanLv * .Cash[1]) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Cash Point ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										#CASHPOINTS -= #Lv2_FishermanLv * .Cash[1];
+										#Lv2_FishermanLv++;
+										mes "คุณได้อัพเกรดชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv2_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 2:
+										if (Zeny < #Lv2_FishermanLv * .Zeny[1]) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Zeny ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										Zeny -= #Lv2_FishermanLv * .Zeny[1];
+										#Lv2_FishermanLv++;
+										mes "คุณได้อัพเกรดชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv2_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 3:
+										mes .NPCname$;
+										mes "ยกเลิกเรียบร้อยแล้ว";
+										close2;
+										cutin "",255;
+										end;
+							}
+						}
+						cutin "",255;
+						end;
+						
+					case 3:
+						if (!#Lv3_FishermanLv) {
+							mes .NPCname$;
+							mes "คุณยังไม่ได้จ้างชาวประมง จะจ้างเลยหรือไม่?";
+							mes "ราคา: [^FF0000 " + .Cash[2] + " ^000000] Cash";
+							mes "คุณมี: [ " + #CASHPOINTS + " ] Cash";
+							mes "--------------------";
+							mes "ราคา: [^0000FF " + .Zeny[2] + " ^000000] Zeny";
+							mes "คุณมี: [ " + Zeny + " ] Zeny";
+							next;
+							switch(select(
+								""+.sb$+" จ้างชาวประมง [^FF0000 Cash ^000000]",
+								""+.sb$+" จ้างชาวประมง [^0000FF Zeny ^000000]",
+								""+.sb$+" ยังไม่จ้าง"
+								)){
+									case 1:
+										if (#CASHPOINTS < .Cash[2]) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Cash Point ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										#CASHPOINTS -= .Cash[2];
+										#Lv3_FishermanLv = 1;
+										#Lv3_FishingCount = $Lv3_FishingCount;
+										mes "คุณได้จ้างชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv3_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+									
+									case 2:
+										if (Zeny < .Zeny[2]) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Zeny ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										Zeny -= .Zeny[2];
+										#Lv3_FishermanLv = 1;
+										#Lv3_FishingCount = $Lv3_FishingCount;
+										mes "คุณได้จ้างชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv3_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 3:
+										mes .NPCname$;
+										mes "ยกเลิกเรียบร้อยแล้ว";
+										close2;
+										cutin "",255;
+										end;
+							}
+						}
+						if (#Lv3_FishermanLv == .FishermanMaxLv) {
+							mes .NPCname$;
+							mes "ปัจจุบัน Lv ของชาวประมง สูงสุดแล้ว";
+							close2;
+							cutin "",255;
+							end;
+						}
+						else {
+							mes .NPCname$;
+							mes "คุณมีชาวประมง Lv "+#Lv3_FishermanLv+" แล้ว จะอัพเกรดหรือไม่?";
+							mes "ราคา: [^FF0000 " + (#Lv3_FishermanLv * .Cash[2]) + " ^000000] Cash";
+							mes "คุณมี: [ " + #CASHPOINTS + " ] Cash";
+							mes "--------------------";
+							mes "ราคา: [^0000FF " + (#Lv3_FishermanLv * .Zeny[2]) + " ^000000] Zeny";
+							mes "คุณมี: [ " + Zeny + " ] Zeny";
+							next;
+							switch(select(
+								""+.sb$+" อัพเกรด [^FF0000 Cash ^000000]",
+								""+.sb$+" อัพเกรด [^0000FF Zeny ^000000]",
+								""+.sb$+" ยังไม่อัพเกรด"
+								)){
+									case 1:
+										if (#CASHPOINTS < #Lv3_FishermanLv * .Cash[2]) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Cash Point ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										#CASHPOINTS -= #Lv3_FishermanLv * .Cash[2];
+										#Lv3_FishermanLv++;
+										mes "คุณได้อัพเกรดชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv3_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 2:
+										if (Zeny < #Lv3_FishermanLv * .Zeny[2]) {
+											mes .NPCname$;
+											mes "ขอโทษค่ะ";
+											mes "คุณมี Zeny ไม่เพียงพอ.";
+											close2;
+											cutin "",255;
+											end;
+										}
+										mes .NPCname$;
+										Zeny -= #Lv3_FishermanLv * .Zeny[2];
+										#Lv3_FishermanLv++;
+										mes "คุณได้อัพเกรดชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv3_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+										
+									case 3:
+										mes .NPCname$;
+										mes "ยกเลิกเรียบร้อยแล้ว";
+										close2;
+										cutin "",255;
+										end;
+							}
+						}
+						cutin "",255;
+						end;
+			}
+			
+		case 2:
+			mes .NPCname$;
+			mes "ยินดีต้อนรับสู่เมนูสำหรับ GM";
+			mes "โปรดใช้เพื่อทดสอบระบบ เท่านั้น";
+			mes "กรุณาเลือกเมนูที่ท่านต้องการ.";
+			next;
+			switch(select(
+				""+.sb$+" จ้าง | อัพเกรด ชาวประมง",
+				""+.sb$+" เร่งความเร็วในการตกปลาของชาวประมง",
+				""+.sb$+" รีเซ็ตการตกปลาชาวประมงของคุณ"
+				)){
+					case 1:
+						mes .NPCname$;
+						mes "โปรดเลือกชาวประมงที่ต้องการ";
+						mes "จ้าง หรือ อัพเกรด";
+						next;
+						switch(select(
+							""+.sb$+" ชาวประมง [ Lv.1 ]",
+							""+.sb$+" ชาวประมง [ Lv.2 ]",
+							""+.sb$+" ชาวประมง [ Lv.3 ]"
+							)){
+								case 1:
+									if (!#Lv1_FishermanLv) {
+										mes .NPCname$;
+										#Lv1_FishermanLv = 1;
+										#Lv1_FishingCount = $Lv1_FishingCount;
+										mes "ท่านได้จ้างชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv1_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+									}
+									if (#Lv1_FishermanLv == .FishermanMaxLv) {
+										mes .NPCname$;
+										mes "ปัจจุบัน Lv ของชาวประมง สูงสุดแล้ว";
+										close2;
+										cutin "",255;
+										end;
+									}
+									else {
+										mes .NPCname$;
+										#Lv1_FishermanLv++;
+										mes "คุณได้อัพเกรดชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv1_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+									}
+									close2;
+									cutin "",255;
+									end;
+									
+								case 2:
+									if (!#Lv1_FishermanLv) {
+										mes .NPCname$;
+										#Lv1_FishermanLv = 1;
+										#Lv1_FishingCount = $Lv1_FishingCount;
+										mes "ท่านได้จ้างชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv1_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+									}
+									if (#Lv1_FishermanLv == .FishermanMaxLv) {
+										mes .NPCname$;
+										mes "ปัจจุบัน Lv ของชาวประมง สูงสุดแล้ว";
+										close2;
+										cutin "",255;
+										end;
+									}
+									else {
+										mes .NPCname$;
+										#Lv1_FishermanLv++;
+										mes "คุณได้อัพเกรดชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv1_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+									}
+									close2;
+									cutin "",255;
+									end;
+									
+								case 3:
+									if (!#Lv1_FishermanLv) {
+										mes .NPCname$;
+										#Lv1_FishermanLv = 1;
+										#Lv1_FishingCount = $Lv1_FishingCount;
+										mes "ท่านได้จ้างชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv1_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+									}
+									if (#Lv1_FishermanLv == .FishermanMaxLv) {
+										mes .NPCname$;
+										mes "ปัจจุบัน Lv ของชาวประมง สูงสุดแล้ว";
+										close2;
+										cutin "",255;
+										end;
+									}
+									else {
+										mes .NPCname$;
+										#Lv1_FishermanLv++;
+										mes "คุณได้อัพเกรดชาวประมง เรียบร้อยแล้ว";
+										mes "ปัจจุบัน Lv ของชาวประมง คือ: "+#Lv1_FishermanLv;
+										close2;
+										cutin "",255;
+										end;
+									}
+									close2;
+									cutin "",255;
+									end;
+						}
+					
+					case 2:
+						mes .NPCname$;
+						mes "กรอกจำนวนรอบที่ต้องการ:";
+						input @round;
+						next;
+						$Lv1_FishingCount += @round;
+						mes .NPCname$;
+						mes "เร่งความเร็วในการตกปลาของท่านเรียบร้อยแล้วค่ะ.";
+						donpcevent "ชาวประมง Lv.1#Fisherman_Lv1::OnGMAding";
+					//	donpcevent "ชาวประมง Lv.2#Fisherman_Lv2::OnGMAding";
+					//	donpcevent "ชาวประมง Lv.3#Fisherman_Lv3::OnGMAding";
+						close2;
+						cutin "",255;
+						end;
+						
+					case 3:
+						mes .NPCname$;
+						mes "ทำการรีเซ็ตการตกปลาของท่านเรียบร้อยแล้วค่ะ.";
+						$Lv1_FishingCount = 0;
+						$Lv2_FishingCount = 0;
+						$Lv3_FishingCount = 0;
+						close2;
+						cutin "",255;
+						end;
+			}
+			cutin "",255;
+			end;
+			
+		case 3:	
+			mes .NPCname$;
+			mes "ชาวประมงจะสามารถตกปลาให้ท่านได้ตลอดเวลา";
+			mes "ท่านสามารถไปรับได้ทุกๆ 15 นาที";
+			mes "และถ้าเลเวลของชาวประมงมากเท่าไร";
+			mes "ก็จะมีโอกาสได้ไอเทมที่หายากมากขึ้นไปด้วย.";
+			next;
+			mes .NPCname$;
+			mes "ท่านสามารถจ้างชาวประมงได้โดยการใช้";
+			mes "Zeny หรือ Cash Point ก็ได้";
+			mes "เลเวลของชาวประมงจะสูงสุดที่ 20.";
+			close2;
+			cutin "",255;
+			end;
+	}
+	cutin "",255;
+	end;
+	
+OnInit:
+	waitingroom "จ้าง | อัพเกรด ชาวประมง",0;
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	// เลเวลสูงสุดของ ชาวประมง.
+	.FishermanMaxLv = 20;
+	// จำนวนเงินที่ใช้ในการอัพเกรดต่อ Lv. ชาวประมง (Cash Points)
+	// ชาวประมง Lv.1|ชาวประมง Lv.2|ชาวประมง Lv.3
+	setarray .Cash[0],100,300,500;
+	// จำนวนเงินที่ใช้ในการอัพเกรดต่อ Lv. ชาวประมง  (Zeny)
+	// ชาวประมง Lv.1|ชาวประมง Lv.2|ชาวประมง Lv.3
+	setarray .Zeny[0],1000000,3000000,5000000;			
+	end;
+}

@@ -1,0 +1,102 @@
+//script by Placid aka lShinel
+
+-	script	Runes	-1,{
+
+	OnInit:
+		//CONFIGURATION
+		set .Duration,60; 	// ระยะเวลาของบัฟรูน. วินาที
+		set .Chance,1; 		// โอกาสที่ได้รับบัฟรูน.
+		set .Sounds,1; 		// ใช้งานเสียง. 1 = เปิด, 0 = ปิด
+
+		setarray .name$,	"Double Damage",
+							"Regeneration",
+							"Movement Speed",
+							"Attack Speed",
+							"Illusions",
+							"Kyrie Eleison!",
+							"Full Critical";
+					
+
+		setarray .sound$,	"doubledamage.wav",
+							"regeneration.wav",
+							"haste.wav",
+							"effect\\wl_stasis.wav",
+							"illusion.wav",
+							"",
+							"";
+
+		setarray .effect,	865, 861, 871, 867, 587, 112, 677;
+
+		
+		setarray .Message$,	"พลังโจมตีและเวทย์ของคุณจะสร้างความเสียหายสองเท่าเป็นเวลา "+.Duration+" วินาที",
+							"การฟื้นฟูของคุณเพิ่มขึ้นเป็นเวลา "+.Duration+" วินาที",
+							"ความเร็วในการเคลื่อนที่ของคุณเพิ่มขึ้นเป็นเวลา "+.Duration+" วินาที",
+							"ความเร็วในการโจมตีของคุณเพิ่มขึ้นเป็นเวลา "+.Duration+" วินาที",
+							"ร่างเงาของคุณจะโจมตีมอนสเตอร์ที่อยู่ใกล้ ๆ!",
+							"คุณเพิ่งได้รับ Kyrie Eleison!",
+							"การโจมตีทางกายภาพทั้งหมดของคุณจะติดคริติคอล!";
+
+		end;
+
+
+	OnNPCKillEvent:
+		if(rand(100) <= .Chance)
+		{
+
+			set .@rand,rand(1,7);
+			switch (.@rand)
+			{
+				case 1:
+				{
+					sc_start SC_INCATKRATE,( .Duration * 1000 ), 100;
+					sc_start SC_INCMATKRATE,( .Duration * 1000 ), 100;
+					break;
+				}
+				case 2:
+				{
+					sc_start SC_REGENERATION,( .Duration * 1000 ), 100;
+					break;
+				}
+				case 3:
+				{
+					sc_start SC_SpeedUp1,( .Duration * 1000 ), 100;
+					break;
+				}
+				case 4:
+				{
+					sc_start SC_INCASPDRATE, ( .Duration * 1000 ), 100;
+					break;
+				}
+				case 5:
+				{
+					getmapxy (.@map$, .@x, .@y);
+					clone .@map$,.@X,.@y,"",getcharid(0),getcharid(0),"",1,.Duration;
+					clone .@map$,.@X,.@y,"",getcharid(0),getcharid(0),"",1,.Duration;
+					break;
+				}
+				case 6:
+				{
+					sc_start SC_KYRIE, ( .Duration * 1000 ), 10;
+					break;
+				}
+				case 7:
+				{
+					sc_start SC_INCCRI, ( .Duration * 1000 ), 999;
+					break;
+				}
+				
+			}
+
+			if(.Sounds)
+				soundeffectall .sound$[.@rand-1],0;
+
+			specialeffect2 .effect[.@rand-1];
+
+			message strcharinfo(0),""+.name$[.@rand-1]+"";
+
+			dispbottom ""+.Message$[.@rand-1]+"";
+
+		}
+
+		end;
+}

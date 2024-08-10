@@ -1,0 +1,276 @@
+//===== rAthena Script =======================================
+//= Shop
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+// Kafra
+mine_cave,93,39,3	script	Kafra Employee::kaf_mc	4_F_KAFRA1,{
+	cutin "kafra_01",2;
+	callfunc "F_KafSet";
+	mes "[Kafra Employee]";
+	mes "ยินดีต้อนรับสู่";
+	mes "Kafra Corporation.";
+	mes "พนักงาน Kafra";
+	mes "พร้อมให้บริการเจ้า.";
+	mes "มีอะไรให้ข้ารับใช้ไหม ?";
+	callfunc "F_Kafra",5,2,1,40,800;
+	savepoint "mine_cave",84,38,1,1;
+	callfunc "F_KafEnd",0,1,"Mine Cave";
+}
+//Premium Storage
+mine_cave,91,41,3	duplicate(Premium Storage)	Premium Storage#mc	4_TREASURE_BOX,
+
+// Dummy Shop
+-	exbartershop	Pickaxe_Crafting	-1
+-	exbartershop	prePickaxe_Crafting	-1
+-	exbartershop	Items_Crafting	-1
+-	exbartershop	upItems_Crafting	-1
+-	exbartershop	Others_Crafting	-1
+-	exbartershop	ShadowEQI_Crafting	-1
+-	exbartershop	EnergyP_Crafting	-1
+-	exbartershop	Ore_Mixer	-1
+-	bartershop	Mining_Point_Coin	-1
+-	shop	Mine_Shop	-1,no,910116:200000,910117:600000,910118:1000000,910086:10000,910087:10000,910088:10000,910089:10000,910090:10000,910114:10000000
+
+//==========================================================
+// Shop
+//==========================================================
+mine_cave,78,46,5	script	พ่อค้า#0F	4_M_HUMERCHANT,{
+	disable_items;
+	mes .NPCname$;
+	mes "ยินดีต้อนรับ";
+	mes "เจ้าอยากจะซื้ออะไรล่ะ?";
+	callshop "Mine_Shop",0;
+	end;
+	
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";	// ชื่อ NPC
+	//waitingroom " ร้านค้า",0;
+	end;
+}
+
+//==========================================================
+//Pickaxe Craft
+//==========================================================
+mine_cave,75,43,5	script	ช่างทำพลั่ว#0F	4_M_DWARF,{
+	disable_items;
+	mes .NPCname$;
+	mes "ยินดีต้อนรับ";
+	mes "เจ้ามีอะไรให้ข้าช่วยล่ะ?";
+	next;
+	switch(select(""+.sb$+" สร้างพลั่ว",""+.sb$+" อัพเกรดพลั่ว")) {
+		case 1:
+			close2;
+			callshop "Pickaxe_Crafting",1;
+			end;
+		case 2:
+			close2;
+			callshop "prePickaxe_Crafting",1;
+			end;
+	}
+
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	//waitingroom " ช่างทำพลั่ว",0;
+	//npcshopadditem "<Shop Name>",<Item>,<Quantity>,<Zeny Cost>,<Cost Item 1>,<Cost Amount 1>,<Cost Refine 1>,........<Cost Item 5>,<Cost Amount 5>,<Cost Refine 5>;
+	npcshopadditem "Pickaxe_Crafting",910077,-1,10000,910086,1,0,1019,20,0,998,20,0,999,5,0,0,0,0;		//Copper Pickaxe
+	npcshopadditem "Pickaxe_Crafting",910078,-1,10000,910087,1,0,1019,20,0,998,20,0,7231,30,0,0,0,0;	//Gold Pickaxe
+	npcshopadditem "Pickaxe_Crafting",910079,-1,10000,910088,1,0,1019,20,0,998,20,0,984,10,0,0,0,0;		//Oridecon Pickaxe
+	npcshopadditem "Pickaxe_Crafting",910080,-1,10000,910089,1,0,1019,20,0,998,20,0,985,10,0,0,0,0;		//Elunium Pickaxe
+	npcshopadditem "Pickaxe_Crafting",910081,-1,10000,910090,1,0,1019,20,0,984,50,0,985,50,0,0,0,0;		//Mystery Pickaxe
+	npcshopadditem "prePickaxe_Crafting",910119,-1,100000,910077,1,15,910136,10,0,999,50,0,0,0,0,0,0,0;	//
+	npcshopadditem "prePickaxe_Crafting",910120,-1,100000,910078,1,15,910136,15,0,999,50,0,0,0,0,0,0,0;	//
+	npcshopadditem "prePickaxe_Crafting",910121,-1,100000,910079,1,15,910136,20,0,999,50,0,0,0,0,0,0,0;	//
+	npcshopadditem "prePickaxe_Crafting",910122,-1,100000,910080,1,15,910136,20,0,999,50,0,0,0,0,0,0,0;	//
+	npcshopadditem "prePickaxe_Crafting",910123,-1,100000,910081,1,15,910136,30,0,999,50,0,0,0,0,0,0,0;	//
+	end;
+}
+
+//==========================================================
+// Mix Ore
+//==========================================================
+mine_cave,91,46,3	script	นักรวมแร่#0F	4_F_JOB_BLACKSMITH,{
+	disable_items;
+	callshop "Ore_Mixer",1;
+	end;
+
+OnInit:
+	//waitingroom " รวมแร่",0;
+	//npcshopadditem "<Shop Name>",<Item>,<Quantity>,<Zeny Cost>,<Cost Item 1>,<Cost Amount 1>,<Cost Refine 1>,........<Cost Item 5>,<Cost Amount 5>,<Cost Refine 5>;
+	npcshopadditem "Ore_Mixer",998,-1,100,1002,10,0,0,0,0,0,0,0,0,0,0,0,0,0;		//Iron
+	npcshopadditem "Ore_Mixer",1010,-1,100,998,5,0,1003,1,0,0,0,0,0,0,0,0,0,0;		//Phracon
+	npcshopadditem "Ore_Mixer",1011,-1,100,998,10,0,1003,3,0,0,0,0,0,0,0,0,0,0;		//Emveretarcon
+	npcshopadditem "Ore_Mixer",984,-1,100,756,5,0,0,0,0,0,0,0,0,0,0,0,0,0;			//Oridecon
+	npcshopadditem "Ore_Mixer",985,-1,100,757,5,0,0,0,0,0,0,0,0,0,0,0,0,0;			//Elunium
+	npcshopadditem "Ore_Mixer",999,-1,100,998,5,0,1003,5,0,0,0,0,0,0,0,0,0,0;		//Steel
+	npcshopadditem "Ore_Mixer",994,-1,500,990,10,0,0,0,0,0,0,0,0,0,0,0,0,0;			//Flame Heart
+	npcshopadditem "Ore_Mixer",995,-1,500,991,10,0,0,0,0,0,0,0,0,0,0,0,0,0;			//Mystic Frozen
+	npcshopadditem "Ore_Mixer",996,-1,500,992,10,0,0,0,0,0,0,0,0,0,0,0,0,0;			//Rough Wind
+	npcshopadditem "Ore_Mixer",997,-1,500,993,10,0,0,0,0,0,0,0,0,0,0,0,0,0;			//Great Nature
+	npcshopadditem "Ore_Mixer",1000,-1,500,1001,10,0,0,0,0,0,0,0,0,0,0,0,0,0;		//Star Crumb		
+	npcshopadditem "Ore_Mixer",730,-1,500,733,100,0,0,0,0,0,0,0,0,0,0,0,0,0;		//1carat Diamond
+	npcshopadditem "Ore_Mixer",731,-1,500,731,250,0,0,0,0,0,0,0,0,0,0,0,0,0;		//2carat Diamond
+	npcshopadditem "Ore_Mixer",732,-1,500,731,550,0,0,0,0,0,0,0,0,0,0,0,0,0;		//3carat Diamond
+	npcshopadditem "Ore_Mixer",7229,-1,1000,7232,100,0,0,0,0,0,0,0,0,0,0,0,0,0;		//Silver Bullion
+	npcshopadditem "Ore_Mixer",969,-1,1000,7231,100,0,0,0,0,0,0,0,0,0,0,0,0,0;		//Gold
+	npcshopadditem "Ore_Mixer",7228,-1,1000,7231,100,0,0,0,0,0,0,0,0,0,0,0,0,0;		//Gold Bullion
+	npcshopadditem "Ore_Mixer",7230,-1,1000,7233,100,0,7231,100,0,0,0,0,0,0,0,0,0,0;//Platinum Bullion
+	npcshopadditem "Ore_Mixer",910091,-1,1000,910094,100,0,0,0,0,0,0,0,0,0,0,0,0,0;	//Sun Stone
+	npcshopadditem "Ore_Mixer",910092,-1,5000,910095,100,0,0,0,0,0,0,0,0,0,0,0,0,0;	//Moon Stone
+	npcshopadditem "Ore_Mixer",910093,-1,10000,910096,100,0,0,0,0,0,0,0,0,0,0,0,0,0;//Growth Stone
+	npcshopadditem "Ore_Mixer",910136,-1,10000,910135,10,0,0,0,0,0,0,0,0,0,0,0,0,0;	//Large Magical Ore
+	end;
+}
+
+//==========================================================
+// Mining Point Shop
+//==========================================================
+tavern,42,43,5	script	Mining Point Shop	4_F_SITDOWN,{
+	disable_items;
+	mes .NPCname$;
+	mes "ยินดีต้อนรับ";
+	mes "หากเจ้ามี <ITEM>"+getitemname(.Req_ItemID)+"<INFO>"+.Req_ItemID+"</INFO></ITEM>";
+	mes "มาแลกเป็นไอเท็มต่างๆได้.";
+	mes "--------------------";
+	mes "เจ้ามีอยู่ทั้งหมด [ ^006600"+callfunc("F_InsertComma",countitem(.Req_ItemID))+" ^000000] อัน.";
+	mes "--------------------";
+	callshop "Mining_Point_Coin",1;
+	end;
+	
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	//waitingroom "ร้านค้า Mining Point",0;
+	.Req_ItemID = 910076;
+	//npcshopadditem "<Shop Name>",<Item>,<Cost Item>,<Cost Amount>,<Quantity>;
+	npcshopadditem "Mining_Point_Coin",910082,910076,5,-1;
+	npcshopadditem "Mining_Point_Coin",910083,910076,5,-1;
+	npcshopadditem "Mining_Point_Coin",910084,910076,5,-1;
+	npcshopadditem "Mining_Point_Coin",910085,910076,5,-1;
+	npcshopadditem "Mining_Point_Coin",910077,910076,5,-1;
+	npcshopadditem "Mining_Point_Coin",910078,910076,10,-1;
+	npcshopadditem "Mining_Point_Coin",910079,910076,15,-1;
+	npcshopadditem "Mining_Point_Coin",910080,910076,15,-1;
+	npcshopadditem "Mining_Point_Coin",910081,910076,30,-1;
+	end;
+}
+
+//==========================================================
+// Items Craft
+//==========================================================
+tavern,42,29,5	script	Jackie Leonard	4_M_ALCHE_A,{
+	disable_items;
+	mes .NPCname$;
+	mes "ยินดีต้อนรับ";
+	mes "เจ้ามีอะไรให้ข้าช่วยล่ะ?";
+	next;
+	switch(select(
+		""+.sb$+" สร้างอุปกรณ์ขุดแร่",
+		""+.sb$+" อัพเกรดอุปกรณ์ขุดแร่",
+		""+.sb$+" สร้างไอเทมจำเป็น"
+	)) {
+		case 1:
+			close2;
+			callshop "Items_Crafting",1;
+			end;
+		case 2:
+			close2;
+			callshop "upItems_Crafting",1;
+			end;
+		case 3:
+			close2;
+			callshop "Others_Crafting",1;
+			end;
+	}
+
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	//npcshopadditem "<Shop Name>",<Item>,<Quantity>,<Zeny Cost>,<Cost Item 1>,<Cost Amount 1>,<Cost Refine 1>,........<Cost Item 5>,<Cost Amount 5>,<Cost Refine 5>;
+	npcshopadditem "Items_Crafting",910082,-1,10000,998,50,0,999,20,0,1041,10,0,938,100,0,0,0,0;
+	npcshopadditem "Items_Crafting",910083,-1,10000,919,50,0,914,50,0,949,50,0,938,100,0,0,0,0;
+	npcshopadditem "Items_Crafting",910084,-1,10000,919,50,0,1059,50,0,949,50,0,938,100,0,0,0,0;
+	npcshopadditem "Items_Crafting",910085,-1,10000,919,50,0,1028,50,0,949,50,0,938,100,0,0,0,0;
+	npcshopadditem "Items_Crafting",910103,-1,100000,919,100,0,1028,100,0,938,100,0,0,0,0,0,0,0;
+	//------------------------------------------------------------
+	npcshopadditem "upItems_Crafting",910110,-1,500000,910082,1,10,910136,5,0,999,50,0,0,0,0,0,0,0;
+	npcshopadditem "upItems_Crafting",910111,-1,1000000,910110,1,12,910136,10,0,999,50,0,0,0,0,0,0,0;
+	npcshopadditem "upItems_Crafting",910106,-1,500000,910083,1,10,910136,5,0,999,50,0,0,0,0,0,0,0;
+	npcshopadditem "upItems_Crafting",910107,-1,1000000,910106,1,12,910136,10,0,999,50,0,0,0,0,0,0,0;
+	npcshopadditem "upItems_Crafting",910112,-1,500000,910084,1,10,910136,5,0,999,50,0,0,0,0,0,0,0;
+	npcshopadditem "upItems_Crafting",910113,-1,1000000,910112,1,12,910136,10,0,999,50,0,0,0,0,0,0,0;
+	npcshopadditem "upItems_Crafting",910108,-1,500000,910085,1,10,910136,5,0,999,50,0,0,0,0,0,0,0;
+	npcshopadditem "upItems_Crafting",910109,-1,1000000,910108,1,12,910136,10,0,999,50,0,0,0,0,0,0,0;
+	npcshopadditem "upItems_Crafting",910104,-1,500000,910103,1,10,910136,5,0,999,50,0,0,0,0,0,0,0;
+	npcshopadditem "upItems_Crafting",910105,-1,1000000,910104,1,12,910136,10,0,999,50,0,0,0,0,0,0,0;
+	npcshopadditem "upItems_Crafting",910115,-1,1000000,910114,1,12,910136,15,0,999,50,0,0,0,0,0,0,0;
+	//------------------------------------------------------------
+	npcshopadditem "Others_Crafting",910132,-1,50000,910136,5,0,25729,5,0,999,15,0,0,0,0,0,0,0;
+	npcshopadditem "Others_Crafting",910132,-1,50000,910136,5,0,25731,5,0,999,15,0,0,0,0,0,0,0;
+	npcshopadditem "Others_Crafting",910133,-1,100000,910132,10,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	npcshopadditem "Others_Crafting",910134,-1,100000,910132,10,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	end;
+}
+
+//==========================================================
+// Shadow Equipment Craft
+//==========================================================
+tavern,40,34,5	script	Glenda Greer	4_M_REPAIR,{
+	disable_items;
+	mes .NPCname$;
+	mes "ยินดีต้อนรับ";
+	mes "เจ้ามีอะไรให้ข้าช่วยล่ะ?";
+	next;
+	switch(select(
+		""+.sb$+" สร้าง Shadow Equipment"
+	)) {
+		case 1:
+			close2;
+			callshop "ShadowEQI_Crafting",1;
+			end;
+	}
+
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	//npcshopadditem "<Shop Name>",<Item>,<Quantity>,<Zeny Cost>,<Cost Item 1>,<Cost Amount 1>,<Cost Refine 1>,........<Cost Item 5>,<Cost Amount 5>,<Cost Refine 5>;
+	npcshopadditem "ShadowEQI_Crafting",24012,-1,500000,25729,15,0,910133,1,0,910134,1,0,0,0,0,0,0,0;
+	npcshopadditem "ShadowEQI_Crafting",24013,-1,500000,25729,15,0,910133,1,0,910134,1,0,0,0,0,0,0,0;
+	npcshopadditem "ShadowEQI_Crafting",24014,-1,500000,25729,15,0,910133,1,0,910134,1,0,0,0,0,0,0,0;
+	npcshopadditem "ShadowEQI_Crafting",24015,-1,500000,25729,15,0,910133,1,0,910134,1,0,0,0,0,0,0,0;
+	npcshopadditem "ShadowEQI_Crafting",24016,-1,500000,25729,15,0,910133,1,0,910134,1,0,0,0,0,0,0,0;
+	npcshopadditem "ShadowEQI_Crafting",24017,-1,500000,25729,15,0,910133,1,0,910134,1,0,0,0,0,0,0,0;
+	end;
+}
+
+//==========================================================
+// Energy Potion Craft
+//==========================================================
+tavern,64,31,3	script	Antonio Rowe	4_M_PATRICK,{
+	disable_items;
+	mes .NPCname$;
+	mes "ยินดีต้อนรับ";
+	mes "เจ้ามีอะไรให้ข้าช่วยล่ะ?";
+	next;
+	switch(select(
+		""+.sb$+" สร้าง Energy Potion"
+	)) {
+		case 1:
+			close2;
+			callshop "EnergyP_Crafting",1;
+			end;
+	}
+
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	//npcshopadditem "<Shop Name>",<Item>,<Quantity>,<Zeny Cost>,<Cost Item 1>,<Cost Amount 1>,<Cost Refine 1>,........<Cost Item 5>,<Cost Amount 5>,<Cost Refine 5>;
+	npcshopadditem "EnergyP_Crafting",910116,-1,1000,6395,20,0,523,20,0,713,1,0,0,0,0,0,0,0;
+	npcshopadditem "EnergyP_Crafting",910117,-1,1000,6395,60,0,523,60,0,713,1,0,0,0,0,0,0,0;
+	npcshopadditem "EnergyP_Crafting",910118,-1,1000,6395,100,0,523,100,0,713,1,0,0,0,0,0,0,0;
+	end;
+}

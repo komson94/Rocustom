@@ -1,0 +1,390 @@
+//===== rAthena Script =======================================
+//= Officer
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+tavern	mapflag	nobranch
+tavern	mapflag	noicewall
+tavern	mapflag	nomemo
+tavern	mapflag	nopenalty
+tavern	mapflag	noteleport
+tavern	mapflag	noskill
+tavern	mapflag	town
+
+mine_cave	mapflag	nobranch
+mine_cave	mapflag	noicewall
+mine_cave	mapflag	nomemo
+mine_cave	mapflag	nopenalty
+mine_cave	mapflag	noteleport
+mine_cave	mapflag	noskill
+mine_cave	mapflag	town
+//============================================================
+tavern,58,48,3	script	Officer Tina#0F	4_F_KAFRA9,{
+	disable_items;
+	cutin "kafra_09",2;
+	mes .NPCname$;
+	mes "ขอบคุณนักผจญภัยมากมายที่มาเยี่ยมชม Miner Group ของเรา";
+	mes "สวัสดี มีอะไรให้ช่วยไหม?";
+	.Certificate_Lv1 = !isbegin_quest(1000001) && (BaseLevel >= 50) && (countitem(.ItemID[0]) == 1) || isbegin_quest(1000001) == 1;
+	.Certificate_Lv2 = !isbegin_quest(1000002) && (BaseLevel >= 100) && (isbegin_quest(1000001) == 2) || isbegin_quest(1000002) == 1;
+	.Certificate_Lv3 = !isbegin_quest(1000003) && (BaseLevel >= 150) && (isbegin_quest(1000002) == 2) || isbegin_quest(1000003) == 1;
+	next;	
+	switch(select(
+		""+.symbol$+" ลงทะเบียนเข้าร่วมเป็นสมาชิก",
+		(.Certificate_Lv1) ? ""+.symbol$+" ใบอนุญาตเข้าเหมืองแร่ลับ Lv.1 "+.quest$+"" : "",
+		(.Certificate_Lv2) ? ""+.symbol$+" ใบอนุญาตเข้าเหมืองแร่ลับ Lv.2 "+.quest$+"" : "",
+		(.Certificate_Lv3) ? ""+.symbol$+" ใบอนุญาตเข้าเหมืองแร่ลับ Lv.3 "+.quest$+"" : "",
+		""+.symbol$+" สอบถามรายละเอียดการขุดแร่",
+		""+.symbol$+" ไม่มีอะไร"
+		)) {
+			case 1:
+				if (countitem(.ItemID[0]) == 1) {
+					mes .NPCname$;
+					mes "เจ้าเป็นสมาชิกของ Miner Group แล้ว.";
+					close2;
+					cutin "",255;
+					end;
+				}
+				else {
+					mes .NPCname$;
+					mes "เจ้าสามารถเป็นสมาชิก ได้เพียงแค่ลงทะเบียนกับข้า.";
+					mes "เจ้าต้องการเข้าร่วม Miner Group หรือไม่?";
+					next;
+					switch(select("ใช่ ข้าต้องการเข้าร่วม","ไม่ ข้าไม่ต้องการเข้าร่วม")) {
+						case 1:
+							mes .NPCname$;
+							mes "เอาล่ะ กรุณาเขียนชื่อของเจ้าที่นี่.";
+							input .@input$;
+							next;
+							mes .NPCname$;
+							mes "เจ้าจะทำอะไร?";
+							mes "ให้ข้าดู.";
+							next;
+							mes .NPCname$;
+							mes "ชื่อของเจ้า คือ ^3131FFBo"+.@input$+"Ba^000000...? นั่นถูกต้องใช่ไหม?";
+							mes "ฮะ? ไม่ใช่เหรอ??";
+							next;
+							emotion ET_SWEAT;
+							mes .NPCname$;
+							mes "อืม นั่นไม่ใช่สิ่งที่เจ้าเขียน?";
+							mes "โอเค อืม อ่านยากไปหน่อย.";
+							next;
+							mes .NPCname$;
+							mes "เจ้าช่วยเขียนชื่อของเจ้าอีกครั้งได้ไหม? กรุณาเขียนให้ ^3131FFชัดเจน^000000.";
+							input .@input$;
+							next;
+							mes .NPCname$;
+							mes "อะ~ ฮะ. เจ้าคือ ^3131FF"+strcharinfo(0)+"^000000.";
+							mes "ข้าเข้าใจถูกแล้วในครั้งนี้.";
+							next;
+							emotion ET_BEST;
+							mes .NPCname$;
+							mes "เราใส่ชื่อของเจ้าในรายการแล้ว.";
+							mes "ยินดีต้อนรับสมาชิกใหม่ของ Miner Group!";
+							next;
+							mes .NPCname$;
+							mes "หวังว่าเจ้าจะทำผลงานได้ยอดเยี่ยมในฐานะสมาชิกของเรา.";
+							getitem .ItemID[0],1; //Minner Group Token				
+							close2;
+							cutin "",255;
+							end;
+							
+						case 2:
+							mes .NPCname$;	
+							mes "หากเจ้าต้องการเข้าร่วม Miner Group";
+							mes "เจ้าสามารถกลับมาลงทะเบียนขับข้าได้ทุกเมื่อ.";				
+							close2;
+							cutin "",255;
+							end;
+					}
+				}
+				cutin "",255;
+				end;
+				
+			case 2:
+				mes .NPCname$;
+				if (isbegin_quest(1000001) == 1) {
+					mes "นี่คือใบอนุญาตของเจ้า";
+					mes "เจ้าสามารถมอบให้กับทหารยาม";
+					mes "เพื่อผ่านเข้าสู่เหมืองแร่ลับได้";
+					getitem .ItemID[1],1;
+					completequest 1000001;
+					close2;
+					cutin "",255;
+					end;
+				}
+				else {
+					mes "เจ้าจำเป็นต้องจ่ายค่าธรรมเนียม ^FF0000"+.Price[0]+"^000000 z";
+					mes "ในการขอใบอนุญาต:";
+					mes "<ITEM>Mining Certificate Lv.1<INFO>910073</INFO></ITEM>";
+					next;
+					switch(select(""+.symbol$+" ข้าไม่มีเงิน",""+.symbol$+" จ่ายค่าธรรมเนียม")) {
+						case 1:
+							mes .NPCname$;
+							mes "หากเจ้ามีเงินเพียงพอแล้ว";
+							mes "ให้กลับมาหาข้าอีกครั้ง.";
+							close2;
+							cutin "",255;
+							end;
+							
+						case 2:
+							mes .NPCname$;
+							if (Zeny < .Price[0]) {
+								mes "เจ้ามีเงินไม่เพียงพอที่จะจ่ายค่าธรรมเนียม";
+								mes "โปรดกลับมาใหม่ภายหลัง.";
+								close2;
+								cutin "",255;
+								end;
+							}
+							Zeny -= .Price[0];
+							mes "ข้าจะเตรียมเอกสารให้";
+							mes "โปรดรอสักครู่...";
+							setquest 1000001;
+							close2;
+							cutin "",255;
+							end;
+					}
+				}
+				close2;
+				cutin "",255;
+				end;	
+				
+			case 3:
+				mes .NPCname$;
+				if (isbegin_quest(1000002) == 1) {
+					mes "นี่คือใบอนุญาตของเจ้า";
+					mes "เจ้าสามารถมอบให้กับทหารยาม";
+					mes "เพื่อผ่านเข้าสู่เหมืองแร่ลับได้";
+					getitem .ItemID[2],1;
+					completequest 1000002;
+					close2;
+					cutin "",255;
+					end;
+				}
+				else {
+					mes "เจ้าจำเป็นต้องจ่ายค่าธรรมเนียม ^FF0000"+.Price[1]+"^000000 z";
+					mes "ในการขอใบอนุญาต:";
+					mes "<ITEM>Mining Certificate Lv.2<INFO>910074</INFO></ITEM>";
+					next;
+					switch(select(""+.symbol$+" ข้าไม่มีเงิน",""+.symbol$+" จ่ายค่าธรรมเนียม")) {
+						case 1:
+							mes .NPCname$;
+							mes "หากเจ้ามีเงินเพียงพอแล้ว";
+							mes "ให้กลับมาหาข้าอีกครั้ง.";
+							close2;
+							cutin "",255;
+							end;
+							
+						case 2:
+							mes .NPCname$;
+							if (Zeny < .Price[0]) {
+								mes "เจ้ามีเงินไม่เพียงพอที่จะจ่ายค่าธรรมเนียม";
+								mes "โปรดกลับมาใหม่ภายหลัง.";
+								close2;
+								cutin "",255;
+								end;
+							}
+							Zeny -= .Price[1];
+							mes "ข้าจะเตรียมเอกสารให้";
+							mes "โปรดรอสักครู่...";
+							setquest 1000002;
+							close2;
+							cutin "",255;
+							end;
+					}
+				}
+				close2;
+				cutin "",255;
+				end;
+				
+			case 4:
+				mes .NPCname$;
+				if (isbegin_quest(1000003) == 1) {
+					mes "นี่คือใบอนุญาตของเจ้า";
+					mes "เจ้าสามารถมอบให้กับทหารยาม";
+					mes "เพื่อผ่านเข้าสู่เหมืองแร่ลับได้";
+					getitem .ItemID[3],1;
+					completequest 1000003;
+					close2;
+					cutin "",255;
+					end;
+				}
+				else {
+					mes "เจ้าจำเป็นต้องจ่ายค่าธรรมเนียม ^FF0000"+.Price[2]+"^000000 z";
+					mes "ในการขอใบอนุญาต:";
+					mes "<ITEM>Mining Certificate Lv.3<INFO>910074</INFO></ITEM>";
+					next;
+					switch(select(""+.symbol$+" ข้าไม่มีเงิน",""+.symbol$+" จ่ายค่าธรรมเนียม")) {
+						case 1:
+							mes .NPCname$;
+							mes "หากเจ้ามีเงินเพียงพอแล้ว";
+							mes "ให้กลับมาหาข้าอีกครั้ง.";
+							close2;
+							cutin "",255;
+							end;
+							
+						case 2:
+							mes .NPCname$;
+							if (Zeny < .Price[2]) {
+								mes "เจ้ามีเงินไม่เพียงพอที่จะจ่ายค่าธรรมเนียม";
+								mes "โปรดกลับมาใหม่ภายหลัง.";
+								close2;
+								cutin "",255;
+								end;
+							}
+							Zeny -= .Price[2];
+							mes "ข้าจะเตรียมเอกสารให้";
+							mes "โปรดรอสักครู่...";
+							setquest 1000003;
+							close2;
+							cutin "",255;
+							end;
+					}
+				}
+				close2;
+				cutin "",255;
+				end;
+			
+			case 5:
+				mes .NPCname$;
+				mes "หากเจ้าต้องการไปขุดแร่ที่เหมืองแร่ลับ";
+				mes "เจ้าจะต้องทำการลงทะเบียนและขอใบอนุญาตเสียก่อน";
+				mes "จึงจะสามารถเข้าไปขุดแร่ได้.";
+				next;
+				mes .NPCname$;
+				mes "ในอนุญาตมีอยู่ 3 ระดับ:";
+				mes "-----------------------";
+				mes "<ITEM>Mining Certificate Lv.1<INFO>910073</INFO></ITEM>";
+				mes "เป็นใบอนุญาตสำหรับการเข้าสู่เหมืองแร่ลับ ชั่นที่ 1 และ 2";
+				mes "-----------------------";
+				mes "<ITEM>Mining Certificate Lv.2<INFO>910074</INFO></ITEM>";
+				mes "เป็นใบอนุญาตสำหรับการเข้าสู่เหมืองแร่ลับ ชั่นที่ 3 และ 4";
+				mes "-----------------------";
+				mes "<ITEM>Mining Certificate Lv.3<INFO>910075</INFO></ITEM>";
+				mes "เป็นใบอนุญาตสำหรับการเข้าสู่เหมืองแร่ลับ ชั่นที่ 5";
+				mes "-----------------------";
+				next;
+				mes .NPCname$;
+				mes "ในการขุดแร่จำเป็นต้องสวมใส่";
+				mes "พลั่วสำหรับขุดแร่แต่ละชนิด";
+				mes "<ITEM>Copper Pickaxe<INFO>910077</INFO></ITEM>";
+				mes "<ITEM>Gold Pickaxe<INFO>910078</INFO></ITEM>";
+				mes "<ITEM>Oridecon Pickaxe<INFO>910079</INFO></ITEM>";
+				mes "<ITEM>Elunium Pickaxe<INFO>910080</INFO></ITEM>";
+				mes "<ITEM>Mystery Pickaxe<INFO>910081</INFO></ITEM>";
+				mes "และ ยังมีอุปกรณ์เสริมอื่นๆ";
+				mes "<ITEM>Miner Helmet<INFO>910082</INFO></ITEM>";
+				mes "<ITEM>Miner Glove<INFO>910083</INFO></ITEM>";
+				mes "<ITEM>Miner Muffler<INFO>910084</INFO></ITEM>";
+				mes "<ITEM>Miner Boots<INFO>910085</INFO></ITEM>";
+				next;
+				mes .NPCname$;
+				mes "ในการขุดแร่ จะสูญเสียพลังงาน ในการขุดแต่ละครั้ง";
+				mes "พลังงานจะฟื้นฟูอัตโนมัติ ^FF0000300^000000 พลังงาน|วัน";
+				mes "แต่ยังสามารถใช้ยาฟื้นฟูพลังงานได้";
+				mes "ยาฟื้นฟูพลังงานสามารถซื้อได้ที่พ่อค้า";
+				mes "<ITEM>Small Mining Energy Potion<INFO>910116</INFO></ITEM>";
+				mes "<ITEM>Medium Mining Energy Potion<INFO>910117</INFO></ITEM>";
+				mes "<ITEM>Large Mining Energy Potion<INFO>910118</INFO></ITEM>";
+				next;
+				mes .NPCname$;
+				mes "นอกจากการขุดแร่ด้วยตัวเองแล้ว";
+				mes "เจ้ายังสามารถจ้างคนขุดแร่";
+				mes "ให้ทำงานแทนเจ้าได้";
+				mes "โดยจะจ้างได้ตั้งแต่ชั่นที่ 1-5";
+				mes "แต่ละชั้นจะจ้างคนงานได้สูงสุด 4 คน";
+				mes "และยังสามารถอัพเกรดได้ถึง 20 เลเวล";
+				mes "ยิ่งคนงานมีเลเวลมากเท่าไรก็ยิ่งมีโอกาสขุดได้แร่มากขึ้นตามไปด้วย";
+				next;
+				mes .NPCname$;
+				mes "นี่ก็คือรายละเอียดเกี่ยวกับการขุดแร่";
+				mes "หากเจ้าสนใจ อย่าลืมลงทะเบียน";
+				mes "และขอใบอนุญาตก่อนเข้าสู่เหมืองแร่ลับด้วยล่ะ.";
+				close2;
+				cutin "",255;
+				end;	
+			
+			case 6:
+				mes .NPCname$;
+				mes "หากเจ้ามีคำถามใด ๆ โปรดกลับมาอีกครั้ง.";				
+				close2;
+				cutin "",255;
+				end;		
+	}
+	cutin "",255;
+	end;
+	
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";	// ชื่อ NPC
+	.symbol$ = "~";
+	.quest$ = "[^FF0000เควส^000000]";
+	setarray .ItemID[0],
+		910072,	//Minner Group Token
+		910073,	//Mining Certificate Lv.1
+		910074,	//Mining Certificate Lv.2
+		910075;	//Mining Certificate Lv.3
+	setarray .Price[0],
+		10000,
+		100000,
+		1000000;
+	// Quest Mark
+	questinfo QTYPE_QUEST2, QMARK_NONE, "!isbegin_quest(1000001) && (BaseLevel >= 50) && (countitem(910072) == 1)";
+	questinfo QTYPE_QUEST2, QMARK_NONE, "!isbegin_quest(1000002) && (BaseLevel >= 100) && (isbegin_quest(1000001) == 2)";
+	questinfo QTYPE_QUEST2, QMARK_NONE, "!isbegin_quest(1000003) && (BaseLevel >= 150) && (isbegin_quest(1000002) == 2)";
+	questinfo QTYPE_QUEST, QMARK_NONE, "isbegin_quest(1000001) == 1";
+	questinfo QTYPE_QUEST, QMARK_NONE, "isbegin_quest(1000002) == 1";
+	questinfo QTYPE_QUEST, QMARK_NONE, "isbegin_quest(1000003) == 1";
+	end;	
+}
+
+tavern,59,35,5	script	Thomas Wilkins	4_TOWER_04,{
+	disable_items;
+	mes .NPCname$;
+	mes "ที่นี่เริ่มมีผู้คนเยอะขึ้นแล้ว";
+	mes "หลังจากที่อุปกรณ์ระดับสูงเป็นที่ต้องการมากขึ้น";
+	mes "แถมแร่ระดับสูงก็ค่อนข้างหายากเช่นกัน.";
+	close;
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";	// ชื่อ NPC
+	end;
+}
+
+tavern,48,36,5	script	Gilbert Murphy	4_TOWER_02,{
+	disable_items;
+	mes .NPCname$;
+	mes "สวัสดี เจ้าเองก็มาหาแร่เหมือนกันสินะ";
+	mes "แต่เจ้าเองก็ควรจะพักบ้างนะ";
+	mes "เพราะยังไงเจ้าก็คงจะเหนื่อยในไม่ช้า.";
+	close;
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";	// ชื่อ NPC
+	end;
+}
+
+tavern,53,36,3	script	Kurt Price	4_TOWER_09,{
+	disable_items;
+	mes .NPCname$;
+	mes "ข้าอยากได้อุปกรณ์ใหม่ๆ";
+	mes "แต่ข้ายังหาแร่ที่ต้องใช้ไม่ได้เลย";
+	mes "ข้าว่า <ITEM>"+getitemname(25729)+"<INFO>25729</INFO></ITEM> มันค่อนข้างจะหายากนะ.";
+	close;
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";	// ชื่อ NPC
+	end;
+}
+
+tavern,49,49,3	script	Miriam Brady	4_TOWER_07,{
+	disable_items;
+	mes .NPCname$;
+	mes "ข้าอยากได้เครื่องดื่มเย็นๆจัง";
+	mes "ขอโทษที ข้าประหม่ามากเวลามีคนอื่นเข้ามาพูดคุยด้วย";
+	mes "มีอะไรอยากจะบอกข้าไหม?";
+	close;
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";	// ชื่อ NPC
+	end;
+}

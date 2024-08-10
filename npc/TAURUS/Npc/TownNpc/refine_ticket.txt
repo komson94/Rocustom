@@ -1,0 +1,40 @@
+
+-	shop	#exchange_weapon_refineticket	-1,no,100381:1000000,100382:1000000,100383:1000000,100384:1000000,100385:1000000,100386:1000000,100387:1000000
+-	bartershop	#up_ticket_refine	-1
+
+prontera,168,179,4	script	Refine Ticker#Exchange_GU_weapon	496,{
+	mes "Refine Ticker";
+	mes "ตามความจริงต้องอยู่ในตลาด Eden";
+	mes "แต่ขี้เกียจเอาไปไว้ในนั้น เลยมาขายตรงนี้";
+	next;
+	switch (select ("- อัพเกรดขั้นใบบวก:- แลกอาวุธเป็นใบบวก") ) {
+		case 1:
+			mes "Refine Ticker";
+			mes "ตามที่ว่านั้นแหละ ";
+			mes "ก็ดูเอาว่าใช้อะไรยังไงในร้านค้าเถิด";
+			next;
+			callshop "#up_ticket_refine",1;
+			end;
+		
+		case 2:
+			mes "Refine Ticker";
+			mes "กฏง่ายๆ";
+			mes "อาวุธซีรีย์ Crimson สามารถใช้ค้อน LV3 ได้";
+			mes "ย้ำว่าแค่อาวุธ ^FF0000 Crimson Weapon Serie^000000 เท่านั้น" ;
+			next;
+			mes "อาวุธซีรีย์ Thanos และ Vicious สามารถใช้ค้อน LV4 ได้";
+			mes "ย้ำว่าแค่อาวุธ ^FF0000 Thanos Weapon Serie^000000 และ" ;
+			mes "ย้ำว่าแค่อาวุธ ^FF0000 Vicious Weapon Serie^000000 เท่านั้น" ;
+			mes "ถ้ามาเรียกร้องว่า ^FF0000ไม่รู้ ^000000 หรือ  ^FF0000ตีอาวุธนี้ไปแล้ว^000000";
+			mes "ก็เสียหายของท่านเอง";
+			next;
+			callshop "#exchange_weapon_refineticket",1;
+			end;
+		}
+	
+OnInit:
+	waitingroom "แลกใบบวกอาวุธ",0;
+	npcshopadditem "#up_ticket_refine",6229,6230,2,-1,6228,6229,2,-1,6993,6228,3,-1,6238,6993,5,-1,6584,6238,5,-1;	//Weapon Ticket
+	npcshopadditem "#up_ticket_refine",6233,6234,2,-1,6232,6233,2,-1,6994,6232,3,-1,6239,6994,5,-1,6585,6239,5,-1;	//Armor Ticket
+end;
+}

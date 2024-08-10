@@ -1,0 +1,283 @@
+//=========================================================================
+// - Command[@job2]: คำเปลี่ยนอาชีพ
+//o คำสั่ง @job2 <job_id>
+//o ตัวอย่าง @job2 4060
+//o ตัวอย่าง #job2 <ชื่อตัวละคร> 4060
+//o ใช้สำหรับเปลี่ยนอาชีพแล้วเพิ่ม Lv, Job Lv, Stat, Skill เต็ม เพื่อความรวดเร็วในการทดสอบ
+//=========================================================================
+
+-	script	GMCommands	-1,{
+OnInit:
+	bindatcmd "job2",strnpcinfo(3) + "::OnJob2",99,99;
+	end;
+	
+OnJob2:
+	.@job_id = .@atcmd_parameters$[0];
+	
+	atcommand "@job " + .@job_id;
+	atcommand "@lvup 999";
+	atcommand "@joblvup 999";
+	atcommand "@statall";
+	atcommand "@skillall";
+	callfunc("F_GetPlatinumSkills");
+	StatusPoint = 0;
+	percentheal 100,100;
+	end;
+}
+
+//=========================================================================
+// - Command[@smclass1]: คำสั่งเสกลูกน้องสำหรับ GM เรียกโคลนคลาส 1 ไว้เสกขำๆ.
+// - Command[@smclass2]: คำสั่งเสกลูกน้องสำหรับ GM เรียกโคลนคลาส 2 ไว้เสกขำๆ.
+// - Command[@smclass3]: คำสั่งเสกลูกน้องสำหรับ GM เรียกโคลนคลาส 3 ไว้เสกขำๆ.
+// - Command[@smhighclass]: คำสั่งเสกลูกน้องสำหรับ GM เรียกโคลนไฮคลาส ไว้เสกขำๆ.
+// - Command[@smnovice]: คำสั่งเสกลูกน้องสำหรับ GM เรียกโคลนโนวิท ไว้เสกขำๆ.
+//========================================================================
+-	script	gmsummons	-1,{
+
+OnInit:
+	bindatcmd "smclass1", strnpcinfo(3)+"::On_S_FirstClass", 99;
+	bindatcmd "smclass2", strnpcinfo(3)+"::On_S_SecondClass", 99;
+	bindatcmd "smhighclass", strnpcinfo(3)+"::On_S_HighClass", 99;
+	bindatcmd "smclass3", strnpcinfo(3)+"::On_S_ThirdClass", 99;
+	bindatcmd "smnovice", strnpcinfo(3)+"::On_S_NoviceClass", 99;
+	end;
+
+On_S_FirstClass:
+	atcommand "@summon 1652 10";
+	atcommand "@summon 1653 10";
+	atcommand "@summon 1654 10";
+	atcommand "@summon 1655 10";
+	atcommand "@summon 1656 10";
+	atcommand "@summon 1657 10";
+	atcommand "@summon 1658 10";
+	end;
+	
+On_S_SecondClass:
+	atcommand "@summon 2415 10";
+	atcommand "@summon 2416 10";
+	atcommand "@summon 2417 10";
+	atcommand "@summon 2418 10";
+	atcommand "@summon 2419 10";
+	atcommand "@summon 2420 10";
+	atcommand "@summon 2421 10";
+	atcommand "@summon 2422 10";
+	atcommand "@summon 2423 10";
+	atcommand "@summon 2424 10";
+	atcommand "@summon 2425 10";
+	atcommand "@summon 2426 10";
+	atcommand "@summon 2427 10";
+	end;
+	
+On_S_HighClass:
+	atcommand "@summon 1646 10";
+	atcommand "@summon 1647 10";
+	atcommand "@summon 1648 10";
+	atcommand "@summon 1649 10";
+	atcommand "@summon 1650 10";
+	atcommand "@summon 1651 10";
+	atcommand "@summon 2235 10";
+	atcommand "@summon 2236 10";
+	atcommand "@summon 2237 10";
+	atcommand "@summon 2238 10";
+	atcommand "@summon 2239 10";
+	atcommand "@summon 2240 10";
+	atcommand "@summon 2241 10";
+	end;
+	
+On_S_ThirdClass:
+	atcommand "@summon 3220 10";
+	atcommand "@summon 3221 10";
+	atcommand "@summon 3222 10";
+	atcommand "@summon 3223 10";
+	atcommand "@summon 3224 10";
+	atcommand "@summon 3225 10";
+	atcommand "@summon 3240 10";
+	atcommand "@summon 3241 10";
+	atcommand "@summon 3242 10";
+	atcommand "@summon 3243 10";
+	atcommand "@summon 3244 10";
+	atcommand "@summon 3245 10";
+	atcommand "@summon 3246 10";
+	end;
+
+On_S_NoviceClass:
+	atcommand "@summon 2441 10";
+	atcommand "@summon 2442 10";
+	end;
+
+}
+
+//=========================================================================
+// - Command[@hide]: คำสั่งห่องหนของ GM เพิ่ม effect เฉยๆไม่มีอะไรพิเศษ.
+//=========================================================================
+-	script	atcmd_hide	-1,{
+OnInit:
+	bindatcmd "hide",strnpcinfo(3)+"::OnAtcommand",99,99;
+	end;
+OnAtcommand:
+
+	if(checkoption(OPTION_INVISIBLE) == 1){
+		specialeffect2 587;
+		specialeffect2 589;
+		setoption OPTION_INVISIBLE,0;
+	} else {	
+		specialeffect2 587;
+		specialeffect2 589;
+		setoption OPTION_INVISIBLE,1;
+	}
+	end;
+}
+
+//=========================================================================
+// - Command[@itemrain]: คำสั่งสำหรับโปรยไอเทมลงพื้นรอบตัว GM เป็นจำนวน 100 ea.
+//=========================================================================
+-	script	Item_Shower	-1,{
+OnInit:
+	bindatcmd "itemrain", strnpcinfo(0) +"::OnItemShower", 60,100;
+	end;
+	
+OnItemShower:
+	.@itemid = atoi( .@atcmd_parameters$[0] );
+	.@Amount = atoi( .@atcmd_parameters$[1] );
+	if ( getitemname( .@itemid ) == "null" ) {
+		message strcharinfo(0), "รหัส Item ไม่ถูกต้อง.";
+		end;
+	}
+	if ( !.@Amount || .@Amount > 100 ) .@Amount = 100;
+	getmapxy .@map$, .@x, .@y, BL_PC;
+	while ( .@i < .@Amount ) {
+		do {
+			.@dx = rand( -10, 10 );
+			.@dy = rand( -10, 10 );
+		} while( !checkcell( .@map$,(.@x+.@dx),(.@y+.@dy),cell_chkpass ) );
+		makeitem .@itemid, 1, .@map$, .@x + .@dx, .@y + .@dy;
+		.@i++;
+	}
+	end;
+}
+
+
+//=========================================================================
+// - Command[@reward]: คำสั่งแจกไอเทมหรือเงินให้กับผู้เล่นเข้า RodEx.
+//o คำสั่ง @reward : จะเรียกการเซ็ตค่าต่างๆขึ้นมา.
+//o ตัวอย่าง @reward all : แจกของรางวัลให้กับผู้เล่นที่ออนไลน์ทุกคนในเซิร์ฟเวอร์.
+//o ตัวอย่าง @reward map : แจกของรางวัลให้กับผู้เล่นที่ออนไลน์อยู่ในแผนที่เดียวกับ GM ทุกคน.
+//=========================================================================
+-	script	rewardcommand	-1,{
+OnInit:
+//==== CONF =====
+	.sender$ = "GM";
+	.title$ = "รางวัลสนับสนุน";
+	.body$ = "นี่คือของขวัญเล็กๆ น้อยๆ สำหรับช่วงเวลาดีๆ แก่ผู้เล่นทุกคน. ขอให้สนุก!";
+	.zeny = 1000;						// Default zent sent
+	setarray .mailitem[0], 501, 502; 	// Default items (Max.5)
+	setarray .mailamount[0], 3, 1; 		// Default items quantity
+//===============	
+	bindatcmd "reward", strnpcinfo(3)+"::OnAtcommand", 99;
+	end;
+
+OnAtcommand:
+	if (.@atcmd_parameters$[0] == "all")
+		.@mode = 1;
+	if (.@atcmd_parameters$[0] == "map")
+		.@mode = 2;
+	if (.@mode) {
+		if (getarraysize(.mailitem) != getarraysize(.mailamount)) {
+			dispbottom "ผิดพลาด.";
+			end;
+		}
+		if (.@mode == 1)
+			addrid(0, 0);
+		else
+			addrid(1, 0);
+		if (checkvending(strcharinfo(0)))
+			detachrid;
+		if (.mailitem[0])
+			mail getcharid(0), .sender$, .title$, .body$, .zeny, .mailitem, .mailamount;
+		else
+			mail getcharid(0), .sender$, .title$, .body$, .zeny;
+		detachrid;
+		end;
+	}
+	mes "ใช้ [^006400 @reward all ^000000] เพื่อส่ง RodEx ไปที่ผู้เล่นออนไลน์ทั้งหมด.";
+	mes "ใช้ [^006400 @reward map ^000000] เพื่อส่ง RodEx ไปที่ผู้เล่นในแผนที่.";
+	while (true) {
+		next;
+		mes "RodEx เนื้อหา:";
+		mes "" + callfunc("F_InsertComma",.zeny) + "z.";
+		if (.mailitem[0]) {
+			for ( .@i = 0; .@i < getarraysize(.mailitem); ++.@i )
+				mes "" + .mailamount[.@i] + "x " + getitemname(.mailitem[.@i]) + ".";
+		}
+		switch(select("ปิด.", "เปลี่ยน zeny.", "เปลี่ยน Items.")) {
+		case 1:
+			close;
+		case 2:
+			input .zeny;
+			break;
+		case 3:
+			do {
+				next;
+				mes "[รายการ ไอเท็ม]";
+				if (.mailitem[0]) {
+					for ( .@i = 0; .@i < getarraysize(.mailitem); ++.@i )
+						mes "" + .mailamount[.@i] + "x " + getitemname(.mailitem[.@i]) + ".";
+				}
+				else
+					mes "ว่าง.";
+				next;
+				switch(select("ย้อนกลับ", "เพิ่ม ไอเท็ม", "ลบ ไอเท็ม", "ลบทั้งหมด")) {
+				case 1:
+					break;
+				case 2:
+					if (getarraysize(.mailitem) > 3) {
+						mes "คุณไม่สามารถเพิ่มไอเท็มได้อีก. สูงสุด 4 รายการ.";
+						break;
+					}
+					mes "กรอก item ID.";
+					input .@newitem;
+					if (getitemname(.@newitem) == "null") {
+						mes "ไม่พบ Item.";
+						break;
+					}
+					mes "- " + getitemname(.@newitem);
+					if (getiteminfo(.@newitem, 2) == 4 || getiteminfo(.@newitem, 2) == 5 || getiteminfo(.@newitem, 2) == 12) {
+						.@newqut = 1;
+					}
+					else {
+						mes "กรอก จำนวน.";
+						input .@newqut;
+						if (.@newqut < 1 || .@newqut > 1000) {
+							mes "จำนวน ไม่ถูกต้อง.";
+							break;
+						}
+					}
+					.mailitem[getarraysize(.mailitem)] = .@newitem;
+					.mailamount[getarraysize(.mailamount)] = .@newqut;
+					next;
+					break;
+				case 3:
+					if (.mailitem[0]) {
+						mes "กรอก หมายเลข ที่ต้องการลบ.";
+						for ( .@i = 0; .@i < getarraysize(.mailitem); ++.@i )
+							mes "" + .@i + ": " + .mailamount[.@i] + "x " + getitemname(.mailitem[.@i]) + ".";
+						input .@i;
+						if (.mailitem[.@i] == 0 || .mailamount[.@i] == 0)
+							mes "หมายเลข ไม่ถูกต้อง.";
+						else {
+							deletearray .mailitem[.@i], 1;
+							deletearray .mailamount[.@i], 1;
+						}
+					}
+					else
+						mes "ไม่มี ไอเท็ม ให้ลบ.";
+					break;
+				case 4:
+					deletearray .mailitem[0], getarraysize(.mailitem);
+					deletearray .mailamount[0], getarraysize(.mailamount);
+					break;
+				}
+			} while (@menu != 1);
+		}
+	}
+}

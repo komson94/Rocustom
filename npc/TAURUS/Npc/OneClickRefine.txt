@@ -1,0 +1,49 @@
+// ======================
+// Discord: HaureN#3690
+// ======================
+
+prontera,164,168,4	script	Refine On You Money	600,{
+	.@item = 671;
+	.@quan = 10000;
+	.@freeRef = 1;
+	.@paidRef = 7;
+	mes "อันนี้คือ NPC ตีบวกของสวมใส่ไม่รวม Shadow ที่ตีบวกได้";
+	mes "มัพ เท้า เสื้อ หมวก อาวุธ โล่";
+	next;
+	mes "มันจะตีทั้งหมดนี้พร้อมกัน ให้แน่ใจว่าใส่ไว้ครบเพื่อป้องกันการเสียเปรียบ";
+	next;
+	mes "เตือนแล้วนะ ถ้าลืมอ่านละก็ออก NPC เข้ามาใหม่ก็ได้";
+	next;
+	switch(select("ตีบวกฟรี", "มันจำเป็นต้องมีค่าน้ำใจ")){
+		case 1:
+		
+			setarray .@items[0],EQI_SHOES,EQI_GARMENT,EQI_HEAD_TOP,EQI_ARMOR,EQI_HAND_L,EQI_HAND_R;
+			for(.@i = 0; .@i < getarraysize(.@items); .@i++){
+				if(getequiprefinerycnt(.@items[.@i]) < .@freeRef){
+					specialeffect2 154;
+					successrefitem .@items[.@i],.@freeRef - getequiprefinerycnt(.@items[.@i]);
+				}
+			}
+			end;
+		case 2:
+			setarray .@items[0],EQI_SHOES,EQI_GARMENT,EQI_HEAD_TOP,EQI_ARMOR; //,EQI_HAND_L,EQI_HAND_R
+			
+			if (countitem(.@item) < .@quan){
+				mes "Voce nao tem os items necessarios: " + .@quan + "x "+ getitemname(.@item);
+				close;
+			}
+			for(.@i = 0; .@i < getarraysize(.@items); .@i++){
+				// prevent the item consuption
+				if(getequiprefinerycnt(.@items[.@i]) != .@paidRef) .@flag = 1;
+				
+				if(getequiprefinerycnt(.@items[.@i]) < .@paidRef){
+					specialeffect2 154;
+					successrefitem .@items[.@i],.@paidRef - getequiprefinerycnt(.@items[.@i]);
+				}
+			}
+			if (.@flag == 1) delitem 671,10000;
+			end;
+	}
+OnInit:
+	waitingroom "ตีบวกนี้พี่จัดให้",0;
+}

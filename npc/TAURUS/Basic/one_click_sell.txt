@@ -1,0 +1,69 @@
+-	script	One_Click_Sell	-1,{
+	.@Delay = 30;
+	
+	if (@OCSD > gettimetick(2)){
+		dispbottom "โปรดรอ 30 วินาที";
+		end;
+	}
+	
+	//dispbottom "One Click Sell >> Start";
+	
+	.@oc = getskilllv(38);
+	getinventorylist;
+	if(@inventorylist_count > 0){
+		freeloop(1);
+		
+		for (.@i = @inventorylist_count - 1; .@i >= 0; .@i--){
+			.@item_id = @inventorylist_id[.@i];
+			
+			//dispbottom "One Click Sell >> .@item_id: " + .@item_id;
+			
+			if(getiteminfo(.@item_id,2) == 3 || getiteminfo(.@item_id,2) == 4 || getiteminfo(.@item_id,2) == 5 || getiteminfo(.@item_id,2) == 12){
+				if(getiteminfo(.@item_id,2) != 3 && @inventorylist_equip[.@i] != 0)
+				continue;
+				
+				.@sell_amount = @inventorylist_amount[.@i];
+				.@sell_reward = getiteminfo(.@item_id,1) * .@sell_amount;
+				//dispbottom "One Click Sell >> .@sell_reward: " + .@sell_reward;
+				if(.@oc)
+				.@sell_reward = (.@sell_reward * (100 + .@oc * 2)/100);
+				//dispbottom "One Click Sell >> .@sell_reward (OC): " + .@sell_reward;
+				
+				
+				Zeny += .@sell_reward;
+				
+				delitem .@item_id,.@sell_amount;
+			}
+		}
+		
+		freeloop(0);
+	}
+	
+	if (.@Delay)
+	@OCSD = gettimetick(2) + .@Delay;
+
+	//dispbottom "One Click Sell >> Finish";
+	
+	end;
+	
+//OnInit:
+//	waitingroom "คลิกขายของทั่วไปกับไม่ได้สวมใส่",0;
+//	end;
+OnInit:
+    setarray .messages$,"ค","ลิ","ก","ข","า","ย","ข","อ","ง","ทั่","ว","ไ","ป","กั","บ","ไ","ม่","ไ","ด้","ส","ว","ม","ใ","ส่";
+    while( 1 )
+    {
+        set .Display$,"";
+        for( set .i,0; .i < getarraysize( .messages$ ); set .i,.i + 1 )
+        {
+            set .Display$,.Display$ + .messages$[.i];
+            delwaitingroom;
+            waitingroom .Display$,0;
+            sleep 100;
+        }
+    sleep 5000;        // ดีเลย์ก่อนตัวอักษรวิ่งซ้ำ 1000 = 1 วินาที.
+    }
+    end;
+}
+
+fct_in01,26,199,3	duplicate(One_Click_Sell)	คลิกขายของ	831

@@ -1,0 +1,528 @@
+//==================================================
+// Training Dummy Area
+//==================================================
+job4_bio,25,30	monster	Dummy Lv50	2409,1,5000
+job4_bio,29,30	monster	Dummy Lv50	2409,1,5000
+job4_bio,33,30	monster	Dummy Lv100	2410,1,5000
+job4_bio,36,30	monster	Dummy Lv100	2410,1,5000
+job4_bio,22,30	monster	Dummy Lv150	2411,1,5000
+job4_bio,19,30	monster	Dummy Lv150	2411,1,5000
+askald,134,64,3	script	Board#TDM	2_BULLETIN_BOARD,{
+end;
+OnInit:
+	//waitingroom "ทดสอบดาเมจ",0;
+	end;
+}
+
+//============================================================
+// Warps:
+//============================================================
+// Trade
+firstcity,377,227,1	warp	Town_Go_Trade1F_01	1,1,fct_in01,21,194
+firstcity,377,222,1	warp	Town_Go_Trade1F_02	1,1,fct_in01,21,194
+fct_in01,21,190,1	warp	Trade1F_Go_Town	1,1,firstcity,372,225
+fct_in01,39,205,1	warp	Trade1F_Go_Trade2F	1,1,fct_in01,40,137
+fct_in01,36,137,1	warp	Trade2F_Go_Trade1F	1,1,fct_in01,35,205
+fct_in01,12,154,1	warp	Trade2F_Go_Trade3F_01	1,1,fct_in01,82,223
+fct_in01,79,223,1	warp	Trade3F_Go_Trade2F_01	1,1,fct_in01,15,154
+fct_in01,49,155,1	warp	Trade2F_Go_Trade3F_02	1,1,fct_in01,99,155
+fct_in01,103,155,1	warp	Trade3F_Go_Trade2F_02	1,1,fct_in01,46,155
+fct_in01,95,213,1	warp	Trade3F_Go_Trade3F_01	1,1,fct_in01,92,145
+fct_in01,88,145,1	warp	Trade3F_Go_Trade3F_02	1,1,fct_in01,92,213
+// WP and AR Shop
+firstcity,356,238,1	warp	Town_Go_WPAR1F	1,1,fct_in01,285,31
+fct_in01,288,31,1	warp	WPAR1F_Go_Town	1,1,firstcity,356,233
+fct_in01,265,15,1	warp	WPAR1F_Go_WPAR2F	1,1,fct_in01,270,83
+fct_in01,274,83,1	warp	WPAR2F_Go_WPAR1F	1,1,fct_in01,269,15
+// Jewel
+firstcity,73,243,1	warp	Town_Go_Jewel	1,1,fct_in01,105,27
+fct_in01,108,27,1	warp	Jewel_Go_Town	1,1,firstcity,73,239
+// Police
+firstcity,344,93,1	warp	Town_Go_Police	1,1,fct_in01,131,199
+fct_in01,128,199,1	warp	Police_Go_Town	1,1,firstcity,341,97
+// Bank
+firstcity,285,235,1	warp	Town_Go_Bank	1,1,fct_in01,41,28
+fct_in01,45,28,1	warp	Bank_Go_Town	1,1,firstcity,285,231
+// Store
+firstcity,170,52,1	warp	Town_Go_Store1F	1,1,fct_in01,27,268
+fct_in01,27,264,1	warp	Store1F_Go_Town	1,1,firstcity,172,54
+fct_in01,12,285,1	warp	Store1F_Go_Store2F	1,1,fct_in01,89,285
+fct_in01,93,285,1	warp	Store2F_Go_Store1F	1,1,fct_in01,17,285
+fct_in01,114,273,1	warp	Store2F_Go_Store	1,1,fct_in01,150,283
+fct_in01,148,283,1	warp	Store_Go_Smith2F	1,1,fct_in01,111,273
+// Hotel
+firstcity,50,216,1	warp	Town_Go_Hotel1F	1,1,fct_in01,232,263
+fct_in01,232,260,1	warp	Hotel1F_Go_Town	1,1,firstcity,50,219
+fct_in01,250,279,1	warp	Hotel1F_Go_BAR	1,1,fct_in01,263,279
+fct_in01,260,279,1	warp	BAR_Go_Hotel1F	1,1,fct_in01,247,279
+fct_in01,210,283,1	warp	Hotel1F_Go_Hotel2F	1,1,fct_in01,240,219
+fct_in01,237,220,1	warp	Hotel2F_Go_Hotel1F	1,1,fct_in01,207,283
+fct_in01,254,213,1	warp	Hotel2F_Go_Room1	1,1,fct_in01,270,213
+fct_in01,268,213,1	warp	Room1_Go_Hotel2F	1,1,fct_in01,251,213
+fct_in01,230,201,1	warp	Hotel2F_Go_Room2	1,1,fct_in01,213,201
+fct_in01,216,201,1	warp	Room2_Go_Hotel2F	1,1,fct_in01,233,201
+fct_in01,230,183,1	warp	Hotel2F_Go_Room3	1,1,fct_in01,213,183
+fct_in01,216,183,1	warp	Room3_Go_Hotel2F	1,1,fct_in01,233,183
+fct_in01,238,169,1	warp	Hotel2F_Go_Room4	1,1,fct_in01,238,150
+fct_in01,238,154,1	warp	Room4_Go_Hotel2F	1,1,fct_in01,238,172
+// Smith
+firstcity,252,79,1	warp	Town_Go_Smith	1,1,fct_in02,346,222
+fct_in02,350,219,1	warp	Smith_Go_Town	1,1,firstcity,249,77
+fct_in02,346,251,1	warp	Smith_Go_Smith2F	1,1,fct_in02,282,223
+fct_in02,285,223,1	warp	Smith2F_Go_Smith	1,1,fct_in02,351,250
+// Bar
+firstcity,336,120,1	warp	Town_Go_Bar	1,1,fct_in02,253,127
+fct_in02,256,127,1	warp	Bar_Go_Town	1,1,firstcity,333,118
+fct_in02,223,115,1	warp	Bar_Go_Bar01	1,1,fct_in02,313,115
+fct_in02,309,115,1	warp	Bar01_Go_Bar	1,1,fct_in02,219,115
+// Potion
+firstcity,168,82,1	warp	Town_Go_Potion1F	1,1,fct_in02,251,287
+fct_in02,251,283,1	warp	Potion1F_Go_Town	1,1,firstcity,172,78
+fct_in02,261,315,1	warp	Potion1F_Go_Potion2F	1,1,fct_in02,178,296
+fct_in02,178,293,1	warp	Potion2F_Go_Potion1F	1,1,fct_in02,261,311
+// House1
+firstcity,204,122,1	warp	Town_Go_House1	1,1,fct_in02,194,373
+fct_in02,194,369,1	warp	House1_Go_Town	1,1,firstcity,208,122
+// House2
+firstcity,323,84,1	warp	Town_Go_House2	1,1,fct_in02,77,295
+fct_in02,77,291,1	warp	House2_Go_Town	1,1,firstcity,326,81
+fct_in02,99,299,1	warp	House2_Go_Jail	1,1,fct_in02,124,373
+fct_in02,128,373,1	warp	Jail_Go_House2	1,1,fct_in02,102,299
+// Hotel2
+firstcity,297,211,1	warp	Town_Go_Hotel2	1,1,fct_in02,184,208
+fct_in02,184,203,1	warp	Hotel2_Go_Town	1,1,firstcity,297,217
+fct_in02,206,211,1	warp	Hotel2_Go_Hotel2_2F	1,1,fct_in02,97,218
+fct_in02,100,215,1	warp	Hotel2_2F_Go_Hotel2	1,1,fct_in02,202,211
+fct_in02,75,229,1	warp	Hotel2_2F_Go_Hotel2_3F	1,1,fct_in02,75,160
+fct_in02,71,160,1	warp	Hotel2_3F_Go_Hotel2_2F	1,1,fct_in02,71,229
+// Hall
+firstcity,217,296,1	warp	Town_Go_Hall	1,1,fct_in03,113,129
+fct_in03,110,121,1	warp	Hall_D1_Go_Town	1,1,firstcity,217,292
+fct_in03,117,121,1	warp	Hall_D2_Go_Town	1,1,firstcity,217,292
+fct_in03,230,227,1	warp	Hall_Go_Room1	1,1,fct_in03,254,227
+fct_in03,251,227,1	warp	Room1_Go_Hall	1,1,fct_in03,227,227
+fct_in03,275,235,1	warp	Room1_Go_Room1-1	1,1,fct_in03,275,244
+fct_in03,275,238,1	warp	Room1-1_Go_Room1	1,1,fct_in03,275,231
+fct_in03,76,252,1	warp	Hall_Go_HallB1-1	1,1,fct_in03,100,52
+fct_in03,100,56,1	warp	HallB1-1_Go_Hall	1,1,fct_in03,76,246
+fct_in03,188,252,1	warp	Hall_Go_HallB1-2	1,1,fct_in03,192,52
+fct_in03,192,56,1	warp	HallB1-2_Go_Hall	1,1,fct_in03,188,246
+fct_in03,88,215,1	warp	HallD1_Go_HallB1_D1	1,1,fct_in03,106,19
+fct_in03,106,15,1	warp	HallB1_D1_Go_HallD1	1,1,fct_in03,88,212
+fct_in03,140,215,1	warp	HallD2_Go_HallB1_D2	1,1,fct_in03,158,19
+fct_in03,158,15,1	warp	HallB1_D2_Go_HallD2	1,1,fct_in03,140,212
+fct_in03,149,179,1	warp	Hall_Go_Hall1-1	1,1,fct_in03,14,25
+fct_in03,12,25,1	warp	Hall1-1_Go_Hall	1,1,fct_in03,146,179
+
+//============================================================
+// Map Flags:
+//============================================================
+askald	mapflag	town
+askald	mapflag	nopenalty
+askald	mapflag	noicewall
+askald	mapflag	nobranch
+askald	mapflag	sakura
+
+fct_in01	mapflag	town
+fct_in01	mapflag	nopenalty
+fct_in01	mapflag	noicewall
+fct_in01	mapflag	nobranch
+fct_in01	mapflag	noteleport
+fct_in01	mapflag	nomemo
+
+fct_in02	mapflag	town
+fct_in02	mapflag	nopenalty
+fct_in02	mapflag	noicewall
+fct_in02	mapflag	nobranch
+fct_in02	mapflag	noteleport
+fct_in02	mapflag	nomemo
+
+fct_in03	mapflag	town
+fct_in03	mapflag	nopenalty
+fct_in03	mapflag	noicewall
+fct_in03	mapflag	nobranch
+fct_in03	mapflag	noteleport
+fct_in03	mapflag	nomemo
+
+//============================================================
+// Kafra:
+//============================================================
+askald,131,161,3	script	Kafra Employee::kaf_fcity	4_F_KAFRA6,{
+	cutin "kafra_06",2;
+	callfunc "F_KafSet";
+	mes "[Kafra Employee]";
+	mes "ยินดีต้อนรับสู่";
+	mes "Kafra Corporation.";
+	mes "พนักงาน Kafra";
+	mes "พร้อมให้บริการเจ้า.";
+	mes "มีอะไรให้ข้ารับใช้ไหม ?";
+	callfunc "F_Kafra",5,1,1,40,800;
+	savepoint "askald",128,146,1,1;
+	callfunc "F_KafEnd",0,1,"กลางเมือง";
+}
+
+askald,116,161,4	script	Guide::gfcity	4_M_MOC_SOLDIER,{
+	disable_items;
+	cutin "moc_soldier",2;
+	mes .NPCname$;
+	mes "ยินดีต้อนรับเหล่านักผจญภัย";
+	mes "ข้าสามารถพาเจ้าไปยังสถานที่ต่างๆได้";
+	mes "เจ้าต้องการไปที่ไหนล่ะ?";
+	next;
+	switch(select(
+		""+.Symbol$+" อัพเกรดอุปกรณ์",
+		""+.Symbol$+" ทหารรับจ้าง",
+		""+.Symbol$+" ทดสอบดาเมจ",
+		""+.Symbol$+" รวมออฟต่างๆ"
+		)) {
+		case 1: warp "askald",62,147; end;
+		case 2: warp "askald",39,211; end;
+		case 3: warp "askald",148,57; end;
+		case 4: warp "askald",59,111; end;
+	}
+	cutin "",255;
+	end;
+	
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.Symbol$ = "~";
+	//waitingroom "วาร์ปสถานที่ต่างๆในเมือง",0;
+	end;
+}
+
+//firstcity,207,146,5	duplicate(gfcity)	Guide#p-1	4_M_MOC_SOLDIER
+//firstcity,205,88,5	duplicate(gfcity)	Guide#p-2	4_M_MOC_SOLDIER
+//firstcity,67,232,5	duplicate(gfcity)	Guide#p-3	4_M_MOC_SOLDIER
+//firstcity,314,232,4	duplicate(gfcity)	Guide#p-4	4_M_MOC_SOLDIER
+//firstcity,287,306,3	duplicate(gfcity)	Guide#p-5	4_M_MOC_SOLDIER
+//firstcity,223,289,3	duplicate(gfcity)	Guide#p-6	4_M_MOC_SOLDIER
+//firstcity,139,286,5	duplicate(gfcity)	Guide#p-7	4_M_MOC_SOLDIER
+
+
+//============================================================
+// Refine:
+//============================================================
+witch,39,57,3	script	Hollgrehenn#fscity1	2_M_OLDBLSMITH,{
+	if( getbattleflag( "feature.refineui" ) ){
+		mes "[Hollgrehenn]";
+		mes "ข้าเป็นช่างตีเหล็กที่สามารถปรับแต่งอาวุธและอุปกรณ์ได้.";
+		mes "เจ้ามีไอเท็มที่ต้องการปรับแต่งหรือไม่?";
+		close2;
+		refineui();
+		end;
+	}else{
+		callfunc "refinemain","Hollgrehenn",0;
+		end;
+	}
+}
+
+witch,28,51,4	script	Dietrich#fscity1	4_M_02,{
+	disable_items;
+	callshop "Dietrich_Ore_Mixer",1;
+	end;
+OnInit:
+	waitingroom " รวมแร่",0;
+	//npcshopadditem "<Shop Name>",<Item>,<Quantity>,<Zeny Cost>,<Cost Item 1>,<Cost Amount 1>,<Cost Refine 1>,........<Cost Item 5>,<Cost Amount 5>,<Cost Refine 5>;
+	npcshopadditem "Dietrich_Ore_Mixer",984,-1,100,756,5,0,0,0,0,0,0,0,0,0,0,0,0,0;			//Oridecon
+	npcshopadditem "Dietrich_Ore_Mixer",985,-1,100,757,5,0,0,0,0,0,0,0,0,0,0,0,0,0;	
+	npcshopadditem "Dietrich_Ore_Mixer",25731,-1,100,25730,20,0,0,0,0,0,0,0,0,0,0,0,0,0;	
+	npcshopadditem "Dietrich_Ore_Mixer",25729,-1,100,25728,20,0,0,0,0,0,0,0,0,0,0,0,0,0;
+	end;
+}
+-	exbartershop	Dietrich_Ore_Mixer	-1
+askald,56,138,3	shop	Vurewell#fscity1	4_M_04,no,1010:-1,1011:-1
+//fct_in02,368,234,3	shop	Smith Dealer#fscity1	4_M_HUMAN_01,no,612:-1,613:-1,614:-1,615:-1,986:-1,987:-1,988:-1,989:-1
+//fct_in02,358,249,5	shop	Ore Dealer#fscity2	4_F_EINWOMAN,no,990:3000,991:3000,992:3000,993:3000,994:6000,995:6000,996:6000,997:6000,998:200,999:2000,1000:9000,1001:3000,1002:100,1003:1000
+
+//fct_in02,279,227,5	cashshop	Rare Hammer Dealer#fscity1	4_F_JOB_BLACKSMITH,910015:1500,910016:1500,910017:1500,910018:1500,910019:1500,910020:1500,910021:1500,910022:1500,910023:1500,910024:1500
+//fct_in02,276,227,5	cashshop	Rare Hammer Dealer#fscity2	4_M_DWARF,910025:1500,910026:1500,910027:1500,910028:1500,910029:1500,910030:1500,910031:1500,910032:1500,910033:1500,910034:1500
+
+
+//============================================================
+// Shop:
+//============================================================
+morocc,163,97,4	shop	Tool Dealer#tool_fscity	1_M_SIGNMCNT,607:100000,717:-1,716:-1,715:-1,678:5000,611:-1,1750:-1,501:-1,502:-1,525:1000,503:-1,504:-1,505:-1,506:-1,645:-1,656:-1,657:-1,601:50,602:-1,1065:-1,610:-1,23277:-1,100158:-1
+//fct_in02,255,314,4	shop	Tool Dealer#tool_fscity2	1_M_INNKEEPER,611:-1,1750:-1,501:-1,502:-1,503:-1,504:-1,505:-1,506:-1,645:-1,656:-1,657:-1,601:-1,602:-1,1065:-1,610:-1,23277:-1,100158:-1
+//fct_in01,22,220,4	shop	Fruit Gardener#Fruit_fscity	8_F,512:-1,513:-1,514:-1,515:-1,516:-1
+//fct_in02,263,301,3	shop	Fruit Gardener#Fruit_fscity2	4_F_02,512:-1,513:-1,514:-1,515:-1,516:-1,568:-1,576:-1,578:-1,582:-1,587:-1,684:-1
+//fct_in02,246,304,4	shop	Chef#fscity1	4_CAT_CHEF,517:-1,518:-1,519:-1,526:-1,528:-1,536:-1,537:-1,538:-1,539:-1,540:-1,541:-1,548:-1,549:-1,550:-1,560:-1,561:-1,562:-1,563:-1,566:-1,567:-1,572:-1,573:-1,574:-1,577:-1,579:-1,580:-1,589:-1,591:1000,592:1000,593:1000,594:1000,595:1000
+//fct_in01,24,214,3	shop	Matchstick Dealer#fscity1	4_F_HUGIRL,910040:5000,910041:10000,910042:15000
+//fct_in01,39,145,4	shop	Wedding Shop Dealer#fscity1	71,744:-1,745:-1,2338:-1,2206:-1,7170:-1
+morocc,169,69,3	shop	Pet Groomer#fscity1	125,643:-1,619:3000,531:3000,537:3000,511:3000,716:3000,6111:3000,1002:3000,507:3000,532:3000,518:3000,711:3000,508:3000,7821:3000,6098:3000,6108:3000,6100:3000,929:3000,7824:3000,911:3000,6104:3000,504:3000,6113:3000,6110:3000,6112:3000,7823:3000,7822:3000,6099:3000,6106:3000,6105:3000,6109:3000,6107:3000,6097:3000,6095:3000,6115:3000,6096:3000,6114:3000,10033:5000,10013:5000,10017:5000,10010:5000,10028:5000,10037:5000,10024:5000,10022:5000,10016:5000,10020:5000,10023:5000,10015:5000,10025:5000,10038:5000,10036:5000,10029:5000,10034:5000,10018:5000,10002:5000,10004:5000,10027:5000,10008:5000,10032:5000,10006:5000,10019:5000,10031:5000,10007:5000,10014:5000,10001:5000,10035:5000,10011:5000,10030:5000,10026:5000,10012:5000,10005:5000,10003:5000,10009:5000
+morocc,169,65,5	shop	Class3 Shop	4_F_01,969:300000,990:-1,991:-1,992:-1,993:-1,994:-1,995:-1,996:-1,997:-1,998:-1,7939:150000,7938:150000,6124:500,7940:-1,7931:100,7932:260000,7933:260000,7934:260000,7935:260000,7936:260000,7937:260000,6145:-1,12383:-1,6146:-1,6147:-1,1549:100000,2139:100000,2800:100000,2801:100000,2802:500000,2803:100000,2804:100000,2805:100000,2806:150000,2807:280000,12392:2500,12393:2500,12394:2500,12725:280000,12726:280000,12727:280000,12728:280000,12729:280000,12730:280000,12731:280000,12732:280000,12733:280000,12734:280000,12735:280000,12736:280000,12737:280000,12738:280000,6128:5000,12717:280000,12718:280000,12719:280000,12720:280000,12721:280000,12722:280000,12723:280000,12724:280000,18000:-1,18001:-1,18002:-1,18003:-1,18004:-1,6120:10000,6121:10000,6122:10000,6123:10000,11513:200,100065:100000,100066:100000,100067:100000,100068:100000,100069:100000,100070:100000,100071:100000,100072:100000,100073:100000,100074:100000
+//fct_in01,32,138,4	script	Poring#fscity1	1002,{}
+//fct_in01,92,156,5	shop	Gift Seller#fscity1	4_F_GON,2612:-1,744:-1,748:-1,736:-1,746:-1,740:-1,2613:-1
+
+//fct_in01,101,149,4	shop	Soul Linker Dealer#fscity1	4_F_SE_SUN,no,910000:-1,910001:-1,910002:-1,910003:-1,910004:-1,910005:-1,910006:-1,910007:-1,910008:-1,910009:-1,910010:-1,910011:-1,910012:-1,910013:-1,910014:-1
+//fct_in01,26,150,3	shop	Alchemist Dealer#fscity1	4_M_MASKMAN,715:-1,716:-1,717:-1,1025:200,7134:-1,713:-1,1092:-1,1093:-1,905:-1,911:-1,929:-1,950:-1,952:-1,1012:-1,1017:-1,1032:-1,1044:-1,1050:-1,1051:-1,1057:-1,1059:-1,7033:-1,7126:-1,7143:-1,7140:-1,7141:-1,7127:-1,7128:-1,7129:-1,7130:-1,7131:-1,7132:-1,7133:-1,7144:-1,7434:-1
+//fct_in01,22,135,3	shop	Herb Dealer#fscity1	4_F_HUGRANMA,507:-1,508:-1,509:-1,510:-1,511:-1,518:-1,520:-1,521:-1,522:-1,610:-1,703:-1,704:-1,708:-1,709:-1,710:-1
+//fct_in01,85,218,5	shop	Item Collector#fscity1	4_M_SANTA,no,644:3000,664:3000,665:3000,666:3000,667:3000,603:150000,617:300000
+morocc,183,78,4	shop	Arrow Merchant#fscity1	4_M_EINMAN,1750:-1,1751:-1,1752:-1,1753:-1,1754:-1,1755:-1,1756:-1,1757:-1,1758:-1,1759:-1,1760:-1,1761:-1,1762:-1,1763:-1,1764:-1,1765:-1,1766:-1,1767:-1,1768:-1,1769:-1,1770:-1,1772:-1,1773:-1,1774:-1
+morocc,187,77,4	shop	Bullet Merchant#fscity1	4_M_GUNSLINGER,13200:-1,13221:-1,13222:-1,13223:-1,13224:-1,13225:-1,13226:-1,13227:-1,13228:-1,13229:-1,13230:-1,13231:-1,13232:-1,13215:-1,13216:-1,13217:-1,13218:-1,13219:-1,13210:-1,13211:-1,13212:-1,13213:-1,13214:-1,13208:1300,13220:30,13201:-1,13202:-1,13203:-1,13204:-1,13205:-1,13206:-1,13207:-1
+//fct_in01,283,25,3	shop	Ninja Merchant#fscity1	4_M_NINJA_BLUE,13250:-1,13251:-1,13252:-1,13253:-1,13254:-1,6493:-1,13255:-1,13256:-1,13257:-1,13258:-1,13259:-1,13291:100,13292:20,13293:20,13294:-1,13295:2,6512:-1,6513:-1,6514:-1,6515:-1,7521:-1,7522:-1,7523:-1,7524:-1,2117:-1
+//fct_in01,106,21,3	shop	Jeweler#fscity1	1_F_MERCHANT_01,no,718:-1,719:-1,720:-1,721:-1,722:-1,723:-1,725:-1,726:-1,727:-1,728:-1,729:-1
+//fct_in01,96,38,5	shop	Jeweler#fscity2	4W_M_01,no,730:-1,731:-1,732:-1,714:100000
+//fct_in01,17,220,5	shop	Mounts Dealer#fscity1	4_M_DST_TOUGH,no,12622:50000000,16682:1500000,16683:6000000
+//fct_in01,15,220,5	cashshop	Mounts Dealer#fscity2	4_M_RUSBALD,12622:500,16682:15,16683:60
+//fct_in01,13,220,5	script	Camel#fscity1	4_DST_CAMEL,{}
+
+
+/*
+firstcity,109,152,3	cashshop	Crystal Dealer#fscity1	4_M_ALCHE_A,910043:100,910044:100,910045:100,910046:100,910047:100,910048:100,910049:100
+firstcity,113,152,3	cashshop	Powerful Crystal Dealer#fscity1	4_F_ALCHE,910050:1000,910051:1000,910052:1000,910053:1000,910054:1000,910055:1000,910056:1000
+*/
+
+
+//============================================================
+// Duplicates:
+//============================================================
+//firstcity,145,309,4	duplicate(Clan Helper)	Clan Helper#fscity1	4_F_KID2
+//firstcity,128,326,4	duplicate(Raffam Oranpere)	Raffam Oranpere#fscity1	4_F_LAPERM
+//firstcity,111,343,4	duplicate(Devon Aire)	Devon Aire#fscity1	4_M_DEBON
+//firstcity,98,330,7	duplicate(Berman Aire)	Berman Aire#fscity1	4_M_BIRMAN
+//firstcity,115,313,7	duplicate(Shaam Rumi)	Shaam Rumi#fscity1	4_F_SHAM
+//fct_in01,93,27,4	duplicate(RareDiamondMerchant)	Rare Diamond Merchant#fscity1	4_M_OILMAN
+//firstcity,82,246,3	duplicate(Catalog Magician#catal01)	Catalog Magician#fscity1	4_M_BIBI
+//firstcity,345,240,3	duplicate(Mergician#pron)	Mergician#fscity1	1_M_WIZARD
+//firstcity,214,215,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#fscity1	4_M_HUBOY
+morocc,162,108,5	duplicate(Universal Rental NPC)	Universal Rental#fscity1	2552
+morocc,141,101,5	duplicate(Platinum Skill NPC)	Platinum Skill NPC#fscity1	4_M_KY_KNT
+witch,33,61,4	duplicate(Ripped Cabus#GymPass)	Ripped Cabus#fscity1	4_M_HUMAN_02
+//firstcity,224,146,4	duplicate(SmileHelper)	Smile Assistance#fscity1	92
+//fct_in02,242,135,4	duplicate(Marianne#juice)	Marianne#fscity1	53
+//fct_in02,208,382,4	duplicate(Alchemist#ama)	Alchemist#fscity1	749
+//fct_in01,98,136,3	duplicate(Jade#pay)	Jade#fscity1	749
+
+morocc,156,108,5	duplicate(Job Master NPC)	Job Master	2560
+//fct_in03,119,175,3	script	Knight Master#JOB_1-1	4_M_JOB_KNIGHT2,{}
+//fct_in03,108,175,5	script	Crusader Master#JOB_1-2	4_M_CRU_OLD,{}
+//fct_in03,119,173,3	script	Wizard Master#JOB_2-1	4_M_JOB_WIZARD,{}
+//fct_in03,108,173,5	script	Sage Master#JOB_2-2	2_M_SAGE_OLD,{}
+//fct_in03,119,171,3	script	Hunter Master#JOB_3-1	4_M_JOB_HUNTER,{}
+//fct_in03,108,171,5	script	Bard Master#JOB_3-2_M	2_M_BARD_ORIENT,{}
+//fct_in03,107,171,5	script	Dancer Master#JOB_3-2_F	4_F_07,{}
+//fct_in03,119,169,3	script	Priest Master#JOB_4-1	1_M_PASTOR,{}
+//fct_in03,108,169,5	script	Monk Master#JOB_4-2	4_M_MONK,{}
+//fct_in03,119,167,3	script	Blacksmith Master#JOB_5-1	4_F_JOB_BLACKSMITH,{}
+//fct_in03,108,167,5	script	Alchemist Master#JOB_5-2	4_F_ALCHE,{}
+//fct_in03,119,165,3	script	Assasin Master#JOB_6-1	4_F_JOB_ASSASSIN,{}
+//fct_in03,108,165,5	script	Rogue Master#JOB_6-2	4_F_ROGUE,{}
+
+askald,34,216,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Sword_1	4_M_JOB_KNIGHT2
+askald,38,216,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Bow_1	4_M_JOB_HUNTER
+askald,42,216,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Spear_1	8W_SOLDIER
+askald,46,216,4	duplicate(MercMerchant)	Mercenary Merchant#Swordfscity1	4_F_HUWOMAN
+
+// Hotel
+//------------------------------------------------------
+fct_in01,230,284,4	script	Hotel Employee#fct_01	86,{
+	mes .NPCname$;
+	mes "ยินดีต้อนรับสู่";
+	mes "มังกรหลวง";
+	mes "ที่คุณสามารถหา";
+	mes "ที่พักที่ดีที่สุด";
+	mes "และบริการที่ดีที่สุด";
+	next;
+	switch(select("บันทึกจุดเซฟ:Rest - 5,000 zeny:ยกเลิก")) {
+	case 1:
+		savepoint "fct_in01",209,275,1,1;
+		mes .NPCname$;
+		mes "ขอบคุณ";
+		mes "จุดเกิดใหม่ได้รับการบันทึกที่นี่ในมังกรหลวง";
+		close;
+	case 2:
+		if(Zeny < .Price) {
+			mes .NPCname$;
+			mes "ฉันขอโทษ แต่";
+			mes "คุณต้องการ "+.Price+" zeny";
+			mes "เพื่อเช็คอิน";
+			close;
+		}
+		Zeny -= .Price;
+		mes .NPCname$;
+		mes "ขอบคุณ ~";
+		mes "ฉันหวังว่าคุณจะสนุก";
+		mes "เจ้าอยู่ใน";
+		mes "Royal Dragon.";
+		close2;
+		specialeffect2 EF_HEAL;
+		percentheal 100,100;
+		sc_start SC_BLESSING,    15*60*1000,10;
+		sc_start SC_INCREASEAGI, 15*60*1000,10;
+		sc_end SC_Poison;
+		sc_end SC_Freeze;
+		sc_end SC_Sleep;
+		sc_end SC_Stan;
+		sc_end SC_Stun;
+		sc_end SC_Stone;
+		sc_end SC_Silence;
+		sc_end SC_Blind;
+		sc_end SC_Bleeding;
+		sc_end SC_Confusion;
+		sc_end SC_Curse;
+		sc_end SC_Hallucination;
+		sc_end SC_ORCISH;
+		warp "fct_in01",219,150;
+		end;
+	case 3:
+		mes .NPCname$;
+		mes "ขอบคุณและ";
+		mes "ขอให้เป็นวันที่ดีนะ";
+		close;
+	}
+
+OnInit:
+	.NPCname$ = "[^0000FF Hotel Employee ^000000]";
+	.Price = 5000;
+}
+
+//============================================================
+// Talking NPCs
+//============================================================
+firstcity,209,162,5	script	Kid#fsc	4_F_KID2,{
+	end;
+
+OnTimer64000:
+	npctalk "Kid : ถ้า Novice Red Potions หมดแล้ว. ข้าควรทำอย่างไรดี?";
+	end;
+
+OnTimer72000:
+	npctalk "Kid : ร้านอยู่แถวไหน?";
+	end;
+
+OnTimer136000:
+	npctalk "Kid : งี่เง่า! เจ้าไม่รู้เกี่ยวกับ 'หน้าต่างทางลัด' ได้อย่างไร?";
+	end;
+
+OnTimer144000:
+	npctalk "Kid : ไอเท็มในคลังของเจ้าสามารถลากและวางในหน้าต่างทางลัดได้.";
+	end;
+
+OnTimer212000:
+	npctalk "Kid : ข้าเห็นมีไอเทมสำหรับมือใหม่มากมายแจกที่ NPC แจกของผู้เล่นใหม่!";
+	end;
+
+OnTimer276000:
+	npctalk "Kid : พวกเขาให้อาวุธและโล่กับข้าด้วยซ้ำ!";
+	end;
+
+OnTimer284000:
+	npctalk "Kid : เจ้าแค่เดินขึ้นไปตรงหานาฬิกา หรือรูปกระเป๋าบนมินิแมพ.";
+	end;
+
+OnTimer344000:
+	npctalk "Kid : หากเจ้ามีเลเวลที่สูงพอ เจ้าไม่ลองไปยัง Bounty Hunter Guild ดูล่ะ.";
+	end;
+
+OnTimer348000:
+	npctalk "Kid : Bounty Hunter Guild อยู่ทางทิศตะวันออกเฉียงเหนือ. ไปกันเลย ~!";
+	end;
+
+OnTimer416000:
+	npctalk "Kid : เจ้าลองลงไปทางทิศใต้เจ้าจะพบกับร้านอัพเกรดที่มีช่างฝีมือดี.";
+	end;
+
+OnTimer424000:
+	npctalk "Kid : เจ้าลองไปที่ Trade Company ทางทิศตะวันออกดูสิ ที่นั่นมีบรรดาพ่อค้าแม่ค้าอยู่เป็นจำนวนมาก.";
+	end;
+
+OnTimer492000:
+	npctalk "Kid : นี่เจ้าจะไม่ใช้สมองของเจ้าเหรอ? กรุณาพิมพ์ /where ในหน้าต่างแชทตอนนี้! ";
+	end;
+
+OnTimer552000:
+	npctalk "Kid : ในกรณีนี้เจ้าสามารถกดปุ่ม <Enter>.";
+	end;
+
+OnTimer560000:
+	npctalk "Kid : พวกเราแค่คุยโต้ตอบกันสองคน. ฮ่าฮ่าฮ่า.";
+	end;
+
+OnTimer565000:
+OnInit:
+	initnpctimer;
+	end;
+}
+
+firstcity,211,163,3	script	Kid#fct2	4_M_KID1,{
+	end;
+
+OnTimer69000:
+	npctalk "Kid : เจ้าสามารถซื้อโพชั่นจากพ่อค้า.";
+	end;
+
+OnTimer77000:
+	npctalk "Kid : มันคือรูปโพชั่นในมินิแมพ.";
+	end;
+
+OnTimer131000:
+	npctalk "Kid : มีวิธีอะไรใช้ไอเทมง่ายๆบ้าง? ";
+	end;
+
+OnTimer141000:
+	npctalk "Kid : หน้าต่างทางลัด? ช่องที่ด้านบนของหน้าจอ? ข้าจะใช้มันได้อย่างไร?";
+	end;
+
+OnTimer149000:
+	npctalk "Kid : สำหรับคลัง, เจ้าหมายถึงเมนู 'ไอเท็ม' หรือเปล่า? โอ้, มันคือ!";
+	end;
+
+OnTimer217000:
+	npctalk "Kid : ข้ามีโพชั่นจำนวนมาก?";
+	end;
+
+OnTimer281000:
+	npctalk "Kid : อะไรนะ?! ข้าควรไปขอรับไอเท็มบ้างแล้ว!";
+	end;
+
+OnTimer279000:
+	npctalk "Kid : ข้าจะพบพนักงาน Kafra ได้ที่ไหน?";
+	end;
+
+OnTimer339000:
+	npctalk "Kid : ข้าไม่รู้จะทำอะไรดี.";
+	end;
+
+OnTimer349000:
+	npctalk "Kid : โอ้ใช่? ข้าอยากรู้หลาย ๆ อย่าง ~ ข้าจะลองไปดู!";
+	end;
+
+OnTimer411000:
+	npctalk "Kid : ข้าอยากอัพเกรดอุปกรณ์ ข้าควรทำอย่างไรดี?";
+	end;
+
+OnTimer421000:
+	npctalk "Kid : ข้าสามารถแลกเปลี่ยน หรือซื้อขายไอเท็มได้ที่ไหน?";
+	end;
+
+OnTimer487000:
+	npctalk "Kid : ชื่อเมืองคืออะไร?";
+	end;
+
+OnTimer497000:
+	npctalk "Kid : ข้าไม่สามารถเขียนอะไรลงหน้าต่างสนทนาได้เลย?";
+	end;
+
+OnTimer557000:
+	npctalk "Kid : โอ้ เจ้าฉลาดมาก...";
+	end;
+
+OnTimer555000:
+	npctalk "Kid : เมื่อไม่นานมานี้ Novice คนหนึ่งพูดกับข้าเหมือนเด็ก? ฮ่าฮ่าฮ่า .";
+	end;
+
+OnTimer565000:
+OnInit:
+	initnpctimer;
+	end;
+}
+
+firstcity,211,174,5	script	Healing Girl#wwer	4_M_JPN,5,5,{
+	.@Delay = 3;	// ระยะเวลารักษาเป็นวินาที
+	if (@HD > gettimetick(2))
+		end;
+	npcskill "AL_HEAL", 10, 99, 60;
+	if (.@Delay)
+		@HD = gettimetick(2) + .@Delay;
+	end;
+}

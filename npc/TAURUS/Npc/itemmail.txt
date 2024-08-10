@@ -1,0 +1,104 @@
+-	script	rewardcommand	HIDDEN_WARP_NPC,{
+OnInit:
+//==== CONF =====
+	.sender$ = "GM Team"; //ห้ามใช้ภาษาไทย
+	.title$ = "Reward"; //ห้ามใช้ภาษาไทย
+	.body$ = "Here's something for you. Have fun!"; //ห้ามใช้ภาษาไทย
+	.zeny = 0;	// ค่าเริ่มต้น
+	setarray .mailitem[0], 0, 0; // สูงสุด5อย่าง
+	setarray .mailamount[0], 0, 0; //จำนวน
+//===============	
+	bindatcmd "reward", strnpcinfo(3)+"::OnAtcommand", 99;
+	end;
+
+OnAtcommand:
+	if (.@atcmd_parameters$[0] == "all")
+		.@mode = 1;
+	if (.@atcmd_parameters$[0] == "map")
+		.@mode = 2;
+	if (.@mode) {
+		if (getarraysize(.mailitem) != getarraysize(.mailamount)) {
+			dispbottom "Error.";
+			end;
+		}
+		if (.@mode == 1)
+			addrid(0, 0);
+		else
+			addrid(1, 0);
+		if (checkvending(strcharinfo(0)))
+			detachrid;
+		if (.mailitem[0])
+			mail getcharid(0), .sender$, .title$, .body$, .zeny, .mailitem, .mailamount;
+		else
+			mail getcharid(0), .sender$, .title$, .body$, .zeny;
+		detachrid;
+		end;
+	}
+	mes "ใช้คำสั่ง [@reward all] เพื่อส่ง RodEx ให้ทุกคนที่กำลัง Online";
+	mes "==============";
+	mes "ใช้คำสั่ง [@reward map] เพื่อส่ง RodEx ให้ทุกคนในแมพที่อยู่";
+	mes "==============";
+	while (true) {
+		next;
+		mes "ตั้งค่า RodEx: ของที่ท่านจะส่งให้ผู้เล่น";
+		mes "" + callfunc("F_InsertComma",.zeny) + " Zeny";
+		if (.mailitem[0]) {
+			for ( .@i = 0; .@i < getarraysize(.mailitem); ++.@i )
+				mes "" + .mailamount[.@i] + "x " + getitemname(.mailitem[.@i]) + ".";
+		}
+		switch(select("ยกเลิก.", "ตั้งค่า zeny.", "ตั้งค่า item(s).")) {
+		case 1:
+			close;
+		case 2:
+			input .zeny;
+			break;
+		case 3:
+			do {
+				next;
+				mes "[รายละเอียด Item]";
+				if (.mailitem[0]) {
+					for ( .@i = 0; .@i < getarraysize(.mailitem); ++.@i )
+						mes "" + .mailamount[.@i] + "x " + getitemname(.mailitem[.@i]) + ".";
+				}
+				else
+					mes "ว่างเปล่า.";
+				next;
+				switch(select("เมนูหลัก", "เพิ่ม item", "ลบทั้งหมด")) {
+				case 1:
+					break;
+				case 2:
+					if (getarraysize(.mailitem) > 4) {
+						mes "สามารถเพิ่มรายการได้สูงสุด 5รายการ.";
+						break;
+					}
+					mes "กรุณาใส่ item ID.";
+					input .@newitem;
+					if (getitemname(.@newitem) == "null") {
+						mes "ไม่พบรายการที่ระบุ.";
+						break;
+					}
+					mes "- " + getitemname(.@newitem);
+					if (getiteminfo(.@newitem, 2) == 4 || getiteminfo(.@newitem, 2) == 5 || getiteminfo(.@newitem, 2) == 12) {
+						.@newqut = 1;
+					}
+					else {
+						mes "กรุณาใส่จำนวน.";
+						input .@newqut;
+						if (.@newqut < 1 || .@newqut > 1000) {
+							mes "จำนวนไม่ถูกต้อง.";
+							break;
+						}
+					}
+					.mailitem[getarraysize(.mailitem)] = .@newitem;
+					.mailamount[getarraysize(.mailamount)] = .@newqut;
+					next;
+					break;
+				case 3:
+					deletearray .mailitem[0], getarraysize(.mailitem);
+					deletearray .mailamount[0], getarraysize(.mailamount);
+					break;
+				}
+			} while (@menu != 1);
+		}
+	}
+}

@@ -1,0 +1,145 @@
+//===== rAthena Script ======================================= 
+//= Bossnia Warp NPCs
+//===== By: ================================================== 
+//= Masao
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Bossnia MVP event.
+//===== Additional Comments: ================================= 
+//= 1.0 Converted from the official script.
+//= 1.1 Optimized. [Euphy]
+//= 1.2 Moved spawns and warps (by Masao) to this file. [Euphy]
+//= 1.3 Added VIP features. [Euphy]
+//============================================================ 
+
+// Entrance NPCs
+//============================================================
+prontera,132,125,4	script	Bossnia Staff#1	908,{
+	mes "[Riss]";
+	mes "หวัดดี ?";
+	mes "ข้าค้นพบสถานที่ๆสวยงาม";
+	mes "ในตอนที่ข้าท่องเที่ยวไปทั่วโลก.";
+	mes "เพราะข้าคือนักผจญภัย.";
+	mes "5555~";
+	next;
+	mes "[Riss]";
+	mes "มีอะไร ? ชื่อของข้า...";
+	mes "'Bossnia Staff'?? ไม่ ไม่ใช่...";
+	mes "อืม, ชื่อของข้ามันไม่สำคัญหรอก.";
+	mes "บางครั้งเจ้าควรทำใจให้กว้างบ้าง.";
+	mes "อย่ามาสนใจสิ่งเล็กๆน้อยๆเลย";
+	mes "เมื่อเจ้าควรสนใจสิ่งที่มันสำคัญกว่า.";
+	next;
+	mes "[Riss]";
+	mes "หืม... ไม่มีทาง ข้าแค่อยากบอก... บางอย่าง..";
+	mes "ในตอนที่ข้าท่องเที่ยวไปทั่วนั้น,";
+	mes "ข้าค้นพบสถานที่ๆน่ากลัวโครตๆ.";
+	next;
+	mes "[Riss]";
+	mes "เมื่อเจ้ามาถึงสถานที่นี้,";
+	mes "เจ้าจะพบกับมอนสเตอร์ที่แข็งแกร่งและน่ากลัว.";
+	mes "เจ้าไม่เชื่อรึ ?";
+	next;
+	mes "[Riss]";
+	mes "แต่... แต่... ที่นั้น...";
+	mes "มันมีมอนสเตอร์ที่แข็งแกร่งและน่ากลัวอยู่...";
+	mes "มันเป็นอะไรที่น่ากลัวมากๆ.";
+	next;
+	mes "[Riss]";
+	mes "ถ้าข้าช้ากว่านี้สัก... เสี้ยววินาที...";
+	mes "ข้าคงตายไปแล้ว.";
+	next;
+	mes "[Riss]";
+	mes "มีอะไรรึ ?";
+	mes "เจ้าอยากไปที่นั้น ?";
+	mes "โอ้~ เด็กน้อย~ เจ้าไม่ได้ฟังข้าเลย.";
+	mes "ที่นั้นมัน.......";
+	next;
+	mes "[Riss]";
+	mes "เห้อ... เจ้ารู้อยู่แล้ว ?";
+	mes "แต่เจ้าก็ยังอยากจะไปอยู่ดี...";
+	mes "ได้, ข้าจะส่งเจ้าไปเอง.";
+	mes "แต่หลังจากที่เจ้าไปถึงแล้ว, อย่ามาโกรธข้าล่ะ";
+
+	// If the VIP system is enabled, players pay a Reset Stone for 5 entrances (with a choice of warps). ถ้าเปิดระบบ VIP ไว้ ผู้เล่นจะจ่ายเป็น Reset Stone สำหรับทางเข้าที่ 5 (ตัวเลือกทางเข้าวาร์ป)
+	// If it's disabled, players pay 5,000z per entrance. ถ้ายกเลิกไว้ ผู้เล่นจะจ่าย 5,000z ต่อทางเข้าแทน
+	if (VIP_SCRIPT) {
+		mes "เจ้าต้องจ่าย 1 Reset Stone สำหรับทางเลือกพิเศษ.";
+		next;
+		mes "[Riss]";
+		if (bossnia_event > 0) {
+			set .@type,1;
+			mes "ทางที่เหลืออยู่: "+bossnia_event;
+		} else if (countitem(6320)) {
+			set .@type,2;
+			mes "เจ้าต้องการไปรึยัง ?";
+		} else {
+			mes "เจ้าไม่มีตั๋ว.....";
+			mes "มาหาข้าใหม่เมื่อมี Reset Stone มาด้วย.";
+			close;
+		}
+		next;
+		if(select("เข้า:ออก") == 2)
+			close;
+		set .@i, select("ทางเข้าแรก:ทางเข้าที่สอง:ทางเข้าที่สาม:ทางเข้าที่สี่");
+		switch(select("Warp 1:Warp 2:Warp 3:Warp 4")) {
+			case 1: set .@x,31; set .@y,208; break;
+			case 2: set .@x,31; set .@y,31; break;
+			case 3: set .@x,208; set .@y,31; break;
+			case 4: set .@x,208; set .@y,208; break;
+		}
+		if (.@type == 1)
+			set bossnia_event, bossnia_event-1;
+		else {
+			delitem 6320,1; //Premium_Reset_Stone
+			set bossnia_event,4;
+		}
+		specialeffect2 EF_MAXPOWER;
+		warp "bossnia_0"+.@i,.@x,.@y;
+		close;
+	} else {
+		mes "เจ้าต้องจ่าย 5,000 zeny.";
+		next;
+		if (Zeny > 4999) {
+			mes "[Riss]";
+			mes "เจ้าพร้อมที่จะท้าทายแล้ว ?";
+			mes "Ok, เลือกหนทางที่จะไป.";
+			next;
+			set .@i, select("ทางเข้าแรก:ทางเข้าที่สอง:ทางเข้าที่สาม:ทางเข้าที่สี่");
+			mes "[Riss]";
+			mes "รักษาตัวด้วย, เด็กน้อย~";
+			mes "อย่ามาโกรธข้าล่ะ.";
+			close2;
+			set Zeny, Zeny - 5000;
+			warp "bossnia_0"+.@i,rand(202,204),rand(202,204);
+			end;
+		} else {
+			mes "[Riss]";
+			mes "เจ้ามีเงินไม่พอ...";
+			mes "กลับมาใหม่เมื่อเจ้ามีเงินอย่างน้อย 5,000 zeny.";
+			close;
+		}
+	}
+}
+geffen,124,169,4	duplicate(Bossnia Staff#1)	Bossnia Staff#2	908
+payon,165,150,4	duplicate(Bossnia Staff#1)	Bossnia Staff#3	908
+morocc,142,100,4	duplicate(Bossnia Staff#1)	Bossnia Staff#4	908
+lighthalzen,203,140,4	duplicate(Bossnia Staff#1)	Bossnia Staff#5	908
+rachel,132,144,4	duplicate(Bossnia Staff#1)	Bossnia Staff#6	908
+
+// Warp Portals
+//============================================================
+bossnia_01,204,204,0	warp	bossnia01	1,1,prontera,155,180
+bossnia_02,204,204,0	warp	bossnia02	1,1,prontera,155,180
+bossnia_03,204,204,0	warp	bossnia03	1,1,prontera,155,180
+bossnia_04,204,204,0	warp	bossnia04	1,1,prontera,155,180
+
+// Monster Spawns
+//============================================================
+
+//----------------------------------------------------------------------------
+// bossnia_01 - Bossnia
+//----------------------------------------------------------------------------

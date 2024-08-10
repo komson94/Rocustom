@@ -1,0 +1,263 @@
+-	script	#autopot1	-1,{
+OnInit:
+	.HP_Option = true;	//Allow HP option
+	.SP_Option = true;	//Allow SP option
+	.MinDelay = 100;	//Minimum Delay Allowed in milliseconds (Default and Recommended: 100) [lower values will increase server strain]
+	
+	if(!.HP_Option && !.SP_Option){
+		debugmes "Warning: autopot both hp and sp are Disabled";
+		debugmes "Warning: autopot script has been Disabled!";
+		end;
+	}
+	bindatcmd("autopot",strnpcinfo(0)+"::OnCommand",0,99);
+end;
+
+L_Start:
+	deltimer strnpcinfo(3) + "::OnStart";
+	if (BaseLevel < getiteminfo(.potion,12)) {
+		message strcharinfo(0), "Level ไม่เพียงพอที่จะใช้ '" + getitemname(.potion) + "'.";
+		end;
+	}
+	setd "autopot_" + .type$ + "_ID",.potion;
+	setd "autopot_hp_Active",true;
+	setd "autopot_sp_Active",true;
+	addtimer .delay,strnpcinfo(3) + "::OnStart";
+	message strcharinfo(0), "Auto-Potion " + strtoupper(.type$) + " พร้อมใช้งาน.";
+	callsub L_Info;
+	return;
+
+L_Info:
+	dispbottom "----------Auto-Potion Information-----------";
+	if(.HP_Option){
+		dispbottom "HP POTION:  " + getitemname(autopot_hp_ID) + " (" + autopot_hp_ID + ")";
+		dispbottom "MIN HP:   " + autopot_hp_Min + " %";
+	}
+	if(.SP_Option){
+		dispbottom "SP POTION:  " + getitemname(autopot_sp_ID) + " (" + autopot_sp_ID + ")";
+		dispbottom "MIN SP:   " + autopot_sp_Min + " %";
+	}
+	dispbottom "DELAY: " + .MinDelay + " ms";
+	dispbottom "---------------------------------------------";
+	goto OnStart;
+	return;
+
+OnCommand:
+if (HP_Status$ != "^0000FFOn^000000") { HP_Status$ = "^FF0000Off^000000"; }
+if (SP_Status$ != "^0000FFOn^000000") { SP_Status$ = "^FF0000Off^000000"; }
+//dispbottom "[Auto Potion] : ต้องตั้ง Potion ทั้ง 2 ประเภท แต่ถ้าหากไม่ต้องการใช้ประเภทใด ไม่ต้องตั้ง % ใช้งาน";
+	mes "[ Auto Potion]";
+	mes "วิธีตั้งค่า";
+	mes "1. เลือกประเภท+ยาที่จะใช้";
+	mes "2. เลือก % ของ HP/SP ที่จะกินยา";
+	mes "3. เปิดระบบ ออโต้";
+	switch(select("เปิด/ปิด Auto HP ["+HP_Status$+"]:เปิด/ปิด Auto SP ["+SP_Status$+"]:ตั้งค่า HP Potion ^006600["+autopot_hp_Min+"]%-["+getitemname(autopot_hp_ID)+"]^000000 :ตั้งค่า SP Potion ^3366FF["+autopot_sp_Min+"]%-["+getitemname(autopot_sp_ID)+"]^000000")) {
+		case 1:
+			if (Select ("^0000FFเปิด Auto HP Potion^000000:^FF0000ปิด Auto HP Potion^000000") ) ==1{
+		if (autopot_hp_ID == 0 && autopot_hp_Min == 0) { mes "กรุณาตั้งค่ายาที่จะใช้"; close; }
+		.type$ = "hp";
+		.potion = autopot_hp_ID;
+		.percent = autopot_hp_Min;
+		.delay = 200;
+		HP_Status$ = "^0000FFOn^000000";
+		if(getitemname(.potion) != "null"){
+			callsub L_Start,.type$,.potion,.percent,200;
+			end;
+			}
+		}
+		HP_Status$ = "^FF0000Off^000000";
+			message strcharinfo(0), "Auto-Potion ปิดใช้งาน.";
+			setd "autopot_hp_Active",false;
+			if(!autopot_hp_Active || !autopot_sp_Active)
+			deltimer strnpcinfo(3) + "::OnStart";
+			end;
+		
+
+
+		case 2:
+			if (Select ("^0000FFเปิด Auto SP Potion^000000:^FF0000ปิด Auto SP Potion^000000") ) ==1{
+		if (autopot_sp_ID == 0 && autopot_sp_Min == 0) { mes "กรุณาตั้งค่ายาที่จะใช้"; close; }
+		.type$ = "sp";
+		.potion = autopot_sp_ID;
+		.percent = autopot_sp_Min;
+		.delay = 200;
+		SP_Status$ = "^0000FFOn^000000";
+		if(getitemname(.potion) != "null"){
+			callsub L_Start,.type$,.potion,.percent,.delay;
+			end;
+			}
+		}
+		SP_Status$ = "^FF0000Off^000000";
+			message strcharinfo(0), "Auto-Potion ปิดใช้งาน.";
+			setd "autopot_sp_Active",false;
+			if(!autopot_hp_Active || !autopot_sp_Active)
+			deltimer strnpcinfo(3) + "::OnStart";
+			end;
+		
+
+		case 3:
+			if (Select ("กินยาเมื่อ ^009933HP ต่ำกว่า ["+autopot_hp_Min+"] ^000000% :ยา HP Potion ที่ใช้ ^0000FF["+getitemname(autopot_hp_ID)+"]^000000 ") ) ==1{
+				switch (Select ("90% :80% :70% :60% :50% :40% :30% :^FF0000100% [เมื่อ HP ลด]^000000") ) {
+					case 1:
+						set autopot_hp_Min,90;
+						goto OnCommand;
+					case 2:
+						set autopot_hp_Min,80;
+						goto OnCommand;
+					case 3:
+						set autopot_hp_Min,70;
+						goto OnCommand;
+					case 4:
+						set autopot_hp_Min,60;
+						goto OnCommand;
+					case 5:
+						set autopot_hp_Min,50;
+						goto OnCommand;
+					case 6:
+						set autopot_hp_Min,40;
+						goto OnCommand;
+					case 7:
+						set autopot_hp_Min,30;
+						goto OnCommand;
+					case 8:
+						set autopot_hp_Min,100;
+						goto OnCommand;
+				end;
+			} }
+				switch (Select ("Yggdrasil -^FF0000 ("+countitem(607)+") ^000000ea. :Orange Potion -^FF0000 ("+countitem(502)+") ^000000ea.:Yellow Potion -^FF0000 ("+countitem(503)+") ^000000ea.:White Potion -^FF0000 ("+countitem(504)+") ^000000ea.:Novice Potion -^FF0000 ("+countitem(11567)+") ^000000ea.:Mastela Fruit -^FF0000 ("+countitem(522)+") ^000000ea.:Siege White Potion -^FF0000 ("+countitem(11503)+") ^000000ea.") ) {
+					case 1:
+						set autopot_hp_ID,607;
+						if (countitem(autopot_hp_ID)<10) { mes "[[ Auto Potion ]]"; mes "^FF0000ต้องมี "+getitemname(autopot_hp_ID)+" มากกว่า 10 ea.^000000"; close; }
+						goto OnCommand;
+					case 2:
+						set autopot_hp_ID,502;
+						if (countitem(autopot_hp_ID)<10) { mes "[[ Auto Potion ]]"; mes "^FF0000ต้องมี "+getitemname(autopot_hp_ID)+" มากกว่า 10 ea.^000000"; close; }
+						goto OnCommand;
+					case 3:
+						set autopot_hp_ID,503;
+						if (countitem(autopot_hp_ID)<10) { mes "[[ Auto Potion ]]"; mes "^FF0000ต้องมี "+getitemname(autopot_hp_ID)+" มากกว่า 10 ea.^000000"; close; }
+						goto OnCommand;
+					case 4:
+						set autopot_hp_ID,504;
+						if (countitem(autopot_hp_ID)<10) { mes "[[ Auto Potion ]]"; mes "^FF0000ต้องมี "+getitemname(autopot_hp_ID)+" มากกว่า 10 ea.^000000"; close; }
+						goto OnCommand;
+					case 5:
+						set autopot_hp_ID,11567;
+						if (countitem(autopot_hp_ID)<10) { mes "[[ Auto Potion ]]"; mes "^FF0000ต้องมี "+getitemname(autopot_hp_ID)+" มากกว่า 10 ea.^000000"; close; }
+						goto OnCommand;
+					case 6:
+						set autopot_hp_ID,522;
+						if (countitem(autopot_hp_ID)<10) { mes "[[ Auto Potion ]]"; mes "^FF0000ต้องมี "+getitemname(autopot_hp_ID)+" มากกว่า 10 ea.^000000"; close; }
+						goto OnCommand;
+					case 7:
+						set autopot_hp_ID,11503;
+						if (countitem(autopot_hp_ID)<10) { mes "[[ Auto Potion ]]"; mes "^FF0000ต้องมี "+getitemname(autopot_hp_ID)+" มากกว่า 10 ea.^000000"; close; }
+						goto OnCommand;
+				end;
+			}
+	
+		case 4:
+			if (Select ("กินยาเมื่อ ^009933 SP ต่ำกว่า ["+autopot_sp_Min+"]^000000 % :ยา SP ที่ใช้ ^0000FF["+getitemname(autopot_sp_ID)+"] ^000000") ) ==1{
+				switch (Select ("90% :80% :70% :60% :50% :40% : 30%") ) {
+					case 1:
+						set autopot_sp_Min,90;
+						goto OnCommand;
+					case 2:
+						set autopot_sp_Min,80;
+						goto OnCommand;
+					case 3:
+						set autopot_sp_Min,70;
+						goto OnCommand;
+					case 4:
+						set autopot_sp_Min,60;
+						goto OnCommand;
+					case 5:
+						set autopot_sp_Min,50;
+						goto OnCommand;
+					case 6:
+						set autopot_sp_Min,40;
+						goto OnCommand;
+					case 7:
+						set autopot_sp_Min,30;
+						goto OnCommand;
+				end;
+			}
+		}
+				switch (Select ("Yggdrasil -^FF0000 ("+countitem(607)+") ^000000ea.:Grape Juice -^FF0000 ("+countitem(533)+") ^000000ea.:Strawberry -^FF0000 ("+countitem(578)+") ^000000ea.:Blue Potion -^FF0000 ("+countitem(505)+") ^000000ea.:Siege Blue Potion -^FF0000 ("+countitem(11504)+") ^000000ea.:Unlimit Yggdrasil -^FF0000 ("+countitem(60031)+") ^000000ea.") ) {
+					case 1:
+						set autopot_sp_ID,607;
+						if (countitem(autopot_sp_ID)<10) { mes "[[ Auto Potion ]]"; mes "^FF0000ต้องมี "+getitemname(autopot_sp_ID)+" มากกว่า 10 ea.^000000"; close; }
+						goto OnCommand;
+					case 2:
+						set autopot_sp_ID,533;
+						if (countitem(autopot_sp_ID)<10) { mes "[[ Auto Potion ]]"; mes "^FF0000ต้องมี "+getitemname(autopot_sp_ID)+" มากกว่า 10 ea.^000000"; close; }
+						goto OnCommand;
+					case 3:
+						set autopot_sp_ID,578;
+						if (countitem(autopot_sp_ID)<10) { mes "[[ Auto Potion ]]"; mes "^FF0000ต้องมี "+getitemname(autopot_sp_ID)+" มากกว่า 10 ea.^000000"; close; }
+						goto OnCommand;
+					case 4:
+						set autopot_sp_ID,505;
+						if (countitem(autopot_sp_ID)<10) { mes "[[ Auto Potion ]]"; mes "^FF0000ต้องมี "+getitemname(autopot_sp_ID)+" มากกว่า 10 ea.^000000"; close; }
+						goto OnCommand;
+					case 5:
+						set autopot_sp_ID,11504;
+						if (countitem(autopot_sp_ID)<10) { mes "[[ Auto Potion ]]"; mes "^FF0000ต้องมี "+getitemname(autopot_sp_ID)+" มากกว่า 10 ea.^000000"; close; }
+						goto OnCommand;
+					case 6:
+						set autopot_sp_ID,60031;
+						if (countitem(autopot_sp_ID)<0) { mes "[[ Auto Potion ]]"; mes "^FF0000ต้องมี "+getitemname(autopot_sp_ID)+" จำนวน 1 ea.^000000"; close; }
+						goto OnCommand;	
+				end;
+			}		
+		
+	}
+
+
+
+OnStart:
+	if (!getstatus(SC_BERSERK) && !getstatus(SC_SATURDAYNIGHTFEVER) && !getstatus(SC_GRAVITATION) &&
+	 !getstatus(SC_TRICKDEAD) && !getstatus(SC_HIDING) && !getstatus(SC__SHADOWFORM) && !getstatus(SC__INVISIBILITY) &&
+	 !getstatus(SC__MANHOLE) && !getstatus(SC_KAGEHUMI) && !getstatus(SC_HEAT_BARREL_AFTER) &&
+		!getstatus(SC_STONE) && !getstatus(SC_FREEZE) && !getstatus(SC_STUN) && !getstatus(SC_SLEEP))
+		{
+		if(Hp){
+			if(autopot_hp_Active) {
+			if (readparam(Hp)*100/readparam(MaxHp) < autopot_hp_Min) {
+				if (countitem(autopot_hp_ID)) {
+					if( autopot_hp_ID != 34021) { delitem autopot_hp_ID,1; }
+					consumeitem autopot_hp_ID;
+					specialeffect2 207;
+				}
+
+	if (!countitem(autopot_hp_ID)) {
+			message strcharinfo(0), "Auto-Potion ปิดใช้งาน.  เนื่องจาก HP Potion หมด";
+			HP_Status$ = "^FF0000Off^000000";
+			setd "autopot_hp_Active",false;
+			if(!autopot_hp_Active || !autopot_sp_Active)
+			deltimer strnpcinfo(3) + "::OnStart";
+			end;
+			}
+			}
+	}
+			if(autopot_sp_Active && Sp * 100 / MaxSp < autopot_sp_Min) {
+				if (countitem(autopot_sp_ID)) {
+					if( autopot_sp_ID != 34022) { delitem autopot_sp_ID,1; }
+					consumeitem autopot_sp_ID;
+					specialeffect2 208;
+				}
+
+	if (!countitem(autopot_sp_ID)) {
+			message strcharinfo(0), "Auto-Potion ปิดใช้งาน.  เนื่องจาก SP Potion หมด";
+			SP_Status$ = "^FF0000Off^000000";
+			setd "autopot_sp_Active",false;
+			if(!autopot_hp_Active || !autopot_sp_Active)
+			deltimer strnpcinfo(3) + "::OnStart";
+			end;
+			}
+			}
+		}
+	}
+	if(autopot_hp_Active || autopot_sp_Active)
+		addtimer 200,strnpcinfo(3) + "::OnStart";
+	end;
+	}

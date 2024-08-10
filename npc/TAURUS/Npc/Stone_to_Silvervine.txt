@@ -1,0 +1,39 @@
+-	shop	burnCardShop	-1,501:1000000
+
+-	script	BurnCard	-1,{
+	mes "ต้องการย่อย Card หรือไม่? \n1 ใบได้ " + ((1 + #card_to_cash_tier) * .multiplier) + " Cash";
+	next;
+	menu "ย่อย",-;
+	callshop "burnCardShop",2;
+	npcshopattach "burnCardShop";
+	end;
+
+OnSellItem:
+	for (.@i = 0; .@i < getarraysize(@sold_nameid); .@i++){
+		if (@sold_quantity[.@i] <= 0)
+		end;
+		if(getiteminfo(@sold_nameid[.@i],2) == 6 && compare(getitemname(@sold_nameid[.@i]),"Card") ){
+			delitem @sold_nameid[.@i],@sold_quantity[.@i];
+			.@burn_amount += @sold_quantity[.@i];
+		}
+	}
+	deletearray @sold_quantity,getarraysize(@sold_quantity);
+	deletearray @sold_nameid,getarraysize(@sold_nameid);
+	
+	if(#card_to_cash_tier)
+	.@finalize = .@burn_amount ;
+	callfunc("AddCash",.@finalize);
+	mes "คุณได้รับ " + .@finalize + " Cash";
+	specialeffect2 49;
+	close;
+
+OnInit:
+	waitingroom "แลก Card เป็น Cash",0;
+	
+	setarray .zeny_price[0],10000,100000,1000000,10000000,100000000,1000000000;
+	
+	.multiplier = 1;
+	
+	end;
+}
+prontera,163,167,3	duplicate(BurnCard)	 แลก Card เป็น Cash	10306

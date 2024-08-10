@@ -1,0 +1,125 @@
+-	bartershop	#ex_dynite	-1
+
+morocc,190,70,5	script	 Manager Elmen	10114,{
+	disable_items;
+	mes "Manager Elmen";
+	mes "ข้าคือผู้จัดการเหมืองแร่แห่งนี้";
+	mes "ขี้เกียจเขียนบทสนทนาละ ไม่รู้ว่าจริงๆมันพูดไร";
+	mes "เอาไปว่าเข้าเมนูไปดูละกันจะอธิบาย";
+	next;
+	menu "ซื้อ Dynite",ore2dynite,"ใช้ Dynite ซื้อของ",dyniteEx,"สุ่มอาวุธกันเถอะ",exdynitewep;
+	
+ore2dynite:
+	mes "Manager Elmen";
+	mes "การจะแลก <ITEM>"+getitemname(25814)+"<INFO>25814</INFO></ITEM> ได้นั้น";
+	mes "จำเป็นต้องมีแร่ 5 สี เพื่อที่จะมาหลอมรวมเป็นอันหนึ่งอันเดียวกันให้ได้";
+	next;
+	mes "Manager Elmen";
+	mes "โดยจะมีแร่ 5 สีดังต่อไปนี้";
+	mes "<ITEM>"+getitemname(25809)+"<INFO>25809</INFO></ITEM>";
+	mes "<ITEM>"+getitemname(25810)+"<INFO>25810</INFO></ITEM>";
+	mes "<ITEM>"+getitemname(25811)+"<INFO>25811</INFO></ITEM>";
+	mes "<ITEM>"+getitemname(25812)+"<INFO>25812</INFO></ITEM>";
+	mes "<ITEM>"+getitemname(25813)+"<INFO>25813</INFO></ITEM>";
+	next;
+	mes "Manager Elmen";
+	mes "โดยการแลกจะใช้ สีละอัน เพื่อหลอมรวมเป็นเทพเจ้ามังกร";
+	mes "จากนั้นจะคืนชีพให้โงกุลเพื่อปลดปล่อยสัตว์หางทั้ง 9";
+	mes "และใช้พลังทั้งหมดนั้นรวมกัน เพื่อสร้าง 1 <ITEM>"+getitemname(25814)+"<INFO>25814</INFO></ITEM>";
+	next;
+	if (select("แลกเปลี่ยนเลย","รีบหรอฟามแปบดิ") == 2 ) {
+	mes "Manager Elmen";
+	mes "ก็แล้วแต่นะ บางทีมาช้าข้าอาจจะขึ้นราคาก็ได้";
+	mes "ใครจะไปรู้ช่วงนี้ ค่าส่งแพง";
+	mes "ลูกจ้างขัดแร่ก็กดราคา ตัดสินใจดีๆนะ";
+	close;
+	}
+	else {
+	mes "Manager Elmen";
+	input .@numdynite ;
+	if (countitem(25809) > .@numdynite && countitem(25810) > .@numdynite && countitem(25811) > .@numdynite && countitem(25812) > .@numdynite && countitem(25813) > .@numdynite )	{
+		mes "รอแปบนึงนะ";
+		next;
+		mes "เจ้าจะใช้ แร่ต่างๆที่ข้าได้กล่าวมาข้างต้น";
+		mes "เป็นจำนวน " +.@numdynite+ "อัน";
+		mes "และเจ้าจะได้ <ITEM>"+getitemname(25814)+"<INFO>25814</INFO></ITEM> " +.@numdynite+ "อัน";
+		mes "เจ้ายอมรับได้จริงๆหรอ 5 : 1 เลยนะ";
+		if (select("ได้สิเรทเหี้ยกว่านี้ก็รับได้:ไม่ดีกว่าข้าว่ามันเอาเปรียบข้าเกินไป") == 2 ) {
+		mes "ก็แล้วแต่เจ้า";
+		end;
+		}
+		mes "ฮึบ";
+		delitem 25809, .@numdynite; 
+		delitem 25810, .@numdynite; 
+		delitem 25811, .@numdynite; 
+		delitem 25812, .@numdynite; 
+		delitem 25813, .@numdynite;
+		sleep2 1000;
+		getitem 25814, .@numdynite;
+		specialeffect 101;
+		mes "เสร็จละ";
+		mes "ไว้มาใหม่หละ";
+		close;
+	}
+	else {
+	mes "ไปขุดเหมืองมาก่อน";
+	mes "รู้จักทำงานบ้าง ไม่ใช่ขออย่างเดียว หึ";
+	close;
+		}
+	}
+
+dyniteEx:
+	mes "Manager Elmen";
+	mes "ร้านค้านี้ เจ้าจะต้องใช้แร่สุดพิเศษ";
+	mes " <ITEM>"+getitemname(25814)+"<INFO>25814</INFO></ITEM>";
+	mes "^FF0000เท่านั้น^000000";
+	next;
+	mes " <ITEM>"+getitemname(25814)+"<INFO>25814</INFO></ITEM>";
+	mes "^FF8300เท่านั้น^000000";
+	next;
+	mes " <ITEM>"+getitemname(25814)+"<INFO>25814</INFO></ITEM>";
+	mes "^FCFF00เท่านั้น^000000";
+	next;
+	mes " <ITEM>"+getitemname(25814)+"<INFO>25814</INFO></ITEM>";	
+	mes "^00FF0Aเท่านั้น^000000";
+	next;
+	mes " <ITEM>"+getitemname(25814)+"<INFO>25814</INFO></ITEM>";
+	mes "^00FFFDเท่านั้น^000000";
+	next;
+	mes " <ITEM>"+getitemname(25814)+"<INFO>25814</INFO></ITEM>";	
+	mes "^0100FFเท่านั้น^000000";
+	next;
+	mes " <ITEM>"+getitemname(25814)+"<INFO>25814</INFO></ITEM>";	
+	mes "^DD00FFเท่านั้น^000000";
+	next;
+	callshop "#ex_dynite",1;
+	end;
+	
+exdynitewep:
+	mes "Manager Elmen";
+	mes "อย่างที่รู้กันว่า ใน Official KRO เนี่ย";
+	mes "ใช้ <ITEM>"+getitemname(25814)+"<INFO>25814</INFO></ITEM> จำนวน 50 ea ";
+	next;
+	if (select ("แลกเลย","ยังก่อน ทำใจกับเรทไม่ได้")  == 2 ) {
+	mes "Manager Elmen";
+	mes "นักรบย่อมมีบาดแผล";
+	close;
+	}
+	if (countitem(25814) < 50 ) {
+	mes "ไปขุดเหมืองมาก่อน";
+	mes "รู้จักทำงานบ้าง ไม่ใช่ขออย่างเดียว หึ";
+	close;
+		}
+	else {
+	mes "จงลิ้มรสความเกลือนี้เสียเถิด";
+		delitem 25814,50;
+		setArray .@weapons[0],1867,2058,13346,16099,18190,21054,26162,26215,28045,28140,28635,28771,28772,32026,32110,32303,32352,550006;
+		getitem .@weapons[rand(18)],1;
+		}
+	close;
+	
+	
+OnInit:
+	npcshopadditem "#ex_dynite",32248,25814,75,-1,32249,25814,75,-1,32250,25814,75,-1,32251,25814,75,-1,9529,25814,30,-1,9514,25814,30,-1;
+	end;
+}
