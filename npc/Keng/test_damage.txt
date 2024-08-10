@@ -1,5 +1,9 @@
-morocc,170,51	monster	ทดสอบดาเมจ	2411,101,5000
-morocc,169,64,0	monster	เสาทดสอบดาเมจทั่วไป#1	1905,101,5000
-morocc,165,58,0	monster	เสาทดสอบดาเมจกึ่งมนุษย์#1	1905,101,5000
-
-
+//==================================================
+// Prontera, Training Dummy Area
+//==================================================
+morocc,166,59,0,0	monster	Dummy Lv50	2409,1,5000,0,0
+morocc,166,63,0,0	monster	Dummy Lv50	2409,1,5000,0,0
+morocc,172,64,0,0	monster	Dummy Lv100	2410,1,5000,0,0
+morocc,176,61,0,0	monster	Dummy Lv100	2410,1,5000,0,0
+morocc,178,56,0,0	monster	Dummy Lv150	2411,1,5000,0,0
+morocc,174,52,0,0	monster	Dummy Lv150	2411,1,5000,0,0

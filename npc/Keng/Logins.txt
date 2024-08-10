@@ -20,7 +20,7 @@ OnPCLoginEvent:
 		announce "[ระบบ] :  "+getusers(1)+" Online User ขณะนี้ ",0,0xCC00CC;
 		end;
 	}
-	
+	end;
 }
 //==================================================================================
 -	script	GMLogin	FAKE_NPC,{
