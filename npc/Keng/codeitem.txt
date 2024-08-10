@@ -1,0 +1,483 @@
+////////////////////////////////////////////////////////////////////////
+//--------------------------------------------------------------------//
+//                          PROMOTIONAL CODES                         //
+//                     AUTHOR: LIL TROLL//COLDFIRE                    //
+//--------------------------------------------------------------------//
+//                          RATHENA SCRIPT                            //
+//--------------------------------------------------------------------//
+//                          Version 1.2.1                             //
+//--------------------------------------------------------------------//
+//    FEATURES: (Modified Promotional Code by sir Patskie)            //
+//   								       				//
+// #1 5`Degree of Abuse-Protection(+ItemBound = 6)		       	//
+//    - IP,ACCOUNT,COUNTLIMIT,DOUBLECHECK,MIX			       	//
+// #2 Code can be deleted/detected by gm.			       		//
+// #3 Friendly User Interface.					      		//
+// #4 Very easy to configure.					      			//
+// #5 Code auto delete at certain variable setup(limit pool).	     //
+// #6 GM can view codes when claiming.				       		//
+// #7 GM can set limitation of usage of the codes.		       	//
+// #8 Automatically delete any codes that set to desirable 	       	//
+//    pool limit by gm claimed by players.			      		//
+// #9 GM can set random code with random item! 		      		//
+//--------------------------------------------------------------------//
+////////////////////////////////////////////////////////////////////////
+/*
+DROP TABLE IF EXISTS `reward_codes`;
+DROP TABLE IF EXISTS `reward_logs`;
+CREATE TABLE IF NOT EXISTS `reward_codes` (
+	`promo` VARCHAR(26) NOT NULL DEFAULT '',
+	`nameid` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+	`item_name` VARCHAR(50) NOT NULL DEFAULT '',
+	`amount` SMALLINT(6) UNSIGNED NOT NULL DEFAULT '0',
+	`time_created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`limit` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`pool` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	PRIMARY KEY (`promo`)
+) ENGINE = MYISAM;
+CREATE TABLE `reward_logs` (
+	`account_id` int(11) unsigned NOT NULL default '0',
+	`last_ip` BINARY( 9 ) NOT NULL,
+	`code` VARCHAR( 26 ) NOT NULL,
+	`redeem_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`claim` INT( 10 ) NOT NULL,
+	PRIMARY KEY (`code`)
+) ENGINE = MYISAM;
+*/
+-	script	LilTrollPCodes	-1,{
+OnInit:
+	//initnpctimer;	// I USED THIS FOR TESTING PURPOSES	WITH ONTIMER
+	bindatcmd "claim",strnpcinfo(3)+"::OnClaim";	
+	bindatcmd "code",strnpcinfo(3)+"::OnEditCode";
+	setarray $@PromoPrize[0],501,502,503,504,505,506,507,508,509,510;   	// SET ITEM ID HERE FOR REWARDS
+	setarray $@PrizeAmount[0],1,2,3,4,5,6,7,8,9,10;                     	// AMOUNT OF REWARDS
+	setarray $@ClaimLimit[0],1,2,3,4,5,6,7,8,9,10;				   	// CLAIM LIMITATION
+	setarray $@length,5,15; // <MIN>,<MAX> LENGTH CHECK	// 5 Recommended Minimum due to not recognizing 1234 from garbage deletion.
+	end;											// 15 maximum characters supported in random code generation.
+//OnTimer20000:			// I USED THIS FOR TESTING PURPOSES WITH INITNPCTIMER
+OnMinute0000: // Refreshes every 1 Hour. Automatically delete 0 pool count promos. // Change this if you want.
+	// ****************************************************** BIRBE WIRE ***************************************************	
+	set .@promotional,query_sql("SELECT `promo`,`pool` FROM `reward_codes` ORDER BY pool ASC LIMIT 10",.@promo$,.@remaining);
+	for(set .@i,1; .@i <= .@promotional; set .@i,.@i++) {
+	query_sql "DELETE FROM `reward_codes` WHERE `promo` = '" + escape_sql(.@promo$[0]) + "' AND `pool` = '0'";   // Number 1 row will be deleted.
+	query_sql "DELETE FROM `reward_codes` WHERE `promo` = '" + escape_sql(.@promo$[.@i]) + "' AND `pool` = '0'"; // Numbers from 2-10 rows will be deleted.
+	}
+	debugmes "Promotional Codes garbage are deleted.";
+	// ****************************************************** BIRBE WIRE ***************************************************	
+	//initnpctimer;	// I USED THIS FOR TESTING PURPOSES WITH ONTIMER
+end;
+	// ****************************************************** BIRBE WIRE ***************************************************
+OnDay0101: OnDay0102: OnDay0103: OnDay0104: OnDay0105: OnDay0106:	// Clean sql garbage every 1st day of the month.
+OnDay0107: OnDay0108: OnDay0109: OnDay0110: OnDay0111: OnDay0112:
+	set .@garbage,query_sql("SELECT `codes`,`redeem_time` FROM `reward_logs` ORDER BY pool ASC LIMIT 25",.@code$);
+	for(set .@i,1; .@i <= .@garbage; set .@i,.@i++) {
+	query_sql "DELETE FROM `reward_logs` WHERE `codes` = '" + escape_sql(.@code$[0]) + "'";  // Number 1 row will be deleted.
+	query_sql "DELETE FROM `reward_logs` WHERE `codes` = '" + escape_sql(.@code$[.@i]) + ""; // Numbers from 2-25 rows will be deleted.
+	}
+	debugmes "reward_logs garbage has been deleted.";
+end;  	
+	// ****************************************************** BIRBE WIRE ***************************************************
+OnClaim:	// ONCLAIM COMMAND STARTS
+	if ( getgmlevel() < 99 ) { 
+	mes "^00007fENTER SERVER NAME^000000"; 							// INPUT YOUR SERVERNAME
+	mes "Promotional Code Rewards"; 								// YOU CAN CHANGE ALL MES DIALOGUES
+	mes "Input the correct [ ^ff0000Code^000000 ]"; 
+	}
+	if ( getgmlevel() == 99 ) {									// CHECK GM LEVEL
+									// QUERY SQL SELECT "DONT CHANGE"
+	set .@nb, query_sql("SELECT `promo`,`pool` FROM `reward_codes` ORDER BY time_created DESC LIMIT 20",.@promo$,.@pool);
+									// QUERY SQL SELECT "DONT CHANGE"
+	mes "^00007fPROMOTIONAL REWARDS^000000";
+	mes "^ff0000GM MENU:^000000";
+	mes "^005500Available Codes:^000000";
+	// FOR STATEMENT DONT CHANGE IF YOU DONT KNOW WHAT YOU ARE DOING.
+	for(set .@i,0; .@i < .@nb; set .@i,.@i+1)
+	// FOR STATEMENT DONT CHANGE IF YOU DONT KNOW WHAT YOU ARE DOING.
+	mes ""+.@promo$[.@i]+" : "+.@pool[.@i]+"";
+	}
+	input .@pc$;						// CLAIM INPUT CODE
+	if ( getstrlen( .@pc$ ) < $@length[0] || getstrlen( .@pc$ ) > $@length[1] ) {			// CHECK LENGHT OF THE CODE
+		dispbottom "Incorrect input. Code is not less than " +$@length[0]+ " and must be greater than " +$@length[1]+ ".";
+		end;// ----------------------------------------------------------------------
+	}	// END CHECK LENGHT
+	close2;		// CLOSE2 COMMAND SCRIPTS WOULD CONTINUE								// QUERY SQL SELECT "DONT CHANGE"
+	query_sql "SELECT `promo`,`nameid`, `amount`,`limit`,`pool` FROM `reward_codes` WHERE `promo` = '" + escape_sql(.@pc$) + "'", .@promo$, .@item, .@amt,.@limit,.@pool;
+	query_sql "SELECT `account_id`,`last_ip`,`code`,`claim` FROM `reward_logs` WHERE `code` = '" + escape_sql(.@pc$) + "'",.@aid,.@lip$,.@code$,.@claim;							// QUERY SQL SELECT "DONT CHANGE"			
+	// YOU CAN REMOVE THIS BY PUTTING "//" BEFORE THE LINE OF THIS STATEMENTS
+	//if ( getgmlevel() == 99 ) {
+	//getitem .@item, .@amt;			// GM CAN CLAIM REWARDS WITHOUT RESTRICTION
+	//end;						
+	//}	// END IF GM CONDTION	
+	if ( !.@item ) { 					// CHECK IF CODE IS INVALID
+		announce "Invalid code.",bc_self; 		
+		end; 
+	}	// END CHECK INVALID CODE					
+						// DONT CHANGE! THIS IS THE 5th DEGREE of ABUSE PROTECTION, COMBO-MIX LOL! ------------------------------------------
+	if ( getcharip(strcharinfo(0)) == .@lip$ && .@code$ == .@pc$ && .@pool == 0 && getcharid(3) == .@aid && .@claim >= 1 ) { // Double Check MIX
+						// ------------------------------------------------------------------------------------------------------------------
+	announce "Code claim limit reach. Also either you already got this promo or other player in different IP might used code.",bc_self;
+						// NOTE: YOU CAN CHANGE ABOVE ANNOUNCE DIALOGUE.
+	end;
+	}	// END OF 5th DEGREE ABUSE PROTECTION
+			// DONT CHANGE! THIS IS THE 4th DEGREE of ABUSE PROTECTION, THE COMBO XD
+	if ( .@code$ == .@pc$ && .@pool == 0 && getcharid(3) == .@aid && .@claim >= 1 ) {
+			// ----------------------------------------------------------------------
+	announce "Code claim limit reach. And you already got this promo.",bc_self;
+						// NOTE: YOU CAN CHANGE ABOVE ANNOUNCE DIALOGUE.
+	end;
+	}	// END OF 4th DEGREE ABUSE PROTECTION
+	// DONT CHANGE! THIS IS THE 3th DEGREE of ABUSE PROTECTION, POOL LIMIT
+	if ( .@code$ == .@pc$ && .@pool == 0 ) { 
+	// ==========================================================================
+		if(.@code$ == .@pc$ && .@limit == 1 ) {
+			announce "Code claim limit reach. "+.@limit+" player already redeemed the codes.",bc_self; 
+						// NOTE: YOU CAN CHANGE ABOVE ANNOUNCE DIALOGUE.
+			end; 
+		}
+		if(.@code$ == .@pc$ && .@limit >= 1 ) {
+			announce "Code claim limit reach. "+.@limit+" players already redeemed the codes.",bc_self; 
+						// NOTE: YOU CAN CHANGE ABOVE ANNOUNCE DIALOGUE.
+			end; 
+		}
+	}	// END OF 3th DEGREE OF ABUSE PROTECTION		
+	// DONT CHANGE! THIS IS THE 2nd DEGREE of ABUSE PROTECTION, ACOUNT BASE LIMIT
+	if(.@code$ == .@pc$ && getcharid(3) == .@aid && .@claim >= 1) { 	
+	// ----------------------------------------------------------------------
+	announce "Your Account already claimed this code.",bc_self; 
+						// NOTE: YOU CAN CHANGE ABOVE ANNOUNCE DIALOGUE.
+	end; 				
+	}	// END OF 2nd DEGREE OF ABUSE PROTECTION
+	// DONT CHANGE! THIS IS THE 2nd DEGREE of ABUSE PROTECTION, IP BASE LIMIT
+	if (.@code$ == .@pc$ && getcharip(strcharinfo(0)) == .@lip$ && .@claim >= 1 ) { 
+	// ----------------------------------------------------------------------
+	announce "IP that you used already claimed this code.",bc_self; 
+						// NOTE: YOU CAN CHANGE ABOVE ANNOUNCE DIALOGUE.
+	end; 
+	} 	// END OF 1st DEGREE OF ABUSE PROTECTION
+	getitem .@item, .@amt;	// CODE SUCCESSFULLY REDEEMED! AFTER 5th DEGREE OF CHECKING!
+	announce "Promotional code successfully redeemed!",bc_self;
+						//  NOTE: YOU CAN CHANGE ABOVE ANNOUNCE DIALOGUE.
+// ****************************************** BIRBE WIRE *************************************************
+	// SQL QUERY SERIES, PLEASE DONT CHANGE ANYTHING BELOW IF YOU DONT KNOW WHAT YOU ARE DOING!
+	// CLAIM COUNT	
+	if(query_sql("SELECT `claim` FROM `reward_logs` WHERE `code` = '" + escape_sql(.@pc$) + "'",.@claim)) { 
+		set .@claim,1;
+		query_sql("UPDATE `reward_logs` SET `claim` = '"+1+"' WHERE `code` = '" + escape_sql(.@pc$) + "'"); 
+	}   
+	else {
+		query_sql("INSERT INTO `reward_logs` (`account_id`,`last_ip`,`code`,`redeem_time`,`claim`) VALUES ('"+getcharid(3)+"','"+getcharip(strcharinfo(0))+"','"+escape_sql(.@pc$)+"',NOW(),'"+1+"')"); 
+	}
+	// POOL COUNT
+	if(query_sql("SELECT `pool` FROM `reward_codes` WHERE `promo` = '" + escape_sql(.@pc$) + "'",.@pool)){ 
+	set .@pool,.@pool-1;
+	query_sql("UPDATE `reward_codes` SET `pool` = '"+.@pool+"' WHERE `promo` = '" + escape_sql(.@pc$) + "'"); 
+	} 
+	else { 
+		if(.@pool == 0) { 
+			end; 
+		}
+		if(.@pool >= 1) { 
+			query_sql "INSERT INTO `reward_codes` VALUES `pool` =  '"+.@pool+"'"; 
+			end;
+		}
+	}
+	// SQL QUERY SERIES, PLEASE DONT CHANGE ANYTHING ABOVE IF YOU DONT KNOW WHAT YOU ARE DOING!	
+// ****************************************** BIRBE WIRE *************************************************
+end;	// END OF ONCLAIM COMMAND
+
+OnEditCode:	// ONEDITCODE STARTS
+	goto EditCode;
+	EditCode:
+	if ( getgmlevel() < 99 ) end;		// CHECK GM LEVEL
+	mes "[   ^ff0000Promotional-Code Generator^000000   ]";	// YOU CAN CHANGE MES DIALOGUES HERE
+	mes "    ^ff5500Select from the options below:^000000";
+	mes "===================================";
+	// SQL QUERY DO NOT CHANGE =========================
+	set .@nb, query_sql("SELECT `promo`,`pool` FROM `reward_codes` ORDER BY time_created DESC LIMIT 20",.@promo$,.@pool);
+	// =================================================
+	mes "^005500Available Codes:^000000";
+	// FOR STATEMENT DONT CHANGE IF YOU DONT KNOW ANYTHING
+	for(set .@i,0; .@i < .@nb; set .@i,.@i+1)
+	mes ""+.@promo$[.@i]+" : "+.@pool[.@i]+"";
+	// ===================================================
+	next;
+	menu "^55007f[ Create Codes ]^000000",Setup,"^005500[ View Codes ]^000000",View,"^6a6a4f[ Delete Codes ]^000000",Delete;
+	close;
+	Setup:
+		menu "[ Create Manualy ]",Bling,"[ Random Code ]",Bleng,"[ All Random ]",Blung,"[ Main Menu ]",EditCode;  
+		Bling:
+			goto Promo;
+			Promo:
+				goto step1;
+				step1:
+				mes "[ ^ff0000Promotional Code Generator^000000 ]";
+				mes "^ff5500Input the desired code.^000000.";
+				input .@pcode$;
+				if ( getstrlen( .@pcode$ ) < $@length[0] || getstrlen( .@pcode$ ) > $@length[1] ) {
+					announce "The code length must not be less than " +$@length[0]+ " and must not be greater than " +$@length[1]+ ".",bc_self;
+					next;
+					menu "[ Re-Enter ]",step1,"[ Cancel ]",Done;
+					close;
+				}
+				query_sql "SELECT `promo` FROM `reward_codes` WHERE `promo` = '"+ escape_sql(.@pcode$) + "'",.@rcodes$;
+				if (.@pcode$ == .@rcodes$) { 
+					mes "The Code : [^ff0000"+.@pcode$+"^000000] is already existing."; 
+					next;
+					menu "[ Re-Enter ]",step1,"[ Cancel ]",Done;
+					close;
+				}
+				goto step2;
+				step2:
+				mes "You have entered [ ^FF0000"+.@pcode$+"^000000 ].";
+				mes "Set the ^005500Promotional Item^000000.";
+				input .@reward;
+				if ( !.@reward || getitemname(.@reward) == "null" ) {
+					announce "Sorry, that is an invalid item id.",bc_self;
+					next;
+					menu "[ Re-Enter ]",step2,"[ Cancel ]",Done;
+					close;
+				}
+				goto step3;
+				step3:
+				set .@iname$, getitemname(.@reward);
+				mes "Item ^FF0000"+.@reward+"^000000 is ^FF0000"+.@iname$+"^000000.";
+				mes "Now, set the ^00007fAmount^000000.";
+				input .@amount;
+				if ( !.@amount ) {
+					announce "Sorry, that is an invalid amount number.",bc_self;
+					next;
+					menu "[ Re-Enter ]",step3,"[ Cancel ]",Done;
+					close;
+				}
+				if (.@amount > 1 ) {
+					mes ""+.@amount+" pieces of reward.";
+				}
+				else {
+					mes ""+.@amount+" piece of reward.";
+				}
+				next;
+				menu "[ Proceed ]",Proceed,"[ Done ]",Done;
+				close;
+					Proceed:
+						goto LilTroll;
+						LilTroll:
+							mes "[ ^ff0000Promotional Code Generator^000000 ]";
+							mes "Check the promo below:";
+							mes "Code: ^ff0000"+.@pcode$+"^000000 : ^005500"+.@reward+"^000000";
+							mes "^55007f"+getitemname(.@reward)+"^000000) : ^00007f"+.@amount+"^000000 ";
+							mes "Set claim limitation.";
+							input .@limitation;
+							if(.@limitation == 0){
+								announce "You must set atleast 1 limitation.",bc_self;  
+								close;
+							}
+							set .@limit,.@limitation;
+							mes "Code-Pool usage ends at "+.@limit+"."; 
+							mes "Create your Promo Code now?";
+							next;
+							if ( select("Generate:Stop") - 1 ) close;
+							// QUERY SQL, PLEASE DONT CHANGE ANYTHING IF YOU DONT KNOW THIS ====================================================================================================================================================================================================
+							query_sql ("INSERT INTO `reward_codes` (`promo`,`nameid`,`item_name`,`amount`,`time_created`,`limit`,`pool`) VALUES ( '" + escape_sql(.@pcode$) + "', '" + .@reward + "', '" + escape_sql(.@iname$) + "', '" + .@amount + "', NOW() ,'"+.@limit+"','"+.@limit+"' )");
+							//  ==================================================================================================================================================================================================== ===========================================================
+							announce "Done creating code!",bc_self;        
+							next;
+							menu "[ Create Another Code ]",Setup,"[ Done ]",Done;
+							close;
+			Bleng:
+			goto RandCode;
+			RandCode:
+			// ******************** IF YOU TOUCH BELOW THIS! TESLA COIL WILL ELECTRIFY AND TOAST YOU! RESULTING INSTANT DEATH! *********************************************************************************************************************************************************************************************************************************************************************************************************************************************************
+			setarray .@s$[0],"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","1","2","3","4","5","6","7","8","9","0";
+			set .@it,$@PromoPrize[rand(getarraysize($@PromoPrize))];
+			set .@am,$@PrizeAmount[rand(getarraysize($@PrizeAmount))];
+			set .@lim,$@ClaimLimit[rand(getarraysize($@ClaimLimit))];
+			if($@length[1]==15) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==14) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==13) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==12) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==11) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==10) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==9) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==8) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==7) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==6) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==5) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";	
+			// ********************  IF YOU TOUCH ABOVE THIS! TESLA COIL WILL ELECTRIFY AND TOAST YOU! RESULTING INSTANT DEATH! *********************************************************************************************************************************************************************************************************************************************************************************************************************************************************
+			mes "[ ^ff0000Promotional Code Generator^000000 ]";
+			mes "Random Generator:";
+			mes "Code : "+.@randomcodes$+" ";
+			next;
+			menu "[ Re-Generate ]",RandCode,"[ Proceed ]",RandProceed,"[ Return ]",Setup;
+			close;
+				RandProceed:
+				goto RandomProceed;
+				RandomProceed:
+					query_sql "SELECT `promo` FROM `reward_codes` WHERE `promo` = '"+ escape_sql(.@pcode$) + "'",.@rcodes$;
+					if (.@randomcodes$ == .@rcodes$) { 
+						mes "The Code : [^ff0000"+.@pcode$+"^000000] is already existing."; 
+						next;
+						menu "[ Re-Generate ]",RandCode,"[ Cancel ]",Done;
+						close;
+					}
+				goto RandProceed1;
+				RandProceed1:
+				mes "Randon code is : ";
+				mes "[ ^FF0000"+.@randomcodes$+"^000000 ].";
+				mes "Set the ^005500Promotional Item^000000.";
+				input .@reward;
+				if ( !.@reward || getitemname(.@reward) == "null" ) {
+					announce "Sorry, that is an invalid item id.",bc_self;
+					next;
+					menu "[ Re-Enter ]",RandProceed1,"[ Cancel ]",Done;
+					close;
+				}
+				goto RandProceed2;
+				RandProceed2:
+				set .@iname$, getitemname(.@reward);
+				mes "Item ^FF0000"+.@reward+"^000000 is ^FF0000"+.@iname$+"^000000.";
+				mes "Now, set the ^00007fAmount^000000.";
+				input .@amount;
+				if ( !.@amount ) {
+					announce "Sorry, that is an invalid amount number.",bc_self;
+					next;
+					menu "[ Re-Enter ]",RandProceed2,"[ Cancel ]",Done;
+					close;
+				}
+				if (.@amount > 1 ) {
+					mes ""+.@amount+" pieces of reward.";
+				}
+				else {
+					mes ""+.@amount+" piece of reward.";
+				}
+				next;
+				menu "[ Proceed ]",RandFinalize,"[ Done ]",Done;
+				close;
+					RandFinalize:
+						goto LilTrollol;
+						LilTrollol:
+							mes "[ ^ff0000Promotional Code Generator^000000 ]";
+							mes "Check the promo below:";
+							mes "Code: ^ff0000"+.@randomcodes$+"^000000 : ^005500"+.@reward+"^000000";
+							mes "^55007f"+getitemname(.@reward)+"^000000) : ^00007f"+.@amount+"^000000 ";
+							mes "Set claim limitation.";
+							input .@limitation;
+							if(.@limitation == 0){
+								announce "You must set atleast 1 limitation.",bc_self;  
+								close;
+							}
+							set .@limit,.@limitation;
+							mes "Code-Pool usage ends at "+.@limit+"."; 
+							mes "Create your Promo Code now?";
+							next;
+							if ( select("Generate:Stop") - 1 ) close;
+							// QUERY SQL, PLEASE DONT CHANGE ANYTHING IF YOU DONT KNOW THIS ====================================================================================================================================================================================================
+							query_sql ("INSERT INTO `reward_codes` (`promo`,`nameid`,`item_name`,`amount`,`time_created`,`limit`,`pool`) VALUES ( '" + escape_sql(.@randomcodes$) + "', '" + .@reward + "', '" + escape_sql(.@iname$) + "', '" + .@amount + "', NOW() ,'"+.@limit+"','"+.@limit+"' )");
+							//  ==================================================================================================================================================================================================== ===========================================================
+							announce "Done creating code!",bc_self;        
+							next;
+							menu "[ Create Another Code ]",Setup,"[ Done ]",Done;
+							close;
+			Blung:
+			goto String;
+			String:
+			// ******************** IF YOU TOUCH BELOW THIS! TESLA COIL WILL ELECTRIFY AND TOAST YOU! RESULTING INSTANT DEATH! *********************************************************************************************************************************************************************************************************************************************************************************************************************************************************
+			setarray .@s$[0],"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","1","2","3","4","5","6","7","8","9","0";
+			set .@it,$@PromoPrize[rand(getarraysize($@PromoPrize))];
+			set .@am,$@PrizeAmount[rand(getarraysize($@PrizeAmount))];
+			set .@lim,$@ClaimLimit[rand(getarraysize($@ClaimLimit))];
+			if($@length[1]==15) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==14) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==13) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==12) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==11) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==10) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==9) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==8) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==7) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==6) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";
+			if($@length[1]==5) set .@randomcodes$,""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+""+.@s$[rand(0,61)]+"";	
+			// ********************  IF YOU TOUCH ABOVE THIS! TESLA COIL WILL ELECTRIFY AND TOAST YOU! RESULTING INSTANT DEATH! *********************************************************************************************************************************************************************************************************************************************************************************************************************************************************
+			mes "[ ^ff0000Promotional Code Generator^000000 ]";
+			mes "Random Generator:";
+			mes "Code : "+.@randomcodes$+" ";
+			mes "Item : "+getitemname(.@it)+" ";
+			mes "Item ID : "+.@it+"";
+			set .@itn$,getitemname(.@it);
+			mes "Amount : "+.@am+" ";
+			mes "Limit : "+.@lim+" ";
+			next;
+			menu "[ Re-Generate Codes ]",string,"[ Confirm ]",confirm,"[ Cancel ]",done;
+			close;
+				Done:
+					close;
+				Confirm:
+					// QUERY SQL DONT CHANGE ANYTHING HERE ====================================================================================================================================================================================================================
+					query_sql ("INSERT INTO `reward_codes` (`promo`,`nameid`,`item_name`,`amount`,`time_created`,`limit`,`pool`) VALUES ( '" + escape_sql(.@randomcodes$) + "', '" + .@it + "', '" + escape_sql(.@itn$) + "', '" + .@am + "', NOW() ,'"+.@lim+"','"+.@lim+"' )");
+					// ========================================================================================================================================================================================================================================================
+					announce "Promotional Code : "+.@randomcodes$+" has been created",bc_self;
+					next;
+					menu "[ Create Another Code ]",Setup,"[ Done ]",Done;
+					close;
+		View:
+		goto	Existing;
+			Existing:
+				// QUERY SQL DONT CHANGE ANYTHING HERE =========================================================================================================================
+				set .@nb, query_sql("SELECT `promo`, `item_name`, `amount`, `pool` FROM `reward_codes` ORDER BY time_created DESC LIMIT 20", .@code$, .@nid$, .@amount, .@pool);    
+				// QUERY SQL DONT CHANGE ANYTHING HERE =========================================================================================================================
+				if ( !.@nb ) {
+				announce "No exisiting codes.",bc_self;
+				close;
+				}
+				mes "[ ^ff0000Promotional Code Generator^000000 ]";
+				mes "===================================";
+				mes "=======  EXISITING  CODES  =======";
+				mes "===================================";
+				mes "Code:ID:Item:Amount:Limit";
+				// FORE STATEMENT DONT CHANGE ANY OF HERE =================================
+				for(set .@i,0; .@i < .@nb; set .@i,.@i+1)
+				mes "["+.@code$[.@i]+"]:["+.@nid$[.@i]+"]["+.@amount[.@i]+"]["+.@pool+"]";
+				// ========================================================================
+				mes "===================================";
+				next;
+				menu "[ Main Menu ]",EditCode,"[ Done ]",Done;
+				close;
+			Delete:
+			goto Deletenow;
+				Deletenow:
+					// QUERY SQL DONT CHANGE ANYTHING HERE ===========================================================================================
+					set .@nb, query_sql("SELECT `promo`,`time_created` FROM `reward_codes` ORDER BY time_created ASC LIMIT 10", .@promo$,.@time$);
+					// ===============================================================================================================================
+					mes "[ ^ff0000Promotional Code Generator^000000 ]";
+					mes "===================================";
+					mes "=======  EXISITING  CODES  =======";
+					mes "===================================";
+					// FORE STATEMENT DONT CHANGE ANY OF HERE ===
+					for(set .@i,0; .@i < .@nb; set .@i,.@i+1){
+					mes ""+.@promo$[.@i]+" : "+.@time$+""; }
+					// ==========================================
+					mes "===================================";
+					input .@dcode$;
+					next;
+					mes "[ ^ff0000Promotional Code Generator^000000 ]";
+					mes "Would you like to delete the code?";
+					mes ""+.@dcode$+"";
+					next;
+					if ( select("[ Confirm ]:[ Decline ]") - 1 ) close;
+					// QUERY SQL DONT CHANGE ANYTHING HERE ===========================================================================================
+					query_sql "SELECT `promo` FROM `reward_codes` WHERE `promo` = '" + escape_sql(.@dcode$) + "'",.@dcode_exists$;  
+					if(.@dcode$ == .@dcode_exists$ ) {
+					query_sql "DELETE FROM `ragnarok`.`reward_codes` WHERE `promo` = '" + escape_sql(.@dcode$) + "'";
+					// QUERY SQL DONT CHANGE ANYTHING HERE ===========================================================================================
+					announce "Promotional Code : ["+.@dcode$+"] has been deleted",bc_self;
+					next;
+					menu "[ Main Menu ]",Proceed,"[ Done ]",Done;
+					close;
+					}
+					else {
+						announce "Promotional code not found.",bc_self;
+						next;
+						menu "[ Main Menu ]",EditCode,"[ Done ]",Done;
+						close;
+					}
+end;	// ENDS ONEDITCODES 
+} // ENDS LILTROLLPCODES

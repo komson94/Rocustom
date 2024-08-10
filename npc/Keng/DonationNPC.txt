@@ -1,0 +1,48 @@
+
+morocc,148,82,6	script	ร้านขายแคชนะจ๊ะ::TCG_shop2	879,{
+
+	mes "ยินดีต้อนรับเข้าสู่ Donate shop"; 
+	mes "<URL>ซื้อแคชกดตรงนี้<INFO>http://45.154.24.87/pay_rocustom/</INFO></URL>";
+	mes "Discord :  <URL>Discord<INFO>https://discord.gg/pThfgS5kVm</INFO></URL>";
+
+OnBuyItem:
+	.@cash_price = 100;
+		for (.@i = 0; .@i < getarraysize(@bought_nameid); .@i++){
+				if (@bought_quantity[.@i] <= 0){
+					mes "omgh4x!";
+					close;
+				} 			
+			callfunc("IsCashEnough",.@cash_price*@bought_quantity[.@i],"",1);			
+						
+			getitem(@bought_nameid[.@i],@bought_quantity[.@i]);
+						
+		}
+
+	
+	deletearray @bought_quantity, getarraysize(@bought_quantity);
+	deletearray @bought_nameid, getarraysize(@bought_nameid);
+
+	end;
+
+OnInit:
+	setunitdata getnpcid(0), UNPC_CLASS, 4023;
+    setunitdata getnpcid(0), UNPC_SEX, SEX_MALE;
+	
+	
+	set .message$,"  ร้านขายแคชนะจ๊ะ   ";
+	while(1)
+	{
+	
+	 delwaitingroom;
+	
+	 waitingroom .message$,0;
+	 
+	 sleep 650;
+	 //unitwalk getnpcid(0),rand(144,148),rand(75,93);
+	  
+	}	
+
+	end;
+	
+	
+}

@@ -1,0 +1,165 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Barter Database
+###########################################################################
+#
+# Barter Settings
+#
+###########################################################################
+#  - Name               NPC name.
+#    Map                Map name. (Default: not on a map)
+#    X                  Map x coordinate. (Default: 0)
+#    Y                  Map y coordinate. (Default: 0)
+#    Direction          Direction the NPC is looking. (Default: North)
+#    Sprite             Sprite name of the NPC. (Default: FakeNpc)
+#    Items:             List of sold items.
+#      - Index          Index of the item inside the shop. (0-...)
+#                       Maximum index depends on client.
+#        Item           Aegis name of the item.
+#        Stock          Amount of item in stock. 0 means unlimited. (Default: 0)
+#        Zeny           Cost of them item in Zeny. (Default: 0)
+#        RequiredItems: List of required items (Optional)
+#          - Index      Index of the required item. (0-4)
+#            Item       Aegis name of required item.
+#            Amount     Amount of required item. (Default: 1)
+#            Refine     Refine level of required item. (Default: 0)
+###########################################################################
+
+Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+  - Name: quest_exp_shop
+    Items:
+      - Index: 0
+        Item: HE_Battle_Manual
+        Zeny: 4909
+        RequiredItems:
+          - Index: 0
+            Item: Jejellopy
+            Amount: 328
+          - Index: 1
+            Item: Burning_Heart
+            Amount: 413
+          - Index: 2
+            Item: Sticky_Mucus
+            Amount: 231
+          - Index: 3
+            Item: Yoyo_Tail
+            Amount: 889
+          - Index: 4
+            Item: Moth_Dust
+            Amount: 216
+      - Index: 1
+        Item: Kafra_Employee_Band
+        Zeny: 4909
+        RequiredItems:
+          - Index: 0
+            Item: Jejellopy
+            Amount: 328
+          - Index: 1
+            Item: Burning_Heart
+            Amount: 413
+          - Index: 2
+            Item: Sticky_Mucus
+            Amount: 231
+          - Index: 3
+            Item: Yoyo_Tail
+            Amount: 889
+          - Index: 4
+            Item: Moth_Dust
+            Amount: 216
+      - Index: 2
+        Item: Kafra_Uniform
+        Zeny: 1439
+        RequiredItems:
+          - Index: 0
+            Item: Yoyo_Tail
+            Amount: 545
+          - Index: 1
+            Item: Red_Herb
+            Amount: 535
+          - Index: 2
+            Item: Dragon_Scale
+            Amount: 981
+          - Index: 3
+            Item: Large_Jellopy
+            Amount: 681
+          - Index: 4
+            Item: Zargon
+            Amount: 357
+      - Index: 3
+        Item: Happy_Balloon_K
+        Zeny: 3392
+        RequiredItems:
+          - Index: 0
+            Item: White_Herb
+            Amount: 313
+          - Index: 1
+            Item: Burning_Heart
+            Amount: 361
+          - Index: 2
+            Item: Seed_Of_Yggdrasil
+            Amount: 248
+          - Index: 3
+            Item: Jejellopy
+            Amount: 223
+          - Index: 4
+            Item: Unripe_Apple
+            Amount: 976
+      - Index: 4
+        Item: Poring_Sunglasses_K
+        Zeny: 2644
+        RequiredItems:
+          - Index: 0
+            Item: Zargon
+            Amount: 502
+          - Index: 1
+            Item: Jejellopy
+            Amount: 143
+          - Index: 2
+            Item: Garlet
+            Amount: 852
+          - Index: 3
+            Item: Green_Herb
+            Amount: 669
+          - Index: 4
+            Item: Sticky_Mucus
+            Amount: 556
+      - Index: 5
+        Item: AngelPoring_Boots
+        Zeny: 7714
+        RequiredItems:
+          - Index: 0
+            Item: Green_Herb
+            Amount: 649
+          - Index: 1
+            Item: Hot_Hair
+            Amount: 359
+          - Index: 2
+            Item: Yoyo_Tail
+            Amount: 845
+          - Index: 3
+            Item: White_Herb
+            Amount: 451
+          - Index: 4
+            Item: Dragon_Scale
+            Amount: 616
+

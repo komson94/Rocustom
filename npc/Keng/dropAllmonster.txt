@@ -1,0 +1,60 @@
+/**
+ * Item Drop On Kill All Mob
+ * But It's Drop on player nor Mob location
+ * Please Fix it and send back
+ * Thanks you
+ * Striker Presentation
+ * But It's Okay
+ * I will waiting for Fixed version
+ */
+ 
+-	script	#droptest	-1,{
+OnNPCKillEvent:
+ 		
+		if ( vip_status(VIP_STATUS_ACTIVE) )
+		{
+		.MobDropRate = 8000;	
+		}
+		
+		// Mob Normal Drop.
+		.@item = .itemroll[rand(getarraysize(.itemroll))];
+		if (rand(.MinRate,.MaxRate) <= .MobDropRate){
+			specialeffect2 10;
+			if ( !.@Amount || .@Amount > .MobAmount ) .@Amount = .MobAmount; 
+			getmapxy .@map$, .@x, .@y, BL_PC;
+			while ( .@i < .@Amount ) {
+				do {
+					.@dx = rand( -.DX, .DX );
+					.@dy = rand( -.DY, .DY );
+				} while( !checkcell( .@map$,(.@x+.@dx),(.@y+.@dy),cell_chkpass ) );
+				makeitem .@item, 1, .@map$, .@x + .@dx, .@y + .@dy;
+				.@i++;
+			}
+		}
+Oninit:
+	.MobAmount = rand(1,1);	// จำนวนดรอป.(สุ่ม)
+	//-------------------------------------------
+	// อัตราดรอป
+	//-------------------------------------------
+	.MaxRate = 10000;		// อัตราดรอปสูงสุด.(10000 = 100.00%)
+	.MinRate = 1;			// อัตราดรอปต่ำสุด.(1 = 0.01%)
+	.BossDropRate = 10000;	// อัตราดรอป MVP.
+	.MobDropRate = 1000;		// อัตราดรอป Normal.
+	//-------------------------------------------
+	// ตัวอย่างการปรับอัตราดรอป
+	//-------------------------------------------
+	// 1     =   0.01 %
+	// 10    =   0.10 %
+	// 100   =   1.00 %
+	// 1000  =  10.00 %
+	// 10000 = 100.00 %
+	//-------------------------------------------
+	// ระยะของตกพื้น + - .DX/.DY ช่อง
+	//-------------------------------------------
+	.DX = 1;	// X Map.
+	.DY = 1;	// Y Map.
+	//-------------------------------------------
+
+	setarray .itemroll[0],100709;	//ตั้งค่า ID Item ที่จะให้ดรอปและจำนวนเช่น 501,3 ดรอป 501 จำนวน 3 อัน
+	end;
+}

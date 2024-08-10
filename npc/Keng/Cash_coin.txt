@@ -1,0 +1,124 @@
+function	script	Cash_coins_100	{
+.@item = 41001;
+.@rate = 100;
+
+.@countitem = countitem( .@item );
+mes "ต้องการแลก "+.@countitem+" x "+getitemname( .@item )+" เป็น "+( .@countitem * .@rate )+" Point หรือไม่ ?";
+
+if( .@countitem )
+	if( select( "ใช่","ยกเลิก" ) == 1 ){
+		delitem .@item,.@countitem;
+		#CASHPOINTS = #CASHPOINTS + ( .@countitem * .@rate );
+		dispbottom "คุณได้รับ "+.@rate+"Cash Point ขณะนี้คุณมี "+#CASHPOINTS+"Cash point";
+		mes "เรียบร้อย~";
+	}
+close;
+}
+
+function	script	Cash_coins_10	{
+.@item = 41002;
+.@rate = 10;
+
+.@countitem = countitem( .@item );
+mes "ต้องการแลก "+.@countitem+" x "+getitemname( .@item )+" เป็น "+( .@countitem * .@rate )+" Point หรือไม่ ?";
+
+if( .@countitem )
+	if( select( "ใช่","ยกเลิก" ) == 1 ){
+		delitem .@item,.@countitem;
+		#CASHPOINTS = #CASHPOINTS + ( .@countitem * .@rate );
+		dispbottom "คุณได้รับ "+.@rate+"Cash Point ขณะนี้คุณมี "+#CASHPOINTS+"Cash point";
+		mes "เรียบร้อย~";
+	}
+close;
+}
+function	script	Cash_coins_5	{
+.@item = 41000;
+.@rate = 5;
+
+.@countitem = countitem( .@item );
+mes "ต้องการแลก "+.@countitem+" x "+getitemname( .@item )+" เป็น "+( .@countitem * .@rate )+" Point หรือไม่ ?";
+
+if( .@countitem )
+	if( select( "ใช่","ยกเลิก" ) == 1 ){
+		delitem .@item,.@countitem;
+		#CASHPOINTS = #CASHPOINTS + ( .@countitem * .@rate );
+		dispbottom "คุณได้รับ "+.@rate+"Cash Point ขณะนี้คุณมี "+#CASHPOINTS+"Cash point";
+		mes "เรียบร้อย~";
+	}
+close;
+}
+function	script	Cash_coins_1	{
+.@item = 41003;
+.@rate = 1;
+
+.@countitem = countitem( .@item );
+mes "ต้องการแลก "+.@countitem+" x "+getitemname( .@item )+" เป็น "+( .@countitem * .@rate )+" Point หรือไม่ ?";
+
+if( .@countitem )
+	if( select( "ใช่","เลิก" ) == 1 ){
+		delitem .@item,.@countitem;
+		#CASHPOINTS = #CASHPOINTS + ( .@countitem * .@rate );
+		dispbottom "คุณได้รับ "+.@rate+"Cash Point ขณะนี้คุณมี "+#CASHPOINTS+"Cash point";
+		mes "เรียบร้อย~";
+	}
+close;
+}
+
+function	script	Cash_coins_400	{
+.@item = 41023;
+.@rate = 400;
+
+.@countitem = countitem( .@item );
+mes "ต้องการแลก "+.@countitem+" x "+getitemname( .@item )+" เป็น "+( .@countitem * .@rate )+" Point หรือไม่ ?";
+
+if( .@countitem )
+	if( select( "YES","Cancel" ) == 1 ){
+		delitem .@item,.@countitem;
+		#CASHPOINTS = #CASHPOINTS + ( .@countitem * .@rate );
+		dispbottom "คุณได้รับ "+.@rate+"Cash Point ขณะนี้คุณมี "+#CASHPOINTS+"Cash point";
+		mes "เรียบร้อย~";
+	}
+close;
+}
+
+
+
+
+function	script	welcome_member	{
+.@item = 12200051;
+
+
+.@countitem = countitem( .@item );
+mes "ต้องการเปิดกล่องของขวัญต้อนรับหรือไม่?";
+
+if( .@countitem )
+	if( select( "ใช่","ไม่" ) == 1 ){
+		delitem .@item,.@countitem;
+		getitem 41003,100;
+		getitem 1220005,30;
+		getitem 12210,10;
+		getitem 12208,10;
+		getitem 677,100;
+		getitem 601,100;
+		mes "เรียบร้อย~";
+	}
+close;
+}
+
+
+function	script	zeny_cash	{
+.@item = 12200052;
+.@rate = 1;
+
+.@countitem = countitem( .@item );
+mes "ต้องการแลก "+.@countitem+" x "+getitemname( .@item )+" เป็น "+( .@countitem * .@rate )+" Zeny หรือไม่ ?";
+
+if( .@countitem )
+	if( select( "YES","Cancel" ) == 1 ){
+		delitem .@item,.@countitem;
+		set Zeny,(Zeny + (.@rate*.@countitem));
+		dispbottom "คุณได้รับ "+.@rate+"Cash Point ขณะนี้คุณมี "+Zeny+" Zeny";
+		mes "เรียบร้อย~";
+	}
+close;
+}

@@ -1143,7 +1143,7 @@ Body:
     AegisName: Gold
     Name: Gold
     Type: Etc
-    Buy: 150000
+    Buy: 1500
     Weight: 200
     Flags:
       BuyingStore: true
@@ -24166,7 +24166,7 @@ Body:
     AegisName: Key_Of_Clock_Tower
     Name: Key of Clock Tower
     Type: Etc
-    Buy: 100
+    Buy: 10
     Weight: 30
     Flags:
       BuyingStore: true
@@ -24174,7 +24174,7 @@ Body:
     AegisName: Underground_Key
     Name: Key of Underground
     Type: Etc
-    Buy: 100
+    Buy: 10
     Weight: 30
     Flags:
       BuyingStore: true

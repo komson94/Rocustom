@@ -92,7 +92,7 @@
 // Compilation might work on these compilers, but they might not fully follow newer C++ rules and
 // cause unexpected behavior.
 // Do NOT create any issues or ask for help with these compilers.
-//#define DEPRECATED_COMPILER_SUPPORT
+#define DEPRECATED_COMPILER_SUPPORT
 
 /// Uncomment for use with Nemo patch ExtendCashShopPreview
 #define ENABLE_CASHSHOP_PREVIEW_PATCH
@@ -106,7 +106,7 @@
 
 /// Uncomment to forcibly disable the detailed loading output.
 /// This will noticeably decrease the boot time of the map server by not having to print so many status messages.
-//#undef DETAILED_LOADING_OUTPUT
+#undef DETAILED_LOADING_OUTPUT
 
 /**
  * No settings past this point

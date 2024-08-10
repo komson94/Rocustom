@@ -1,0 +1,206 @@
+ morocc,111,75,4	script	Recycle Costume	747,{
+set $@cosptpname$,"Costume Exchange";  //ชื่อ NPC
+
+goto NPC;
+	
+end;
+///////////////////////////////////////
+OnInit:		
+setarray .thd1,
+50,
+100,
+150,
+200,
+250;
+set .Oridecon,984; 	//โอริ
+set .Elunium,985; 	//อีลู
+set .Stone,50202; 	//หินหลอม
+///////////////////////////////////////////////////
+//waitingroom "Option & Recycle",0;
+
+	setarray .messages$,"•"," ","O","p","t","i","o","n"," ","C","o","s","t","u","m","e";
+	setarray .messages2$,"•"," ","R","e","c","y","c","l","e"," ","C","o","s","t","u","m","e";
+    while( 1 )
+    {
+        set .Display$,"";
+        for( set .i,0; .i < getarraysize( .messages$ ); set .i,.i + 1 )
+        {
+            set .Display$,.Display$ + .messages$[.i];
+            delwaitingroom;
+            waitingroom .Display$,0;
+            sleep 100;
+        }
+	sleep 5000;        // ดีเลย์ก่อนตัวอักษรวิ่งซ้ำ 1000 = 1 วินาที.
+    
+		set .Display2$,"";
+        for( set .i,0; .i < getarraysize( .messages2$ ); set .i,.i + 1 )
+		{
+            set .Display2$,.Display2$ + .messages2$[.i];
+            delwaitingroom;
+            waitingroom .Display2$,0;
+            sleep 100;
+        }
+    sleep 5000;        // ดีเลย์ก่อนตัวอักษรวิ่งซ้ำ 1000 = 1 วินาที.
+    }
+end;	
+///////////////////////////////////////////////////
+NPC:
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "[ "+$@cosptpname$+" ]";
+		mes "^9400D3คุณมีไอเทมมากเกินไป เอาไปเก็บก่อน!^000000";
+		end;
+	}
+	if (MaxWeight - Weight < 10000) {
+		mes "[ "+$@cosptpname$+" ]";
+		mes "^9400D3คุณมีน้ำหนักมากเกินไป!^000000";
+		end;
+	}
+mes "[ "+$@cosptpname$+" ]";
+mes "ท่านมีอะไรให้ข้าช่วยหรอ?";
+next;
+menu 
+"[•] ขาย Costume 300 Cashpoints",sell,
+"[•] Costume แลก Costume Crystal",resell,
+"[•] เสริมพลัง Costume",option,
+"[•] ยกเลิก",OnCancel;
+end;
+
+//////////////////////////////
+sell:
+#mode_id = 1;
+		deletearray @sold_nameid[0],getarraysize(@sold_nameid);
+		callshop "recycl_reset",2;
+		npcshopattach "recycl_reset";
+		end;
+//////////////////////////////
+resell:
+#mode_id = 2;
+		deletearray @sold_nameid[0],getarraysize(@sold_nameid);
+		callshop "recycl_reset",2;
+		npcshopattach "recycl_reset";
+end;
+//////////////////////////////
+
+option:
+set .sobrepor,0;
+mes "[ "+$@cosptpname$+" ]";
+mes "เลือกอุปกรณ์ที่จะเสริมพลัง";		
+	setarray .@eq[1], EQI_COSTUME_HEAD_TOP, EQI_COSTUME_HEAD_MID, EQI_COSTUME_HEAD_LOW, EQI_COSTUME_GARMENT, EQI_SHADOW_WEAPON, EQI_COSTUME_ARMOR,EQI_SHADOW_GARMENT,EQI_SHADOW_SHOES,EQI_SHADOW_ACC_R,EQI_SHADOW_ACC_L;
+	for(set .@i,1; .@i<getarraysize(.@eq); set .@i,.@i+1){
+		if(getequipisequiped(.@eq[.@i])){
+			set @refine_rate,getequippercentrefinery(.@eq[.@i]);
+			set .@menu$,.@menu$+F_getpositionname(.@eq[.@i])+" ^FF0000•^000000 [ ^0000FFข้าเลือกส่วนนี้^000000 ]";
+			set .@equipped,1;
+			set .@nameitem$,"" + getequipname(.@eq[.@i]) + "";
+		} set .@menu$,.@menu$+":";
+	} set .@part,.@eq[select(.@menu$)];
+	mes "ท่านจะเสริมพลัง : "+.@nameitem$+"";	
+	mes "ค่าบริการ";
+	mes "^0000FF<ITEM>"+getitemname(.Stone)+"<INFO>50202</INFO></ITEM> [ "+( ( countitem(.Stone) < 1 )? ( 0+countitem(.Stone) ):countitem(.Stone) )+" / 1ea ]^000000";
+	mes "^0000FF<ITEM>"+getitemname(.Elunium)+"<INFO>985</INFO></ITEM> [ "+( ( countitem(.Elunium) < 10 )? ( 0+countitem(.Elunium) ):countitem(.Elunium) )+" / 10ea ]^000000";
+	mes "^0000FF<ITEM>"+getitemname(.Oridecon)+"<INFO>984</INFO></ITEM> [ "+( ( countitem(.Oridecon) < 10 )? ( 0+countitem(.Oridecon) ):countitem(.Oridecon) )+" / 10ea ]^000000";
+	mes "^009900[ "+( ( Zeny < 500000 )? ( 0+readparam(20) ):readparam(20) )+" / 500,000 Zeny ]^000000";
+	mes "โอกาสสำเร็จ 20%";
+	next;
+	if (Zeny < 500000){mes "^FF0000ขออภัย!!^000000 : คุณมีเงินไม่พอสำหรับใช้บริการ!!";end;}
+	if (countitem(.Stone) < 1){mes "^FF0000ขออภัย!!^000000 : คุณต้องมี ^FF0000"+getitemname(.Stone)+"^000000 1 ชิ้น!!";end;}
+	if (countitem(985) < 10){mes "^FF0000ขออภัย!!^000000 : คุณต้องมี ^FF0000"+getitemname(985)+"^000000 10 ชิ้น!!";end;}
+	if (countitem(984) < 10){mes "^FF0000ขออภัย!!^000000 : คุณต้องมี ^FF0000"+getitemname(984)+"^000000 10 ชิ้น!!";end;}
+	set .@rah, rand(1,3);
+
+if(.@rah == 1){
+	set .@val, rand(1,5);
+	.@opt = RDMOPT_ETC_DROP_ALL;}
+if(.@rah == 2){
+	set .@val, rand(1,5);
+	.@opt = RDMOPT_ETC_EXP_ALL;}
+if(.@rah == 3){
+
+	.@opt = RDMOPT_ETC_WEIGHT_ALL;
+	.@val = .thd1[rand(getarraysize(.thd1))];
+	}
+
+delitem .Stone,1;
+delitem .Elunium,10;
+delitem .Oridecon,10;
+set Zeny,Zeny-500000;
+specialeffect2 154;
+	setrandomoption(.@part,.@indx,.@opt,.@val,.@indx,getcharid(0));
+end;
+
+
+OnSellItem:
+	for(set .@i,0; .@i<getarraysize(@sold_nameid); set .@i,.@i+1)
+		//////////////////////เพิ่มรายการของ////////////////////////
+if(@sold_nameid[.@i] == 40337)+ //ระบุของแบบไม่เรียง
+(@sold_nameid[.@i] == 25315)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 25670)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 40369)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 40335)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 40336)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 40337)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 40257)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 26417)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 26240)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 26231)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 26226)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 26214)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 40006)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 50428)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 40287)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 26841)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 26840)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 26839)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 64708)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 64717)+ //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+(@sold_nameid[.@i] == 40337) //ระบุของแบบไม่เรียง **อันสุดท้ายไม่ต้องใส่ +**
+
+//(@sold_nameid[.@i] > 499 && @sold_nameid[.@i] < 505)+ //ระบุของแบบเรียงตั่งแต่เลข  500-504
+
+	
+		{ 
+			
+			
+			
+			set .@reitem_id[getarraysize(.@reitem_id)], @sold_nameid[.@i];
+			set .@itemin_amt[getarraysize(.@itemin_amt)], @sold_quantity[.@i];
+			set .@num_item,.@num_item+1;
+			if(#mode_id == 1){set .@pointbil1,.@pointbil1 +(300*@sold_quantity[.@i]);}
+
+		}
+
+	
+		
+	deletearray @sold_nameid[0], getarraysize(@sold_nameid);
+	deletearray @sold_quantity[0], getarraysize(@sold_quantity);
+
+	if (!.@reitem_id)
+	{
+		mes $@recycl_neam$;
+		mes "ของชิ้นนี้ยังไม่สามารถแลกได้";
+		emotion ET_SWEAT;
+		end;
+	}
+	
+	for(set .@i,0; .@i<getarraysize(.@reitem_id); set .@i,.@i+1)
+	{
+	delitem .@reitem_id[.@i],.@itemin_amt[.@i];
+	if(#mode_id == 2){getitem .Stone,.@itemin_amt[.@i];}
+	}
+	if(#mode_id == 1){set #CASHPOINTS,#CASHPOINTS +.@pointbil1;}
+	dispbottom "แลกเปลี่ยนสำเร็จ !";
+	if(#mode_id == 1){dispbottom "Cashpoints + "+.@pointbil1+"";}
+	emotion ET_DELIGHT;
+	#mode_id = 0;
+	
+	end;	
+
+
+OnCancel:
+	mes "^FF0000กลับมาใหม่เมื่อคุณต้องการจะใช้บริการของเรา.^000000 ";
+end;
+
+
+}
+-	shop	recycl_reset	-1,909:-1

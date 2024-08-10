@@ -1,0 +1,133 @@
+
+
+//	Author: Ehwaz
+//	Version: 2018/06/01
+
+function	script	GetCurrencyText	{
+	.@currency = getarg(0,0);
+	return .@currency ? getitemname(.@currency): "Zeny";
+}
+
+function	script	DisplayCurrency	{
+		.@currency		= getarg(0,0);
+		.@textCurrency$ = GetCurrencyText(.@currency);
+		if(.@textCurrency$ != "Zeny"){
+			.@numCurr$ = "("+countitem(.@currency)+")";
+			return "Welcome to "+ .@textCurrency$ + " Shop " + .@numCurr$;
+		}
+		return .@textCurrency$ == "Zeny" ? "" : "Welcome to "+ .@textCurrency$ + " Shop" ;
+}
+
+//////////////////////////////////
+
+function	script	InitItemShop	{
+
+	copyarray(.@items[0],getarg(0),getarraysize(getarg(0)));
+	
+	.@shop_name$ 	= getarg(1);
+	.@npcName$ 		= getarg(2);
+	.@total_items 	= getarraysize(.@items);
+
+	for(.@i = 0; .@i < .@total_items; .@i+=2){
+		
+		.@itemid = .@items[.@i];
+		.@price  = .@items[.@i+1];
+		
+		.@priceList[.@itemid] = .@price;
+		
+		set getvariableofnpc(.priceList[.@itemid],.@npcName$),.@price;
+		npcshopadditem .@shop_name$, .@itemid , .@price;
+	}
+
+	npcshopdelitem .@shop_name$,501;
+}
+
+//////////////////////////////////
+
+function	script	BuyProcess	{
+
+	.@bought_nameid_size = getarraysize(@bought_nameid);
+	copyarray(.@price_arr[0],getarg(0),getarraysize(getarg(0)));
+	
+	.@itemCurrencyId	= getarg(1,0);
+	.@isZeny 			= .@itemCurrencyId ? 0 : 1;
+	.@textCurrency$		= GetCurrencyText(.@itemCurrencyId);
+	.@paid 				= 0;
+	
+	for (.@i = 0; .@i < .@bought_nameid_size; .@i++){
+	
+		.@boughtId 	= @bought_nameid[.@i];
+		.@quanty 	= @bought_quantity[.@i];
+		.@totalPrice = .@price_arr[.@boughtId] * .@quanty;
+		
+		.@canPay	= 1;
+		
+		//Check weight
+		if( !checkweight(.@boughtId,.@quanty) )
+		{
+			mes "Need more weight to get %d %s",.@quanty, getitemname(.@boughtId);
+			break;
+		}
+		
+		if(.@isZeny)
+		{
+			if(Zeny >= .@totalPrice){
+				Zeny -= .@totalPrice;
+				getitem .@boughtId,.@quanty;
+				.@paid += .@totalPrice;
+			}
+			else .@canPay = 0;
+		}
+		else 
+		{
+			if(countitem(.@itemCurrencyId) >= .@totalPrice){
+				delitem .@itemCurrencyId,.@totalPrice;
+				getitem .@boughtId,.@quanty;
+				.@paid += .@totalPrice;
+			}
+			else .@canPay = 0;
+		}
+		
+		if(!.@canPay)
+		{
+			mes "ต้องใช้ "+.@textCurrency$+" จำนวน "+.@quanty+ getitemname(.@boughtId)+" เพื่อแลกเปลี่ยน";
+			break;
+		}	
+	}
+	
+	if(.@paid)
+		dispbottom "Paid: "+F_InsertComma(.@paid)+" "+.@textCurrency$+"";
+	
+	deletearray @bought_quantity, getarraysize(@bought_quantity);
+	deletearray @bought_nameid, .@bought_nameid_arr_size;
+	end;
+}
+
+//	Author: Ehwaz
+//	Version: 2018/06/01
+
+// Dummy shop to insert items into:
+-	shop	templ_shop	-1,501:50.
+
+league,25,31,5	script	Templ Shop	1_M_WIZARD,{
+	dispbottom DisplayCurrency(.currency);
+	callshop .shop_name$,1;
+	npcshopattach .shop_name$;
+	end;
+OnBuyItem:
+	BuyProcess(.priceList, .currency);
+OnInit:
+
+	waitingroom "popular item",0;
+	.shop_name$ = "templ_shop";
+	.npcName$ 	= strnpcinfo(1);	//Visiable name
+	.currency 	= 7539;				// 0: Zeny, else Item
+
+	setarray .items,41001,1,	
+					41002,1;	
+								
+					
+	InitItemShop(.items,.shop_name$,.npcName$);
+	end;
+}
+

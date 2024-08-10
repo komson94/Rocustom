@@ -1,0 +1,33 @@
+morocc,154,61,7	script	Kyojin RO Mall	2301,{
+
+
+	OnInit:
+
+
+			setarray .message$,
+
+			"เช่านก",
+
+			"รีเซต",
+			"เปลี่ยนอาชีพ",
+			"ปั่นสล็อต",
+			"ตีบวก ++",
+			"ซื้อ - ขาย",
+			"Buff Skill",
+			"Gym Pass";
+
+
+			set .message_size,getarraysize( .message$ );
+
+			while( .message_size ){
+
+			delwaitingroom;
+
+			waitingroom ""+.message$[ rand( .message_size ) ],0;
+
+			sleep 1000;
+
+			}
+
+	end;
+}

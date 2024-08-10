@@ -1,0 +1,2183 @@
+//==============================================
+// - Script By : M-Ro Online
+// - Script City : Thailand 
+// - Script Support Server : Hercules & rAthena
+//==============================================
+-	script	map_self_announce	-1,{
+OnPCLoadMapEvent:
+//=====================================
+if (strcharinfo(3)=="sanctum") set .@mname$,"เมืองหลวงหลัก";
+if (strcharinfo(3)=="m_pvp01") set .@mname$,"สนามประลองกลางทะเล";
+if (strcharinfo(3)=="m_pvp02") set .@mname$,"สนามประลองโคคาโคล่า";
+if (strcharinfo(3)=="m_pvp03") set .@mname$,"สนามประลองของนักฆ่า";
+//if (strcharinfo(3)=="prt_pvp") set .@mname$,"สนามประลอง พรอนเทร่า";
+//if (strcharinfo(3)=="start_a01") set .@mname$,"สถานที่ฝึกผู้เล่นเริ่มต้น";
+//if (strcharinfo(3)=="home01") set .@mname$,"บ้านพัก";
+//if (strcharinfo(3)=="home02") set .@mname$,"บ้านพัก";
+//if (strcharinfo(3)=="home03") set .@mname$,"บ้านพัก";
+//if (strcharinfo(3)=="home04") set .@mname$,"บ้านพัก";
+//if (strcharinfo(3)=="home05") set .@mname$,"บ้านพัก";
+//if (strcharinfo(3)=="home06") set .@mname$,"บ้านพัก";
+//if (strcharinfo(3)=="home07") set .@mname$,"บ้านพัก";
+//if (strcharinfo(3)=="home08") set .@mname$,"บ้านพัก";
+//if (strcharinfo(3)=="home09") set .@mname$,"บ้านพัก";
+if (strcharinfo(3)=="boss_a01") set .@mname$,"สถานที่ล่าบอส";
+if (strcharinfo(3)=="boss_a02") set .@mname$,"สถานที่ล่าบอส";
+if (strcharinfo(3)=="boss_a03") set .@mname$,"สถานที่ล่าบอส";
+if (strcharinfo(3)=="boss_b01") set .@mname$,"สถานที่ล่าบอส";
+if (strcharinfo(3)=="boss_b02") set .@mname$,"สถานที่ล่าบอส";
+if (strcharinfo(3)=="boss_b03") set .@mname$,"สถานที่ล่าบอส";
+if (strcharinfo(3)=="boss_c01") set .@mname$,"สถานที่ล่าบอส";
+if (strcharinfo(3)=="boss_c02") set .@mname$,"สถานที่ล่าบอส";
+if (strcharinfo(3)=="boss_c03") set .@mname$,"สถานที่ล่าบอส";
+//if (strcharinfo(3)=="m_event01") set .@mname$,"สถานที่กิจกรรม";
+//=====================================
+if (strcharinfo(3)=="job_gun") set .@mname$,"Release Shelter";
+if (strcharinfo(3)=="ver_eju") set .@mname$,"Ruins of Los yupe";
+if (strcharinfo(3)=="ver_tunn") set .@mname$,"Behrooz outside the tunnel";
+if (strcharinfo(3)=="verus04") set .@mname$,"Behrooz excavations";
+if (strcharinfo(3)=="verus03") set .@mname$,"Behrooz Central Square";
+if (strcharinfo(3)=="1@mcd") set .@mname$,"Charleston factory";
+if (strcharinfo(3)=="e_hugel") set .@mname$,"Invaded Hugel";
+if (strcharinfo(3)=="1@face") set .@mname$,"Worm's Nest Face";
+if (strcharinfo(3)=="1@sara") set .@mname$,"Memories of Sara";
+if (strcharinfo(3)=="dali") set .@mname$,"Dimensional Crack";
+if (strcharinfo(3)=="1@gef") set .@mname$,"Geffen Magic Tournament";
+if (strcharinfo(3)=="1@gef_in") set .@mname$,"Geffen Magic Tournament";
+if (strcharinfo(3)=="1@def01") set .@mname$,"Wave Dungeon - Forest";
+if (strcharinfo(3)=="1@def02") set .@mname$,"Wave Dungeon - Sky";
+if (strcharinfo(3)=="1@def03") set .@mname$,"Wave Dungeon - Lava";
+if (strcharinfo(3)=="evt_bomb") set .@mname$,"Labyrinth Events";
+if (strcharinfo(3)=="gl_cas02_") set .@mname$,"Corridor 2nd Floor";
+if (strcharinfo(3)=="gl_chyard_") set .@mname$,"Monastery Cemetery";
+if (strcharinfo(3)=="2@gl_k") set .@mname$,"Old Templar 2nd Floor";
+if (strcharinfo(3)=="1@gl_k") set .@mname$,"Old Templar 1st Floor";
+if (strcharinfo(3)=="te_prt_gld") set .@mname$," ??   ";
+if (strcharinfo(3)=="te_prtcas01") set .@mname$," ?       ";
+if (strcharinfo(3)=="te_prtcas02") set .@mname$,"   ? ?";
+if (strcharinfo(3)=="te_prtcas03") set .@mname$,"   ? ";
+if (strcharinfo(3)=="te_prtcas04") set .@mname$,"   ? ";
+if (strcharinfo(3)=="te_prtcas05") set .@mname$," ?  ?";
+if (strcharinfo(3)=="teg_dun01") set .@mname$,"             ";
+if (strcharinfo(3)=="te_alde_gld") set .@mname$,"?      ";
+if (strcharinfo(3)=="te_aldecas01") set .@mname$," ??? ";
+if (strcharinfo(3)=="te_aldecas02") set .@mname$,"        ";
+if (strcharinfo(3)=="te_aldecas03") set .@mname$," ? ";
+if (strcharinfo(3)=="te_aldecas04") set .@mname$,"   ";
+if (strcharinfo(3)=="te_aldecas05") set .@mname$,"     ";
+if (strcharinfo(3)=="teg_dun02") set .@mname$,"             ";
+if (strcharinfo(3)=="prt_fild08d") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild08c") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild08b") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild08a") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="iz_ac01_d") set .@mname$,"Academy 1st Floor";
+if (strcharinfo(3)=="iz_ac02_d") set .@mname$,"Academy 2nd Floor";
+if (strcharinfo(3)=="iz_ac01_c") set .@mname$,"Academy 1st Floor";
+if (strcharinfo(3)=="iz_ac02_c") set .@mname$,"Academy 2nd Floor";
+if (strcharinfo(3)=="iz_ac01_b") set .@mname$,"Academy 1st Floor";
+if (strcharinfo(3)=="iz_ac02_b") set .@mname$,"Academy 2nd Floor";
+if (strcharinfo(3)=="iz_ac01_a") set .@mname$,"Academy 1st Floor";
+if (strcharinfo(3)=="iz_ac02_a") set .@mname$,"Academy 2nd Floor";
+if (strcharinfo(3)=="izlude_d") set .@mname$,"Izlude Town";
+if (strcharinfo(3)=="izlude_c") set .@mname$,"Izlude Town";
+if (strcharinfo(3)=="izlude_b") set .@mname$,"Izlude Town";
+if (strcharinfo(3)=="izlude_a") set .@mname$,"Izlude Town";
+if (strcharinfo(3)=="iz_int") set .@mname$,"Intro";
+if (strcharinfo(3)=="iz_int01") set .@mname$,"Intro";
+if (strcharinfo(3)=="iz_int02") set .@mname$,"Intro";
+if (strcharinfo(3)=="iz_int03") set .@mname$,"Intro";
+if (strcharinfo(3)=="iz_int04") set .@mname$,"Intro";
+if (strcharinfo(3)=="iz_ac01") set .@mname$,"Academy 1st Floor";
+if (strcharinfo(3)=="iz_ac02") set .@mname$,"Academy 2nd Floor";
+if (strcharinfo(3)=="iz_ng01") set .@mname$,"Ninja tutorial map";
+if (strcharinfo(3)=="treasure_n1") set .@mname$,"          ?  1  ";
+if (strcharinfo(3)=="treasure_n2") set .@mname$,"          ?  2  ";
+if (strcharinfo(3)=="moc_prydn1") set .@mname$,"Morocc Nightmare Pyramids";
+if (strcharinfo(3)=="moc_prydn2") set .@mname$,"Morocc Nightmare Pyramids";
+if (strcharinfo(3)=="eclage") set .@mname$,"Eclage, Forestic Village";
+if (strcharinfo(3)=="ecl_fild01") set .@mname$,"Eclage Field 01";
+if (strcharinfo(3)=="ecl_in01") set .@mname$,"Eclage Indoor 01";
+if (strcharinfo(3)=="ecl_in02") set .@mname$,"Eclage Indoor 02";
+if (strcharinfo(3)=="ecl_in03") set .@mname$,"Eclage Indoor 03";
+if (strcharinfo(3)=="ecl_in04") set .@mname$,"Eclage Indoor 04";
+if (strcharinfo(3)=="1@ecl") set .@mname$,"Eclage Indoor";
+if (strcharinfo(3)=="ecl_tdun01") set .@mname$,"Eclage Dungeon 01";
+if (strcharinfo(3)=="ecl_tdun02") set .@mname$,"Eclage Dungeon 02";
+if (strcharinfo(3)=="ecl_tdun03") set .@mname$,"Eclage Dungeon 03";
+if (strcharinfo(3)=="ecl_tdun04") set .@mname$,"Eclage Dungeon 04";
+if (strcharinfo(3)=="ecl_hub01") set .@mname$,"Eclage Hub 01";
+if (strcharinfo(3)=="que_avan01") set .@mname$,"Eclage Indoor";
+if (strcharinfo(3)=="malaya") set .@mname$,"Port Malaya";
+if (strcharinfo(3)=="ma_fild01") set .@mname$,"Baryo Mahiwaga";
+if (strcharinfo(3)=="ma_fild02") set .@mname$,"Forest";
+if (strcharinfo(3)=="ma_scene01") set .@mname$,"Bakonawa Lake";
+if (strcharinfo(3)=="ma_in01") set .@mname$,"Inside of Malaya";
+if (strcharinfo(3)=="ma_dun01") set .@mname$,"Bangungot Hospital 1F";
+if (strcharinfo(3)=="1@ma_h") set .@mname$,"Bangungot Hospital 2F";
+if (strcharinfo(3)=="1@ma_c") set .@mname$,"Buwaya Cave";
+if (strcharinfo(3)=="1@ma_b") set .@mname$,"Bakonawa Hideout";
+if (strcharinfo(3)=="ma_zif01") set .@mname$,"Inside of Jeepney";
+if (strcharinfo(3)=="ma_zif02") set .@mname$,"Inside of Jeepney";
+if (strcharinfo(3)=="ma_zif03") set .@mname$,"Inside of Jeepney";
+if (strcharinfo(3)=="ma_zif04") set .@mname$,"Inside of Jeepney";
+if (strcharinfo(3)=="ma_zif05") set .@mname$,"Inside of Jeepney";
+if (strcharinfo(3)=="ma_zif06") set .@mname$,"Inside of Jeepney";
+if (strcharinfo(3)=="ma_zif07") set .@mname$,"Inside of Jeepney";
+if (strcharinfo(3)=="ma_zif08") set .@mname$,"Inside of Jeepney";
+if (strcharinfo(3)=="ma_zif09") set .@mname$,"Inside of Jeepney";
+if (strcharinfo(3)=="job_ko") set .@mname$,"Hidden Place";
+if (strcharinfo(3)=="gld_dun01_2") set .@mname$,"Baldur Guild Dungeon 2";
+if (strcharinfo(3)=="gld_dun02_2") set .@mname$,"Luina Guild Dungeon 2";
+if (strcharinfo(3)=="gld_dun03_2") set .@mname$,"Valkyrie Guild Dungeon 2";
+if (strcharinfo(3)=="gld_dun04_2") set .@mname$,"Britoniah Guild Dungeon 2";
+if (strcharinfo(3)=="gld2_ald") set .@mname$,"Al De Baran Guild Dungeon";
+if (strcharinfo(3)=="gld2_gef") set .@mname$,"Geffen Guild Dungeon";
+if (strcharinfo(3)=="gld2_pay") set .@mname$,"Payon Guild Dungeon";
+if (strcharinfo(3)=="gld2_prt") set .@mname$,"Prontera Guild Dungeon";
+if (strcharinfo(3)=="lhz_dun04") set .@mname$,"Lighthalzen Biolab 4";
+if (strcharinfo(3)=="que_lhz") set .@mname$,"Lighthalzen Indoor";
+if (strcharinfo(3)=="1@lhz") set .@mname$,"Lighthalzen Indoor";
+if (strcharinfo(3)=="iz_dun05") set .@mname$,"Undersea Tunnel F6";
+if (strcharinfo(3)=="malangdo") set .@mname$,"Malangdo";
+if (strcharinfo(3)=="mal_in01") set .@mname$,"Malangdo Inside";
+if (strcharinfo(3)=="mal_in02") set .@mname$,"Inside the Ship";
+if (strcharinfo(3)=="mal_dun01") set .@mname$,"Starry Coral Area";
+if (strcharinfo(3)=="1@cash") set .@mname$,"Octopus Cave";
+if (strcharinfo(3)=="1@pump") set .@mname$,"Culvert";
+if (strcharinfo(3)=="2@pump") set .@mname$,"Culvert";
+if (strcharinfo(3)=="evt_hello") set .@mname$,"Dead Angel's landing";
+if (strcharinfo(3)=="dic_dun03") set .@mname$,"Scaraba Hole - Nightmare Mode";
+if (strcharinfo(3)=="que_house_s") set .@mname$,"Strange House";
+if (strcharinfo(3)=="dewata") set .@mname$,"Dewata";
+if (strcharinfo(3)=="dew_in01") set .@mname$,"Inside Dewata";
+if (strcharinfo(3)=="dew_fild01") set .@mname$,"Dewata Field (Tribal Village)";
+if (strcharinfo(3)=="dew_dun01") set .@mname$,"Volcanic Island of Krakatoa";
+if (strcharinfo(3)=="dew_dun02") set .@mname$,"Tina Grace Cave";
+if (strcharinfo(3)=="1@mist") set .@mname$,"The Hazy Maze Forest";
+if (strcharinfo(3)=="mora") set .@mname$,"Mora Village";
+if (strcharinfo(3)=="bif_fild01") set .@mname$,"Bifrost Bridge";
+if (strcharinfo(3)=="bif_fild02") set .@mname$,"Bifrost Bridge";
+if (strcharinfo(3)=="dicastes01") set .@mname$,"El Dicastes, the Sapha Capital";
+if (strcharinfo(3)=="dicastes02") set .@mname$,"Dicastes Diel";
+if (strcharinfo(3)=="dic_in01") set .@mname$,"Inside of El Dicastes";
+if (strcharinfo(3)=="dic_fild01") set .@mname$,"Outskirts of Kamidal Mountain";
+if (strcharinfo(3)=="dic_fild02") set .@mname$,"Outskirts of Kamidal Mountain";
+if (strcharinfo(3)=="dic_dun01") set .@mname$,"Kamidal Tunnel";
+if (strcharinfo(3)=="dic_dun02") set .@mname$,"Scaraba Hall";
+if (strcharinfo(3)=="job3_gen01") set .@mname$,"Geneticist Lab";
+if (strcharinfo(3)=="s_atelier") set .@mname$,"Shadow Workshop";
+if (strcharinfo(3)=="brasilis") set .@mname$,"Brasilis";
+if (strcharinfo(3)=="bra_in01") set .@mname$,"Inside Brasilis";
+if (strcharinfo(3)=="bra_fild01") set .@mname$,"Brasilis Field";
+if (strcharinfo(3)=="bra_dun01") set .@mname$,"Beyond the Waterfall";
+if (strcharinfo(3)=="bra_dun02") set .@mname$,"Beyond the Waterfall";
+if (strcharinfo(3)=="moc_para01") set .@mname$,"Inside of Paradise Group Building in Morroc";
+if (strcharinfo(3)=="job3_arch01") set .@mname$,"Waiting room for Arch Bishop Job Change";
+if (strcharinfo(3)=="job3_arch02") set .@mname$,"Odin Temple";
+if (strcharinfo(3)=="job3_arch03") set .@mname$,"Waiting room for Arch Bishop Job Change";
+if (strcharinfo(3)=="job3_guil01") set .@mname$,"Secret Tavern";
+if (strcharinfo(3)=="job3_guil02") set .@mname$,"Inside the Old Warehouse";
+if (strcharinfo(3)=="job3_guil03") set .@mname$,"An isolated mansion";
+if (strcharinfo(3)=="job3_rang01") set .@mname$,"Waiting room for Ranger Job Change";
+if (strcharinfo(3)=="job3_rang02") set .@mname$,"Test room for Ranger Job Change";
+if (strcharinfo(3)=="job3_rune01") set .@mname$,"Inside of Rune Knight Templar";
+if (strcharinfo(3)=="job3_rune02") set .@mname$,"Test room for Rune Knight Job Change";
+if (strcharinfo(3)=="job3_rune03") set .@mname$,"Test room for Rune Knight Job Change";
+if (strcharinfo(3)=="job3_war01") set .@mname$,"Test room for Warlock Job Change";
+if (strcharinfo(3)=="job3_war02") set .@mname$,"Test room for Warlock Job Change";
+if (strcharinfo(3)=="jupe_core2") set .@mname$,"The center of Juperos";
+if (strcharinfo(3)=="1@nyd") set .@mname$,"Nidhoggr's Nest F1";
+if (strcharinfo(3)=="2@nyd") set .@mname$,"Nidhoggr's Nest F2";
+if (strcharinfo(3)=="nyd_dun01") set .@mname$,"Yggdrasil Root F1";
+if (strcharinfo(3)=="nyd_dun02") set .@mname$,"Yggdrasil Root F2";
+if (strcharinfo(3)=="manuk") set .@mname$,"Manuk";
+if (strcharinfo(3)=="man_fild02") set .@mname$,"Manuk Field";
+if (strcharinfo(3)=="man_in01") set .@mname$,"Inside Manuk";
+if (strcharinfo(3)=="splendide") set .@mname$,"Splendide";
+if (strcharinfo(3)=="spl_fild01") set .@mname$,"Splendide Field";
+if (strcharinfo(3)=="spl_in01") set .@mname$,"Inside Splendide";
+if (strcharinfo(3)=="spl_in02") set .@mname$,"Inside Splendide";
+if (strcharinfo(3)=="bat_c01") set .@mname$,"Kreiger Von Midgard";
+if (strcharinfo(3)=="bat_c02") set .@mname$,"Kreiger Von Midgard";
+if (strcharinfo(3)=="bat_c03") set .@mname$,"Kreiger Von Midgard";
+if (strcharinfo(3)=="mid_camp") set .@mname$,"Midgard Expedition Camp";
+if (strcharinfo(3)=="mid_campin") set .@mname$,"Inside Midgard Expedition Camp";
+if (strcharinfo(3)=="man_fild01") set .@mname$,"Manuk Field";
+if (strcharinfo(3)=="man_fild03") set .@mname$,"Manuk Field";
+if (strcharinfo(3)=="spl_fild02") set .@mname$,"Splendide Field";
+if (strcharinfo(3)=="spl_fild03") set .@mname$,"Splendide Field";
+if (strcharinfo(3)=="moc_fild22b") set .@mname$,"Dimensional Gorge";
+if (strcharinfo(3)=="que_dan01") set .@mname$,"Hugel Field";
+if (strcharinfo(3)=="que_dan02") set .@mname$,"Inside of the Abandoned House in Yuno";
+if (strcharinfo(3)=="schg_que01") set .@mname$,"Morestone Prairie";
+if (strcharinfo(3)=="schg_dun01") set .@mname$,"Schwartzvald Guild Dungeon";
+if (strcharinfo(3)=="arug_que01") set .@mname$,"Morestone Prairie";
+if (strcharinfo(3)=="arug_dun01") set .@mname$,"Arunafeltz Guild Dungeon";
+if (strcharinfo(3)=="1@orcs") set .@mname$,"Subterranean Orc Cave F1";
+if (strcharinfo(3)=="2@orcs") set .@mname$,"Subterranean Orc Cave F2";
+if (strcharinfo(3)=="1@cata") set .@mname$,"Catacombs";
+if (strcharinfo(3)=="2@cata") set .@mname$,"Sealed Shrine";
+if (strcharinfo(3)=="e_tower") set .@mname$,"Misty Island";
+if (strcharinfo(3)=="1@tower") set .@mname$,"Endless Tower";
+if (strcharinfo(3)=="2@tower") set .@mname$,"Endless Tower";
+if (strcharinfo(3)=="3@tower") set .@mname$,"Endless Tower";
+if (strcharinfo(3)=="4@tower") set .@mname$,"Endless Tower";
+if (strcharinfo(3)=="5@tower") set .@mname$,"Endless Tower";
+if (strcharinfo(3)=="6@tower") set .@mname$,"Endless Tower (Unknown Area)";
+if (strcharinfo(3)=="bat_room") set .@mname$,"Battlegrounds Waiting Room";
+if (strcharinfo(3)=="bat_a01") set .@mname$,"Tierra Valley";
+if (strcharinfo(3)=="bat_a02") set .@mname$,"Tierra Valley";
+if (strcharinfo(3)=="bat_b01") set .@mname$,"Flavian";
+if (strcharinfo(3)=="bat_b02") set .@mname$,"Flavian";
+if (strcharinfo(3)=="que_qsch01") set .@mname$,"Fallacious Okolnir";
+if (strcharinfo(3)=="que_qsch02") set .@mname$,"Fallacious Okolnir";
+if (strcharinfo(3)=="que_qsch03") set .@mname$,"Fallacious Okolnir";
+if (strcharinfo(3)=="que_qsch04") set .@mname$,"Fallacious Okolnir";
+if (strcharinfo(3)=="que_qsch05") set .@mname$,"Fallacious Okolnir";
+if (strcharinfo(3)=="que_qaru01") set .@mname$,"Fallacious Okolnir";
+if (strcharinfo(3)=="que_qaru02") set .@mname$,"Fallacious Okolnir";
+if (strcharinfo(3)=="que_qaru03") set .@mname$,"Fallacious Okolnir";
+if (strcharinfo(3)=="que_qaru04") set .@mname$,"Fallacious Okolnir";
+if (strcharinfo(3)=="que_qaru05") set .@mname$,"Fallacious Okolnir";
+if (strcharinfo(3)=="arug_cas01") set .@mname$,"Valfreyja Guild";
+if (strcharinfo(3)=="arug_cas02") set .@mname$,"Valfreyja Guild";
+if (strcharinfo(3)=="arug_cas03") set .@mname$,"Valfreyja Guild";
+if (strcharinfo(3)=="arug_cas04") set .@mname$,"Valfreyja Guild";
+if (strcharinfo(3)=="arug_cas05") set .@mname$,"Valfreyja Guild";
+if (strcharinfo(3)=="aru_gld") set .@mname$,"Valfreyja";
+if (strcharinfo(3)=="moscovia") set .@mname$,"Moscovia";
+if (strcharinfo(3)=="mosk_in") set .@mname$,"Inside Moscovia";
+if (strcharinfo(3)=="mosk_ship") set .@mname$,"Charabel";
+if (strcharinfo(3)=="mosk_fild01") set .@mname$,"Okrestnosti Of Moscovia";
+if (strcharinfo(3)=="mosk_fild02") set .@mname$,"Okrestnosti Of Moscovia";
+if (strcharinfo(3)=="mosk_dun01") set .@mname$,"Les Forest";
+if (strcharinfo(3)=="mosk_dun02") set .@mname$,"Temny Forest";
+if (strcharinfo(3)=="mosk_dun03") set .@mname$,"Dremuci Forest";
+if (strcharinfo(3)=="mosk_que") set .@mname$,"Marozka's Cave";
+if (strcharinfo(3)=="schg_cas01") set .@mname$,"Nidhoggur Guild";
+if (strcharinfo(3)=="schg_cas02") set .@mname$,"Nidhoggur Guild";
+if (strcharinfo(3)=="schg_cas03") set .@mname$,"Nidhoggur Guild";
+if (strcharinfo(3)=="schg_cas04") set .@mname$,"Nidhoggur Guild";
+if (strcharinfo(3)=="schg_cas05") set .@mname$,"Nidhoggur Guild";
+if (strcharinfo(3)=="sch_gld") set .@mname$,"Nidhoggur";
+if (strcharinfo(3)=="cave") set .@mname$,"Cave Village";
+if (strcharinfo(3)=="moc_fild20") set .@mname$,"Sograt Desert - Continental Guard Quarantine";
+if (strcharinfo(3)=="moc_fild21") set .@mname$,"Dimensional Gorge";
+if (strcharinfo(3)=="moc_fild22") set .@mname$,"Dimensional Gorge";
+if (strcharinfo(3)=="bossnia_01") set .@mname$,"Bossnia";
+if (strcharinfo(3)=="bossnia_02") set .@mname$,"Bossnia";
+if (strcharinfo(3)=="bossnia_03") set .@mname$,"Bossnia";
+if (strcharinfo(3)=="bossnia_04") set .@mname$,"Bossnia";
+if (strcharinfo(3)=="itemmall") set .@mname$,"Kafra Shop";
+if (strcharinfo(3)=="poring_w01") set .@mname$,"Poring War Waiting Room";
+if (strcharinfo(3)=="poring_w02") set .@mname$,"Poring War Market";
+if (strcharinfo(3)=="nameless_i") set .@mname$,"Nameless Island";
+if (strcharinfo(3)=="nameless_n") set .@mname$,"Nameless Island";
+if (strcharinfo(3)=="nameless_in") set .@mname$,"Inside Nameless Island";
+if (strcharinfo(3)=="abbey01") set .@mname$,"Cursed Abbey Dungeon F1";
+if (strcharinfo(3)=="abbey02") set .@mname$,"Cursed Abbey Dungeon F2";
+if (strcharinfo(3)=="abbey03") set .@mname$,"Cursed Abbey Dungeon F3";
+if (strcharinfo(3)=="que_temsky") set .@mname$,"Pope's Room (Sky Garden)";
+if (strcharinfo(3)=="z_agit") set .@mname$,"Z Gang's Hideout";
+if (strcharinfo(3)=="veins") set .@mname$,"Veins, the Canyon Village";
+if (strcharinfo(3)=="ve_in") set .@mname$,"Inside Veins";
+if (strcharinfo(3)=="ve_in02") set .@mname$,"Inside Veins";
+if (strcharinfo(3)=="ve_fild01") set .@mname$,"Veins Field";
+if (strcharinfo(3)=="ve_fild02") set .@mname$,"Veins Field";
+if (strcharinfo(3)=="ve_fild03") set .@mname$,"Veins Field";
+if (strcharinfo(3)=="ve_fild04") set .@mname$,"Veins Field";
+if (strcharinfo(3)=="ve_fild05") set .@mname$,"Veins Field";
+if (strcharinfo(3)=="ve_fild06") set .@mname$,"Veins Field";
+if (strcharinfo(3)=="ve_fild07") set .@mname$,"Veins Field";
+if (strcharinfo(3)=="thor_camp") set .@mname$,"Thor Volcano Camp";
+if (strcharinfo(3)=="que_thor") set .@mname$,"Thor Volcano Dungeon";
+if (strcharinfo(3)=="thor_v01") set .@mname$,"Thor Volcano Dungeon";
+if (strcharinfo(3)=="thor_v02") set .@mname$,"Thor Volcano Dungeon";
+if (strcharinfo(3)=="thor_v03") set .@mname$,"Thor Volcano Dungeon";
+if (strcharinfo(3)=="06guild_r") set .@mname$,"Guild Arena Waiting Room";
+if (strcharinfo(3)=="06guild_01") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="06guild_02") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="06guild_03") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="06guild_04") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="06guild_05") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="06guild_06") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="06guild_07") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="06guild_08") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="rachel") set .@mname$,"Rachel, Capital of Arunafelz, the Study Nation";
+if (strcharinfo(3)=="ra_in01") set .@mname$,"Inside Rachel";
+if (strcharinfo(3)=="ra_temple") set .@mname$,"Freya's Grand Temple (Sesilmir)";
+if (strcharinfo(3)=="ra_temin") set .@mname$,"Inside Rachel Sanctuary";
+if (strcharinfo(3)=="que_rachel") set .@mname$,"Inside Freya's Temple";
+if (strcharinfo(3)=="ra_temsky") set .@mname$,"Pope's Room (Sky Garden)";
+if (strcharinfo(3)=="ra_fild01") set .@mname$,"Audumra Grass Land";
+if (strcharinfo(3)=="ra_fild02") set .@mname$,"Oz Gorge";
+if (strcharinfo(3)=="ra_fild03") set .@mname$,"Ida Plane";
+if (strcharinfo(3)=="ra_fild04") set .@mname$,"Audumra Grass Land";
+if (strcharinfo(3)=="ra_fild05") set .@mname$,"Audumra Grass Land";
+if (strcharinfo(3)=="ra_fild06") set .@mname$,"Fortu Luna";
+if (strcharinfo(3)=="ra_fild07") set .@mname$,"Oz Gorge";
+if (strcharinfo(3)=="ra_fild08") set .@mname$,"Ida Plane";
+if (strcharinfo(3)=="ra_fild09") set .@mname$,"Audumra Grass Land";
+if (strcharinfo(3)=="ra_fild10") set .@mname$,"Oz Gorge";
+if (strcharinfo(3)=="ra_fild11") set .@mname$,"Ida Plane";
+if (strcharinfo(3)=="ra_fild12") set .@mname$,"Ida Plane";
+if (strcharinfo(3)=="ra_fild13") set .@mname$,"Beach of Tears";
+if (strcharinfo(3)=="ra_san01") set .@mname$,"Freya's Sacred Precinct F1";
+if (strcharinfo(3)=="ra_san02") set .@mname$,"Freya's Sacred Precinct F2";
+if (strcharinfo(3)=="ra_san03") set .@mname$,"Freya's Sacred Precinct F3";
+if (strcharinfo(3)=="ra_san04") set .@mname$,"Freya's Sacred Precinct F4";
+if (strcharinfo(3)=="ra_san05") set .@mname$,"Freya's Sacred Precinct F5";
+if (strcharinfo(3)=="ice_dun01") set .@mname$,"Ice Cave F1";
+if (strcharinfo(3)=="ice_dun02") set .@mname$,"Ice Cave F2";
+if (strcharinfo(3)=="ice_dun03") set .@mname$,"Ice Cave F3";
+if (strcharinfo(3)=="ice_dun04") set .@mname$,"Ice Cave F4";
+if (strcharinfo(3)=="hugel") set .@mname$,"Hugel, the Quaint Garden Village";
+if (strcharinfo(3)=="hu_in01") set .@mname$,"Inside Hugel";
+if (strcharinfo(3)=="que_bingo") set .@mname$,"Bingo Game Room";
+if (strcharinfo(3)=="que_hugel") set .@mname$,"Odin Shrine's Underground";
+if (strcharinfo(3)=="p_track01") set .@mname$,"Monster Race Arena";
+if (strcharinfo(3)=="p_track02") set .@mname$,"Monster Race Arena";
+if (strcharinfo(3)=="odin_tem01") set .@mname$,"Odin Shirine F1";
+if (strcharinfo(3)=="odin_tem02") set .@mname$,"Odin Shirine F2";
+if (strcharinfo(3)=="odin_tem03") set .@mname$,"Odin Shirine F3";
+if (strcharinfo(3)=="hu_fild02") set .@mname$,"Hugel Field";
+if (strcharinfo(3)=="hu_fild03") set .@mname$,"Hugel Field";
+if (strcharinfo(3)=="hu_fild06") set .@mname$,"Hugel Field";
+if (strcharinfo(3)=="ein_fild01") set .@mname$,"Einbroch Field";
+if (strcharinfo(3)=="ein_fild02") set .@mname$,"Einbroch Field";
+if (strcharinfo(3)=="ein_fild05") set .@mname$,"Einbroch Field";
+if (strcharinfo(3)=="yuno_fild10") set .@mname$,"Yuno Field";
+if (strcharinfo(3)=="kh_kiehl02") set .@mname$,"Kiehl's Room";
+if (strcharinfo(3)=="kh_kiehl01") set .@mname$,"Kiehl's Room";
+if (strcharinfo(3)=="kh_dun02") set .@mname$,"Robot Factory F2";
+if (strcharinfo(3)=="kh_dun01") set .@mname$,"Robot Factory F1";
+if (strcharinfo(3)=="kh_mansion") set .@mname$,"Kiel Hyre's Mansion";
+if (strcharinfo(3)=="kh_rossi") set .@mname$,"The Rosimier's Mansion";
+if (strcharinfo(3)=="kh_school") set .@mname$,"Kiel Hyre's Academy";
+if (strcharinfo(3)=="kh_vila") set .@mname$,"Kiel Hyre's Cottage";
+if (strcharinfo(3)=="auction_01") set .@mname$,"Auction Hall";
+if (strcharinfo(3)=="auction_02") set .@mname$,"Auction Hall";
+if (strcharinfo(3)=="que_job01") set .@mname$,"Private Pub";
+if (strcharinfo(3)=="abyss_01") set .@mname$,"Abyss Lakes Underground Cave F1";
+if (strcharinfo(3)=="abyss_02") set .@mname$,"Abyss Lakes Underground Cave F2";
+if (strcharinfo(3)=="abyss_03") set .@mname$,"Abyss Lakes Underground Cave F3";
+if (strcharinfo(3)=="tha_t01") set .@mname$,"Thanatos Tower F1 - Lower Level";
+if (strcharinfo(3)=="tha_t02") set .@mname$,"Thanatos Tower F2 - Lower Level";
+if (strcharinfo(3)=="tha_t03") set .@mname$,"Thanatos Tower F3 - Lower Level";
+if (strcharinfo(3)=="tha_t04") set .@mname$,"Thanatos Tower F4 - Lower Level";
+if (strcharinfo(3)=="tha_t05") set .@mname$,"Thanatos Tower F5 - Upper Level";
+if (strcharinfo(3)=="tha_t06") set .@mname$,"Thanatos Tower F6 - Upper Level";
+if (strcharinfo(3)=="tha_t07") set .@mname$,"Thanatos Tower F7 - Upper Level";
+if (strcharinfo(3)=="tha_t08") set .@mname$,"Thanatos Tower F8 - Upper Level";
+if (strcharinfo(3)=="tha_t09") set .@mname$,"Thanatos Tower F9 - Upper Level";
+if (strcharinfo(3)=="tha_t10") set .@mname$,"Thanatos Tower F10 - Upper Level";
+if (strcharinfo(3)=="tha_t11") set .@mname$,"Thanatos Tower F11 - Upper Level";
+if (strcharinfo(3)=="tha_t12") set .@mname$,"Thanatos Tower F12 - Upper Level";
+if (strcharinfo(3)=="thana_step") set .@mname$,"Thanatos Tower Steps - Upper Level";
+if (strcharinfo(3)=="thana_boss") set .@mname$,"Thanatos Tower - Boss Area";
+if (strcharinfo(3)=="tha_scene01") set .@mname$,"Thanatos Tower Entrance";
+if (strcharinfo(3)=="job_soul") set .@mname$,"Your Heart";
+if (strcharinfo(3)=="job_star") set .@mname$,"The Sun, the Moon and the Stars";
+if (strcharinfo(3)=="hu_fild07") set .@mname$,"Hugel Field";
+if (strcharinfo(3)=="hu_fild05") set .@mname$,"The Abyss Lakes";
+if (strcharinfo(3)=="hu_fild04") set .@mname$,"Hugel Field";
+if (strcharinfo(3)=="hu_fild01") set .@mname$,"Hugel Field";
+if (strcharinfo(3)=="yuno_fild06") set .@mname$,"El Mes Plateau";
+if (strcharinfo(3)=="quiz_02") set .@mname$,"Quiz Arena";
+if (strcharinfo(3)=="jupe_cave") set .@mname$,"Juperos Dungeon Entrance";
+if (strcharinfo(3)=="juperos_01") set .@mname$,"The Ruins of Juperos F1";
+if (strcharinfo(3)=="juperos_02") set .@mname$,"The Ruins of Juperos F2";
+if (strcharinfo(3)=="jupe_gate") set .@mname$,"Juperos, Restricted Zone";
+if (strcharinfo(3)=="jupe_area1") set .@mname$,"Juperos, Restricted Zone";
+if (strcharinfo(3)=="jupe_area2") set .@mname$,"Juperos, Restricted Zone";
+if (strcharinfo(3)=="jupe_ele") set .@mname$,"Juperos Elevator";
+if (strcharinfo(3)=="jupe_ele_r") set .@mname$,"Juperos Elevator";
+if (strcharinfo(3)=="jupe_core") set .@mname$,"Center of Juperos";
+if (strcharinfo(3)=="lighthalzen") set .@mname$,"Lighthalzen, the City-State of Prosperity";
+if (strcharinfo(3)=="lhz_in01") set .@mname$,"Rekenber Corporation Headquarters";
+if (strcharinfo(3)=="lhz_in02") set .@mname$,"Inside Lighthalzen";
+if (strcharinfo(3)=="lhz_in03") set .@mname$,"Inside Lighthalzen";
+if (strcharinfo(3)=="lhz_cube") set .@mname$,"Cube Room";
+if (strcharinfo(3)=="lhz_que01") set .@mname$,"Inside Lighthalzen";
+if (strcharinfo(3)=="lhz_airport") set .@mname$,"Lighthalzen Airport";
+if (strcharinfo(3)=="airplane_01") set .@mname$,"Airship";
+if (strcharinfo(3)=="lhz_dun01") set .@mname$,"Somatology Laboratory F1";
+if (strcharinfo(3)=="lhz_dun02") set .@mname$,"Somatology Laboratory F2";
+if (strcharinfo(3)=="lhz_dun03") set .@mname$,"Somatology Laboratory F3";
+if (strcharinfo(3)=="lhz_fild01") set .@mname$,"Lighthalzen Field";
+if (strcharinfo(3)=="yuno_pre") set .@mname$,"Schwarzwald Government Buildings";
+if (strcharinfo(3)=="y_airport") set .@mname$,"Yuno Airport";
+if (strcharinfo(3)=="lhz_fild03") set .@mname$,"Lighthalzen Field";
+if (strcharinfo(3)=="lhz_fild02") set .@mname$,"Lighthalzen Field (Grim Reaper's Valley)";
+if (strcharinfo(3)=="ein_fild04") set .@mname$,"Einbroch Field";
+if (strcharinfo(3)=="ein_fild03") set .@mname$,"Einbroch Field";
+if (strcharinfo(3)=="ein_dun02") set .@mname$,"Mine Dungeon F2";
+if (strcharinfo(3)=="ein_dun01") set .@mname$,"Mine Dungeon F1";
+if (strcharinfo(3)=="ein_fild10") set .@mname$,"Einbroch Field";
+if (strcharinfo(3)=="ein_fild09") set .@mname$,"Einbroch Field";
+if (strcharinfo(3)=="ein_fild08") set .@mname$,"Einbroch Field";
+if (strcharinfo(3)=="ein_fild07") set .@mname$,"Einbroch Field";
+if (strcharinfo(3)=="ein_fild06") set .@mname$,"Einbroch Field";
+if (strcharinfo(3)=="airplane") set .@mname$,"Airship";
+if (strcharinfo(3)=="airport") set .@mname$,"Airport";
+if (strcharinfo(3)=="ein_in01") set .@mname$,"Inside Einbroch";
+if (strcharinfo(3)=="einbech") set .@mname$,"Einbech, the Mining Village";
+if (strcharinfo(3)=="einbroch") set .@mname$,"Einbroch, the City of Steel";
+if (strcharinfo(3)=="turbo_e_16") set .@mname$,"Turbo Track Stadium";
+if (strcharinfo(3)=="turbo_e_8") set .@mname$,"Turbo Track Stadium";
+if (strcharinfo(3)=="turbo_e_4") set .@mname$,"Turbo Track Stadium";
+if (strcharinfo(3)=="turbo_n_16") set .@mname$,"Turbo Track Stadium";
+if (strcharinfo(3)=="turbo_n_8") set .@mname$,"Turbo Track Stadium";
+if (strcharinfo(3)=="turbo_n_4") set .@mname$,"Turbo Track Stadium";
+if (strcharinfo(3)=="turbo_n_1") set .@mname$,"Turbo Track Stadium";
+if (strcharinfo(3)=="turbo_room") set .@mname$,"Waiting Room";
+if (strcharinfo(3)=="yuno_fild12") set .@mname$,"Border Checkpoint";
+if (strcharinfo(3)=="yuno_fild11") set .@mname$,"Yuno Field";
+if (strcharinfo(3)=="yuno_fild09") set .@mname$,"Schwarzwald Guards Camp";
+if (strcharinfo(3)=="yuno_fild08") set .@mname$,"Kiel Hyre's Academy";
+if (strcharinfo(3)=="yuno_fild07") set .@mname$,"El Mes Gorge (Valley of Abyss)";
+if (strcharinfo(3)=="yuno_fild05") set .@mname$,"El Mes Plateau";
+if (strcharinfo(3)=="ayo_in02") set .@mname$,"Inside Ayothaya";
+if (strcharinfo(3)=="ayo_in01") set .@mname$,"Inside Ayothaya";
+if (strcharinfo(3)=="ayo_dun02") set .@mname$,"Inside Ancient Shrine";
+if (strcharinfo(3)=="ayo_dun01") set .@mname$,"Ancient Shrine Maze";
+if (strcharinfo(3)=="ayo_fild02") set .@mname$,"Ayothaya Field";
+if (strcharinfo(3)=="ayo_fild01") set .@mname$,"Ayothaya Field";
+if (strcharinfo(3)=="ayothaya") set .@mname$,"Ayothaya";
+if (strcharinfo(3)=="que_god02") set .@mname$,"Quest Map";
+if (strcharinfo(3)=="que_god01") set .@mname$,"Quest Map";
+if (strcharinfo(3)=="quiz_test") set .@mname$,"Quiz Hall";
+if (strcharinfo(3)=="gefenia04") set .@mname$,"Geffenia";
+if (strcharinfo(3)=="gefenia03") set .@mname$,"Geffenia";
+if (strcharinfo(3)=="gefenia02") set .@mname$,"Geffenia";
+if (strcharinfo(3)=="gefenia01") set .@mname$,"Geffenia";
+if (strcharinfo(3)=="himinn") set .@mname$,"Valkyrie Hall (Himinn)";
+if (strcharinfo(3)=="jawaii_in") set .@mname$,"Inside Jawaii";
+if (strcharinfo(3)=="jawaii") set .@mname$,"Jawaii, the Honeymoon Island";
+if (strcharinfo(3)=="lou_in02") set .@mname$,"Inside Louyang";
+if (strcharinfo(3)=="lou_in01") set .@mname$,"Inside Louyang";
+if (strcharinfo(3)=="lou_dun03") set .@mname$,"Suei Long Gon";
+if (strcharinfo(3)=="lou_dun02") set .@mname$,"Inside the Royal Tomb";
+if (strcharinfo(3)=="lou_dun01") set .@mname$,"The Royal Tomb";
+if (strcharinfo(3)=="lou_fild01") set .@mname$,"Louyang Field";
+if (strcharinfo(3)=="louyang") set .@mname$,"Louyang, the Highland";
+if (strcharinfo(3)=="valkyrie") set .@mname$,"Valkyrie Hall, the Hall of Honor";
+if (strcharinfo(3)=="nif_in") set .@mname$,"Inside Niflheim";
+if (strcharinfo(3)=="yggdrasil01") set .@mname$,"Hvergelmir's Fountain (Trunk of Yggdrasil)";
+if (strcharinfo(3)=="nif_fild02") set .@mname$,"Valley of Gyoll";
+if (strcharinfo(3)=="nif_fild01") set .@mname$,"Skellington, a Solitary Village in Niflheim";
+if (strcharinfo(3)=="niflheim") set .@mname$,"Niflheim, Realm of the Dead";
+if (strcharinfo(3)=="um_dun01") set .@mname$,"Carpenter's Shop in the Tree";
+if (strcharinfo(3)=="um_dun02") set .@mname$,"Passage to a Foreign World";
+if (strcharinfo(3)=="um_in") set .@mname$,"Inside Umbala";
+if (strcharinfo(3)=="um_fild01") set .@mname$,"Luluka Forest";
+if (strcharinfo(3)=="um_fild02") set .@mname$,"Hoomga Forest";
+if (strcharinfo(3)=="um_fild03") set .@mname$,"Kalala Swamp";
+if (strcharinfo(3)=="um_fild04") set .@mname$,"Hoomga Jungle";
+if (strcharinfo(3)=="umbala") set .@mname$,"Wootan Tribe's Village, Umbala";
+if (strcharinfo(3)=="sec_in01") set .@mname$,"Inside Valhalla";
+if (strcharinfo(3)=="sec_in02") set .@mname$,"Inside Valhalla";
+if (strcharinfo(3)=="sec_pri") set .@mname$,"Room of Meditation (Valhalla Prison)";
+if (strcharinfo(3)=="gon_test") set .@mname$,"Arena";
+if (strcharinfo(3)=="gon_dun01") set .@mname$,"Shrine of Gonryun Queen";
+if (strcharinfo(3)=="gon_dun02") set .@mname$,"Hermit's Checkers";
+if (strcharinfo(3)=="gon_dun03") set .@mname$,"Arcadia";
+if (strcharinfo(3)=="gon_fild01") set .@mname$,"Gonryun Field";
+if (strcharinfo(3)=="gon_in") set .@mname$,"Inside Gonryun";
+if (strcharinfo(3)=="gonryun") set .@mname$,"Gonryun, the Hermit Land";
+if (strcharinfo(3)=="ama_test") set .@mname$,"Momotaro Experience Place";
+if (strcharinfo(3)=="ama_dun03") set .@mname$,"Amatsu Underground Shrine";
+if (strcharinfo(3)=="ama_dun02") set .@mname$,"Battle Field in the Underground Forest";
+if (strcharinfo(3)=="ama_dun01") set .@mname$,"Tatami Maze";
+if (strcharinfo(3)=="ama_fild01") set .@mname$,"Amatsu Field";
+if (strcharinfo(3)=="ama_in02") set .@mname$,"Inside Himezi Castle";
+if (strcharinfo(3)=="ama_in01") set .@mname$,"Inside Amatsu";
+if (strcharinfo(3)=="amatsu") set .@mname$,"Amatsu, the Land of Destiny";
+if (strcharinfo(3)=="alde_alche") set .@mname$,"Alchemist Realm";
+if (strcharinfo(3)=="yuno_in05") set .@mname$,"Power Plant of Ymir's Heart";
+if (strcharinfo(3)=="yuno_in04") set .@mname$,"Republic Library";
+if (strcharinfo(3)=="job_duncer") set .@mname$,"Comodo Theatre";
+if (strcharinfo(3)=="job_sage") set .@mname$,"Sage Realm";
+if (strcharinfo(3)=="job_cru") set .@mname$,"Crusader Realm";
+if (strcharinfo(3)=="job_monk") set .@mname$,"Saint Capitolina Abbey";
+if (strcharinfo(3)=="monk_test") set .@mname$,"Saint Capitolina Abbey";
+if (strcharinfo(3)=="in_rogue") set .@mname$,"Inside the Rogue Guild";
+if (strcharinfo(3)=="mag_dun02") set .@mname$,"Nogg Road F2";
+if (strcharinfo(3)=="mag_dun01") set .@mname$,"Nogg Road F1";
+if (strcharinfo(3)=="yuno_fild04") set .@mname$,"El Mes Plateau";
+if (strcharinfo(3)=="yuno_fild03") set .@mname$,"El Mes Plateau";
+if (strcharinfo(3)=="yuno_fild02") set .@mname$,"Kiel Hyre's Cottage";
+if (strcharinfo(3)=="yuno_fild01") set .@mname$,"Border Posts";
+if (strcharinfo(3)=="yuno_in03") set .@mname$,"Inside Yuno";
+if (strcharinfo(3)=="yuno_in02") set .@mname$,"Inside the Sage Castle";
+if (strcharinfo(3)=="yuno_in01") set .@mname$,"Inside Yuno";
+if (strcharinfo(3)=="yuno") set .@mname$,"Yuno, Capital of Schwarzwald Republic";
+if (strcharinfo(3)=="job_wiz") set .@mname$,"Wizard Realm";
+if (strcharinfo(3)=="job_prist") set .@mname$,"Priest Realm";
+if (strcharinfo(3)=="job_knt") set .@mname$,"Knight Realm";
+if (strcharinfo(3)=="job_hunte") set .@mname$,"Hunter Job Change Place";
+if (strcharinfo(3)=="gld_dun04") set .@mname$,"Britoniah Guild Dungeon";
+if (strcharinfo(3)=="gld_dun03") set .@mname$,"Valkyrie Guild Dungeon";
+if (strcharinfo(3)=="gld_dun02") set .@mname$,"Luina Guild Dungeon";
+if (strcharinfo(3)=="gld_dun01") set .@mname$,"Baldur Guild Dungeon";
+if (strcharinfo(3)=="payg_cas05") set .@mname$,"Greenwood Lake Guild";
+if (strcharinfo(3)=="payg_cas04") set .@mname$,"Greenwood Lake Guild";
+if (strcharinfo(3)=="payg_cas03") set .@mname$,"Greenwood Lake Guild";
+if (strcharinfo(3)=="payg_cas02") set .@mname$,"Greenwood Lake Guild";
+if (strcharinfo(3)=="payg_cas01") set .@mname$,"Greenwood Lake Guild";
+if (strcharinfo(3)=="pay_gld") set .@mname$,"Greenwood Lake";
+if (strcharinfo(3)=="aldeg_cas05") set .@mname$,"Luina Guild";
+if (strcharinfo(3)=="aldeg_cas04") set .@mname$,"Luina Guild";
+if (strcharinfo(3)=="aldeg_cas03") set .@mname$,"Luina Guild";
+if (strcharinfo(3)=="aldeg_cas02") set .@mname$,"Luina Guild";
+if (strcharinfo(3)=="aldeg_cas01") set .@mname$,"Luina Guild";
+if (strcharinfo(3)=="alde_gld") set .@mname$,"Luina, the satellite of Aldebaran";
+if (strcharinfo(3)=="gefg_cas05") set .@mname$,"Britoniah Guild";
+if (strcharinfo(3)=="gefg_cas04") set .@mname$,"Britoniah Guild";
+if (strcharinfo(3)=="gefg_cas03") set .@mname$,"Britoniah Guild";
+if (strcharinfo(3)=="gefg_cas02") set .@mname$,"Britoniah Guild";
+if (strcharinfo(3)=="gefg_cas01") set .@mname$,"Britoniah Guild";
+if (strcharinfo(3)=="prtg_cas05") set .@mname$,"Valkyrie Realm Guild";
+if (strcharinfo(3)=="prtg_cas04") set .@mname$,"Valkyrie Realm Guild";
+if (strcharinfo(3)=="prtg_cas03") set .@mname$,"Valkyrie Realm Guild";
+if (strcharinfo(3)=="prtg_cas02") set .@mname$,"Valkyrie Realm Guild";
+if (strcharinfo(3)=="prtg_cas01") set .@mname$,"Valkyrie Realm Guild";
+if (strcharinfo(3)=="prt_gld") set .@mname$,"Valkyrie Realm";
+if (strcharinfo(3)=="tur_dun01") set .@mname$,"Turtle Island";
+if (strcharinfo(3)=="tur_dun02") set .@mname$,"Turtle Island Dungeon";
+if (strcharinfo(3)=="tur_dun03") set .@mname$,"Good Turtles Village";
+if (strcharinfo(3)=="tur_dun04") set .@mname$,"Turtle Palace";
+if (strcharinfo(3)=="tur_dun05") set .@mname$,"Underground swamp zone";
+if (strcharinfo(3)=="tur_dun06") set .@mname$,"Underground swamp zone";
+if (strcharinfo(3)=="guild_vs5") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="guild_vs4") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="guild_vs3") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="guild_vs2") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="guild_vs1") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="guild_room") set .@mname$,"Guild Arena Waiting Room";
+if (strcharinfo(3)=="quiz_00") set .@mname$,"Quiz Revolution";
+if (strcharinfo(3)=="quiz_01") set .@mname$,"Quiz Revolution";
+if (strcharinfo(3)=="gef_fild12") set .@mname$,"Kordt Forest";
+if (strcharinfo(3)=="gef_fild13") set .@mname$,"Britoniah";
+if (strcharinfo(3)=="gef_fild14") set .@mname$,"West Orc Village";
+if (strcharinfo(3)=="cmd_in02") set .@mname$,"Inside Comodo";
+if (strcharinfo(3)=="cmd_in01") set .@mname$,"Inside Comodo";
+if (strcharinfo(3)=="comodo") set .@mname$,"Beach town, Comodo";
+if (strcharinfo(3)=="beach_dun") set .@mname$,"Karu, the West Cave";
+if (strcharinfo(3)=="beach_dun2") set .@mname$,"Ruande, the North Cave";
+if (strcharinfo(3)=="beach_dun3") set .@mname$,"Mao, the East Cave";
+if (strcharinfo(3)=="cmd_fild01") set .@mname$,"Papuchicha Forest";
+if (strcharinfo(3)=="cmd_fild02") set .@mname$,"Kokomo Beach";
+if (strcharinfo(3)=="cmd_fild03") set .@mname$,"Zenhai Marsh";
+if (strcharinfo(3)=="cmd_fild04") set .@mname$,"Kokomo Beach";
+if (strcharinfo(3)=="cmd_fild05") set .@mname$,"Border of Papuchica Forest";
+if (strcharinfo(3)=="cmd_fild06") set .@mname$,"Fortress Saint Darmain (West)";
+if (strcharinfo(3)=="cmd_fild07") set .@mname$,"Beacon Island, Pharos";
+if (strcharinfo(3)=="cmd_fild08") set .@mname$,"Fortress Saint Darmain (East)";
+if (strcharinfo(3)=="cmd_fild09") set .@mname$,"Fortress Saint Darmain (South)";
+if (strcharinfo(3)=="xmas_in") set .@mname$,"Inside Lutie";
+if (strcharinfo(3)=="xmas_dun02") set .@mname$,"Toy Monitoring Room";
+if (strcharinfo(3)=="xmas_dun01") set .@mname$,"Toy Factory Warehouse";
+if (strcharinfo(3)=="xmas_fild01") set .@mname$,"Lutie Field";
+if (strcharinfo(3)=="xmas") set .@mname$,"Lutie, the Snow Village";
+if (strcharinfo(3)=="mjolnir_01") set .@mname$,"Mt.Mjolnir";
+if (strcharinfo(3)=="mjolnir_02") set .@mname$,"Mt.Mjolnir";
+if (strcharinfo(3)=="mjolnir_03") set .@mname$,"Mt.Mjolnir";
+if (strcharinfo(3)=="mjolnir_04") set .@mname$,"Mt.Mjolnir";
+if (strcharinfo(3)=="mjolnir_05") set .@mname$,"Mt.Mjolnir";
+if (strcharinfo(3)=="mjolnir_06") set .@mname$,"Mt.Mjolnir";
+if (strcharinfo(3)=="mjolnir_07") set .@mname$,"Mt.Mjolnir";
+if (strcharinfo(3)=="mjolnir_08") set .@mname$,"Mt.Mjolnir";
+if (strcharinfo(3)=="mjolnir_09") set .@mname$,"Mt.Mjolnir";
+if (strcharinfo(3)=="mjolnir_10") set .@mname$,"Mt.Mjolnir";
+if (strcharinfo(3)=="mjolnir_11") set .@mname$,"Mt.Mjolnir";
+if (strcharinfo(3)=="mjolnir_12") set .@mname$,"Mt.Mjolnir";
+if (strcharinfo(3)=="prt_fild00") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild01") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild02") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild03") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild04") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild05") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild06") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild07") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild08") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild09") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild10") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild11") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_monk") set .@mname$,"St. Capitolina Abbey";
+if (strcharinfo(3)=="gef_fild00") set .@mname$,"Geffen Field";
+if (strcharinfo(3)=="gef_fild01") set .@mname$,"Geffen Field";
+if (strcharinfo(3)=="gef_fild02") set .@mname$,"Geffen Field";
+if (strcharinfo(3)=="gef_fild03") set .@mname$,"Geffen Field";
+if (strcharinfo(3)=="gef_fild04") set .@mname$,"Geffen Field";
+if (strcharinfo(3)=="gef_fild05") set .@mname$,"Geffen Field";
+if (strcharinfo(3)=="gef_fild06") set .@mname$,"Geffen Field";
+if (strcharinfo(3)=="gef_fild07") set .@mname$,"Geffen Field";
+if (strcharinfo(3)=="gef_fild08") set .@mname$,"Geffen Field";
+if (strcharinfo(3)=="gef_fild09") set .@mname$,"Geffen Field";
+if (strcharinfo(3)=="gef_fild10") set .@mname$,"Geffen Field";
+if (strcharinfo(3)=="in_orcs01") set .@mname$,"Orc Village";
+if (strcharinfo(3)=="gef_fild11") set .@mname$,"Geffen Field";
+if (strcharinfo(3)=="moc_fild01") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="moc_fild02") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="moc_fild03") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="moc_fild04") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="moc_fild05") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="moc_fild06") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="moc_fild07") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="moc_fild08") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="moc_fild09") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="moc_fild10") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="moc_fild11") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="moc_fild12") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="moc_fild13") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="moc_fild14") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="moc_fild15") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="moc_fild16") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="in_moc_16") set .@mname$,"Assassin Clan";
+if (strcharinfo(3)=="moc_fild17") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="moc_fild18") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="moc_fild19") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="pay_fild01") set .@mname$,"Payon Forest";
+if (strcharinfo(3)=="pay_fild02") set .@mname$,"Payon Forest";
+if (strcharinfo(3)=="pay_fild03") set .@mname$,"Payon Forest";
+if (strcharinfo(3)=="pay_fild04") set .@mname$,"Sograt Desert";
+if (strcharinfo(3)=="pay_fild05") set .@mname$,"Payon Forest";
+if (strcharinfo(3)=="pay_fild06") set .@mname$,"Payon Forest";
+if (strcharinfo(3)=="pay_fild07") set .@mname$,"Payon Forest";
+if (strcharinfo(3)=="pay_fild08") set .@mname$,"Payon Forest";
+if (strcharinfo(3)=="pay_fild09") set .@mname$,"Payon Forest";
+if (strcharinfo(3)=="pay_fild10") set .@mname$,"Payon Forest";
+if (strcharinfo(3)=="pay_fild11") set .@mname$,"Payon Forest";
+if (strcharinfo(3)=="new_1-1") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_2-1") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_3-1") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_4-1") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_5-1") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_1-2") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_2-2") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_3-2") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_4-2") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_5-2") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_1-3") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_2-3") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_3-3") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_4-3") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_5-3") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_1-4") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_2-4") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_3-4") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_4-4") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_5-4") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="anthell01") set .@mname$,"Ant Hell F1";
+if (strcharinfo(3)=="anthell02") set .@mname$,"Ant Hell F2";
+if (strcharinfo(3)=="gef_dun00") set .@mname$,"Geffen Dungeon F1";
+if (strcharinfo(3)=="gef_dun01") set .@mname$,"Geffen Dungeon F2";
+if (strcharinfo(3)=="gef_dun02") set .@mname$,"Geffenia";
+if (strcharinfo(3)=="gef_dun03") set .@mname$,"Geffenia";
+if (strcharinfo(3)=="iz_dun00") set .@mname$,"Undersea Tunnel F1";
+if (strcharinfo(3)=="iz_dun01") set .@mname$,"Undersea Tunnel F2";
+if (strcharinfo(3)=="iz_dun02") set .@mname$,"Undersea Tunnel F3";
+if (strcharinfo(3)=="iz_dun03") set .@mname$,"Undersea Tunnel F4";
+if (strcharinfo(3)=="iz_dun04") set .@mname$,"Undersea Tunnel F5";
+if (strcharinfo(3)=="iz_dun05") set .@mname$,"Undersea Tunnel F6";
+if (strcharinfo(3)=="in_sphinx1") set .@mname$,"Sphinx F1";
+if (strcharinfo(3)=="in_sphinx2") set .@mname$,"Sphinx F2";
+if (strcharinfo(3)=="in_sphinx3") set .@mname$,"Sphinx F3";
+if (strcharinfo(3)=="in_sphinx4") set .@mname$,"Sphinx F4";
+if (strcharinfo(3)=="in_sphinx5") set .@mname$,"Sphinx F5";
+if (strcharinfo(3)=="moc_pryd01") set .@mname$,"Inside Pyramid F1";
+if (strcharinfo(3)=="moc_pryd02") set .@mname$,"Inside Pyramid F2";
+if (strcharinfo(3)=="moc_pryd03") set .@mname$,"Inside Pyramid F3";
+if (strcharinfo(3)=="moc_pryd04") set .@mname$,"Inside Pyramid F4";
+if (strcharinfo(3)=="moc_pryd05") set .@mname$,"Inside Pyramid B1";
+if (strcharinfo(3)=="moc_pryd06") set .@mname$,"Inside Pyramid B2";
+if (strcharinfo(3)=="moc_prydb1") set .@mname$,"Thief Guild";
+if (strcharinfo(3)=="mjo_dun01") set .@mname$,"Mjolnir Dead Pit F1";
+if (strcharinfo(3)=="mjo_dun02") set .@mname$,"Mjolnir Dead Pit F2";
+if (strcharinfo(3)=="mjo_dun03") set .@mname$,"Mjolnir Dead Pit F3";
+if (strcharinfo(3)=="orcsdun01") set .@mname$,"Orc Dungeon F1";
+if (strcharinfo(3)=="orcsdun02") set .@mname$,"Orc Dungeon F2";
+if (strcharinfo(3)=="pay_dun00") set .@mname$,"Payon Cave F1";
+if (strcharinfo(3)=="pay_dun01") set .@mname$,"Payon Cave F2";
+if (strcharinfo(3)=="pay_dun02") set .@mname$,"Payon Cave F3";
+if (strcharinfo(3)=="pay_dun03") set .@mname$,"Payon Cave F4";
+if (strcharinfo(3)=="pay_dun04") set .@mname$,"Payon Cave F5";
+if (strcharinfo(3)=="prt_maze01") set .@mname$,"Labyrinth Forest F1";
+if (strcharinfo(3)=="prt_maze02") set .@mname$,"Labyrinth Forest F2";
+if (strcharinfo(3)=="prt_maze03") set .@mname$,"Labyrinth Forest F3";
+if (strcharinfo(3)=="prt_sewb1") set .@mname$,"Prontera Culvert F1";
+if (strcharinfo(3)=="prt_sewb2") set .@mname$,"Prontera Culvert F2";
+if (strcharinfo(3)=="prt_sewb3") set .@mname$,"Prontera Culvert F3";
+if (strcharinfo(3)=="prt_sewb4") set .@mname$,"Prontera Culvert F4";
+if (strcharinfo(3)=="treasure01") set .@mname$,"Sunken Ship F1";
+if (strcharinfo(3)=="treasure02") set .@mname$,"Sunken Ship F2";
+if (strcharinfo(3)=="hunter_1-1") set .@mname$,"Hunter Guild";
+if (strcharinfo(3)=="hunter_2-1") set .@mname$,"Hunter Guild";
+if (strcharinfo(3)=="hunter_3-1") set .@mname$,"Hunter Guild";
+if (strcharinfo(3)=="in_hunter") set .@mname$,"Hunter Guild";
+if (strcharinfo(3)=="knight_1-1") set .@mname$,"The Chivalry";
+if (strcharinfo(3)=="knight_2-1") set .@mname$,"The Chivalry";
+if (strcharinfo(3)=="knight_3-1") set .@mname$,"The Chivalry";
+if (strcharinfo(3)=="priest_1-1") set .@mname$,"The Sanctum";
+if (strcharinfo(3)=="priest_2-1") set .@mname$,"The Sanctum";
+if (strcharinfo(3)=="priest_3-1") set .@mname$,"The Sanctum";
+if (strcharinfo(3)=="sword_1-1") set .@mname$,"Swordman Test Hall";
+if (strcharinfo(3)=="sword_2-1") set .@mname$,"Swordman Test Hall";
+if (strcharinfo(3)=="sword_3-1") set .@mname$,"Swordman Test Hall";
+if (strcharinfo(3)=="job_thief1") set .@mname$,"Mushroom Farm";
+if (strcharinfo(3)=="wizard_1-1") set .@mname$,"Wizard Academy";
+if (strcharinfo(3)=="wizard_2-1") set .@mname$,"Wizard Academy";
+if (strcharinfo(3)=="wizard_3-1") set .@mname$,"Wizard Academy";
+if (strcharinfo(3)=="force_1-1") set .@mname$,"Time Limit Fight";
+if (strcharinfo(3)=="force_2-1") set .@mname$,"Time Limit Fight";
+if (strcharinfo(3)=="force_3-1") set .@mname$,"Time Limit Fight";
+if (strcharinfo(3)=="force_1-2") set .@mname$,"Time Limit Fight";
+if (strcharinfo(3)=="force_2-2") set .@mname$,"Time Limit Fight";
+if (strcharinfo(3)=="force_3-2") set .@mname$,"Time Limit Fight";
+if (strcharinfo(3)=="force_1-3") set .@mname$,"Time Limit Fight";
+if (strcharinfo(3)=="force_2-3") set .@mname$,"Time Limit Fight";
+if (strcharinfo(3)=="force_3-3") set .@mname$,"Time Limit Fight";
+if (strcharinfo(3)=="ordeal_1-1") set .@mname$,"Battle Ordeal Mode";
+if (strcharinfo(3)=="ordeal_2-1") set .@mname$,"Battle Ordeal Mode";
+if (strcharinfo(3)=="ordeal_3-1") set .@mname$,"Battle Ordeal Mode";
+if (strcharinfo(3)=="ordeal_1-2") set .@mname$,"Battle Ordeal Mode";
+if (strcharinfo(3)=="ordeal_2-2") set .@mname$,"Battle Ordeal Mode";
+if (strcharinfo(3)=="ordeal_3-2") set .@mname$,"Battle Ordeal Mode";
+if (strcharinfo(3)=="ordeal_1-3") set .@mname$,"Battle Ordeal Mode";
+if (strcharinfo(3)=="ordeal_2-3") set .@mname$,"Battle Ordeal Mode";
+if (strcharinfo(3)=="ordeal_3-3") set .@mname$,"Battle Ordeal Mode";
+if (strcharinfo(3)=="ordeal_1-4") set .@mname$,"Battle Ordeal Mode";
+if (strcharinfo(3)=="ordeal_2-4") set .@mname$,"Battle Ordeal Mode";
+if (strcharinfo(3)=="ordeal_3-4") set .@mname$,"Battle Ordeal Mode";
+if (strcharinfo(3)=="alb_ship") set .@mname$,"Alberta Ship";
+if (strcharinfo(3)=="alberta") set .@mname$,"Alberta";
+if (strcharinfo(3)=="alberta_in") set .@mname$,"Inside Alberta";
+if (strcharinfo(3)=="alb2trea") set .@mname$,"Alberta Island";
+if (strcharinfo(3)=="aldebaran") set .@mname$,"Aldebaran";
+if (strcharinfo(3)=="aldeba_in") set .@mname$,"Inside Aldebaran";
+if (strcharinfo(3)=="gef_tower") set .@mname$,"Geffen Tower";
+if (strcharinfo(3)=="geffen") set .@mname$,"Geffen";
+if (strcharinfo(3)=="geffen_in") set .@mname$,"Inside Geffen";
+if (strcharinfo(3)=="moc_castle") set .@mname$,"Morocc Castle";
+if (strcharinfo(3)=="moc_ruins") set .@mname$,"Morocc Ruins";
+if (strcharinfo(3)=="morocc") set .@mname$,"Morocc Town";
+if (strcharinfo(3)=="morocc_in") set .@mname$,"Inside Morocc";
+if (strcharinfo(3)=="pay_arche") set .@mname$,"Archer Village";
+if (strcharinfo(3)=="payon") set .@mname$,"Payon Town";
+if (strcharinfo(3)=="payon_in01") set .@mname$,"Inside Payon";
+if (strcharinfo(3)=="payon_in02") set .@mname$,"Inside Payon";
+if (strcharinfo(3)=="payon_in03") set .@mname$,"Inside Payon";
+if (strcharinfo(3)=="prontera") set .@mname$,"Prontera City, Capital of Rune Midgard";
+if (strcharinfo(3)=="prt_in") set .@mname$,"Inside Prontera";
+if (strcharinfo(3)=="prt_castle") set .@mname$,"Prontera Castle";
+if (strcharinfo(3)=="prt_church") set .@mname$,"The Sanctuary";
+if (strcharinfo(3)=="izlude") set .@mname$,"Izlude Town";
+if (strcharinfo(3)=="izlude_in") set .@mname$,"Inside Izlude";
+if (strcharinfo(3)=="izlu2dun") set .@mname$,"Byalan Island";
+if (strcharinfo(3)=="monk_in") set .@mname$,"Inside St. Abbey";
+if (strcharinfo(3)=="prt_are_in") set .@mname$,"Waiting room";
+if (strcharinfo(3)=="arena_room") set .@mname$,"Waiting room";
+if (strcharinfo(3)=="prt_arena01") set .@mname$,"ARENA";
+if (strcharinfo(3)=="prt_are01") set .@mname$,"ARENA";
+if (strcharinfo(3)=="glast_01") set .@mname$,"Glast Heim";
+if (strcharinfo(3)=="alde_dun01") set .@mname$,"Clock Tower B1";
+if (strcharinfo(3)=="alde_dun02") set .@mname$,"Clock Tower B2";
+if (strcharinfo(3)=="alde_dun03") set .@mname$,"Clock Tower B3";
+if (strcharinfo(3)=="alde_dun04") set .@mname$,"Clock Tower B4";
+if (strcharinfo(3)=="c_tower1") set .@mname$,"Clock Tower F1";
+if (strcharinfo(3)=="c_tower2") set .@mname$,"Clock Tower F2";
+if (strcharinfo(3)=="c_tower3") set .@mname$,"Clock Tower F3";
+if (strcharinfo(3)=="c_tower4") set .@mname$,"Clock Tower F4";
+if (strcharinfo(3)=="gl_cas01") set .@mname$,"Glast Heim F1";
+if (strcharinfo(3)=="gl_cas02") set .@mname$,"Glast Heim F2";
+if (strcharinfo(3)=="gl_church") set .@mname$,"Glast Heim St. Abbey";
+if (strcharinfo(3)=="gl_chyard") set .@mname$,"Glast Heim Churchyard";
+if (strcharinfo(3)=="gl_dun01") set .@mname$,"The Lowest Cave in Glast Heim F1";
+if (strcharinfo(3)=="gl_dun02") set .@mname$,"The Lowest Cave in Glast Heim F2";
+if (strcharinfo(3)=="gl_in01") set .@mname$,"Inside Glast Heim";
+if (strcharinfo(3)=="gl_knt01") set .@mname$,"Inside Glast Heim Chivalry F1";
+if (strcharinfo(3)=="gl_knt02") set .@mname$,"Inside Glast Heim Chivalry F2";
+if (strcharinfo(3)=="gl_prison") set .@mname$,"Glast Heim Underprison F1";
+if (strcharinfo(3)=="gl_prison1") set .@mname$,"Glast Heim Underprison F2";
+if (strcharinfo(3)=="gl_sew01") set .@mname$,"Glast Heim Culvert F1";
+if (strcharinfo(3)=="gl_sew02") set .@mname$,"Glast Heim Culvert F2";
+if (strcharinfo(3)=="gl_sew03") set .@mname$,"Glast Heim Culvert F3";
+if (strcharinfo(3)=="gl_sew04") set .@mname$,"Glast Heim Culvert F4";
+if (strcharinfo(3)=="gl_step") set .@mname$,"Glast Heim Staircase Dungeon";
+if (strcharinfo(3)=="que_job02") set .@mname$,"Job Quest 2";
+if (strcharinfo(3)=="que_job03") set .@mname$,"Job Quest 3";
+if (strcharinfo(3)=="ordeal_a00") set .@mname$,"Battle Ordeal Mode";
+if (strcharinfo(3)=="ordeal_a02") set .@mname$,"Battle Ordeal Mode";
+if (strcharinfo(3)=="force_map1") set .@mname$,"Time Limit Fight";
+if (strcharinfo(3)=="force_map2") set .@mname$,"Time Limit Fight";
+if (strcharinfo(3)=="force_map3") set .@mname$,"Time Limit Fight";
+if (strcharinfo(3)=="job_hunter") set .@mname$,"Hunter Guild";
+if (strcharinfo(3)=="job_knight") set .@mname$,"The Chivalry";
+if (strcharinfo(3)=="job_priest") set .@mname$,"The Sanctum";
+if (strcharinfo(3)=="job_sword1") set .@mname$,"Swordman Test Hall";
+if (strcharinfo(3)=="job_wizard") set .@mname$,"Wizard Academy";
+if (strcharinfo(3)=="pvp_room") set .@mname$,"PvP : Waiting Room";
+if (strcharinfo(3)=="que_sign02") set .@mname$,"Valley of Gyoll";
+if (strcharinfo(3)=="g_room1-1") set .@mname$,"Quiz Revolution";
+if (strcharinfo(3)=="g_room1-2") set .@mname$,"Quiz Revolution";
+if (strcharinfo(3)=="g_room1-3") set .@mname$,"Quiz Revolution";
+if (strcharinfo(3)=="g_room2") set .@mname$,"Quiz Revolution";
+if (strcharinfo(3)=="guild_vs1-1") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="guild_vs1-2") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="guild_vs1-3") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="guild_vs1-4") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="guild_vs2-1") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="guild_vs2-2") set .@mname$,"Guild Arena";
+if (strcharinfo(3)=="new_zone01") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_zone02") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_zone03") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="new_zone04") set .@mname$,"Training Ground";
+if (strcharinfo(3)=="que_ng") set .@mname$,"Ninja - Gunslinger map";
+if (strcharinfo(3)=="que_san04") set .@mname$,"Inside Freya's Temple";
+if (strcharinfo(3)=="que_ba") set .@mname$,"Unknown";
+if (strcharinfo(3)=="prontera_x") set .@mname$,"Prontera City, Capital of Rune Midgard";
+if (strcharinfo(3)=="alberta_x") set .@mname$,"Alberta";
+if (strcharinfo(3)=="aldebaran_x") set .@mname$,"Aldebaran";
+if (strcharinfo(3)=="geffen_x") set .@mname$,"Geffen";
+if (strcharinfo(3)=="izlude_x") set .@mname$,"Izlude Town";
+if (strcharinfo(3)=="prt_church_x") set .@mname$,"The Sanctuary";
+if (strcharinfo(3)=="prontera_s") set .@mname$,"Prontera City, Capital of Rune Midgard";
+if (strcharinfo(3)=="pay_arche_s") set .@mname$,"Archer Village";
+if (strcharinfo(3)=="rwc01") set .@mname$,"Ragnarok World Championship Arena 1";
+if (strcharinfo(3)=="rwc02") set .@mname$,"Ragnarok World Championship Arena 2";
+if (strcharinfo(3)=="rwc03") set .@mname$,"Ragnarok World Championship Arena 3";
+if (strcharinfo(3)=="2007rwc_r") set .@mname$,"2007 Ragnarok World Championship Arena Waiting Room";
+if (strcharinfo(3)=="2007rwc_01") set .@mname$,"2007 Ragnarok World Championship Arena 1";
+if (strcharinfo(3)=="2007rwc_02") set .@mname$,"2007 Ragnarok World Championship Arena 2";
+if (strcharinfo(3)=="2007rwc_03") set .@mname$,"2007 Ragnarok World Championship Arena 3";
+if (strcharinfo(3)=="2007rwc_04") set .@mname$,"2007 Ragnarok World Championship Arena 4";
+if (strcharinfo(3)=="2007rwc_05") set .@mname$,"2007 Ragnarok World Championship Arena 5";
+if (strcharinfo(3)=="2007rwc_06") set .@mname$,"2007 Ragnarok World Championship Arena 6";
+if (strcharinfo(3)=="2007rwc_07") set .@mname$,"2007 Ragnarok World Championship Arena 7";
+if (strcharinfo(3)=="2007rwc_08") set .@mname$,"2007 Ragnarok World Championship Arena 8";
+if (strcharinfo(3)=="2007rwc_09") set .@mname$,"2007 Ragnarok World Championship Arena 9";
+if (strcharinfo(3)=="2007rwc_10") set .@mname$,"2007 Ragnarok World Championship Arena 10";
+if (strcharinfo(3)=="izlude07") set .@mname$,"Izlude Town";
+if (strcharinfo(3)=="guild_rwc1") set .@mname$,"Training Room";
+if (strcharinfo(3)=="guild_rwc2") set .@mname$,"Training Room";
+if (strcharinfo(3)=="guild_rwc3") set .@mname$,"Training Room";
+if (strcharinfo(3)=="guild_rwc4") set .@mname$,"Training Room";
+if (strcharinfo(3)=="guild_rwc5") set .@mname$,"Training Room";
+if (strcharinfo(3)=="fay_vilg00") set .@mname$,"Payon Village";
+if (strcharinfo(3)=="fay_vilg01") set .@mname$,"Payon Village";
+if (strcharinfo(3)=="gef_vilg00") set .@mname$,"Geffen Village";
+if (strcharinfo(3)=="gef_vilg01") set .@mname$,"Geffen Village";
+if (strcharinfo(3)=="moc_dugn01") set .@mname$,"Morocc Dungeon";
+if (strcharinfo(3)=="moc_dugn02") set .@mname$,"Morocc Dungeon";
+if (strcharinfo(3)=="moc_fild01") set .@mname$,"Morocc Field";
+if (strcharinfo(3)=="moc_fild02") set .@mname$,"Morocc Field";
+if (strcharinfo(3)=="moc_fild03") set .@mname$,"Morocc Field";
+if (strcharinfo(3)=="moc_fild04") set .@mname$,"Morocc Field";
+if (strcharinfo(3)=="moc_intr00") set .@mname$,"Inside Morocc";
+if (strcharinfo(3)=="moc_intr01") set .@mname$,"Inside Morocc";
+if (strcharinfo(3)=="moc_intr02") set .@mname$,"Inside Morocc";
+if (strcharinfo(3)=="moc_intr04") set .@mname$,"Inside Morocc";
+if (strcharinfo(3)=="moc_vilg00") set .@mname$,"Morocc Village";
+if (strcharinfo(3)=="moc_vilg01") set .@mname$,"Morocc Village";
+if (strcharinfo(3)=="moc_vilg02") set .@mname$,"Morocc Village";
+if (strcharinfo(3)=="probemap") set .@mname$,"Probe Map 1";
+if (strcharinfo(3)=="probemap02") set .@mname$,"Probe Map 2";
+if (strcharinfo(3)=="prt_cstl01") set .@mname$,"Prontera Castle";
+if (strcharinfo(3)=="prt_dugn00") set .@mname$,"Prontera Dungeon";
+if (strcharinfo(3)=="prt_dugn01") set .@mname$,"Prontera Dungeon";
+if (strcharinfo(3)=="prt_fild00") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild01") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild03") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild04") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_fild05") set .@mname$,"Prontera Field";
+if (strcharinfo(3)=="prt_intr01") set .@mname$,"Inside Prontera";
+if (strcharinfo(3)=="prt_intr01_a") set .@mname$,"Inside Prontera";
+if (strcharinfo(3)=="prt_intr02") set .@mname$,"Inside Prontera";
+if (strcharinfo(3)=="prt_vilg00") set .@mname$,"Prontera Village";
+if (strcharinfo(3)=="prt_vilg01") set .@mname$,"Prontera Village";
+if (strcharinfo(3)=="prt_vilg02") set .@mname$,"Prontera Village";
+if (strcharinfo(3)=="tank_test") set .@mname$,"Tank Test 1";
+if (strcharinfo(3)=="tank_test2") set .@mname$,"Tank Test 2";
+if (strcharinfo(3)=="test") set .@mname$,"Test Map";
+if (strcharinfo(3)=="oldpayon") set .@mname$,"Old Payon";
+if (strcharinfo(3)=="oldpay_in01") set .@mname$,"Inside Old Payon";
+if (strcharinfo(3)=="oldpay_in02") set .@mname$,"Inside Old Payon";
+if (strcharinfo(3)=="xmas_x") set .@mname$,"Lutie, the Snow Village";
+if (strcharinfo(3)=="alberta_d") set .@mname$,"Alberta";
+if (strcharinfo(3)=="holy_gold") set .@mname$,"Gold Sanctuary";
+if (strcharinfo(3)=="holy_silver") set .@mname$,"Silver Sanctuary";
+if (strcharinfo(3)=="darkness_z") set .@mname$,"Darkness Island";
+if (strcharinfo(3)=="baby_para") set .@mname$,"Playground";
+if (strcharinfo(3)=="dragon_nest") set .@mname$,"Evil Dragon Nest";
+if (strcharinfo(3)=="dragon_nes2") set .@mname$,"Evil Dragon Nest";
+if (strcharinfo(3)=="que_new01") set .@mname$,"New Year Day Place";
+if (strcharinfo(3)=="que_new02") set .@mname$,"New Year Day Place";
+if (strcharinfo(3)=="jp_stage_a") set .@mname$,"Stage A";
+if (strcharinfo(3)=="jp_castle") set .@mname$,"Halloween Castle";
+if (strcharinfo(3)=="jp_ruins") set .@mname$,"Sandy Beach of Ruins";
+if (strcharinfo(3)=="jp_magic") set .@mname$,"House of Magical";
+if (strcharinfo(3)=="jp_stage_b") set .@mname$,"Stage B";
+if (strcharinfo(3)=="jp_dress_a") set .@mname$,"Back Stage A";
+if (strcharinfo(3)=="jp_dress_b") set .@mname$,"Back Stage B";
+if (strcharinfo(3)=="anothership") set .@mname$,"Another Ship";
+if (strcharinfo(3)=="jp_event02") set .@mname$,"Japanese Event 2";
+if (strcharinfo(3)=="jp_event03") set .@mname$,"Japanese Event 3";
+if (strcharinfo(3)=="jp_event04") set .@mname$,"Japanese Event 4";
+if (strcharinfo(3)=="jp_event05") set .@mname$,"Japanese Event 5";
+if (strcharinfo(3)=="jp_event06") set .@mname$,"Japanese Event 6";
+if (strcharinfo(3)=="pvp_2vs2b") set .@mname$,"PvP : Event Coliseum";
+if (strcharinfo(3)=="pvp_2vs2c") set .@mname$,"PvP : Event Coliseum";
+if (strcharinfo(3)=="room_00") set .@mname$,"Room 0";
+if (strcharinfo(3)=="room_01") set .@mname$,"Room 1";
+if (strcharinfo(3)=="room_02") set .@mname$,"Room 2";
+if (strcharinfo(3)=="moonlight_a") set .@mname$,"Moonlight A";
+if (strcharinfo(3)=="guild_vs2pa") set .@mname$,"Prontera Room A";
+if (strcharinfo(3)=="guild_vs2pb") set .@mname$,"Prontera Room B";
+if (strcharinfo(3)=="guild_vs2pc") set .@mname$,"Prontera Room C";
+if (strcharinfo(3)=="guild_vs2ia") set .@mname$,"Izlude Room A";
+if (strcharinfo(3)=="guild_vs2ib") set .@mname$,"Izlude Room B";
+if (strcharinfo(3)=="guild_vs2ic") set .@mname$,"Izlude Room C";
+if (strcharinfo(3)=="guild_vs2ga") set .@mname$,"Geffen Room A";
+if (strcharinfo(3)=="guild_vs2gb") set .@mname$,"Geffen Room B";
+if (strcharinfo(3)=="guild_vs2gc") set .@mname$,"Geffen Room C";
+if (strcharinfo(3)=="guild_vs2ma") set .@mname$,"Morocc Room A";
+if (strcharinfo(3)=="guild_vs2mb") set .@mname$,"Morocc Room B";
+if (strcharinfo(3)=="guild_vs2mc") set .@mname$,"Morocc Room C";
+if (strcharinfo(3)=="tower_a0") set .@mname$,"Tower A0";
+if (strcharinfo(3)=="tower_a1") set .@mname$,"Tower A1";
+if (strcharinfo(3)=="tower_a2") set .@mname$,"Tower A2";
+if (strcharinfo(3)=="tower_a3") set .@mname$,"Tower A3";
+if (strcharinfo(3)=="tower_a4") set .@mname$,"Tower A4";
+if (strcharinfo(3)=="tower_a5") set .@mname$,"Tower A5";
+if (strcharinfo(3)=="tower_a6") set .@mname$,"Tower A6";
+if (strcharinfo(3)=="tower_a7") set .@mname$,"Tower A7";
+if (strcharinfo(3)=="tower_a8") set .@mname$,"Tower A8";
+if (strcharinfo(3)=="tower_a9") set .@mname$,"Tower A9";
+if (strcharinfo(3)=="tower_a10") set .@mname$,"Tower A10";
+if (strcharinfo(3)=="tower_a11") set .@mname$,"Tower A11";
+if (strcharinfo(3)=="tower_a12") set .@mname$,"Tower A12";
+if (strcharinfo(3)=="tower_b0") set .@mname$,"Tower B0";
+if (strcharinfo(3)=="tower_b1") set .@mname$,"Tower B1";
+if (strcharinfo(3)=="tower_b2") set .@mname$,"Tower B2";
+if (strcharinfo(3)=="tower_b3") set .@mname$,"Tower B3";
+if (strcharinfo(3)=="tower_b4") set .@mname$,"Tower B4";
+if (strcharinfo(3)=="tower_b5") set .@mname$,"Tower B5";
+if (strcharinfo(3)=="tower_b6") set .@mname$,"Tower B6";
+if (strcharinfo(3)=="tower_b7") set .@mname$,"Tower B7";
+if (strcharinfo(3)=="tower_b8") set .@mname$,"Tower B8";
+if (strcharinfo(3)=="tower_b9") set .@mname$,"Tower B9";
+if (strcharinfo(3)=="tower_b10") set .@mname$,"Tower B10";
+if (strcharinfo(3)=="tower_b11") set .@mname$,"Tower B11";
+if (strcharinfo(3)=="tower_b12") set .@mname$,"Tower B12";
+if (strcharinfo(3)=="tower_c0") set .@mname$,"Tower C0";
+if (strcharinfo(3)=="tower_c1") set .@mname$,"Tower C1";
+if (strcharinfo(3)=="tower_c2") set .@mname$,"Tower C2";
+if (strcharinfo(3)=="tower_c3") set .@mname$,"Tower C3";
+if (strcharinfo(3)=="tower_c4") set .@mname$,"Tower C4";
+if (strcharinfo(3)=="tower_c5") set .@mname$,"Tower C5";
+if (strcharinfo(3)=="tower_c6") set .@mname$,"Tower C6";
+if (strcharinfo(3)=="tower_c7") set .@mname$,"Tower C7";
+if (strcharinfo(3)=="tower_c8") set .@mname$,"Tower C8";
+if (strcharinfo(3)=="tower_c9") set .@mname$,"Tower C9";
+if (strcharinfo(3)=="tower_c10") set .@mname$,"Tower C10";
+if (strcharinfo(3)=="tower_c11") set .@mname$,"Tower C11";
+if (strcharinfo(3)=="tower_c12") set .@mname$,"Tower C12";
+if (strcharinfo(3)=="tower_d0") set .@mname$,"Tower D0";
+if (strcharinfo(3)=="tower_d1") set .@mname$,"Tower D1";
+if (strcharinfo(3)=="tower_d2") set .@mname$,"Tower D2";
+if (strcharinfo(3)=="tower_d3") set .@mname$,"Tower D3";
+if (strcharinfo(3)=="tower_d4") set .@mname$,"Tower D4";
+if (strcharinfo(3)=="tower_d5") set .@mname$,"Tower D5";
+if (strcharinfo(3)=="tower_d6") set .@mname$,"Tower D6";
+if (strcharinfo(3)=="tower_d7") set .@mname$,"Tower D7";
+if (strcharinfo(3)=="tower_d8") set .@mname$,"Tower D8";
+if (strcharinfo(3)=="tower_d9") set .@mname$,"Tower D9";
+if (strcharinfo(3)=="tower_d10") set .@mname$,"Tower D10";
+if (strcharinfo(3)=="tower_d11") set .@mname$,"Tower D11";
+if (strcharinfo(3)=="tower_d12") set .@mname$,"Tower D12";
+if (strcharinfo(3)=="que_moon") set .@mname$,"Moon Palace";
+if (strcharinfo(3)=="que_moc_16") set .@mname$,"Moon Palace, Mob Area";
+if (strcharinfo(3)=="ein_polu") set .@mname$,"Indoor";
+if (strcharinfo(3)=="poring_c01") set .@mname$,"จุดเริ่มต้นของ NamTom";
+if (strcharinfo(3)=="poring_c02") set .@mname$,"Poring Market";
+if (strcharinfo(3)=="gl_in01_ev") set .@mname$,"Event Crazy Drops";
+if (strcharinfo(3)=="evt_zombie") set .@mname$,"Run From Zombies";
+if (strcharinfo(3)=="arcadanias") set .@mname$,"Arcadanias, Satellite World";
+if (strcharinfo(3)=="pvp_y_room") set .@mname$,"PvP : Waiting Room";
+if (strcharinfo(3)=="pvp_n_room") set .@mname$,"PvP : Waiting Room";
+if (strcharinfo(3)=="pvp_c_room") set .@mname$,"PvP : Waiting Room";
+if (strcharinfo(3)=="pvp_n_1-1") set .@mname$,"PvP : Room Sandwich";
+if (strcharinfo(3)=="pvp_n_2-1") set .@mname$,"PvP : Room Sandwich";
+if (strcharinfo(3)=="pvp_n_3-1") set .@mname$,"PvP : Room Sandwich";
+if (strcharinfo(3)=="pvp_n_4-1") set .@mname$,"PvP : Room Sandwich";
+if (strcharinfo(3)=="pvp_n_5-1") set .@mname$,"PvP : Room Sandwich";
+if (strcharinfo(3)=="pvp_n_6-1") set .@mname$,"PvP : Room Sandwich";
+if (strcharinfo(3)=="pvp_n_7-1") set .@mname$,"PvP : Room Sandwich";
+if (strcharinfo(3)=="pvp_n_8-1") set .@mname$,"PvP : Room Sandwich";
+if (strcharinfo(3)=="pvp_n_1-2") set .@mname$,"PvP : Room Rock On";
+if (strcharinfo(3)=="pvp_n_2-2") set .@mname$,"PvP : Room Rock On";
+if (strcharinfo(3)=="pvp_n_3-2") set .@mname$,"PvP : Room Rock On";
+if (strcharinfo(3)=="pvp_n_4-2") set .@mname$,"PvP : Room Rock On";
+if (strcharinfo(3)=="pvp_n_5-2") set .@mname$,"PvP : Room Rock On";
+if (strcharinfo(3)=="pvp_n_6-2") set .@mname$,"PvP : Room Rock On";
+if (strcharinfo(3)=="pvp_n_7-2") set .@mname$,"PvP : Room Rock On";
+if (strcharinfo(3)=="pvp_n_8-2") set .@mname$,"PvP : Room Rock On";
+if (strcharinfo(3)=="pvp_n_1-3") set .@mname$,"PvP : Four Room";
+if (strcharinfo(3)=="pvp_n_2-3") set .@mname$,"PvP : Four Room";
+if (strcharinfo(3)=="pvp_n_3-3") set .@mname$,"PvP : Four Room";
+if (strcharinfo(3)=="pvp_n_4-3") set .@mname$,"PvP : Four Room";
+if (strcharinfo(3)=="pvp_n_5-3") set .@mname$,"PvP : Four Room";
+if (strcharinfo(3)=="pvp_n_6-3") set .@mname$,"PvP : Four Room";
+if (strcharinfo(3)=="pvp_n_7-3") set .@mname$,"PvP : Four Room";
+if (strcharinfo(3)=="pvp_n_8-3") set .@mname$,"PvP : Four Room";
+if (strcharinfo(3)=="pvp_n_1-4") set .@mname$,"PvP : Room Undercross";
+if (strcharinfo(3)=="pvp_n_2-4") set .@mname$,"PvP : Room Undercross";
+if (strcharinfo(3)=="pvp_n_3-4") set .@mname$,"PvP : Room Undercross";
+if (strcharinfo(3)=="pvp_n_4-4") set .@mname$,"PvP : Room Undercross";
+if (strcharinfo(3)=="pvp_n_5-4") set .@mname$,"PvP : Room Undercross";
+if (strcharinfo(3)=="pvp_n_6-4") set .@mname$,"PvP : Room Undercross";
+if (strcharinfo(3)=="pvp_n_7-4") set .@mname$,"PvP : Room Undercross";
+if (strcharinfo(3)=="pvp_n_8-4") set .@mname$,"PvP : Room Undercross";
+if (strcharinfo(3)=="pvp_n_1-5") set .@mname$,"PvP : Room Copass";
+if (strcharinfo(3)=="pvp_n_2-5") set .@mname$,"PvP : Room Copass";
+if (strcharinfo(3)=="pvp_n_3-5") set .@mname$,"PvP : Room Copass";
+if (strcharinfo(3)=="pvp_n_4-5") set .@mname$,"PvP : Room Copass";
+if (strcharinfo(3)=="pvp_n_5-5") set .@mname$,"PvP : Room Copass";
+if (strcharinfo(3)=="pvp_n_6-5") set .@mname$,"PvP : Room Copass";
+if (strcharinfo(3)=="pvp_n_7-5") set .@mname$,"PvP : Room Copass";
+if (strcharinfo(3)=="pvp_n_8-5") set .@mname$,"PvP : Room Copass";
+if (strcharinfo(3)=="pvp_y_1-1") set .@mname$,"PvP : Room Prontera";
+if (strcharinfo(3)=="pvp_y_2-1") set .@mname$,"PvP : Room Prontera";
+if (strcharinfo(3)=="pvp_y_3-1") set .@mname$,"PvP : Room Prontera";
+if (strcharinfo(3)=="pvp_y_4-1") set .@mname$,"PvP : Room Prontera";
+if (strcharinfo(3)=="pvp_y_5-1") set .@mname$,"PvP : Room Prontera";
+if (strcharinfo(3)=="pvp_y_6-1") set .@mname$,"PvP : Room Prontera";
+if (strcharinfo(3)=="pvp_y_7-1") set .@mname$,"PvP : Room Prontera";
+if (strcharinfo(3)=="pvp_y_8-1") set .@mname$,"PvP : Room Prontera";
+if (strcharinfo(3)=="pvp_y_1-2") set .@mname$,"PvP : Room Izlude";
+if (strcharinfo(3)=="pvp_y_2-2") set .@mname$,"PvP : Room Izlude";
+if (strcharinfo(3)=="pvp_y_3-2") set .@mname$,"PvP : Room Izlude";
+if (strcharinfo(3)=="pvp_y_4-2") set .@mname$,"PvP : Room Izlude";
+if (strcharinfo(3)=="pvp_y_5-2") set .@mname$,"PvP : Room Izlude";
+if (strcharinfo(3)=="pvp_y_6-2") set .@mname$,"PvP : Room Izlude";
+if (strcharinfo(3)=="pvp_y_7-2") set .@mname$,"PvP : Room Izlude";
+if (strcharinfo(3)=="pvp_y_8-2") set .@mname$,"PvP : Room Izlude";
+if (strcharinfo(3)=="pvp_y_1-3") set .@mname$,"PvP : Room Payon";
+if (strcharinfo(3)=="pvp_y_2-3") set .@mname$,"PvP : Room Payon";
+if (strcharinfo(3)=="pvp_y_3-3") set .@mname$,"PvP : Room Payon";
+if (strcharinfo(3)=="pvp_y_4-3") set .@mname$,"PvP : Room Payon";
+if (strcharinfo(3)=="pvp_y_5-3") set .@mname$,"PvP : Room Payon";
+if (strcharinfo(3)=="pvp_y_6-3") set .@mname$,"PvP : Room Payon";
+if (strcharinfo(3)=="pvp_y_7-3") set .@mname$,"PvP : Room Payon";
+if (strcharinfo(3)=="pvp_y_8-3") set .@mname$,"PvP : Room Payon";
+if (strcharinfo(3)=="pvp_y_1-4") set .@mname$,"PvP : Room Alberta";
+if (strcharinfo(3)=="pvp_y_2-4") set .@mname$,"PvP : Room Alberta";
+if (strcharinfo(3)=="pvp_y_3-4") set .@mname$,"PvP : Room Alberta";
+if (strcharinfo(3)=="pvp_y_4-4") set .@mname$,"PvP : Room Alberta";
+if (strcharinfo(3)=="pvp_y_5-4") set .@mname$,"PvP : Room Alberta";
+if (strcharinfo(3)=="pvp_y_6-4") set .@mname$,"PvP : Room Alberta";
+if (strcharinfo(3)=="pvp_y_7-4") set .@mname$,"PvP : Room Alberta";
+if (strcharinfo(3)=="pvp_y_8-4") set .@mname$,"PvP : Room Alberta";
+if (strcharinfo(3)=="pvp_y_1-5") set .@mname$,"PvP : Room Morocc";
+if (strcharinfo(3)=="pvp_y_2-5") set .@mname$,"PvP : Room Morocc";
+if (strcharinfo(3)=="pvp_y_3-5") set .@mname$,"PvP : Room Morocc";
+if (strcharinfo(3)=="pvp_y_4-5") set .@mname$,"PvP : Room Morocc";
+if (strcharinfo(3)=="pvp_y_5-5") set .@mname$,"PvP : Room Morocc";
+if (strcharinfo(3)=="pvp_y_6-5") set .@mname$,"PvP : Room Morocc";
+if (strcharinfo(3)=="pvp_y_7-5") set .@mname$,"PvP : Room Morocc";
+if (strcharinfo(3)=="pvp_y_8-5") set .@mname$,"PvP : Room Morocc";
+if (strcharinfo(3)=="pvp_2vs2") set .@mname$,"PvP : Event Coliseum";
+if (strcharinfo(3)=="league") set .@mname$,"โรงเตี้ยม : โรงเตี้ยม";
+		announce "[ระบบ] : ขณะนี้ คุณอยู่แผนที่ [" + .@mname$ + "] Map: "+strcharinfo(3), bc_self,0xFC04DC;
+	end;
+}
+
+//=====================================
+//wonderworld	mapflag	loadevent
+m_pvp01	mapflag	loadevent
+m_pvp02	mapflag	loadevent
+m_pvp03	mapflag	loadevent
+//prt_pvp	mapflag	loadevent
+//start_a01	mapflag	loadevent
+//home01	mapflag	loadevent
+//home02	mapflag	loadevent
+//home03	mapflag	loadevent
+//home04	mapflag	loadevent
+//home05	mapflag	loadevent
+//home06	mapflag	loadevent
+//home07	mapflag	loadevent
+//home08	mapflag	loadevent
+//home09	mapflag	loadevent
+boss_a01	mapflag	loadevent
+boss_a02	mapflag	loadevent
+boss_a03	mapflag	loadevent
+boss_b01	mapflag	loadevent
+boss_b02	mapflag	loadevent
+boss_b03	mapflag	loadevent
+boss_c01	mapflag	loadevent
+boss_c02	mapflag	loadevent
+boss_c03	mapflag	loadevent
+//m_event01	mapflag	loadevent
+//=====================================
+1@face	mapflag	loadevent
+1@sara	mapflag	loadevent
+dali	mapflag	loadevent
+1@gef	mapflag	loadevent
+1@gef_in	mapflag	loadevent
+1@def01	mapflag	loadevent
+1@def02	mapflag	loadevent
+1@def03	mapflag	loadevent
+evt_bomb	mapflag	loadevent
+gl_cas02_	mapflag	loadevent
+gl_chyard_	mapflag	loadevent
+2@gl_k	mapflag	loadevent
+1@gl_k	mapflag	loadevent
+te_prt_gld	mapflag	loadevent
+te_prtcas01	mapflag	loadevent
+te_prtcas02	mapflag	loadevent
+te_prtcas03	mapflag	loadevent
+te_prtcas04	mapflag	loadevent
+te_prtcas05	mapflag	loadevent
+teg_dun01	mapflag	loadevent
+te_alde_gld	mapflag	loadevent
+teg_dun02	mapflag	loadevent
+prt_fild08d	mapflag	loadevent
+prt_fild08c	mapflag	loadevent
+prt_fild08b	mapflag	loadevent
+prt_fild08a	mapflag	loadevent
+iz_ac01_d	mapflag	loadevent
+iz_ac02_d	mapflag	loadevent
+iz_ac01_c	mapflag	loadevent
+iz_ac02_c	mapflag	loadevent
+iz_ac01_b	mapflag	loadevent
+iz_ac02_b	mapflag	loadevent
+iz_ac01_a	mapflag	loadevent
+iz_ac02_a	mapflag	loadevent
+izlude_d	mapflag	loadevent
+izlude_c	mapflag	loadevent
+izlude_b	mapflag	loadevent
+izlude_a	mapflag	loadevent
+iz_int	mapflag	loadevent
+iz_int01	mapflag	loadevent
+iz_int02	mapflag	loadevent
+iz_int03	mapflag	loadevent
+iz_int04	mapflag	loadevent
+iz_ac01	mapflag	loadevent
+iz_ac02	mapflag	loadevent
+iz_ng01	mapflag	loadevent
+treasure_n1	mapflag	loadevent
+treasure_n2	mapflag	loadevent
+moc_prydn1	mapflag	loadevent
+moc_prydn2	mapflag	loadevent
+eclage	mapflag	loadevent
+ecl_fild01	mapflag	loadevent
+ecl_in01	mapflag	loadevent
+ecl_in02	mapflag	loadevent
+ecl_in03	mapflag	loadevent
+ecl_in04	mapflag	loadevent
+1@ecl	mapflag	loadevent
+ecl_tdun01	mapflag	loadevent
+ecl_tdun02	mapflag	loadevent
+ecl_tdun03	mapflag	loadevent
+ecl_tdun04	mapflag	loadevent
+ecl_hub01	mapflag	loadevent
+que_avan01	mapflag	loadevent
+malaya	mapflag	loadevent
+ma_fild01	mapflag	loadevent
+ma_fild02	mapflag	loadevent
+ma_scene01	mapflag	loadevent
+ma_in01	mapflag	loadevent
+ma_dun01	mapflag	loadevent
+1@ma_h	mapflag	loadevent
+1@ma_c	mapflag	loadevent
+1@ma_b	mapflag	loadevent
+ma_zif01	mapflag	loadevent
+ma_zif02	mapflag	loadevent
+ma_zif03	mapflag	loadevent
+ma_zif04	mapflag	loadevent
+ma_zif05	mapflag	loadevent
+ma_zif06	mapflag	loadevent
+ma_zif07	mapflag	loadevent
+ma_zif08	mapflag	loadevent
+ma_zif09	mapflag	loadevent
+job_ko	mapflag	loadevent
+gld_dun01_2	mapflag	loadevent
+gld_dun02_2	mapflag	loadevent
+gld_dun03_2	mapflag	loadevent
+gld_dun04_2	mapflag	loadevent
+gld2_ald	mapflag	loadevent
+gld2_gef	mapflag	loadevent
+gld2_pay	mapflag	loadevent
+gld2_prt	mapflag	loadevent
+lhz_dun04	mapflag	loadevent
+que_lhz	mapflag	loadevent
+1@lhz	mapflag	loadevent
+iz_dun05	mapflag	loadevent
+malangdo	mapflag	loadevent
+mal_in01	mapflag	loadevent
+mal_in02	mapflag	loadevent
+mal_dun01	mapflag	loadevent
+1@cash	mapflag	loadevent
+1@pump	mapflag	loadevent
+2@pump	mapflag	loadevent
+
+dic_dun03	mapflag	loadevent
+que_house_s	mapflag	loadevent
+dewata	mapflag	loadevent
+dew_in01	mapflag	loadevent
+dew_fild01	mapflag	loadevent
+dew_dun01	mapflag	loadevent
+dew_dun02	mapflag	loadevent
+1@mist	mapflag	loadevent
+mora	mapflag	loadevent
+bif_fild01	mapflag	loadevent
+bif_fild02	mapflag	loadevent
+dicastes01	mapflag	loadevent
+dicastes02	mapflag	loadevent
+dic_in01	mapflag	loadevent
+dic_fild01	mapflag	loadevent
+dic_fild02	mapflag	loadevent
+dic_dun01	mapflag	loadevent
+dic_dun02	mapflag	loadevent
+job3_gen01	mapflag	loadevent
+s_atelier	mapflag	loadevent
+brasilis	mapflag	loadevent
+bra_in01	mapflag	loadevent
+bra_fild01	mapflag	loadevent
+bra_dun01	mapflag	loadevent
+bra_dun02	mapflag	loadevent
+moc_para01	mapflag	loadevent
+job3_arch01	mapflag	loadevent
+job3_arch02	mapflag	loadevent
+job3_arch03	mapflag	loadevent
+job3_guil01	mapflag	loadevent
+job3_guil02	mapflag	loadevent
+job3_guil03	mapflag	loadevent
+job3_rang01	mapflag	loadevent
+job3_rang02	mapflag	loadevent
+job3_rune01	mapflag	loadevent
+job3_rune02	mapflag	loadevent
+job3_rune03	mapflag	loadevent
+job3_war01	mapflag	loadevent
+job3_war02	mapflag	loadevent
+jupe_core2	mapflag	loadevent
+1@nyd	mapflag	loadevent
+2@nyd	mapflag	loadevent
+nyd_dun01	mapflag	loadevent
+nyd_dun02	mapflag	loadevent
+manuk	mapflag	loadevent
+man_fild02	mapflag	loadevent
+man_in01	mapflag	loadevent
+splendide	mapflag	loadevent
+spl_fild01	mapflag	loadevent
+spl_in01	mapflag	loadevent
+spl_in02	mapflag	loadevent
+bat_c01	mapflag	loadevent
+bat_c02	mapflag	loadevent
+bat_c03	mapflag	loadevent
+mid_camp	mapflag	loadevent
+mid_campin	mapflag	loadevent
+man_fild01	mapflag	loadevent
+man_fild03	mapflag	loadevent
+spl_fild02	mapflag	loadevent
+spl_fild03	mapflag	loadevent
+moc_fild22b	mapflag	loadevent
+que_dan01	mapflag	loadevent
+que_dan02	mapflag	loadevent
+schg_que01	mapflag	loadevent
+schg_dun01	mapflag	loadevent
+arug_que01	mapflag	loadevent
+arug_dun01	mapflag	loadevent
+1@orcs	mapflag	loadevent
+2@orcs	mapflag	loadevent
+1@cata	mapflag	loadevent
+2@cata	mapflag	loadevent
+e_tower	mapflag	loadevent
+1@tower	mapflag	loadevent
+2@tower	mapflag	loadevent
+3@tower	mapflag	loadevent
+4@tower	mapflag	loadevent
+5@tower	mapflag	loadevent
+6@tower	mapflag	loadevent
+bat_room	mapflag	loadevent
+bat_a01	mapflag	loadevent
+bat_a02	mapflag	loadevent
+bat_b01	mapflag	loadevent
+bat_b02	mapflag	loadevent
+que_qsch01	mapflag	loadevent
+que_qsch02	mapflag	loadevent
+que_qsch03	mapflag	loadevent
+que_qsch04	mapflag	loadevent
+que_qsch05	mapflag	loadevent
+que_qaru01	mapflag	loadevent
+que_qaru02	mapflag	loadevent
+que_qaru03	mapflag	loadevent
+que_qaru04	mapflag	loadevent
+que_qaru05	mapflag	loadevent
+arug_cas01	mapflag	loadevent
+arug_cas02	mapflag	loadevent
+arug_cas03	mapflag	loadevent
+arug_cas04	mapflag	loadevent
+arug_cas05	mapflag	loadevent
+aru_gld	mapflag	loadevent
+moscovia	mapflag	loadevent
+mosk_in	mapflag	loadevent
+mosk_ship	mapflag	loadevent
+mosk_fild01	mapflag	loadevent
+mosk_fild02	mapflag	loadevent
+mosk_dun01	mapflag	loadevent
+mosk_dun02	mapflag	loadevent
+mosk_dun03	mapflag	loadevent
+mosk_que	mapflag	loadevent
+schg_cas01	mapflag	loadevent
+schg_cas02	mapflag	loadevent
+schg_cas03	mapflag	loadevent
+schg_cas04	mapflag	loadevent
+schg_cas05	mapflag	loadevent
+sch_gld	mapflag	loadevent
+cave	mapflag	loadevent
+moc_fild20	mapflag	loadevent
+moc_fild21	mapflag	loadevent
+moc_fild22	mapflag	loadevent
+bossnia_01	mapflag	loadevent
+bossnia_02	mapflag	loadevent
+bossnia_03	mapflag	loadevent
+bossnia_04	mapflag	loadevent
+itemmall	mapflag	loadevent
+poring_w01	mapflag	loadevent
+poring_w02	mapflag	loadevent
+nameless_i	mapflag	loadevent
+nameless_n	mapflag	loadevent
+nameless_in	mapflag	loadevent
+abbey01	mapflag	loadevent
+abbey02	mapflag	loadevent
+abbey03	mapflag	loadevent
+que_temsky	mapflag	loadevent
+z_agit	mapflag	loadevent
+veins	mapflag	loadevent
+ve_in	mapflag	loadevent
+ve_in02	mapflag	loadevent
+ve_fild01	mapflag	loadevent
+ve_fild02	mapflag	loadevent
+ve_fild03	mapflag	loadevent
+ve_fild04	mapflag	loadevent
+ve_fild05	mapflag	loadevent
+ve_fild06	mapflag	loadevent
+ve_fild07	mapflag	loadevent
+thor_camp	mapflag	loadevent
+que_thor	mapflag	loadevent
+thor_v01	mapflag	loadevent
+thor_v02	mapflag	loadevent
+thor_v03	mapflag	loadevent
+06guild_r	mapflag	loadevent
+06guild_01	mapflag	loadevent
+06guild_02	mapflag	loadevent
+06guild_03	mapflag	loadevent
+06guild_04	mapflag	loadevent
+06guild_05	mapflag	loadevent
+06guild_06	mapflag	loadevent
+06guild_07	mapflag	loadevent
+06guild_08	mapflag	loadevent
+rachel	mapflag	loadevent
+ra_in01	mapflag	loadevent
+ra_temple	mapflag	loadevent
+ra_temin	mapflag	loadevent
+que_rachel	mapflag	loadevent
+ra_temsky	mapflag	loadevent
+ra_fild01	mapflag	loadevent
+ra_fild02	mapflag	loadevent
+ra_fild03	mapflag	loadevent
+ra_fild04	mapflag	loadevent
+ra_fild05	mapflag	loadevent
+ra_fild06	mapflag	loadevent
+ra_fild07	mapflag	loadevent
+ra_fild08	mapflag	loadevent
+ra_fild09	mapflag	loadevent
+ra_fild10	mapflag	loadevent
+ra_fild11	mapflag	loadevent
+ra_fild12	mapflag	loadevent
+ra_fild13	mapflag	loadevent
+ra_san01	mapflag	loadevent
+ra_san02	mapflag	loadevent
+ra_san03	mapflag	loadevent
+ra_san04	mapflag	loadevent
+ra_san05	mapflag	loadevent
+ice_dun01	mapflag	loadevent
+ice_dun02	mapflag	loadevent
+ice_dun03	mapflag	loadevent
+ice_dun04	mapflag	loadevent
+hugel	mapflag	loadevent
+hu_in01	mapflag	loadevent
+que_bingo	mapflag	loadevent
+que_hugel	mapflag	loadevent
+p_track01	mapflag	loadevent
+p_track02	mapflag	loadevent
+odin_tem01	mapflag	loadevent
+odin_tem02	mapflag	loadevent
+odin_tem03	mapflag	loadevent
+hu_fild02	mapflag	loadevent
+hu_fild03	mapflag	loadevent
+hu_fild06	mapflag	loadevent
+ein_fild01	mapflag	loadevent
+ein_fild02	mapflag	loadevent
+ein_fild05	mapflag	loadevent
+yuno_fild10	mapflag	loadevent
+kh_kiehl02	mapflag	loadevent
+kh_kiehl01	mapflag	loadevent
+kh_dun02	mapflag	loadevent
+kh_dun01	mapflag	loadevent
+kh_mansion	mapflag	loadevent
+kh_rossi	mapflag	loadevent
+kh_school	mapflag	loadevent
+kh_vila	mapflag	loadevent
+auction_01	mapflag	loadevent
+auction_02	mapflag	loadevent
+que_job01	mapflag	loadevent
+abyss_01	mapflag	loadevent
+abyss_02	mapflag	loadevent
+abyss_03	mapflag	loadevent
+tha_t01	mapflag	loadevent
+tha_t02	mapflag	loadevent
+tha_t03	mapflag	loadevent
+tha_t04	mapflag	loadevent
+tha_t05	mapflag	loadevent
+tha_t06	mapflag	loadevent
+tha_t07	mapflag	loadevent
+tha_t08	mapflag	loadevent
+tha_t09	mapflag	loadevent
+tha_t10	mapflag	loadevent
+tha_t11	mapflag	loadevent
+tha_t12	mapflag	loadevent
+thana_step	mapflag	loadevent
+thana_boss	mapflag	loadevent
+tha_scene01	mapflag	loadevent
+job_soul	mapflag	loadevent
+job_star	mapflag	loadevent
+hu_fild07	mapflag	loadevent
+hu_fild05	mapflag	loadevent
+hu_fild04	mapflag	loadevent
+hu_fild01	mapflag	loadevent
+yuno_fild06	mapflag	loadevent
+quiz_02	mapflag	loadevent
+jupe_cave	mapflag	loadevent
+juperos_01	mapflag	loadevent
+juperos_02	mapflag	loadevent
+jupe_gate	mapflag	loadevent
+jupe_area1	mapflag	loadevent
+jupe_area2	mapflag	loadevent
+jupe_ele	mapflag	loadevent
+jupe_ele_r	mapflag	loadevent
+jupe_core	mapflag	loadevent
+lighthalzen	mapflag	loadevent
+lhz_in01	mapflag	loadevent
+lhz_in02	mapflag	loadevent
+lhz_in03	mapflag	loadevent
+lhz_cube	mapflag	loadevent
+lhz_que01	mapflag	loadevent
+lhz_airport	mapflag	loadevent
+airplane_01	mapflag	loadevent
+lhz_dun01	mapflag	loadevent
+lhz_dun02	mapflag	loadevent
+lhz_dun03	mapflag	loadevent
+lhz_fild01	mapflag	loadevent
+yuno_pre	mapflag	loadevent
+y_airport	mapflag	loadevent
+lhz_fild03	mapflag	loadevent
+lhz_fild02	mapflag	loadevent
+ein_fild04	mapflag	loadevent
+ein_fild03	mapflag	loadevent
+ein_dun02	mapflag	loadevent
+ein_dun01	mapflag	loadevent
+ein_fild10	mapflag	loadevent
+ein_fild09	mapflag	loadevent
+ein_fild08	mapflag	loadevent
+ein_fild07	mapflag	loadevent
+ein_fild06	mapflag	loadevent
+airplane	mapflag	loadevent
+airport	mapflag	loadevent
+ein_in01	mapflag	loadevent
+einbech	mapflag	loadevent
+einbroch	mapflag	loadevent
+turbo_e_16	mapflag	loadevent
+turbo_e_8	mapflag	loadevent
+turbo_e_4	mapflag	loadevent
+turbo_n_16	mapflag	loadevent
+turbo_n_8	mapflag	loadevent
+turbo_n_4	mapflag	loadevent
+turbo_n_1	mapflag	loadevent
+turbo_room	mapflag	loadevent
+yuno_fild12	mapflag	loadevent
+yuno_fild11	mapflag	loadevent
+yuno_fild09	mapflag	loadevent
+yuno_fild08	mapflag	loadevent
+yuno_fild07	mapflag	loadevent
+yuno_fild05	mapflag	loadevent
+ayo_in02	mapflag	loadevent
+ayo_in01	mapflag	loadevent
+ayo_dun02	mapflag	loadevent
+ayo_dun01	mapflag	loadevent
+ayo_fild02	mapflag	loadevent
+ayo_fild01	mapflag	loadevent
+ayothaya	mapflag	loadevent
+que_god02	mapflag	loadevent
+que_god01	mapflag	loadevent
+quiz_test	mapflag	loadevent
+gefenia04	mapflag	loadevent
+gefenia03	mapflag	loadevent
+gefenia02	mapflag	loadevent
+gefenia01	mapflag	loadevent
+himinn	mapflag	loadevent
+jawaii_in	mapflag	loadevent
+jawaii	mapflag	loadevent
+lou_in02	mapflag	loadevent
+lou_in01	mapflag	loadevent
+lou_dun03	mapflag	loadevent
+lou_dun02	mapflag	loadevent
+lou_dun01	mapflag	loadevent
+lou_fild01	mapflag	loadevent
+louyang	mapflag	loadevent
+valkyrie	mapflag	loadevent
+nif_in	mapflag	loadevent
+yggdrasil01	mapflag	loadevent
+nif_fild02	mapflag	loadevent
+nif_fild01	mapflag	loadevent
+niflheim	mapflag	loadevent
+um_dun01	mapflag	loadevent
+um_dun02	mapflag	loadevent
+um_in	mapflag	loadevent
+um_fild01	mapflag	loadevent
+um_fild02	mapflag	loadevent
+um_fild03	mapflag	loadevent
+um_fild04	mapflag	loadevent
+umbala	mapflag	loadevent
+sec_in01	mapflag	loadevent
+sec_in02	mapflag	loadevent
+sec_pri	mapflag	loadevent
+gon_test	mapflag	loadevent
+gon_dun01	mapflag	loadevent
+gon_dun02	mapflag	loadevent
+gon_dun03	mapflag	loadevent
+gon_fild01	mapflag	loadevent
+gon_in	mapflag	loadevent
+gonryun	mapflag	loadevent
+ama_test	mapflag	loadevent
+ama_dun03	mapflag	loadevent
+ama_dun02	mapflag	loadevent
+ama_dun01	mapflag	loadevent
+ama_fild01	mapflag	loadevent
+ama_in02	mapflag	loadevent
+ama_in01	mapflag	loadevent
+amatsu	mapflag	loadevent
+alde_alche	mapflag	loadevent
+yuno_in05	mapflag	loadevent
+yuno_in04	mapflag	loadevent
+job_duncer	mapflag	loadevent
+job_sage	mapflag	loadevent
+job_cru	mapflag	loadevent
+job_monk	mapflag	loadevent
+monk_test	mapflag	loadevent
+in_rogue	mapflag	loadevent
+mag_dun02	mapflag	loadevent
+mag_dun01	mapflag	loadevent
+yuno_fild04	mapflag	loadevent
+yuno_fild03	mapflag	loadevent
+yuno_fild02	mapflag	loadevent
+yuno_fild01	mapflag	loadevent
+yuno_in03	mapflag	loadevent
+yuno_in02	mapflag	loadevent
+yuno_in01	mapflag	loadevent
+yuno	mapflag	loadevent
+job_wiz	mapflag	loadevent
+job_prist	mapflag	loadevent
+job_knt	mapflag	loadevent
+job_hunte	mapflag	loadevent
+gld_dun04	mapflag	loadevent
+gld_dun03	mapflag	loadevent
+gld_dun02	mapflag	loadevent
+gld_dun01	mapflag	loadevent
+payg_cas05	mapflag	loadevent
+payg_cas04	mapflag	loadevent
+payg_cas03	mapflag	loadevent
+payg_cas02	mapflag	loadevent
+payg_cas01	mapflag	loadevent
+pay_gld	mapflag	loadevent
+aldeg_cas05	mapflag	loadevent
+aldeg_cas04	mapflag	loadevent
+aldeg_cas03	mapflag	loadevent
+aldeg_cas02	mapflag	loadevent
+aldeg_cas01	mapflag	loadevent
+alde_gld	mapflag	loadevent
+gefg_cas05	mapflag	loadevent
+gefg_cas04	mapflag	loadevent
+gefg_cas03	mapflag	loadevent
+gefg_cas02	mapflag	loadevent
+gefg_cas01	mapflag	loadevent
+prtg_cas05	mapflag	loadevent
+prtg_cas04	mapflag	loadevent
+prtg_cas03	mapflag	loadevent
+prtg_cas02	mapflag	loadevent
+prtg_cas01	mapflag	loadevent
+prt_gld	mapflag	loadevent
+tur_dun01	mapflag	loadevent
+tur_dun02	mapflag	loadevent
+tur_dun03	mapflag	loadevent
+tur_dun04	mapflag	loadevent
+tur_dun05	mapflag	loadevent
+tur_dun06	mapflag	loadevent
+guild_vs5	mapflag	loadevent
+guild_vs4	mapflag	loadevent
+guild_vs3	mapflag	loadevent
+guild_vs2	mapflag	loadevent
+guild_vs1	mapflag	loadevent
+guild_room	mapflag	loadevent
+quiz_00	mapflag	loadevent
+quiz_01	mapflag	loadevent
+gef_fild12	mapflag	loadevent
+gef_fild13	mapflag	loadevent
+gef_fild14	mapflag	loadevent
+cmd_in02	mapflag	loadevent
+cmd_in01	mapflag	loadevent
+comodo	mapflag	loadevent
+beach_dun	mapflag	loadevent
+beach_dun2	mapflag	loadevent
+beach_dun3	mapflag	loadevent
+cmd_fild01	mapflag	loadevent
+cmd_fild02	mapflag	loadevent
+cmd_fild03	mapflag	loadevent
+cmd_fild04	mapflag	loadevent
+cmd_fild05	mapflag	loadevent
+cmd_fild06	mapflag	loadevent
+cmd_fild07	mapflag	loadevent
+cmd_fild08	mapflag	loadevent
+cmd_fild09	mapflag	loadevent
+xmas_in	mapflag	loadevent
+xmas_dun02	mapflag	loadevent
+xmas_dun01	mapflag	loadevent
+xmas_fild01	mapflag	loadevent
+xmas	mapflag	loadevent
+mjolnir_01	mapflag	loadevent
+mjolnir_02	mapflag	loadevent
+mjolnir_03	mapflag	loadevent
+mjolnir_04	mapflag	loadevent
+mjolnir_05	mapflag	loadevent
+mjolnir_06	mapflag	loadevent
+mjolnir_07	mapflag	loadevent
+mjolnir_08	mapflag	loadevent
+mjolnir_09	mapflag	loadevent
+mjolnir_10	mapflag	loadevent
+mjolnir_11	mapflag	loadevent
+mjolnir_12	mapflag	loadevent
+prt_fild00	mapflag	loadevent
+prt_fild01	mapflag	loadevent
+prt_fild02	mapflag	loadevent
+prt_fild03	mapflag	loadevent
+prt_fild04	mapflag	loadevent
+prt_fild05	mapflag	loadevent
+prt_fild06	mapflag	loadevent
+prt_fild07	mapflag	loadevent
+prt_fild08	mapflag	loadevent
+prt_fild09	mapflag	loadevent
+prt_fild10	mapflag	loadevent
+prt_fild11	mapflag	loadevent
+prt_monk	mapflag	loadevent
+gef_fild00	mapflag	loadevent
+gef_fild01	mapflag	loadevent
+gef_fild02	mapflag	loadevent
+gef_fild03	mapflag	loadevent
+gef_fild04	mapflag	loadevent
+gef_fild05	mapflag	loadevent
+gef_fild06	mapflag	loadevent
+gef_fild07	mapflag	loadevent
+gef_fild08	mapflag	loadevent
+gef_fild09	mapflag	loadevent
+gef_fild10	mapflag	loadevent
+in_orcs01	mapflag	loadevent
+gef_fild11	mapflag	loadevent
+moc_fild01	mapflag	loadevent
+moc_fild02	mapflag	loadevent
+moc_fild03	mapflag	loadevent
+moc_fild04	mapflag	loadevent
+moc_fild05	mapflag	loadevent
+moc_fild06	mapflag	loadevent
+moc_fild07	mapflag	loadevent
+moc_fild08	mapflag	loadevent
+moc_fild09	mapflag	loadevent
+moc_fild10	mapflag	loadevent
+moc_fild11	mapflag	loadevent
+moc_fild12	mapflag	loadevent
+moc_fild13	mapflag	loadevent
+moc_fild14	mapflag	loadevent
+moc_fild15	mapflag	loadevent
+moc_fild16	mapflag	loadevent
+in_moc_16	mapflag	loadevent
+moc_fild17	mapflag	loadevent
+moc_fild18	mapflag	loadevent
+moc_fild19	mapflag	loadevent
+pay_fild01	mapflag	loadevent
+pay_fild02	mapflag	loadevent
+pay_fild03	mapflag	loadevent
+pay_fild04	mapflag	loadevent
+pay_fild05	mapflag	loadevent
+pay_fild06	mapflag	loadevent
+pay_fild07	mapflag	loadevent
+pay_fild08	mapflag	loadevent
+pay_fild09	mapflag	loadevent
+pay_fild10	mapflag	loadevent
+pay_fild11	mapflag	loadevent
+new_1-1	mapflag	loadevent
+new_2-1	mapflag	loadevent
+new_3-1	mapflag	loadevent
+new_4-1	mapflag	loadevent
+new_5-1	mapflag	loadevent
+new_1-2	mapflag	loadevent
+new_2-2	mapflag	loadevent
+new_3-2	mapflag	loadevent
+new_4-2	mapflag	loadevent
+new_5-2	mapflag	loadevent
+new_1-3	mapflag	loadevent
+new_2-3	mapflag	loadevent
+new_3-3	mapflag	loadevent
+new_4-3	mapflag	loadevent
+new_5-3	mapflag	loadevent
+new_1-4	mapflag	loadevent
+new_2-4	mapflag	loadevent
+new_3-4	mapflag	loadevent
+new_4-4	mapflag	loadevent
+new_5-4	mapflag	loadevent
+anthell01	mapflag	loadevent
+anthell02	mapflag	loadevent
+gef_dun00	mapflag	loadevent
+gef_dun01	mapflag	loadevent
+gef_dun02	mapflag	loadevent
+gef_dun03	mapflag	loadevent
+iz_dun00	mapflag	loadevent
+iz_dun01	mapflag	loadevent
+iz_dun02	mapflag	loadevent
+iz_dun03	mapflag	loadevent
+iz_dun04	mapflag	loadevent
+iz_dun05	mapflag	loadevent
+in_sphinx1	mapflag	loadevent
+in_sphinx2	mapflag	loadevent
+in_sphinx3	mapflag	loadevent
+in_sphinx4	mapflag	loadevent
+in_sphinx5	mapflag	loadevent
+moc_pryd01	mapflag	loadevent
+moc_pryd02	mapflag	loadevent
+moc_pryd03	mapflag	loadevent
+moc_pryd04	mapflag	loadevent
+moc_pryd05	mapflag	loadevent
+moc_pryd06	mapflag	loadevent
+moc_prydb1	mapflag	loadevent
+mjo_dun01	mapflag	loadevent
+mjo_dun02	mapflag	loadevent
+mjo_dun03	mapflag	loadevent
+orcsdun01	mapflag	loadevent
+orcsdun02	mapflag	loadevent
+pay_dun00	mapflag	loadevent
+pay_dun01	mapflag	loadevent
+pay_dun02	mapflag	loadevent
+pay_dun03	mapflag	loadevent
+pay_dun04	mapflag	loadevent
+prt_maze01	mapflag	loadevent
+prt_maze02	mapflag	loadevent
+prt_maze03	mapflag	loadevent
+prt_sewb1	mapflag	loadevent
+prt_sewb2	mapflag	loadevent
+prt_sewb3	mapflag	loadevent
+prt_sewb4	mapflag	loadevent
+treasure01	mapflag	loadevent
+treasure02	mapflag	loadevent
+hunter_1-1	mapflag	loadevent
+hunter_2-1	mapflag	loadevent
+hunter_3-1	mapflag	loadevent
+in_hunter	mapflag	loadevent
+knight_1-1	mapflag	loadevent
+knight_2-1	mapflag	loadevent
+knight_3-1	mapflag	loadevent
+priest_1-1	mapflag	loadevent
+priest_2-1	mapflag	loadevent
+priest_3-1	mapflag	loadevent
+sword_1-1	mapflag	loadevent
+sword_2-1	mapflag	loadevent
+sword_3-1	mapflag	loadevent
+job_thief1	mapflag	loadevent
+wizard_1-1	mapflag	loadevent
+wizard_2-1	mapflag	loadevent
+wizard_3-1	mapflag	loadevent
+force_1-1	mapflag	loadevent
+force_2-1	mapflag	loadevent
+force_3-1	mapflag	loadevent
+force_1-2	mapflag	loadevent
+force_2-2	mapflag	loadevent
+force_3-2	mapflag	loadevent
+force_1-3	mapflag	loadevent
+force_2-3	mapflag	loadevent
+force_3-3	mapflag	loadevent
+ordeal_1-1	mapflag	loadevent
+ordeal_2-1	mapflag	loadevent
+ordeal_3-1	mapflag	loadevent
+ordeal_1-2	mapflag	loadevent
+ordeal_2-2	mapflag	loadevent
+ordeal_3-2	mapflag	loadevent
+alb_ship	mapflag	loadevent
+alberta	mapflag	loadevent
+alberta_in	mapflag	loadevent
+alb2trea	mapflag	loadevent
+aldebaran	mapflag	loadevent
+aldeba_in	mapflag	loadevent
+gef_tower	mapflag	loadevent
+geffen	mapflag	loadevent
+geffen_in	mapflag	loadevent
+moc_castle	mapflag	loadevent
+moc_ruins	mapflag	loadevent
+morocc	mapflag	loadevent
+morocc_in	mapflag	loadevent
+pay_arche	mapflag	loadevent
+payon	mapflag	loadevent
+payon_in01	mapflag	loadevent
+payon_in02	mapflag	loadevent
+payon_in03	mapflag	loadevent
+prontera	mapflag	loadevent
+prt_in	mapflag	loadevent
+prt_castle	mapflag	loadevent
+prt_church	mapflag	loadevent
+izlude	mapflag	loadevent
+izlude_in	mapflag	loadevent
+izlu2dun	mapflag	loadevent
+monk_in	mapflag	loadevent
+prt_are_in	mapflag	loadevent
+arena_room	mapflag	loadevent
+prt_are01	mapflag	loadevent
+glast_01	mapflag	loadevent
+alde_dun01	mapflag	loadevent
+alde_dun02	mapflag	loadevent
+alde_dun03	mapflag	loadevent
+alde_dun04	mapflag	loadevent
+c_tower1	mapflag	loadevent
+c_tower2	mapflag	loadevent
+c_tower3	mapflag	loadevent
+c_tower4	mapflag	loadevent
+gl_cas01	mapflag	loadevent
+gl_cas02	mapflag	loadevent
+gl_church	mapflag	loadevent
+gl_chyard	mapflag	loadevent
+gl_dun01	mapflag	loadevent
+gl_dun02	mapflag	loadevent
+gl_in01	mapflag	loadevent
+gl_knt01	mapflag	loadevent
+gl_knt02	mapflag	loadevent
+gl_prison	mapflag	loadevent
+gl_prison1	mapflag	loadevent
+gl_sew01	mapflag	loadevent
+gl_sew02	mapflag	loadevent
+gl_sew03	mapflag	loadevent
+gl_sew04	mapflag	loadevent
+gl_step	mapflag	loadevent
+que_job02	mapflag	loadevent
+que_job03	mapflag	loadevent
+force_map1	mapflag	loadevent
+force_map2	mapflag	loadevent
+force_map3	mapflag	loadevent
+job_hunter	mapflag	loadevent
+job_knight	mapflag	loadevent
+job_priest	mapflag	loadevent
+job_sword1	mapflag	loadevent
+job_wizard	mapflag	loadevent
+pvp_room	mapflag	loadevent
+que_sign02	mapflag	loadevent
+g_room1-1	mapflag	loadevent
+g_room1-2	mapflag	loadevent
+g_room1-3	mapflag	loadevent
+g_room2	mapflag	loadevent
+guild_vs1-1	mapflag	loadevent
+guild_vs1-2	mapflag	loadevent
+guild_vs1-3	mapflag	loadevent
+guild_vs1-4	mapflag	loadevent
+guild_vs2-1	mapflag	loadevent
+guild_vs2-2	mapflag	loadevent
+new_zone01	mapflag	loadevent
+new_zone02	mapflag	loadevent
+new_zone03	mapflag	loadevent
+new_zone04	mapflag	loadevent
+que_ng	mapflag	loadevent
+que_san04	mapflag	loadevent
+que_ba	mapflag	loadevent
+que_moon	mapflag	loadevent
+que_moc_16	mapflag	loadevent
+poring_c01	mapflag	loadevent
+poring_c02	mapflag	loadevent
+pvp_y_room	mapflag	loadevent
+pvp_n_room	mapflag	loadevent
+pvp_c_room	mapflag	loadevent
+pvp_n_1-1	mapflag	loadevent
+pvp_n_2-1	mapflag	loadevent
+pvp_n_3-1	mapflag	loadevent
+pvp_n_4-1	mapflag	loadevent
+pvp_n_5-1	mapflag	loadevent
+pvp_n_6-1	mapflag	loadevent
+pvp_n_7-1	mapflag	loadevent
+pvp_n_8-1	mapflag	loadevent
+pvp_n_1-2	mapflag	loadevent
+pvp_n_2-2	mapflag	loadevent
+pvp_n_3-2	mapflag	loadevent
+pvp_n_4-2	mapflag	loadevent
+pvp_n_5-2	mapflag	loadevent
+pvp_n_6-2	mapflag	loadevent
+pvp_n_7-2	mapflag	loadevent
+pvp_n_8-2	mapflag	loadevent
+pvp_n_1-3	mapflag	loadevent
+pvp_n_2-3	mapflag	loadevent
+pvp_n_3-3	mapflag	loadevent
+pvp_n_4-3	mapflag	loadevent
+pvp_n_5-3	mapflag	loadevent
+pvp_n_6-3	mapflag	loadevent
+pvp_n_7-3	mapflag	loadevent
+pvp_n_8-3	mapflag	loadevent
+pvp_n_1-4	mapflag	loadevent
+pvp_n_2-4	mapflag	loadevent
+pvp_n_3-4	mapflag	loadevent
+pvp_n_4-4	mapflag	loadevent
+pvp_n_5-4	mapflag	loadevent
+pvp_n_6-4	mapflag	loadevent
+pvp_n_7-4	mapflag	loadevent
+pvp_n_8-4	mapflag	loadevent
+pvp_n_1-5	mapflag	loadevent
+pvp_n_2-5	mapflag	loadevent
+pvp_n_3-5	mapflag	loadevent
+pvp_n_4-5	mapflag	loadevent
+pvp_n_5-5	mapflag	loadevent
+pvp_n_6-5	mapflag	loadevent
+pvp_n_7-5	mapflag	loadevent
+pvp_n_8-5	mapflag	loadevent
+pvp_y_1-1	mapflag	loadevent
+pvp_y_2-1	mapflag	loadevent
+pvp_y_3-1	mapflag	loadevent
+pvp_y_4-1	mapflag	loadevent
+pvp_y_5-1	mapflag	loadevent
+pvp_y_6-1	mapflag	loadevent
+pvp_y_7-1	mapflag	loadevent
+pvp_y_8-1	mapflag	loadevent
+pvp_y_1-2	mapflag	loadevent
+pvp_y_2-2	mapflag	loadevent
+pvp_y_3-2	mapflag	loadevent
+pvp_y_4-2	mapflag	loadevent
+pvp_y_5-2	mapflag	loadevent
+pvp_y_6-2	mapflag	loadevent
+pvp_y_7-2	mapflag	loadevent
+pvp_y_8-2	mapflag	loadevent
+pvp_y_1-3	mapflag	loadevent
+pvp_y_2-3	mapflag	loadevent
+pvp_y_3-3	mapflag	loadevent
+pvp_y_4-3	mapflag	loadevent
+pvp_y_5-3	mapflag	loadevent
+pvp_y_6-3	mapflag	loadevent
+pvp_y_7-3	mapflag	loadevent
+pvp_y_8-3	mapflag	loadevent
+pvp_y_1-4	mapflag	loadevent
+pvp_y_2-4	mapflag	loadevent
+pvp_y_3-4	mapflag	loadevent
+pvp_y_4-4	mapflag	loadevent
+pvp_y_5-4	mapflag	loadevent
+pvp_y_6-4	mapflag	loadevent
+pvp_y_7-4	mapflag	loadevent
+pvp_y_8-4	mapflag	loadevent
+pvp_y_1-5	mapflag	loadevent
+pvp_y_2-5	mapflag	loadevent
+pvp_y_3-5	mapflag	loadevent
+pvp_y_4-5	mapflag	loadevent
+pvp_y_5-5	mapflag	loadevent
+pvp_y_6-5	mapflag	loadevent
+pvp_y_7-5	mapflag	loadevent
+pvp_y_8-5	mapflag	loadevent
+pvp_2vs2	mapflag	loadevent
+league	mapflag	loadevent
+
+// unused maps
+//prontera_x	mapflag	loadevent
+//alberta_x	mapflag	loadevent
+//aldebaran_x	mapflag	loadevent
+//geffen_x	mapflag	loadevent
+//izlude_x	mapflag	loadevent
+//prt_church_x	mapflag	loadevent
+//prontera_s	mapflag	loadevent
+//pay_arche_s	mapflag	loadevent
+//rwc01	mapflag	loadevent
+//rwc02	mapflag	loadevent
+//rwc03	mapflag	loadevent
+//2007rwc_r	mapflag	loadevent
+//2007rwc_01	mapflag	loadevent
+//2007rwc_02	mapflag	loadevent
+//2007rwc_03	mapflag	loadevent
+//2007rwc_04	mapflag	loadevent
+//2007rwc_05	mapflag	loadevent
+//2007rwc_06	mapflag	loadevent
+//2007rwc_07	mapflag	loadevent
+//2007rwc_08	mapflag	loadevent
+//2007rwc_09	mapflag	loadevent
+//2007rwc_10	mapflag	loadevent
+//izlude07	mapflag	loadevent
+//guild_rwc1	mapflag	loadevent
+//guild_rwc2	mapflag	loadevent
+//guild_rwc3	mapflag	loadevent
+//guild_rwc4	mapflag	loadevent
+//guild_rwc5	mapflag	loadevent
+//fay_vilg00	mapflag	loadevent
+//fay_vilg01	mapflag	loadevent
+//gef_vilg00	mapflag	loadevent
+//gef_vilg01	mapflag	loadevent
+//moc_dugn01	mapflag	loadevent
+//moc_dugn02	mapflag	loadevent
+//moc_fild01	mapflag	loadevent
+//moc_fild02	mapflag	loadevent
+//moc_fild03	mapflag	loadevent
+//moc_fild04	mapflag	loadevent
+//moc_intr00	mapflag	loadevent
+//moc_intr01	mapflag	loadevent
+//moc_intr02	mapflag	loadevent
+//moc_intr04	mapflag	loadevent
+//moc_vilg00	mapflag	loadevent
+//moc_vilg01	mapflag	loadevent
+//moc_vilg02	mapflag	loadevent
+//probemap	mapflag	loadevent
+//probemap02	mapflag	loadevent
+//prt_cstl01	mapflag	loadevent
+//prt_dugn00	mapflag	loadevent
+//prt_dugn01	mapflag	loadevent
+//prt_fild00	mapflag	loadevent
+//prt_fild01	mapflag	loadevent
+//prt_fild03	mapflag	loadevent
+//prt_fild04	mapflag	loadevent
+//prt_fild05	mapflag	loadevent
+//prt_intr01	mapflag	loadevent
+//prt_intr01_a	mapflag	loadevent
+//prt_intr02	mapflag	loadevent
+//prt_vilg00	mapflag	loadevent
+//prt_vilg01	mapflag	loadevent
+//prt_vilg02	mapflag	loadevent
+//tank_test	mapflag	loadevent
+//tank_test2	mapflag	loadevent
+//test	mapflag	loadevent
+//oldpayon	mapflag	loadevent
+//oldpay_in01	mapflag	loadevent
+//oldpay_in02	mapflag	loadevent
+//xmas_x	mapflag	loadevent
+//alberta_d	mapflag	loadevent
+//holy_gold	mapflag	loadevent
+//holy_silver	mapflag	loadevent
+//darkness_z	mapflag	loadevent
+//baby_para	mapflag	loadevent
+//dragon_nest	mapflag	loadevent
+//dragon_nes2	mapflag	loadevent
+//que_new01	mapflag	loadevent
+//que_new02	mapflag	loadevent
+//jp_stage_a	mapflag	loadevent
+//jp_castle	mapflag	loadevent
+//jp_ruins	mapflag	loadevent
+//jp_magic	mapflag	loadevent
+//jp_stage_b	mapflag	loadevent
+//jp_dress_a	mapflag	loadevent
+//jp_dress_b	mapflag	loadevent
+//anothership	mapflag	loadevent
+//jp_event02	mapflag	loadevent
+//jp_event03	mapflag	loadevent
+//jp_event04	mapflag	loadevent
+//jp_event05	mapflag	loadevent
+//jp_event06	mapflag	loadevent
+//pvp_2vs2b	mapflag	loadevent
+//pvp_2vs2c	mapflag	loadevent
+//room_00	mapflag	loadevent
+//room_01	mapflag	loadevent
+//room_02	mapflag	loadevent
+//guild_vs2pa	mapflag	loadevent
+//guild_vs2pb	mapflag	loadevent
+//guild_vs2pc	mapflag	loadevent
+//guild_vs2ia	mapflag	loadevent
+//guild_vs2ib	mapflag	loadevent
+//guild_vs2ic	mapflag	loadevent
+//guild_vs2ga	mapflag	loadevent
+//guild_vs2gb	mapflag	loadevent
+//guild_vs2gc	mapflag	loadevent
+//guild_vs2ma	mapflag	loadevent
+//guild_vs2mb	mapflag	loadevent
+//guild_vs2mc	mapflag	loadevent
+//tower_a0	mapflag	loadevent
+//tower_a1	mapflag	loadevent
+//tower_a2	mapflag	loadevent
+//tower_a3	mapflag	loadevent
+//tower_a4	mapflag	loadevent
+//tower_a5	mapflag	loadevent
+//tower_a6	mapflag	loadevent
+//tower_a7	mapflag	loadevent
+//tower_a8	mapflag	loadevent
+//tower_a9	mapflag	loadevent
+//tower_a10	mapflag	loadevent
+//tower_a11	mapflag	loadevent
+//tower_a12	mapflag	loadevent
+//tower_b0	mapflag	loadevent
+//tower_b1	mapflag	loadevent
+//tower_b2	mapflag	loadevent
+//tower_b3	mapflag	loadevent
+//tower_b4	mapflag	loadevent
+//tower_b5	mapflag	loadevent
+//tower_b6	mapflag	loadevent
+//tower_b7	mapflag	loadevent
+//tower_b8	mapflag	loadevent
+//tower_b9	mapflag	loadevent
+//tower_b10	mapflag	loadevent
+//tower_b11	mapflag	loadevent
+//tower_b12	mapflag	loadevent
+//tower_c0	mapflag	loadevent
+//tower_c1	mapflag	loadevent
+//tower_c2	mapflag	loadevent
+//tower_c3	mapflag	loadevent
+//tower_c4	mapflag	loadevent
+//tower_c5	mapflag	loadevent
+//tower_c6	mapflag	loadevent
+//tower_c7	mapflag	loadevent
+//tower_c8	mapflag	loadevent
+//tower_c9	mapflag	loadevent
+//tower_c10	mapflag	loadevent
+//tower_c11	mapflag	loadevent
+//tower_c12	mapflag	loadevent
+//tower_d0	mapflag	loadevent
+//tower_d1	mapflag	loadevent
+//tower_d2	mapflag	loadevent
+//tower_d3	mapflag	loadevent
+//tower_d4	mapflag	loadevent
+//tower_d5	mapflag	loadevent
+//tower_d6	mapflag	loadevent
+//tower_d7	mapflag	loadevent
+//tower_d8	mapflag	loadevent
+//tower_d9	mapflag	loadevent
+//tower_d10	mapflag	loadevent
+//tower_d11	mapflag	loadevent
+//tower_d12	mapflag	loadevent
+//gl_in01_ev	mapflag	loadevent
+//evt_zombie	mapflag	loadevent
+//arcadanias	mapflag	loadevent
+//ein_polu	mapflag	loadevent
+//moonlight_a	mapflag	loadevent
+//ordeal_a00	mapflag	loadevent
+//ordeal_a02	mapflag	loadevent
+//ordeal_1-3	mapflag	loadevent
+//ordeal_2-3	mapflag	loadevent
+//ordeal_3-3	mapflag	loadevent
+//ordeal_1-4	mapflag	loadevent
+//ordeal_2-4	mapflag	loadevent
+//ordeal_3-4	mapflag	loadevent
+//evt_hello	mapflag	loadevent
+//te_aldecas01	mapflag	loadevent
+//te_aldecas02	mapflag	loadevent
+//te_aldecas03	mapflag	loadevent
+//te_aldecas04	mapflag	loadevent
+//te_aldecas05	mapflag	loadevent
+//prt_arena01	mapflag	loadevent
+//e_hugel	mapflag	loadevent
+//job_gun	mapflag	loadevent
+//ver_eju	mapflag	loadevent
+//ver_tunn	mapflag	loadevent
+//verus04	mapflag	loadevent
+//verus03	mapflag	loadevent
+//1@mcd	mapflag	loadevent
+

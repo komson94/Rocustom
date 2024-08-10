@@ -1,0 +1,131 @@
+-	script	CfgLuckSpin	-1,{
+	end;
+	
+OnInit:
+	set $@LS_req_item,671;
+	set $@LS_req_item_amount,10;
+	
+	set $@LS_slot_default_filename$,"spin_01";
+	setarray $@LS_slot_filename$[0],
+		"spin_01", "spin_02", "spin_03", "spin_04", "spin_05", "spin_06", "spin_07", "spin_08", "spin_09", "spin_10",
+		"spin_11", "spin_12", "spin_13", "spin_14", "spin_15", "spin_16", "spin_17", "spin_18", "spin_19", "spin_20",
+		"spin_21", "spin_22", "spin_23", "spin_24";
+		
+	setarray $@LS_slot_item[0],
+		505, 504, 603, 12103, 604, 985, 984, 5215, 671, 12211,
+		617, 2624, 714, 5216, 12210, 12208, 12214, 5340, 7139, 2202,
+		5293, 607, 608, 5376;
+		
+	// system
+	setarray $@LS_size_db[0],
+		getarraysize($@LS_slot_filename$);
+	end;
+}
+
+function	script	LS_NextSlot	{
+	set .@img,getarg(0) + 1;
+	
+	if (.@img >= $@LS_size_db[0])
+		set .@img,0;
+		
+	cutin $@LS_slot_filename$[.@img], 4;
+	soundeffect "se_cock_03.wav",0;
+	sleep2 getarg(1);
+	
+	return .@img;
+}
+
+league,33,52,4	script	Luck True#NPC	563,{
+	set .@npc$,"["+strnpcinfo(1)+"]";
+	cutin $@LS_slot_default_filename$, 4;
+	
+	mes .@npc$;
+	mes "ยินดีต้อนรับสู่ Luck Spin";
+	next;
+	if (select("- ต้องการเล่น", "- ยกเลิก") == 2) goto L_Cancel;
+	mes .@npc$;
+	mes "ท่านต้องมี "+getitemname($@LS_req_item)+" จำนวน "+$@LS_req_item_amount;
+	mes "เพื่อใช้ในการเล่น";
+	next;
+	if (select("- ตกลง", "- ยกเลิก") == 2) goto L_Cancel;
+	if (countitem($@LS_req_item) < $@LS_req_item_amount)
+	{
+		mes .@npc$;
+		mes "ท่านมี "+getitemname($@LS_req_item)+" ไม่พอ";
+		next;
+		goto L_Cancel;
+	}
+	delitem $@LS_req_item, $@LS_req_item_amount;
+	mes .@npc$;
+	mes "กดปิดหน้าต่างเพื่อเริ่มเล่น";
+	close2;
+	pcblockmove getcharid(3),1;
+	
+	set .@img,0;
+	set .@round,rand(5, 10);
+	set .@speed,2;
+	
+	for (set .@i,0; .@i < .@round; set .@i,.@i+1)
+	{
+		set .@mini_round,rand($@LS_size_db[0]/2, $@LS_size_db[0]);
+		for (set .@j,0; .@j < .@mini_round; set .@j,.@j+1)
+			set .@img,callfunc("LS_NextSlot", .@img, .@speed);
+		set .@speed,.@speed+2;
+	}
+
+	set .@round,rand($@LS_size_db[0]/2, $@LS_size_db[0]);
+	
+	for (set .@i,0; .@i < .@round; set .@i,.@i+1)
+	{
+		set .@img,callfunc("LS_NextSlot", .@img, .@speed);
+		set .@speed,.@speed+5;
+	}
+
+	set .@min,($@LS_size_db[0]/2)/2;
+	set .@round,rand(.@min, $@LS_size_db[0]/2);
+	set .@round_per_50,.@round/2;
+	set .@round_per_25,.@round_per_50/2;
+
+	for (set .@i,0; .@i < .@round; set .@i,.@i+1)
+	{
+		set .@img,callfunc("LS_NextSlot", .@img, .@speed);
+
+		if (.@i < .@round_per_25)
+			set .@speed,.@speed+2;
+		else if (.@i < .@round_per_50)
+			set .@speed,.@speed+1;
+		else
+			set .@speed,.@speed+2;
+	}
+	
+	pcblockmove getcharid(3),0;
+	set .@prize,$@LS_slot_item[.@img];
+	
+	if (.@prize == 0)
+	{
+		mes .@npc$;
+		mes "เสียใจด้วยท่านไม่ได้รับรางวัล";
+		soundeffect "taming_fail.wav",0;
+		next;
+		goto L_Cancel;
+	}
+	
+	mes .@npc$;
+	mes "ยินดีด้วยท่านได้รับ "+getitemname(.@prize)+"";
+	soundeffect "tming_success.wav",0;
+	 announce "ผู้เล่น ["+strcharinfo(0)+"] ได้รับ "+getitemname(.@prize)+"จากเครื่อง Luck Spin True",bc_all,0xFF0000;
+	getitem .@prize, 1;
+	close2;
+	cutin "", 255;
+	end;
+	
+L_Cancel:
+	mes .@npc$;
+	mes "โอกาสหน้าเชิญใหม่";
+	close2;
+	cutin "", 255;
+end;
+OnInit:
+waitingroom "Luck Spin True",0;
+end;
+}

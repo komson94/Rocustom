@@ -1,0 +1,16 @@
+
+-	script	whodrop	FAKE_NPC,{
+
+OnDetail:
+.@id = atoi(.@atcmd_parameters$[0]);
+atcommand "@whodrops "+.@id;
+
+	end;	
+OnInit:
+	bindatcmd "whodrops", strnpcinfo(3) +"::OnDetail", 0, 40;
+
+	end;
+}
+
+
+
