@@ -41,7 +41,7 @@
 #define BOUND_ITEMS
 
 /// Uncomment to enable real-time server stats (in and out data and ram usage).
-#define SHOW_SERVER_STATS
+//#define SHOW_SERVER_STATS
 
 /// Comment to disable the job base HP/SP/AP table (job_basepoints.yml)
 #define HP_SP_TABLES
@@ -60,7 +60,7 @@
 		#define MIN_STORAGE 300 // Default number of storage slots.
 	#endif
 	#ifndef MAX_CHAR_VIP
-		#define MAX_CHAR_VIP 3 // This must be less than MAX_CHARS
+		#define MAX_CHAR_VIP 6 // This must be less than MAX_CHARS
 	#endif
 #else
 	#ifndef MIN_STORAGE
@@ -92,9 +92,10 @@
 // Compilation might work on these compilers, but they might not fully follow newer C++ rules and
 // cause unexpected behavior.
 // Do NOT create any issues or ask for help with these compilers.
-#define DEPRECATED_COMPILER_SUPPORT
+//#define DEPRECATED_COMPILER_SUPPORT
 
 /// Uncomment for use with Nemo patch ExtendCashShopPreview
+
 #define ENABLE_CASHSHOP_PREVIEW_PATCH
 
 /// Uncomment for use with Nemo patch ExtendOldCashShopPreview
@@ -106,7 +107,7 @@
 
 /// Uncomment to forcibly disable the detailed loading output.
 /// This will noticeably decrease the boot time of the map server by not having to print so many status messages.
-#undef DETAILED_LOADING_OUTPUT
+//#undef DETAILED_LOADING_OUTPUT
 
 /**
  * No settings past this point
