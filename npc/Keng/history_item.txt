@@ -10,11 +10,12 @@ OnInit:
 		if(attachrid(.account[.j]) == 1)
 		{
 		getinventorylist;
+		freeloop(1);
 		for(set @i, 0; @i < @inventorylist_count; set @i, @i + 1) 
 		{
 			.@command[0] = @inventorylist_id[@i];
 			
-			freeloop(1);
+			
 			setarray .@tables$,"cart_inventory","guild_storage","inventory","storage",  "mail_attachments";
 			setarray .@id$,		"char_id",		"guild_id",		"char_id",	"account_id","id";
 				for(.@i=0;.@i<getarraysize(.@tables$);.@i++){
@@ -43,14 +44,15 @@ OnInit:
 					deletearray .@allcounts,getarraysize(.@allcounts);
 					
 					//dispbottom "syn..";
-				freeloop(0);
+				
 			}
+			freeloop(0);
 		}
 
 	}
 	deletearray .account,getarraysize(.account);
 		detachrid;
-		sleep 386400;
+		sleep 86400;
 	}
 end;
 }
