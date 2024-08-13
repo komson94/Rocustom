@@ -1,0 +1,47 @@
+-	script	Move_charactor	-1,{
+
+		mes "[ GM Service ]";
+
+		.nb = query_sql("SELECT `char_id`,`name` FROM `char` WHERE `account_id` = "+getcharid(3),.char_id$,.name$);
+		
+		for (set .i,0; .i < getarraysize(.char_id$); set .i,.i+1) {
+			.@menu$ = .@menu$ + .name$[.i] + ":";
+		}
+			 
+		.@select = select(.@menu$)-1;
+		//mes .char_id$[.@select];
+		query_sql "UPDATE `char` SET `last_map` = 'league', `last_x` = '15', `last_y` = '12' WHERE `char`.`char_id` ="+.char_id$[.@select];
+		
+		mes "เรียบร้อย !! โปรดทำการล็อคอินเข้าสู่ตัวละครอีกครั้ง ";
+
+	deletearray .nb,getarraysize(.nb);
+
+end;
+	
+OnInit:
+
+
+
+
+
+	setarray .message$,
+
+			"ย้ายตัวละคร ",
+
+			"เด้งแมพ";
+
+			set .message_size,getarraysize( .message$ );
+
+			while( .message_size ){
+
+			delwaitingroom;
+
+			waitingroom ""+.message$[ rand( .message_size ) ],0;
+
+			sleep 600;
+
+			}
+end;
+}
+
+league,54,44,4	duplicate(Move_charactor)	ผู้ช่วย GM#League01	685
