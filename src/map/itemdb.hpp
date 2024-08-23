@@ -3200,6 +3200,27 @@ private:
 
 extern ItemGroupDatabase itemdb_group;
 
+/**
++* Extended Vending system [Lilith]
++**/
+struct s_item_vend_db {
+	t_itemid nameid;
+};
+
+class ItemVendingDatabase : public TypesafeCachedYamlDatabase<t_itemid, s_item_vend_db> {
+public:
+	ItemVendingDatabase() : TypesafeCachedYamlDatabase("ITEM_VENDING_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const ryml::NodeRef& node);
+};
+
+extern ItemVendingDatabase itemdb_vending;
+
+//extern struct s_item_vend item_vend[MAX_INVENTORY];
+
 struct s_laphine_synthesis_requirement{
 	t_itemid item_id;
 	uint16 amount;
@@ -3449,5 +3470,9 @@ void itemdb_reload(void);
 
 void do_final_itemdb(void);
 void do_init_itemdb(void);
+
+/// Extended Vending
+#define ITEMID_ZENY battle_config.item_zeny
+#define ITEMID_CASH battle_config.item_cash
 
 #endif /* ITEMDB_HPP */
