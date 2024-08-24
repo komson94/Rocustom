@@ -113652,3 +113652,40 @@ Body:
             Item: Snow_F_Stone3
             Amount: 4
             Rate: 1
+  - Group: ODIN_RELIC
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: CassockA_STR
+            Rate: 1
+          - Index: 1
+            Item: CassockA_AGI
+            Rate: 1
+          - Index: 2
+            Item: CassockA_VIT
+            Rate: 1
+          - Index: 3
+            Item: CassockA_INT
+            Rate: 1
+          - Index: 4
+            Item: CassockA_DEX
+            Rate: 1
+          - Index: 5
+            Item: CassockA_LUK
+            Rate: 1
+          - Index: 6
+            Item: Cassock_Manteau
+            Rate: 1
+          - Index: 7
+            Item: Cassock_Boots
+            Rate: 1
+          - Index: 8
+            Item: Soft_Feather
+            Rate: 1
+          - Index: 9
+            Item: Rune_Of_Darkness
+            Rate: 1
+          - Index: 10
+            Item: Angel_Dream
+            Rate: 1

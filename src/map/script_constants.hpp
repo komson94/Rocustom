@@ -7811,7 +7811,8 @@
 	export_constant(IG_COSTUMEMILEPACK_35_2);
 	export_constant(IG_COSTUMEMILEPACK_35_3);
 	export_constant(IG_D_GW_EXTRACTOR);
-
+	export_constant(IG_ODIN_RELIC);
+	
 	/* unit stop walking */
 	export_constant(USW_NONE);
 	export_constant(USW_FIXPOS);

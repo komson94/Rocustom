@@ -2844,7 +2844,8 @@ enum e_random_item_group {
 	IG_COSTUMEMILEPACK_35_2,
 	IG_COSTUMEMILEPACK_35_3,
 	IG_D_GW_EXTRACTOR,
-
+	IG_ODIN_RELIC,
+	
 	IG_MAX,
 };
 
