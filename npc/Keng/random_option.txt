@@ -68,6 +68,7 @@ league,44,5,3	script	Random Option	10060,{
 	if(countitem(.require_item) > 0){
 		setrandomoption(.@part,(.@slot - 1),.@all_opt[rand(0,(getarraysize(.@all_opt)-1))],rand(3,10),0);
 		delitem .require_item,1;
+		specialeffect2 EF_REPAIRWEAPON;
 	}
 	//announce strcharinfo(0) + " ใช้ " + .@cash_price + " Cash กับ " + getequipname(.@part) + " ได้รับ Random Option " + .@sum_slot + " แถว !!",bc_all,0xedeaaf;
 	dispbottom "ใช้ " + .@cash_price + " Cash กับ " + getequipname(.@part) + " ได้รับ Random Option ที่แถว " + .@slot + " !!";

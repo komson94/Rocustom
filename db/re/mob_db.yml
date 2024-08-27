@@ -100723,10 +100723,27 @@ Body:
       NoRandomWalk: true
       Detector: true
       Mvp: true
+    MvpDrops:
+      - Item: Odin_itembox
+        Rate: 10000
+      - Item: Odin_itembox
+        Rate: 10000
     Drops:
       - Item: Reginleif_Card
         Rate: 1
         StealProtected: true
+      - Item: Valhalla_Flower
+        Rate: 5000
+      - Item: Angel_Dream
+        Rate: 10000
+      - Item: Cassock_Boots
+        Rate: 500
+      - Item: Odin_itembox
+        Rate: 10000
+      - Item: Valkyrja's_Shield
+        Rate: 500
+      - Item: Cassock_Manteau
+        Rate: 500
   - Id: 20611
     AegisName: INGRID
     Name: Valkryie Ingrid
@@ -100763,10 +100780,27 @@ Body:
       NoRandomWalk: true
       Detector: true
       Mvp: true
+    MvpDrops:
+      - Item: Odin_itembox
+        Rate: 10000
+      - Item: Odin_itembox
+        Rate: 10000
     Drops:
       - Item: Ingrid_Card
         Rate: 1
         StealProtected: true
+      - Item: Valhalla_Flower
+        Rate: 5000
+      - Item: Cassock_Manteau
+        Rate: 500
+      - Item: Cassock_Boots
+        Rate: 500
+      - Item: Valkyrja's_Shield
+        Rate: 500
+      - Item: Angel_Dream
+        Rate: 10000
+      - Item: Odin_itembox
+        Rate: 10000
   - Id: 20612
     AegisName: FERUS_P
     Name: Purple Ferus
