@@ -1,0 +1,53 @@
+league,28,52,4	script	สุ่มเหรียญปั่นสล๊อต	1_M_PRON_KING,{
+	set .Require,1000000;	
+	setarray .Shop[0],677,671;		// ตั้งค่า เพิ่ม / ลบ / แก้ใข รายการไอเท็มที่ใช้การซื้อขาย : <รหัสไอเท็ม>,<จำนวนราคา>
+	mes "[สุ่มเหรียญปั่นสล๊อต]";
+	mes "ต้องใช้  Zeeny จำนวน "+ F_InsertComma(.Require)+" Zeny";
+	mes "และเหรียญที่ได้ก็แล้วแต่ข้าจะหยิบติดมือมา ";
+	mes "โอเครไหม ?";
+	if(Zeny < .Require){
+		clear;
+		mes "[สุ่มเหรียญปั่นสล๊อต]";
+		mes "คุณมี  Zeny ไม่เพียงพอ!!!";
+		mes "เสียใจด้วย การพนันเป็นสิ่งไม่ดี";
+		close;
+	}
+	
+	if(select("~ ^0055FFใช่ ข้าต้องการมันทันที^000000:~ ^777777ข้าขอ... คิดใหม่อีกครั้งดีกว่า^000000") == 2)
+	{
+		clear;
+		mes "[สุ่มเหรียญปั่นสล๊อต]";
+		mes "อื้มมม, โอเค ไว้ต้องการเมื่อไรค่อยกลับมาอีกครั้ง...";
+		//emotion e_hmm;
+		close;
+	}else{
+	clear;
+	mes "[สุ่มเหรียญปั่นสล๊อต]";
+		set .item,.Shop[rand(getarraysize(.shop))];
+		mes "นี่คือ เหรียญของเจ้า ";
+		mes "เอ้า เอาไป ข้าไม่มีเวลามากนัก !! ไป ไปๆ";
+		getitem .item,1;
+		Zeny = zeny-.Require;
+		specialeffect2 EF_REPAIRWEAPON;
+		dispbottom "คุณได้รับ "+getitemname(.item)+" จำนวน  1  ชิ้น Zeny ของคุณคือ "+F_InsertComma(Zenys)+" Zeny";
+	}
+	
+	
+		deletearray .Shop,getarraysize(.shop);
+		deletearray .Require,getarraysize(.Require);
+	
+	end;
+OnInit:
+	
+	set .message$,"  สุ่มเหรียญปั่นสล๊อต   ";
+	while(1)
+	{
+	
+	 delwaitingroom;
+	
+	 waitingroom .message$,0;
+	 
+	 sleep 100;
+	}	
+end;
+}
