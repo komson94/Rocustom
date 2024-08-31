@@ -1,6 +1,6 @@
 league,28,52,4	script	สุ่มเหรียญปั่นสล๊อต	1_M_PRON_KING,{
 	set .Require,1000000;	
-	setarray .Shop[0],677,671;		// ตั้งค่า เพิ่ม / ลบ / แก้ใข รายการไอเท็มที่ใช้การซื้อขาย : <รหัสไอเท็ม>,<จำนวนราคา>
+
 	mes "[สุ่มเหรียญปั่นสล๊อต]";
 	mes "ต้องใช้  Zeeny จำนวน "+ F_InsertComma(.Require)+" Zeny";
 	mes "และเหรียญที่ได้ก็แล้วแต่ข้าจะหยิบติดมือมา ";
@@ -33,12 +33,12 @@ league,28,52,4	script	สุ่มเหรียญปั่นสล๊อต	1_M_PRON_KING,{
 	}
 	
 	
-		deletearray .Shop,getarraysize(.shop);
+		 
 		deletearray .Require,getarraysize(.Require);
 	
 	end;
 OnInit:
-	
+		setarray .Shop[0],677,671;		// ตั้งค่า เพิ่ม / ลบ / แก้ใข รายการไอเท็มที่ใช้การซื้อขาย : <รหัสไอเท็ม>,<จำนวนราคา>
 	set .message$,"  สุ่มเหรียญปั่นสล๊อต   ";
 	while(1)
 	{
