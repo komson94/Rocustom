@@ -11,6 +11,8 @@ Header:
   Version: 1
 
 Body:
+ - Item: Gold_Coin
+ - Item: White_Gold_Coin 
  - Item: TCG_Card
  - Item: Mithril_Coin
  - Item: Silver_Coin
