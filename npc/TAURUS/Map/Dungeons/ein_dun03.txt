@@ -1,0 +1,202 @@
+//===== rAthena Script =======================================
+//= Einbech 03 Script
+//===== By: ================================================== 
+//= mr.TAURUS
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//============================================================
+
+//==================================================
+// ein_dun03 - Warp
+//==================================================
+ein_dun03,268,281,0	warp	ein_dun02	1,1,ein_dun02,22,250
+ein_dun02,17,250,0	script	ein_dun03	WARPNPC,2,2,{
+	if (Baselevel < .ReqLevel)    {
+        mes .NPC$;
+        mes "ต้องมี Base Level ^FF0000"+.ReqLevel+"^000000 ขึ้นไป";
+        mes "จึงจะสามารถเข้าไปได้.";
+        close;
+    }
+	warp .mapname$,.x,.y;
+    end;
+OnInit:
+    .ReqLevel = 180;
+    .mapname$ = "ein_dun03";
+    .x = 268;
+    .y = 277;
+    end;
+}
+
+
+//==================================================
+// ein_dun03 - Mine Dungeon
+//==================================================
+ein_dun03,0,0	monster	Green Mineral	20594,30,5000
+ein_dun03,0,0	monster	Red Obsidian	20595,30,5000
+ein_dun03,0,0	monster	White Mineral	20596,30,5000
+ein_dun03,0,0	monster	Purple Mineral	20597,30,5000
+ein_dun03,0,0	monster	Jewelry Ant	20598,30,5000
+ein_dun03,0,0	monster	Jewel	20600,20,5000
+ein_dun03,0,0	monster	White Porcellio	20602,40,5000
+ein_dun03,0,0	monster	Abyssman	20603,40,5000
+ein_dun03,0,0,0,0	boss_monster	Jungoliant	20601,1,7500000,600000,0
+
+//==================================================
+// NPC
+//==================================================
+-	bartershop	#Elmen_Shop	-1
+-	bartershop	#Elmen_Acc	-1
+// official npc position.
+//einbech,149,257,3	script	Elmen	4_M_ALCHE_E,{
+legend_ro,96,121,5	script	Elmen	940,{
+	disable_items;
+	mes .NPCname$;
+	mes "สวัสดี "+strcharinfo(0)+"";
+	mes "ข้าสามารถสร้าง <ITEM>"+getitemname(.material[6])+"<INFO>"+.material[6]+"</INFO></ITEM>";
+	mes "และอะไรก็ตามที่เกี่ยวข้องกับ Einbech.";
+	next;
+	switch(select(
+		""+.sb$+" สร้างไอเทม",
+		""+.sb$+" ซื้อไอเทม",
+		""+.sb$+" ไม่มีอะไร"
+	)) {
+		case 1:
+			switch(select(
+				""+.sb$+" สร้าง "+getitemname(.material[6])+"",
+				""+.sb$+" สร้าง อาวุธ",
+				""+.sb$+" สร้าง เครื่องประดับ",
+				""+.sb$+" ไม่มีอะไร"
+			)) {
+				case 1:
+					next;
+					mes .NPCname$;
+					mes "เจ้าต้องการจะสร้างกี่อัน?";
+					mes "^FF0000หากใส่ 0 จะเป็นการยกเลิก.^000000";
+					next;
+					input .@num;
+					if (.@num == 0) {
+						mes .NPCname$;
+						mes "ยกเลิกเรียบร้อยแล้ว.";
+					}
+					if (.@num > 0) {
+						mes .NPCname$;
+						mes "เจ้าแน่ใจใช่ไหมที่จะสร้าง";
+						mes "<ITEM>"+getitemname(.material[6])+"<INFO>"+.material[6]+"</INFO></ITEM> x"+callfunc("F_InsertComma",.@num)+"?";
+						next;
+						switch(select(""+.sb$+" ใช่",""+.sb$+" ไม่" )) {
+							case 1:
+								if (countitem(.material[1]) < .@num) || (countitem(.material[2]) < .@num) || (countitem(.material[3]) < .@num) || (countitem(.material[4]) < .@num) || (countitem(.material[5]) < .@num) {
+									mes .NPCname$;
+									mes "ขอโทษด้วย";
+									mes "แต่เจ้ามีวัตถุดิบไม่เพียงพอ.";
+									close;
+								}
+								delitem .material[1],.@num;
+								delitem .material[2],.@num;
+								delitem .material[3],.@num;
+								delitem .material[4],.@num;
+								delitem .material[5],.@num;
+								specialeffect 101;
+								next;
+								getitem .material[6],.@num;
+								mes .NPCname$;
+								mes "การแลกเปลี่ยนเสร็จสิ้น.";
+								close;
+								
+							case 2:
+								mes .NPCname$;
+								mes "ยกเลิกเรียบร้อยแล้ว.";
+								close;
+						}
+					}
+					end;
+					
+				case 2:
+					next;
+					mes .NPCname$;
+					mes "การสร้างอาวุธจะต้องใช้ <ITEM>"+getitemname(.material[6])+"<INFO>"+.material[6]+"</INFO></ITEM> x^FF0000"+.wpcraft+"^000000";
+					mes "และจะได้รับอาวุธแบบสุ่ม.";
+					mes "เจ้าต้องการจะสร้างอาวุธหรือไม่?";
+					next;
+					switch(select(""+.sb$+" ใช่",""+.sb$+" ไม่" )) {
+						case 1:
+							if (countitem(.material[6]) < .wpcraft) {
+								mes .NPCname$;
+								mes "ขอโทษด้วย";
+								mes "แต่เจ้ามี <ITEM>"+getitemname(.material[6])+"<INFO>"+.material[6]+"</INFO></ITEM> ไม่เพียงพอ.";
+								close;
+							}
+							delitem .material[6],.wpcraft;
+							specialeffect 101;
+							next;
+							.@reward = .weapons[rand(getarraysize(.weapons))];
+							getitem .@reward,1;
+							mes .NPCname$;
+							mes "การแลกเปลี่ยนเสร็จสิ้น";
+							mes "เจ้าได้รับ <ITEM>"+getitemname(.@reward)+"<INFO>"+.@reward+"</INFO></ITEM>";
+							close;
+							
+						case 2:
+							mes .NPCname$;
+							mes "ยกเลิกเรียบร้อยแล้ว.";
+							close;
+					}
+					
+				case 3:
+					close2;
+					callshop "#Elmen_Acc",1;
+					end;
+			}
+		case 2:
+			close2;
+			callshop "#Elmen_Shop",1;
+			end;
+		case 3: end;
+	}
+	
+OnInit:
+	waitingroom " Dvnite Quest",0;
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	.sb$ = "~";
+	setarray .material,
+		0,//null
+		25809,//Redium
+		25810,//Rindium
+		25811,//Odium
+		25812,//Purdium
+		25813,//Whidium
+		25814;//Dynite
+		
+	setarray .weapons,
+		1867,//Safety Knuckle
+		2058,//Detecting Staff
+		13346,//Grinder Huuma Shuriken
+		16099,//Rubber Hammer
+		18190,//Bolt Shooter
+		21054,//Claw Sword
+		26162,//Welding Wand
+		26215,//Safety Whip
+		28045,//Bolt Crusher
+		28140,//Saw Axe
+		28635,//Safety Manual
+		28771,//Metal Detector Mk47
+		28772,//Jewel Detector Mk47
+		550006,//Safety Foxtail
+		32026,//Blocking Spear
+		32110,//Safety Lute
+		32303,//Bolt Revolver
+		32352;//Safety Saber
+	.wpcraft = 50;
+	//Shop
+	npcshopadditem "#Elmen_Shop",9514,25814,30,-1;
+	npcshopadditem "#Elmen_Shop",9529,25814,30,-1;	
+	npcshopadditem "#Elmen_Acc",32248,25814,75,-1;
+	npcshopadditem "#Elmen_Acc",32249,25814,75,-1;
+	npcshopadditem "#Elmen_Acc",32250,25814,75,-1;
+	npcshopadditem "#Elmen_Acc",32251,25814,75,-1;
+	end;
+	
+}
+

@@ -12,4 +12,15 @@ Header:
 
 Body:
  - Item: Gold_Coin
- - Item: White_Gold_Coin
+ - Item: White_Gold_Coin 
+ - Item: TCG_Card
+ - Item: Mithril_Coin
+ - Item: Silver_Coin
+ - Item: Copper_Coin
+ - Item: Geffen_Magic_Coin 
+ - Item: Sweets_Coin 
+ - Item: TokenOfHero 
+ - Item: TokenOfHonor 
+ - Item: Bloody_Coin 
+ - Item: Charleston_Parts 
+ - Item: Normal_Parts

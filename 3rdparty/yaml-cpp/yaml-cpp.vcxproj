@@ -22,7 +22,6 @@
     <ProjectGuid>{61D6A599-6BED-4154-A9FC-40553BD972E0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>yamlcpp</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -96,8 +95,9 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\yaml-cpp\include\;$(SolutionDir)3rdparty\yaml-cpp\src\;</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;WIN32;_WINDOWS;_DEBUG;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -108,8 +108,9 @@
       </SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\yaml-cpp\include\;$(SolutionDir)3rdparty\yaml-cpp\src\;</AdditionalIncludeDirectories>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;WIN32;_WINDOWS;_DEBUG;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -121,8 +122,9 @@
       <SDLCheck>
       </SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\yaml-cpp\include\;$(SolutionDir)3rdparty\yaml-cpp\src\;</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -138,8 +140,9 @@
       <SDLCheck>
       </SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\yaml-cpp\include\;$(SolutionDir)3rdparty\yaml-cpp\src\;</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -175,6 +178,7 @@
     <ClCompile Include="src\contrib\graphbuilder.cpp" />
     <ClCompile Include="src\contrib\graphbuilderadapter.cpp" />
     <ClCompile Include="src\convert.cpp" />
+    <ClCompile Include="src\depthguard.cpp" />
     <ClCompile Include="src\directives.cpp" />
     <ClCompile Include="src\emit.cpp" />
     <ClCompile Include="src\emitfromevents.cpp" />

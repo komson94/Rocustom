@@ -34,7 +34,7 @@
 //= 1.6 - Dungeon warp [Neouni] (beta only)
 // - added option to add a extra fee for going down deeper into dungeon
 // partly by rebuilding the dungeon warping into variable menu's
-//= 1.6a - alot of fixes for beta release [Neouni] (public release)
+//= 1.6a - a lot of fixes for beta release [Neouni] (public release)
 // - fixed syntax problems
 // - fixed missing pyramid gats in @DGat$ array
 // - removed the culver level 5 that didn't exist
@@ -1645,7 +1645,7 @@ jawaii,107,182,5	script	Warpra#25	113,{ callfunc "QWS_Town_Warpra",12,"Jawaii To
 izlude,132,116,4	script	Warpra#26	113,{ callfunc "QWS_Town_Warpra",11,"Izlude Town"; close; }
 lighthalzen,153,100,5	script	Warpra#27	113,{ callfunc "QWS_Town_Warpra",13,"Lighthalzen Town"; close; }
 louyang,211,106,4	script	Warpra#28	113,{ callfunc "QWS_Town_Warpra",14,"Luoyang Town"; close; }
-morocc,164,97,4	script	Warpra#29	113,{ callfunc "QWS_Town_Warpra",16,"Morocc Town"; close; }
+morocc,157,95,4	script	Warpra#29	113,{ callfunc "QWS_Town_Warpra",16,"Morocc Town"; close; }
 nif_fild01,319,77,1	script	Warpra#30	113,{ callfunc "QWS_Town_Warpra",17,"Niflheim Town"; close; }
 payon,183,110,4	script	Warpra#31	113,{ callfunc "QWS_Town_Warpra",18,"Payon Town"; close; }
 prontera,147,172,5	script	Warpra#32	113,{ callfunc "QWS_Town_Warpra",0,"Prontera Town"; close; }

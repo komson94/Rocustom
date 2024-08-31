@@ -1,4 +1,4 @@
-league,21,10,5	script	คลังเก็บของ	10005,{
+league,21,8,5	script	คลังเก็บของ	10005,{
 	specialeffect2 65;
 	if(getcharid(2) > 0)
 	menu "เปิดคลังปกติ",L_Storage,"เปิดคลังกิลด์",L_Guild_Storage;

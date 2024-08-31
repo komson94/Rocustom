@@ -1,0 +1,71 @@
+//===== rAthena Script =======================================
+//= Freebie
+//===== By: ==================================================
+//= mr.TAURUS
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//============================================================
+legend_ro,136,125,3	script	New novice#1	900,{
+OnTalk:
+	if (GetFree) {
+		mes .NPCname$;
+		mes "ดูเหมือนคุณจะได้รับของขวัญไปแล้วนะ.";
+		close;
+	}
+	else {
+		mes .NPCname$;
+		mes "สวัสดี, ^0000FF"+ strcharinfo(0) +"^000000.";
+		mes .ServerName$;
+		next;
+		mes .NPCname$;
+		mes "การผจญภัยของคุณกำลังจะเริ่มต้นขึ้นหลังจากนี้.";
+		mes "และฉันมีของขวัญเล็กๆน้อยๆมอบให้ก่อนออกดินทางด้วย.";
+		next;
+		mes .NPCname$;
+		mes "รับนี่ไปสิ !";
+		if(.char_bound) {
+			for(.@i = 0; .@i<getarraysize(.char_reward); .@i++)
+			getitem .char_reward[.@i],.char_reward_amt[.@i];
+		}
+		GetFree = 1;
+		if(#freebies == 0 && .account_bound == 1) {
+		next;
+			mes "[ ^FF0000System^000000 ]";
+			mes "ดูเหมือนจะเป็นครั้งแรกของคุณ, ที่นี่!";
+			mes "~ ของสมนาคุณพิเศษจาก [^FF0000 GM ^000000]";
+			for(.@i = 0; .@i<getarraysize(.acc_reward); .@i++)
+				getitem .acc_reward[.@i],.acc_reward_amt[.@i];
+		#freebies = 1;
+		}
+		next;
+		mes .NPCname$;
+		mes "ตอนนี้ คุณก็สามารถออกเดินทางได้แล้ว.";
+		mes "ขอให้โชคดี.";
+		close;
+}
+		
+OnTimer60000:
+	npctalk "Kid : ถ้า Novice Red Potions หมดแล้ว. ข้าควรทำอย่างไรดี?";
+	end;
+
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	waitingroom " New novice ",0;
+	.ServerName$ = "ยินดีต้อนรับสู่ : ^FF0000 Custom-Ro  ^000000.";
+	.char_bound = 1; 		// เปิดใช้งานของรางวัลที่ผูกไว้กับตัวละคร (1 = เปิด || 0 = ปิด)
+	.account_bound = 0; 	// เปิดใช้งานของรางวัลที่ผูกไว้กับบัญชี (1 = เปิด || 0 = ปิด)
+	// set item (char)
+	setarray .char_reward, 	20000000,	//Beginner Mark
+							12802;
+							
+	setarray .char_reward_amt, 1,1; 		// amount
+	// set item (acc)
+	setarray .acc_reward, 	20000000,	//Beginner Mark
+							12802;
+							
+	setarray .acc_reward_amt, 1,1,1; 			// amount
+	questinfo( QTYPE_EVENT2, QMARK_GREEN, "!GetFree" );
+	end;
+}

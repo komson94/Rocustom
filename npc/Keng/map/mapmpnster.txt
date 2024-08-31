@@ -41,7 +41,7 @@ morocc,180,75,3	script	Find_MOnser_LV	10060,{
 	
 		
 		deletearray .d;
-	for (set .i,0; .i < getarraysize(.@monster$); set .i,.i+1) {//getarraysize(.@monster$);
+	for (set .i,0; .i < 30; set .i,.i+1) {//getarraysize(.@monster$);
 		.@id = .@monster$[.i];
 		//mes getmonsterinfo(.@id,MOB_NAME)+"[เลเวล "+.lv[.i]+"]";
 		if(.lv[.i] > BaseLevel){

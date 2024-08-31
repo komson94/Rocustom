@@ -1,0 +1,37 @@
+//============================================================
+//= Cash Coin Function
+//============================================================
+
+function	script	CC_Function	{
+
+	.CashCoin = 910039;
+	.Amounts = countitem(.CashCoin);
+	delitem .CashCoin,.Amounts;
+	.Counts = .Amounts+1;
+	#CASHPOINTS += .Amounts+1;
+	dispbottom "[ระบบ] : คุณได้รับ ["+.Counts+"] Cash Points. | คงเหลือทั้งหมด ["+#CASHPOINTS+"] Cash Points.";
+	end;
+}
+
+function	script	Bonus_Function	{
+
+	.CoinID = 909999;
+	.Amounts = countitem(.CoinID);
+	delitem .CoinID,.Amounts;
+	.Counts = .Amounts+1;
+	#BonusPoint += .Amounts+1;
+	dispbottom "[ระบบ] : คุณได้รับ BonusPoint ["+.Counts+"] แต้ม. | คงเหลือทั้งหมด ["+#BonusPoint+"] แต้ม.";
+	end;
+}
+
+function	script	mvp_Function	{
+
+//	.CoinID = 130000053;
+	///.Amounts = countitem(.CoinID);
+	//delitem .CoinID,.Amounts;
+	//.Counts = .Amounts+1;
+	#pointmvp += .Amounts+1;
+	dispbottom "[ระบบ] : คุณได้รับ pointmvp ["+.Counts+"] แต้ม. | คงเหลือทั้งหมด ["+#pointmvp+"] แต้ม.";
+	end;
+}
+

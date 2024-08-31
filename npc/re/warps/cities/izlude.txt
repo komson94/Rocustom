@@ -84,33 +84,33 @@ int_land,49,57,0	script	#intro_to_izlude	WARPNPC,2,2,{
 	end;
 OnTouch:
 	if (isbegin_quest(21008) == 1) {
-		mes "^4d4dffเมื่อคุณออกจากเกาะนี้ไม่มีทางกลับ";
-		mes "คุณแน่ใจหรือว่าต้องการไปที่ Izlude โดยตรง^000000";
+		mes "^4d4dffOnce you leave this island there is no way back.";
+		mes "Are you sure you want to go directly to Izlude?^000000";
 		next;
-		mes "^4d4dffหากคุณทำเควสต์นั้นจะถูกลบออกจาก Quest Log ของคุณ^000000";
+		mes "^4d4dffIf you do, the quest will be deleted from your Quest Log.^000000";
 		next;
-		if (select("อย่าไป Izlude เลย", "ออกเดินทางไปยัง Izlude!") == 1) {
+		if (select("Do not go to Izlude yet", "Sail to Izlude!") == 1) {
 			mes "[Sailor]";
-			mes "คุณต้องการที่จะอยู่ที่นี่อีกต่อไป?";
-			mes "เยี่ยมแล้วฉันจะรอจนกว่าคุณจะพร้อม ~";
+			mes "You want to stay here longer?";
+			mes "Good, then I'll wait until you're ready~";
 			close;
 		}
 		completequest 21008;
 	}
 	mes "[Sailor]";
-	mes "มามุ่งหน้าไปที่ morocc!";
+	mes "Let's head towards Izlude!";
 	close2;
 	if (isbegin_quest(21001) == 1)
 		completequest 21001;
-	.@map$ = "morocc";
-	warp .@map$,155,45;
-	savepoint .@map$,155,45,1,1;
+	.@map$ = "izlude" + replacestr( strnpcinfo(2), "intro_to_izlude", "" );
+	warp .@map$,196,209;
+	savepoint .@map$,128,142,1,1;
 	end;
 }
 int_land01,49,57,0	duplicate(#intro_to_izlude)	#intro_to_izlude_a	WARPNPC,2,2
-int_land02,49,57,0	duplicate(#intro_to_izlude)	#intro_to_izlude_a0	WARPNPC,2,2
-int_land03,49,57,0	duplicate(#intro_to_izlude)	#intro_to_izlude_a1	WARPNPC,2,2
-int_land04,49,57,0	duplicate(#intro_to_izlude)	#intro_to_izlude_a2	WARPNPC,2,2
+int_land02,49,57,0	duplicate(#intro_to_izlude)	#intro_to_izlude_b	WARPNPC,2,2
+int_land03,49,57,0	duplicate(#intro_to_izlude)	#intro_to_izlude_c	WARPNPC,2,2
+int_land04,49,57,0	duplicate(#intro_to_izlude)	#intro_to_izlude_d	WARPNPC,2,2
 
 //= Izlude Academy ===========================================
 izlude,125,257,0	warp	#to_ac01	2,2,iz_ac01,99,29

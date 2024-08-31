@@ -1,0 +1,99 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2024 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Cash Database
+###########################################################################
+#
+# Item Cash Settings
+#
+###########################################################################
+# - Tab                     Cash shop tab. Available tabs are New, Hot, Limited, Rental, Permanent, Scrolls, Consumables, Other, Sale.
+#   Items:                  List of possible items.
+#     - Item                Item name.
+#       Price               Item cost in cash points (#CASHPOINTS).
+###########################################################################
+
+Header:
+  Type: ITEM_CASH_DB
+  Version: 1
+
+Body:
+  - Tab: Limited
+    Items:
+      - Item: Token_Of_Siegfried
+        Price: 100
+  - Tab: Rental
+    Items:
+      - Item: Inventory_Ex
+        Price: 100
+  - Tab: Rental
+    Items:
+      - Item: Mightysoul_Essence
+        Price: 100
+  - Tab: New
+    Items:
+      - Item: 100_Cash_Coin
+        Price: 100
+  - Tab: New
+    Items:
+      - Item: 10_Cash_Coin
+        Price: 10
+  - Tab: New
+    Items:
+      - Item: 5_Cash_Coin
+        Price: 5
+  - Tab: New
+    Items:
+      - Item: 1_Cash_Coin
+        Price: 1
+  - Tab: New
+    Items:
+      - Item: 400_Cash_Coin
+        Price: 400
+  - Tab: New
+    Items:
+      - Item: E_LastRo_refine
+        Price: 50
+  - Tab: New
+    Items:
+      - Item: E_LastRo_ASPD
+        Price: 1000
+  - Tab: New
+    Items:
+      - Item: E_LastRo_STR
+        Price: 1000
+  - Tab: New
+    Items:
+      - Item: E_LastRo_DROP
+        Price: 1000
+  - Tab: New
+    Items:
+      - Item: E_LastRo_PIERCE
+        Price: 1000
+  - Tab: New
+    Items:
+      - Item: E_LastRo_STEALHP
+        Price: 1000
+  - Tab: New
+    Items:
+      - Item: E_LastRo_Mana
+        Price: 2500
+  - Tab: Hot
+    Items:
+      - Item: VIP_Ticket_1_Day
+        Price: 500

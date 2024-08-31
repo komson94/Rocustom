@@ -9,10 +9,10 @@
  * For detailed guidance on these check http://rathena.org/wiki/SRC/config/
  **/
 
-#include "../custom/defines_pre.hpp"
+#include <custom/defines_pre.hpp>
 
 /// Max number of items on @autolootid list
-#define AUTOLOOTITEM_SIZE 20
+#define AUTOLOOTITEM_SIZE 10
 
 /// The maximum number of atcommand and @warp suggestions
 #define MAX_SUGGESTIONS 10
@@ -64,8 +64,7 @@
 	#endif
 #else
 	#ifndef MIN_STORAGE
-		//#define MIN_STORAGE MAX_STORAGE // If the VIP system is disabled the min = max.
-		#define MIN_STORAGE 300 // Default number of storage slots.
+		#define MIN_STORAGE MAX_STORAGE // If the VIP system is disabled the min = max.
 	#endif
 	#ifndef MAX_CHAR_VIP
 		#define MAX_CHAR_VIP 0
@@ -96,10 +95,19 @@
 //#define DEPRECATED_COMPILER_SUPPORT
 
 /// Uncomment for use with Nemo patch ExtendCashShopPreview
+
 #define ENABLE_CASHSHOP_PREVIEW_PATCH
 
 /// Uncomment for use with Nemo patch ExtendOldCashShopPreview
 #define ENABLE_OLD_CASHSHOP_PREVIEW_PATCH
+
+#if defined(_DEBUG) || defined(DEBUG)
+	#define DETAILED_LOADING_OUTPUT
+#endif
+
+/// Uncomment to forcibly disable the detailed loading output.
+/// This will noticeably decrease the boot time of the map server by not having to print so many status messages.
+//#undef DETAILED_LOADING_OUTPUT
 
 /**
  * No settings past this point
@@ -114,6 +122,6 @@
  **/
 #include "./const.hpp"
 
-#include "../custom/defines_post.hpp"
+#include <custom/defines_post.hpp>
 
 #endif /* CONFIG_CORE_HPP */

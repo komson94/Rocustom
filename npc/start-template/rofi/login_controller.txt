@@ -1,6 +1,0 @@
--	script	LoginController	-1,{
-OnPCLoginEvent:
-	setfont 0;
-	dispbottom "Account ID: " + getcharid(3);
-	end;
-}

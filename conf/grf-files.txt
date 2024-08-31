@@ -9,8 +9,4 @@
 // Data Directory
 // Use the base folder, not the data\ path.
 //-----------------------------------------
-data_dir: E:\Client\data\
-grf: E:\LastRO\Ragnarok KRO\data.grf
-E:\Client\data.grf
-E:\Client\ndata.grf
-E:\Client\rdata.grf
+//data_dir: C:\Program Files\Gravity\RO\

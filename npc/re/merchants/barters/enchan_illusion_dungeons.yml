@@ -55,7 +55,7 @@ Body:
             Item: Electric_Eel
             Refine: 9
           - Index: 1
-            Item: aegis_25895 #Deep_Sea_Starfish
+            Item: Deep_Sea_Starfish
             Amount: 150
           - Index: 2
             Item: IllusionStone
@@ -67,7 +67,7 @@ Body:
             Item: Electronic_Guitar
             Refine: 9
           - Index: 1
-            Item: aegis_25895 #Deep_Sea_Starfish
+            Item: Deep_Sea_Starfish
             Amount: 150
           - Index: 2
             Item: IllusionStone
@@ -79,7 +79,7 @@ Body:
             Item: Brionac
             Refine: 9
           - Index: 1
-            Item: aegis_25893 #Deepsea_Fish_Tail
+            Item: Deepsea_Fish_Tail
             Amount: 150
           - Index: 2
             Item: IllusionStone
@@ -91,7 +91,7 @@ Body:
             Item: Katar_Of_Cold_Icicle_
             Refine: 9
           - Index: 1
-            Item: aegis_25896 #Deep_Sea_Crab
+            Item: Deep_Sea_Crab
             Amount: 150
           - Index: 2
             Item: IllusionStone
@@ -103,7 +103,7 @@ Body:
             Item: Death_Guidance
             Refine: 9
           - Index: 1
-            Item: aegis_25894 #Rotten_Deepseafish
+            Item: Rotten_Deepseafish
             Amount: 150
           - Index: 2
             Item: IllusionStone
@@ -115,7 +115,7 @@ Body:
             Item: Zephyrus_
             Refine: 9
           - Index: 1
-            Item: aegis_25892 #Abysmal_Clam
+            Item: Abysmal_Clam
             Amount: 150
           - Index: 2
             Item: IllusionStone
@@ -127,7 +127,7 @@ Body:
             Item: Saint_Robe_
             Refine: 9
           - Index: 1
-            Item: aegis_25893 #Deepsea_Fish_Tail
+            Item: Deepsea_Fish_Tail
             Amount: 100
           - Index: 2
             Item: E_Abyss1
@@ -142,7 +142,7 @@ Body:
             Item: Water_Sprits_Armor_
             Refine: 9
           - Index: 1
-            Item: aegis_25896 #Deep_Sea_Crab
+            Item: Deep_Sea_Crab
             Amount: 100
           - Index: 2
             Item: E_Abyss1
@@ -157,7 +157,7 @@ Body:
             Item: Chain_Mail_
             Refine: 9
           - Index: 1
-            Item: aegis_25895 #Deep_Sea_Starfish
+            Item: Deep_Sea_Starfish
             Amount: 100
           - Index: 2
             Item: E_Abyss1
@@ -166,13 +166,13 @@ Body:
             Item: IllusionStone
             Amount: 90
       - Index: 9
-        Item: Morrigane's_Helm_IL #Morrigane_Helm_IL
+        Item: Morrigane_Helm_IL
         RequiredItems:
           - Index: 0
             Item: Morrigane's_Helm
             Refine: 9
           - Index: 1
-            Item: aegis_25896 #Deep_Sea_Crab
+            Item: Deep_Sea_Crab
             Amount: 100
           - Index: 2
             Item: E_Abyss1
@@ -181,13 +181,13 @@ Body:
             Item: IllusionStone
             Amount: 100
       - Index: 10
-        Item: Morrigane's_Manteau_IL #Morrigane_Manyeau_IL
+        Item: Morrigane_Manyeau_IL
         RequiredItems:
           - Index: 0
             Item: Morrigane's_Manteau
             Refine: 9
           - Index: 1
-            Item: aegis_25894 #Rotten_Deepseafish
+            Item: Rotten_Deepseafish
             Amount: 100
           - Index: 2
             Item: E_Abyss1
@@ -196,29 +196,29 @@ Body:
             Item: IllusionStone
             Amount: 100
       - Index: 11
-        Item: Morrigane's_Belt_IL #Morrigane_Belt_IL
+        Item: Morrigane_Belt_IL
         RequiredItems:
           - Index: 0
             Item: Morrigane's_Belt
           - Index: 1
-            Item: aegis_25893 #Deepsea_Fish_Tail
+            Item: Deepsea_Fish_Tail
             Amount: 100
           - Index: 2
             Item: E_Abyss1
             Amount: 50
           - Index: 3
-            Item: aegis_7324 #IL_Kraken_Leg
+            Item: IL_Kraken_Leg
             Amount: 15
           - Index: 4
             Item: IllusionStone
             Amount: 100
       - Index: 12
-        Item: Morrigane's_Pendant_IL #Morrigane_Pendant_IL
+        Item: Morrigane_Pendant_IL
         RequiredItems:
           - Index: 0
             Item: Morrigane's_Pendant
           - Index: 1
-            Item: aegis_25892 #Abysmal_Clam
+            Item: Abysmal_Clam
             Amount: 100
           - Index: 2
             Item: E_Abyss1
@@ -438,7 +438,7 @@ Body:
             Item: IllusionStone
             Amount: 30
           - Index: 2
-            Item: Hazy_Dream_Fragment #HazyDream
+            Item: HazyDream
             Amount: 100
       - Index: 1
         Item: Moonlight_Sword_IL
@@ -450,7 +450,7 @@ Body:
             Item: IllusionStone
             Amount: 60
           - Index: 2
-            Item: Hazy_Dream_Fragment #HazyDream
+            Item: HazyDream
             Amount: 100
       - Index: 2
         Item: Long_Mace_IL
@@ -462,7 +462,7 @@ Body:
             Item: IllusionStone
             Amount: 10
           - Index: 2
-            Item: Hazy_Dream_Fragment #HazyDream
+            Item: HazyDream
             Amount: 20
       - Index: 3
         Item: Spectral_Spear_IL
@@ -474,7 +474,7 @@ Body:
             Item: IllusionStone
             Amount: 20
           - Index: 2
-            Item: Hazy_Dream_Fragment #HazyDream
+            Item: HazyDream
             Amount: 100
       - Index: 4
         Item: Nurse_Cap_IL
@@ -486,7 +486,7 @@ Body:
             Item: IllusionStone
             Amount: 10
           - Index: 2
-            Item: Bloody_Love_Letter #Bloody_LoveLetter
+            Item: Bloody_LoveLetter
             Amount: 100
       - Index: 5
         Item: Apple_Of_Archer_IL
@@ -498,7 +498,7 @@ Body:
             Item: IllusionStone
             Amount: 10
           - Index: 2
-            Item: Broken_Arrow #BrokenArrow
+            Item: BrokenArrow
             Amount: 100
       - Index: 6
         Item: Puente_Robe_IL
@@ -510,7 +510,7 @@ Body:
             Item: IllusionStone
             Amount: 10
           - Index: 2
-            Item: Hazy_Dream_Fragment #HazyDream
+            Item: HazyDream
             Amount: 100
       - Index: 7
         Item: Muffler_IL
@@ -548,7 +548,7 @@ Body:
             Item: IllusionStone
             Amount: 100
           - Index: 2
-            Item: Ktullanux_Eye #KTULLANUXsEye
+            Item: KTULLANUXsEye
             Amount: 20
       - Index: 1
         Item: Combo_Battle_Glove_IL
@@ -572,10 +572,10 @@ Body:
             Item: IllusionStone
             Amount: 100
           - Index: 2
-            Item: Spirit_Jewel #SpritJewel
+            Item: SpritJewel
             Amount: 300
       - Index: 3
-        Item: Illusion_Survivor_Manteau #Clack_Of_Servival_IL
+        Item: Clack_Of_Servival_IL
         RequiredItems:
           - Index: 0
             Item: Clack_Of_Servival
@@ -584,7 +584,7 @@ Body:
             Item: IllusionStone
             Amount: 100
           - Index: 2
-            Item: Frozen_Stone_Fragment #Frozen_PieceOfRock
+            Item: Frozen_PieceOfRock
             Amount: 200
       - Index: 4
         Item: Cap_IL
@@ -596,7 +596,7 @@ Body:
             Item: IllusionStone
             Amount: 50
           - Index: 2
-            Item: Frozen_Stone_Fragment #Frozen_PieceOfRock
+            Item: Frozen_PieceOfRock
             Amount: 100
   - Name: barter_ill_vampire
     Items:
@@ -697,7 +697,7 @@ Body:
   - Name: barter_ill_turtle
     Items:
       - Index: 0
-        Item: Illusion_Immaterial_Sword #Immaterial_Sword_IL
+        Item: Immaterial_Sword_IL
         RequiredItems:
           - Index: 0
             Item: Immaterial_Sword
@@ -709,7 +709,7 @@ Body:
             Item: ShipsLog
             Amount: 50
       - Index: 1
-        Item: Illusion_War_Axe #War_Axe_IL
+        Item: War_Axe_IL
         RequiredItems:
           - Index: 0
             Item: War_Axe
@@ -718,10 +718,10 @@ Body:
             Item: IllusionStone
             Amount: 100
           - Index: 2
-            Item: Piece_of_Black_Horn #PieceOfBlackSpirit
+            Item: PieceOfBlackSpirit
             Amount: 200
       - Index: 2
-        Item: Illusion_Pole_Axe #Pole_Axe_IL
+        Item: Pole_Axe_IL
         RequiredItems:
           - Index: 0
             Item: Pole_Axe
@@ -730,10 +730,10 @@ Body:
             Item: IllusionStone
             Amount: 100
           - Index: 2
-            Item: Piece_of_Black_Horn #PieceOfBlackSpirit
+            Item: PieceOfBlackSpirit
             Amount: 200
       - Index: 3
-        Item: Illusion_Wing_Shuriken #Huuma_Bird_Wing_IL
+        Item: Huuma_Bird_Wing_IL
         RequiredItems:
           - Index: 0
             Item: Huuma_Bird_Wing
@@ -742,10 +742,10 @@ Body:
             Item: IllusionStone
             Amount: 100
           - Index: 2
-            Item: Old_Shell #OldShell
+            Item: OldShell
             Amount: 200
       - Index: 4
-        Item: Illusion_Iron_Driver   #Iron_Driver_IL
+        Item: Iron_Driver_IL
         RequiredItems:
           - Index: 0
             Item: Iron_Driver
@@ -754,10 +754,10 @@ Body:
             Item: IllusionStone
             Amount: 100
           - Index: 2
-            Item: Old_Shell #OldShell
+            Item: OldShell
             Amount: 200
       - Index: 5
-        Item: Illusion_Fancy_Flower #Fancy_Flower_IL
+        Item: Fancy_Flower_IL
         RequiredItems:
           - Index: 0
             Item: Fancy_Flower
@@ -765,12 +765,12 @@ Body:
             Item: IllusionStone
             Amount: 50
           - Index: 2
-            Item: Fine_Old_Doll #OldDoll
+            Item: OldDoll
             Amount: 50
   - Name: barter_ill_luanda
     Items:
       - Index: 0
-        Item: Illusion_Tablet #Tablet_IL
+        Item: Tablet_IL
         RequiredItems:
           - Index: 0
             Item: Tablet
@@ -782,7 +782,7 @@ Body:
             Item: Weak_Worm
             Amount: 100
       - Index: 1
-        Item: Illusion_Hunter_Bow #Hunter_Bow_IL
+        Item: Hunter_Bow_IL
         RequiredItems:
           - Index: 0
             Item: Hunter_Bow_
@@ -800,7 +800,7 @@ Body:
             Item: Hair_Leaf
             Amount: 50
       - Index: 2
-        Item: Illusion_Goibne_Helm #Goibne_Helmet_IL
+        Item: Goibne_Helmet_IL
         RequiredItems:
           - Index: 0
             Item: Goibne's_Helmet
@@ -815,7 +815,7 @@ Body:
             Item: Token_Of_Wootan
             Amount: 150
       - Index: 3
-        Item: Illusion_Goibne_Armor #Goibne_Armor_IL
+        Item: Goibne_Armor_IL
         RequiredItems:
           - Index: 0
             Item: Goibne's_Armor
@@ -830,7 +830,7 @@ Body:
             Item: Token_Of_Bigstone
             Amount: 150
       - Index: 4
-        Item: Illusion_Goibne's_Greaves #Goibne_Boots_IL
+        Item: Goibne_Boots_IL
         RequiredItems:
           - Index: 0
             Item: Goibne's_Combat_Boots
@@ -845,7 +845,7 @@ Body:
             Item: Token_Of_Wootan
             Amount: 150
       - Index: 5
-        Item: Illusion_Goibne_Spaulders #Goibne_Shoulder_IL
+        Item: Goibne_Shoulder_IL
         RequiredItems:
           - Index: 0
             Item: Goibne's_Shoulder_Arms
@@ -862,7 +862,7 @@ Body:
   - Name: barter_ill_teddy
     Items:
       - Index: 0
-        Item: Illusion_Counter_Dagger #Counter_Dagger_IL
+        Item: Counter_Dagger_IL
         RequiredItems:
           - Index: 0
             Item: Counter_Dagger
@@ -877,7 +877,7 @@ Body:
             Item: Chonchon_Doll_HQ
             Amount: 50
       - Index: 1
-        Item: Illusion_Gate_Keeper_DD #Gate_KeeperDD_IL
+        Item: Gate_KeeperDD_IL
         RequiredItems:
           - Index: 0
             Item: Gate_KeeperDD
@@ -892,7 +892,7 @@ Body:
             Item: NasariansSoulstone
             Amount: 150
       - Index: 2
-        Item:   Illusion_Survivor's_Staff     #Survival_Staff_IL
+        Item: Survival_Staff_IL
         RequiredItems:
           - Index: 0
             Item: Survival_Rod_
@@ -913,7 +913,7 @@ Body:
             Item: Clay_Doll
             Amount: 15
       - Index: 3
-        Item: Illusion_Boots #Boots_IL
+        Item: Boots_IL
         RequiredItems:
           - Index: 0
             Item: Boots_
@@ -928,7 +928,7 @@ Body:
             Item: Gothic_China_Doll
             Amount: 50
       - Index: 4
-        Item: Illusion_Hot_blooded_Headband #Headband_Of_Power_IL
+        Item: Headband_Of_Power_IL
         RequiredItems:
           - Index: 0
             Item: Headband_Of_Power
@@ -945,117 +945,3 @@ Body:
           - Index: 4
             Item: Clay_Doll
             Amount: 5
-  - Name: barter_ill_labyrinth
-    Items:
-      - Index: 0
-        Item: Illusion_Morpheus's_Hood #Morpheus_Hood_IL
-        RequiredItems:
-          - Index: 0
-            Item: Morpheus's_Hood
-            Refine: 9
-          - Index: 1
-            Item: IllusionStone
-            Amount: 100
-          - Index: 2
-            Item: Soft_Scarf
-            Amount: 100
-          - Index: 3
-            Item: Cold_Holy_Water
-            Amount: 50
-      - Index: 1
-        Item: Illusion_Morpheus's_Shawl #Morpheus_Shawl_IL
-        RequiredItems:
-          - Index: 0
-            Item: Morpheus's_Shawl
-            Refine: 9
-          - Index: 1
-            Item: IllusionStone
-            Amount: 100
-          - Index: 2
-            Item: Brilliant_Jelly
-            Amount: 100
-          - Index: 3
-            Item: Medicinal_Stuff
-            Amount: 50
-      - Index: 2
-        Item: Illusion_Morpheus's_Ring #Morpheus_Ring_IL
-        RequiredItems:
-          - Index: 0
-            Item: Morpheus's_Ring
-          - Index: 1
-            Item: IllusionStone
-            Amount: 100
-          - Index: 2
-            Item: Purple_Solid_Shell
-            Amount: 100
-          - Index: 3
-            Item: Little_Lovely_Candle
-            Amount: 50
-          - Index: 4
-            Item: Essence_Of_Demon
-            Amount: 15
-      - Index: 3
-        Item: Illusion_Morpheus's_Bracelet #Morpheus_Armlet_IL
-        RequiredItems:
-          - Index: 0
-            Item: Morpheus's_Armlet
-          - Index: 1
-            Item: IllusionStone
-            Amount: 100
-          - Index: 2
-            Item: Suspicious_Sap
-            Amount: 100
-          - Index: 3
-            Item: Small_Flashlight
-            Amount: 50
-          - Index: 4
-            Item: Essence_Of_Demon
-            Amount: 15
-      - Index: 4
-        Item: Illusion_Butcher #Butcher_IL
-        RequiredItems:
-          - Index: 0
-            Item: Butcher_
-            Refine: 9
-          - Index: 1
-            Item: IllusionStone
-            Amount: 120
-          - Index: 2
-            Item: Delicious_Juice
-            Amount: 150
-      - Index: 5
-        Item: Illusion_Tae_Goo_Lyeon #Taegoolyeon_IL
-        RequiredItems:
-          - Index: 0
-            Item: Tae_Goo_Lyeon
-            Refine: 9
-          - Index: 1
-            Item: IllusionStone
-            Amount: 120
-          - Index: 2
-            Item: Short_Rope
-            Amount: 150
-      - Index: 6
-        Item: Illusion_Gold_Lux #Gold_Lux_IL
-        RequiredItems:
-          - Index: 0
-            Item: Gold_Lux
-            Refine: 9
-          - Index: 1
-            Item: IllusionStone
-            Amount: 120
-          - Index: 2
-            Item: Snake_Deadly_Poison
-            Amount: 150
-      - Index: 7
-        Item: Illusion_Bazerald #Bazerald_IL
-        RequiredItems:
-          - Index: 0
-            Item: Bazerald
-            Refine: 9
-          - Index: 1
-            Item: IllusionStone
-            Amount: 120
-          - Index: 2
-            Item: Mantis_Flower
-            Amount: 150
